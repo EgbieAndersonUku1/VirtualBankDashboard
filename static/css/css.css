@@ -14,6 +14,7 @@
     --light-gray: #F5F7FA;
     --color-one: #8D6E63 ;
     --steel-blue: #2D3E50;
+    --darker-red: #CC0000;
     --white: #FFFFFF;
 
     --size-xs: 4px;
@@ -22,6 +23,8 @@
     --size-lg: 32px;
     --size-xl: 64px;
     --size-xlg: 128px;
+
+    --box-shadow : rgba(0, 0, 0, 0.16) 0px 10px 36px 0px, rgba(0, 0, 0, 0.06) 0px 0px 0px 1px;
 }
 
 
@@ -35,6 +38,7 @@ body {
 a {
     text-decoration: none;
     color: black;
+    text-transform: capitalize;
 }
 
 a:hover {
@@ -57,7 +61,19 @@ a:hover {
     font-style: normal;
   }
 
+
+
 /* variables */
+
+.bold {
+    font-weight: bold;
+}
+
+.italic {
+    font-style: italic;
+    font-weight: 300;
+}
+
 
 /* padding */
 .padding-xsm {
@@ -81,7 +97,6 @@ a:hover {
 }
 
 
-
 /* margin */
 .margin-xsm {
     margin: var(--size-xs);
@@ -103,7 +118,6 @@ a:hover {
     margin: var(--size-lg);
 }
 
-
 .margin-top-lg {
     margin-top: var(--size-lg);
 }
@@ -111,7 +125,6 @@ a:hover {
 .margin-bottom-lg {
     margin-bottom: var(--size-lg);
 }
-
 
 
 .lightbox-display {
@@ -122,14 +135,37 @@ a:hover {
     border: 2px solid lavender;
 }
 
+.flex-space-between {
+    display: flex;
+    justify-content: space-between;
 
+}
+
+
+
+/* icons */
+/* nav icons */
+.nav-icon {
+    width: 24px;
+    height: 24px;
+}
+
+.nav-icon:hover {
+    transform: scale(1.1);
+    opacity: 0.6;
+}
+
+
+
+/* The virtual bank dashboard */
 #virtualbank-dashboard .container {
     display: grid;
     grid-template-columns: 25% 75%;
     grid-template-rows: auto;
-    background: var(--steel-blue);
+   
     height: 100vh; /* Full viewport height */
 }
+
 
 #main-body {
     background: rgb(247, 247, 240);
@@ -140,28 +176,30 @@ a:hover {
 
 
 #side-dashboard {
+    cursor: pointer;
+    background: var(--steel-blue);
+
+
+    /* grid elements */
     display: grid;
     grid-template-columns: 20% 80%;
     grid-template-rows: auto;
-    cursor: pointer;
-    
-    
 }
+
 
 #side-dashbard .icon {
     padding-left: var(--size-md);
     padding-right: var(--size-md);
 }
 
+
 #side-dashboard .main-container {
     display: flex;
-    flex-direction: column;
-   
+    flex-direction: column;   
 }
 
 #side-dashboard .main-container div{
    margin: 2px;
-   
 }
 
 
@@ -174,15 +212,162 @@ a:hover {
 
 
 .sidebar-icon {
+    /* sizes */
     height: 25px;
     width: 25px;
-    margin-top: var(--size-md);
-    opacity: 0.5;
+
     border-radius: 5%;
     cursor: pointer;
+    margin-top: var(--size-md);
+    opacity: 0.5;
 }
 
 .sidebar-icon:hover {
     transform: rotate(45deg);
     opacity: 0.7;
 }
+
+
+
+/* navigation section */
+#navigation {
+    border: 2px solid lavender;
+    cursor: pointer;
+}
+
+#navigation:hover {
+    background: ghostwhite;
+}
+
+#navigation .wrapper .nav {
+  
+    background: var(--white);
+    padding: var(--size-lg);
+    border-radius: 2%;
+}
+
+.navigation__nav-body {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: auto;
+    column-gap: var(--size-lg);
+}
+
+
+.nav-element {
+    position: relative;
+}
+
+
+.notification-badge {
+    /* position elements */
+    position: absolute;
+    top: -10px;
+    right: -14px;
+
+    background-color: red;
+    color: white;
+    border-radius: 50%;
+
+    cursor: pointer;
+    font-weight: bold;
+    font-size:  0.75rem;
+    line-height: 1;
+    min-width: 18px;
+    padding: var(--size-xs);
+    text-align: center;
+
+  }
+
+   /* Hide the badge if there's no count */
+  .notification-badge[data-count="0"] {
+    display: none;
+  }
+
+ 
+  .dropdown {
+    /* positioning */
+    position: absolute;
+    right: 10px;
+
+    background: white;
+    box-shadow: var(--box-shadow);
+    cursor: pointer;
+    padding: var(--size-lg);
+    width: 400px;
+   
+    /* show */
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease-in-out, visibility 0s 0.3s;
+  }
+  
+  .dropdown.show {
+    opacity: 1;
+    visibility: visible;
+    transition: opacity 0.3s ease-in-out, visibility 0s 0s;
+  }
+  
+
+
+  .profile-info {
+
+    /* grid elements */
+    display: grid;
+    grid-template-columns: 25% 75%;
+    grid-template-rows: auto;
+    column-gap: 16px;
+
+    background: ghostwhite;
+    border: 2px solid lavender;
+  }
+
+
+  .profile-icon {
+    width: 90px;
+    height: 90px;
+    transform: scale(0.8);
+    cursor: pointer;
+  }
+
+  .account-icon:hover,
+  .profile-icon:hover {
+    transform: scale(0.6);
+  }
+
+  .account-info .value {
+    font-weight: bolder;
+    color: green;
+  }
+
+  .account-settings div {
+    background: white;
+    border: 2px solid lavender;
+    display: flex;
+   
+    /* sizes */
+    margin-top: var(--size-sm);
+    padding-top: var(--size-sm);
+    padding-bottom: var(--size-sm);
+
+  }
+
+  .account-settings div:hover {
+    background-color: ghostwhite;
+    color: green;
+    font-weight: bold;
+  }
+  
+  .account-settings div img {
+    /* paddings */
+    padding-right: var(--size-md);
+    padding-left: var(--size-sm);
+
+    height: 30px;
+    transform: translateY(10px);
+  
+  }
+
+ .slogan {
+    color: var(--darker-red);
+ }
