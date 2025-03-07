@@ -1,92 +1,180 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="static/css/css.css">
     <title>Virtual Bank - EUSBC - One bank to rule them all</title>
 </head>
+
 <body>
-    
-
-<header>
-    <nav>
-        <div class="nav-container">
-            <div class="nav-head">
-
-            </div>
-
-            <div class="nav-body">
-
-            </div>
-
-            <div class="nav-footer">
-
-            </div>
-        </div>
-    </nav>
-
-</header>
 
 
+    <header>
+        <nav>
+            <div class="nav-container">
+                <div class="nav-head">
 
-<section id="virtualbank-dashboard">
-
-    <div class="container">
-
-        <div id="side-dashboard" class="poppins-regular">
-            <div class="icons" id="sidebar-icons">
-                <img src="static/images/icons/facebook.svg" alt="" class="sidebar-icon">
-                <img src="static/images/icons/instagram.svg" alt="" class="sidebar-icon">
-                <img src="static/images/icons/gmail.svg" alt="" class="sidebar-icon">
-                <img src="static/images/icons/twitter.svg" alt="" class="sidebar-icon">
-
-                <hr class="margin-top-lg margin-bottom-lg">
-                <img src="static/images/icons/discover.svg" alt="" class="sidebar-icon">
-                <img src="static/images/icons/mastercard.svg" alt="" class="sidebar-icon">
-
-
-                <img src="static/images/icons/payment-card-visa.svg" alt="" class="sidebar-icon">
-                <img src="static/images/icons/american-express.svg" alt="" class="sidebar-icon">
-               
-            </div>
-            <div class="main-container">
-
-                <div class="lightbox-display">
-                    <p><span>EUSBC</span> Virtual banking </p>
-                    <p>One bank to rule it all </p>
-                </div>
-                <div class="lightbox-display">
-                    <h1>Dashboard</h1>
                 </div>
 
-                <div class="sidebar-links lightbox-display">
-                    <img src="" alt="" srcset="">
-                    <a href="#">Add account info</a>
+                <div class="nav-body">
+
                 </div>
-               
+
+                <div class="nav-footer">
+
+                </div>
+            </div>
+        </nav>
+
+    </header>
+
+
+
+    <section id="virtualbank-dashboard">
+
+        <div class="container">
+
+            <div id="side-dashboard" class="poppins-regular">
+
+                <div class="icons" id="sidebar-icons">
+
+                    <a href="https://facebook.com" aria-label="Facebook" target="_blank">
+                        <img src="static/images/icons/facebook.svg" alt="Facebook icon" class="sidebar-icon" loading="lazy">
+                    </a>
+                    <a href="https://instagram.com" aria-label="Instagram" target="_blank">
+                        <img src="static/images/icons/instagram.svg" alt="Instagram icon" class="sidebar-icon" loading="lazy">
+                    </a>
+                    <a href="mailto:example@example.com" aria-label="Gmail" target="_blank">
+                        <img src="static/images/icons/gmail.svg" alt="Gmail icon" class="sidebar-icon" loading="lazy">
+                    </a>
+                    <a href="https://twitter.com" aria-label="Twitter" target="_blank">
+                        <img src="static/images/icons/twitter.svg" alt="Twitter icon" class="sidebar-icon" loading="lazy">
+                    </a>
+                
+                    <hr class="margin-top-lg margin-bottom-lg">
+                
+                    <!-- Payment & Other Icons -->
+                    <img src="static/images/icons/discover.svg" alt="Discover Card icon" class="sidebar-icon" loading="lazy">
+                    <img src="static/images/icons/mastercard.svg" alt="MasterCard icon" class="sidebar-icon" loading="lazy">
+                    <img src="static/images/icons/payment-card-visa.svg" alt="Visa Card icon" class="sidebar-icon" loading="lazy">
+                    <img src="static/images/icons/american-express.svg" alt="American Express Card icon" class="sidebar-icon" loading="lazy">
+                </div>
+                
+                <div class="main-container">
+
+                    <div class="lightbox-display">
+                        <p><span>EUSBC</span> Virtual banking </p>
+                        <p class="italic slogan">One bank to rule it all </p>
+                    </div>
+                    <div class="lightbox-display">
+                        <h1>Dashboard</h1>
+                    </div>
+
+                    <div class="sidebar-links lightbox-display">
+                        <img src="" alt="" srcset="">
+                        <a href="#">Add account info</a>
+                    </div>
+
+                </div>
+
+
             </div>
 
-           
-           
+
+            <!-- The main body -->
+            <div id="main-body">
+
+                <!-- The navigation section -->
+                <section id="navigation">
+                    <div class="wrapper">
+                        <div class="nav flex-space-between">
+                            <!-- Logo Section -->
+                            <div class="nav-head">
+                                <p class="logo" aria-label="EUSBC logo">EUSBC</p>
+                            </div>
+                
+                            <!-- Navigation Body -->
+                            <div class="navigation__nav-body">
+                                
+                                <!-- Search Icon -->
+                                <div class="search-icon nav-element">
+                                    <a href="#" aria-label="Search">
+                                        <img src="static/images/icons/search_icon.png" alt="Search icon" class="nav-icon" loading="lazy">
+                                    </a>
+                                    <span class="notification-badge" aria-live="polite">...</span>
+                                </div>
+                
+                                <!-- Notification Icon -->
+                                <div class="notification nav-element">
+                                    <a href="#" aria-label="Notifications">
+                                        <img src="static/images/icons/notification_smartphone_icon.png" alt="Notification bell" class="nav-icon" loading="lazy">
+                                    </a>
+                                    <span class="notification-badge" data-count="3" aria-live="polite">3</span>
+                                </div>
+                
+                                <!-- Messages Icon -->
+                                <div class="messages nav-element">
+                                    <a href="#" aria-label="Messages">
+                                        <img src="static/images/icons/email_web_essential_icon.png" alt="Message icon" class="nav-icon" loading="lazy">
+                                    </a>
+                                    <span class="notification-badge" data-count="2" aria-live="polite">2</span>
+                                </div>
+                
+                                <!-- Profile Picture Icon with Dropdown -->
+                                <div class="profile-pic nav-element">
+                                    <img src="static/images/icons/profile.png" alt="Profile icon" class="nav-icon" loading="lazy" id="profile-icon-img" aria-haspopup="true" aria-expanded="false" aria-label="Profile menu">
+                                    
+                                    <!-- Dropdown Menu for Profile -->
+                                    <div class="dropdown" id="profile-dropdown" role="menu" aria-labelledby="profile-icon-img">
+                                        <div class="profile-info">
+                                            <div class="profile-img">
+                                                <a href="#" aria-label="Profile picture">
+                                                    <img src="static/images/icons/profile.png" alt="Profile icon" class="nav-icon profile-icon" loading="lazy">
+                                                </a>
+                                            </div>
+                
+                                            <div class="account-info">
+                                                <p><span class="bold">Account no:</span> <span class="value">400217 00327502</span></p>
+                                                <p><span class="bold">Pin:</span> <span class="value">1025</span></p>
+                                            </div>
+                                        </div>
+                
+                                        <!-- Account Settings Options -->
+                                        <div class="account-settings">
+                                            <div class="logout nav-link">
+                                                <img src="static/images/icons/profile icon_user_icon.png" alt="Dashboard icon" loading="lazy" class="account-icon">
+                                                <p>Dashboard</p>
+                                            </div>
+                
+                                            <div class="logout">
+                                                <img src="static/images/icons/settings_icon.png" alt="Settings icon" loading="lazy" class="account-icon">
+                                                <p>Settings</p>
+                                            </div>
+                
+                                            <div class="logout">
+                                                <img src="static/images/icons/logout.png" alt="Logout icon" loading="lazy" class="account-icon">
+                                                <p>Logout</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                
+                
+            </div>
 
         </div>
 
 
-        <div id="main-body">
-            <h1>Test</h1>
-        </div>
+    </section>
 
-
-
-
-
-
-    </div>
-
-
-</section>
-
-
+    <script src="static/js/script.js" type="module" defer></script>
 </body>
+
 </html>
