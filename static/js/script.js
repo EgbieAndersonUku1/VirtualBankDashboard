@@ -18,7 +18,7 @@ const run = {
 run.init();
 
 notificationManager.setKey("notifications");
-notificationManager.add("This is a test and it will be remove");
+notificationManager.add("This is a test and it will be remove. Refresh the page to add more notifications");
 
 
 // event listeners

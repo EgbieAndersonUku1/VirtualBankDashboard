@@ -320,7 +320,7 @@ a:hover {
   .notification-dropdown {
     /* positioning */
     
-    width: 750px;
+    width: 800px;
     height: 350px;
     overflow-y: scroll;
     overflow-x: hidden;
@@ -424,10 +424,11 @@ a:hover {
 
  .notification-msg {
     display: grid;
-    grid-template-columns: 15% 55% 15% 15%;
+    grid-template-columns: 10% 60% 15% 15%;
     grid-template-rows: auto;
     column-gap: var(--size-md);
     margin-bottom: var(--size-sm);
+    
    
   
     
@@ -436,6 +437,7 @@ a:hover {
  .notification-msg a small {
     font-family: "Poppins", sans-serif;
     font-weight: 200;
+    
  }
 
  .notification-msg .notification-alert {
