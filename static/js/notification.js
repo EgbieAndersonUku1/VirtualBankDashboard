@@ -34,7 +34,7 @@ validatePageElements();
 export const notificationManager = {
 
     _NOTIFICATION_KEY: null,
-    _notifications: [],  // create a cache
+    _notifications: null,  // create a cache
 
      /**
      * Adds a new notification to local storage.
@@ -111,7 +111,7 @@ export const notificationManager = {
      * @returns {Array} List of notifications.
      */
     getNotifications: (unread = true) => {
-        if (notificationManager._notifications === null || notificationManager._notifications.length === 0) { 
+        if (notificationManager._notifications === null) { 
             try {
                 const notificationsArray = getLocalStorage(notificationManager._NOTIFICATION_KEY) || [];
                 if (!Array.isArray(notificationsArray)) {
@@ -178,7 +178,7 @@ export const notificationManager = {
      * @param {string} id - The notification ID.
      */
     deleteNotification: (id) => {
-        const NOT_FOUND = -1;
+        const NOT_FOUND      = -1;
         const notificationId = findByIndex(parseInt(id), notificationManager._notifications);
 
         if (notificationId === NOT_FOUND) {
@@ -189,6 +189,7 @@ export const notificationManager = {
         notificationManager._notifications = notificationManager._notifications.filter((notification) => notification.id != id)
         notificationManager._save();
         notificationManager.renderNotificationsToUI();
+        return true;
     },
 
     /**
@@ -197,7 +198,7 @@ export const notificationManager = {
     renderNotificationsToUI: () => {
      
         if (!notificationManager._notifications) {
-            notificationManager.getNotifications()   
+            notificationManager.getNotifications();   
         }
 
         if (notificationManager._notifications.length === 0) {
@@ -209,7 +210,7 @@ export const notificationManager = {
 
         noNotificationDiv.style.display = "none";
         const fragment = document.createDocumentFragment();
-
+        
         notificationManager._notifications.forEach(( notification ) => {
             const notificationDiv = notificationManager._createSingleNotificationDiv(notification);
             fragment.appendChild(notificationDiv)

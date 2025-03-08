@@ -39,7 +39,7 @@ body {
 a {
     text-decoration: none;
     color: black;
-    text-transform: capitalize;
+  
 }
 
 a:hover {
@@ -336,7 +336,7 @@ a:hover {
     background: white;
     box-shadow: var(--box-shadow);
     cursor: pointer;
-    padding: var(--size-lg);
+    padding: var(--size-sm);
 
     opacity: 0;
     visibility: hidden;
@@ -459,6 +459,12 @@ a:hover {
     text-transform: capitalize;
     display: none;
     overflow: hidden;
+    border: 2px solid lavender;
+ }
+
+ .no-notification p {
+    opacity: 0.6;
+    font-stretch: expanded;
  }
 
  .no-notification img {
