@@ -107,11 +107,27 @@
                                 </div>
                 
                                 <!-- Notification Icon -->
-                                <div class="notification nav-element">
-                                    <a href="#" aria-label="Notifications">
-                                        <img src="static/images/icons/notification_smartphone_icon.png" alt="Notification bell" class="nav-icon" loading="lazy">
+                                <div class="notification nav-element" id="notification-div">
+                                    <a href="#" aria-label="Notifications" id="notification-bell-link">
+                                        <img src="static/images/icons/notification_smartphone_icon.png" alt="Notification bell" class="nav-icon" loading="lazy" id="notification-bell-icon" >
                                     </a>
-                                    <span class="notification-badge" data-count="3" aria-live="polite">3</span>
+                                    <span class="notification-badge" data-count="0" aria-live="polite" id="notification">0</span>
+
+                                    <div class="notification-dropdown" id="notification-dropdown" role="menu" aria-labelledby="notification bell icon">
+                                        <div class="spinner" id="spinner"></div>
+
+                                        <div class="no-notification center" id="no-notification">
+                                            <p class="padding-lg">No notifications</p>
+                                            <img src="static/images/icons/notification_off_line_icon.png" alt="no notification img">
+                                        </div>
+                                        <div class="wrapper">
+                                           
+
+                                           
+
+                                          
+                                        </div>
+                                    </div>
                                 </div>
                 
                                 <!-- Messages Icon -->
