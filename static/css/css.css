@@ -6,6 +6,7 @@
     box-sizing: border-box;
     padding: 0;
     margin: 0;
+    scroll-behavior: smooth;
     
 }
 
@@ -69,11 +70,30 @@ a:hover {
     font-weight: bold;
 }
 
+.center {
+    display: flex;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+    
+}
+
 .italic {
     font-style: italic;
     font-weight: 300;
 }
 
+.red {
+    color: var(--darker-red);
+}
+
+.green {
+    color: darkgreen;
+}
+
+.steel-blue {
+    color: var(--steel-blue);
+}
 
 /* padding */
 .padding-xsm {
@@ -126,6 +146,9 @@ a:hover {
     margin-bottom: var(--size-lg);
 }
 
+.margin-bottom-sm {
+    margin-bottom: var(--size-sm);
+}
 
 .lightbox-display {
     background: ghostwhite;
@@ -286,7 +309,27 @@ a:hover {
 
  
   .dropdown {
+
+   
+    width: 400px;
+   
+
+  }
+
+
+  .notification-dropdown {
     /* positioning */
+    
+    width: 800px;
+    height: 350px;
+    overflow-y: scroll;
+    overflow-x: hidden;
+   
+  }
+
+  
+.dropdown,
+.notification-dropdown {
     position: absolute;
     right: 10px;
 
@@ -294,20 +337,23 @@ a:hover {
     box-shadow: var(--box-shadow);
     cursor: pointer;
     padding: var(--size-lg);
-    width: 400px;
-   
-    /* show */
+
     opacity: 0;
     visibility: hidden;
     transition: opacity 0.3s ease-in-out, visibility 0s 0.3s;
-  }
-  
-  .dropdown.show {
+}
+
+.dropdown.show {
     opacity: 1;
     visibility: visible;
     transition: opacity 0.3s ease-in-out, visibility 0s 0s;
   }
   
+.notification-dropdown.show {
+    opacity: 1;
+    visibility: visible;
+    transition: opacity 0.3s ease-in-out, visibility 0s 0s;
+}
 
 
   .profile-info {
@@ -371,3 +417,78 @@ a:hover {
  .slogan {
     color: var(--darker-red);
  }
+
+ 
+
+ /* Notification */
+
+ .notification-msg {
+    display: grid;
+    grid-template-columns: 10% 60% 15% 15%;
+    grid-template-rows: auto;
+    column-gap: var(--size-md);
+    margin-bottom: var(--size-sm);
+    
+   
+  
+    
+ }
+
+ .notification-msg a small {
+    font-family: "Poppins", sans-serif;
+    font-weight: 200;
+    
+ }
+
+ .notification-msg .notification-alert {
+    text-decoration: none;
+ }
+
+ .notification-msg .notification-alert small {
+    font-size: 0.875rem; /* 14px = 0.875rem (assuming that 1rem = 16px) */
+    color: #555;
+    font-weight: normal;
+ }
+
+
+ .no-notification {
+    height: 350px;
+    background: ghostwhite;
+    display: flex;
+    flex-direction: column;
+    text-transform: capitalize;
+    display: none;
+    overflow: hidden;
+ }
+
+ .no-notification img {
+    height: 60px;
+    width: 60px;
+    opacity: 0.4;
+ }
+
+
+ /* The spinner */
+.spinner {
+    /* display: none; */
+    width: 50px;
+    height: 50px;
+    border: 8px solid #f3f3f3;      /* Light grey */
+    border-top: 8px solid #3498db;  /* Blue */
+    border-radius: 50%;
+    animation: spin 1.5s linear infinite;
+
+    /* position */
+    position: fixed;
+    top: 20%;
+    left: 60%;
+    right: 50%;
+    bottom: 50%;
+}
+
+
+/* Keyframes for spin animation */
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
