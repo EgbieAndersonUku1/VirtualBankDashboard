@@ -3,8 +3,8 @@ import { notificationManager } from "./notification.js";
 import { toggleSpinner, showSpinnerFor } from "./utils.js";
 
 // elements
-const dashboardElement       = document.getElementById("virtualbank-dashboard");
-const profileDropdownElement = document.getElementById("profile-dropdown");
+const dashboardElement            = document.getElementById("virtualbank-dashboard");
+const profileDropdownElement      = document.getElementById("profile-dropdown");
 const notificationDropdownWrapper = document.querySelector(".notification-dropdown")
 const spinnerElement              = document.getElementById("spinner");
 
@@ -109,7 +109,6 @@ function handleMarkAsUnreadClick(e) {
     const MARK_AS_UNREAD_CLASS = "mark-as-unread";
 
     if (e.target.classList.contains(MARK_AS_UNREAD_CLASS)){
-        console.log("here")
         notificationManager.markAsUnRead(e.target.dataset.id);
     }
 }
