@@ -31,6 +31,7 @@ function handleEventDelegation(e) {
     handleProfileIconClick(e);
     handleNotificationIconClick(e);
     handleMarkAsRedClick(e);
+    handleMarkAsUnreadClick(e);
     handleDeleteLinkClick(e);
 }
 
@@ -76,8 +77,16 @@ function handleMarkAsRedClick(e) {
     const MARK_AS_READ_CLASS = "mark-as-read";
 
     if (e.target.classList.contains(MARK_AS_READ_CLASS)){
-
         notificationManager.markAsRead(e.target.dataset.id);
+    }
+}
+
+
+function handleMarkAsUnreadClick(e) {
+    const MARK_AS_UNREAD_CLASS = "mark-as-unread";
+
+    if (e.target.classList.contains(MARK_AS_UNREAD_CLASS)){
+        notificationManager.markAsUnRead(e.target.dataset.id);
     }
 }
 
@@ -86,7 +95,7 @@ function handleDeleteLinkClick(e) {
     const DELETE_CLASS = "delete";
 
     if (e.target.classList.contains(DELETE_CLASS)){
-        showSpinnerFor(spinnerElement)
+        showSpinnerFor(spinnerElement);
         notificationManager.deleteNotification(e.target.dataset.id);
     }
 }

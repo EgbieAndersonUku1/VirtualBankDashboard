@@ -9,7 +9,6 @@ const noNotificationDiv           = document.getElementById("no-notification")
 validatePageElements();
 
 
-
 /**
  * Manages user notifications, including storing, retrieving, and rendering notifications.
  * Notifications are stored in local storage and displayed in the UI.
@@ -19,6 +18,7 @@ validatePageElements();
  * - add(notification): Adds a new notification.
  * - getNotifications(unread=true): Retrieves notifications (filtered by unread status).
  * - markAsRead(id): Marks a notification as read.
+ * - markAsUnread(id): Marks a notification as unread
  * - deleteNotification(id): Deletes a notification.
  * - renderNotificationsToUI(): Renders notifications in the UI.
  * - updateNotificationBadgeIcon(count): Updates the notification badge.
@@ -30,16 +30,18 @@ validatePageElements();
  * - _createSingleNotificationDiv(notification): Creates a notification UI element.
  * - _createAnchorTag(className, datasetID): Creates an anchor element.
  * - _createSmallTag(smallTagClassList, textContent, dataset): Creates a small element.
+ * -  _getNotificationIndexOrWarn: Checks for a given notification index based on the id
  */
 export const notificationManager = {
 
     _NOTIFICATION_KEY: null,
     _notifications: null,  // create a cache
+    _NOT_FOUND: -1,
 
      /**
      * Adds a new notification to local storage.
      * @param {string} notification - The notification message to add.
-     * @throws {Error} If the notification key is not set.
+     * @sdthrows {Error} If the notification key is not set.
      */
     add: (notification) => {
 
@@ -113,10 +115,7 @@ export const notificationManager = {
     getNotifications: (unread = true) => {
         if (notificationManager._notifications === null) { 
             try {
-                const notificationsArray = getLocalStorage(notificationManager._NOTIFICATION_KEY) || [];
-                if (!Array.isArray(notificationsArray)) {
-                    throw new Error(`Expected an array but got ${typeof notificationsArray}`);
-                }
+                const notificationsArray           = getLocalStorage(notificationManager._NOTIFICATION_KEY) || [];
                 notificationManager._notifications = notificationsArray;
             } catch (error) {
                 console.error(error.message);
@@ -136,7 +135,6 @@ export const notificationManager = {
         return notificationManager._notifications.filter((notification) => notification.unread === unread);
     },
 
-
     /**
      * Updates the notification badge icon with the count of unread notifications.
      * @param {number} count - The number of unread notifications.
@@ -147,30 +145,48 @@ export const notificationManager = {
             throw new Error(`The count parameter must be a number. Expected integer but got ${typeof count} `);
         }
 
-        notificationElement.textContent = count;
+        notificationElement.textContent    = count;
         notificationElement.dataset.count  = count;
     },
-
 
     /**
      * Marks a notification as read by its ID. (To be implemented)
      * @param {string} id - The notification ID.
      */
     markAsRead: (id) => {
+       return notificationManager._setReadStatus(id, false);
+    },
 
-        const NOT_FOUND      = -1;
-        const notificationId = findByIndex(parseInt(id), notificationManager._notifications);
-        
-        if (notificationId === NOT_FOUND) {
-            console.warn(`Notification with ID ${id} not found.`);
-            return NOT_FOUND;
+    /**
+     * Marks a notification as read by its ID. (To be implemented)
+     * @param {string} id - The notification ID.
+     */
+    markAsUnRead: (id) => {
+        return notificationManager._setReadStatus(id, true);
+    },
+
+    /**
+     * A helper method that changes the status of a notification to either read or unread.
+     * @param {*} id - The notification ID.
+     * @param {*} unReadSatus - A boolean value to set the notification to. A boolean value of `true` means the notification is unread
+     *                          and `false` means the notification is read.
+     * @returns 
+     */
+    _setReadStatus: (id, unReadSatus) => {
+        if (typeof unReadSatus != "boolean") {
+            throw new Error(`Expected a boolean value of either true or false but got unexpected value ${typeof unReadSatus}`);
         }
+
+        const notificationIndex = notificationManager._getNotificationIndexOrWarn(id);
+
+        if (notificationIndex === notificationManager._NOT_FOUND) {
+            return notificationIndex; // -1
+        };
         
-        notificationManager._notifications[notificationId].unread =  false;
+        notificationManager._notifications[notificationIndex].unread = unReadSatus;
         notificationManager._save();
         notificationManager.renderNotificationsToUI();
         return true;
-       
     },
 
     /**
@@ -178,13 +194,12 @@ export const notificationManager = {
      * @param {string} id - The notification ID.
      */
     deleteNotification: (id) => {
-        const NOT_FOUND      = -1;
-        const notificationId = findByIndex(parseInt(id), notificationManager._notifications);
+       
+        const notificationIndex = notificationManager._getNotificationIndexOrWarn(id);
 
-        if (notificationId === NOT_FOUND) {
-            console.warn(`Notification with ID ${id} not found.`);
-            return NOT_FOUND;
-        }
+        if (notificationIndex === notificationManager._NOT_FOUND) {
+            return notificationIndex; // -1
+        };
         
         notificationManager._notifications = notificationManager._notifications.filter((notification) => notification.id != id)
         notificationManager._save();
@@ -202,23 +217,21 @@ export const notificationManager = {
         }
 
         if (notificationManager._notifications.length === 0) {
-            noNotificationDiv.style.display = "block";
+            noNotificationDiv.style.display           = "block";
             notificationDropdownWrapper.style.display = "none"
             return;
-
         }
 
         noNotificationDiv.style.display = "none";
-        const fragment = document.createDocumentFragment();
+        const fragment                  = document.createDocumentFragment();
         
         notificationManager._notifications.forEach(( notification ) => {
             const notificationDiv = notificationManager._createSingleNotificationDiv(notification);
-            fragment.appendChild(notificationDiv)
+            fragment.insertBefore(notificationDiv, fragment.firstChild);
         })
 
         notificationDropdownWrapper.textContent = "";
         notificationDropdownWrapper.appendChild(fragment);
-
 
     },
 
@@ -243,9 +256,10 @@ export const notificationManager = {
 
         // mark as red link
         const notificationMarkAsRedAnchorTag = notificationManager._createAnchorTag(["mark-as-read", "action"], notification.id);
-        const isReadTextContent              = notification.unread === true ? "mark as read": "read";
-        const isReadClass                    = notification.unread === true ? "red" : "green";
-        const notificationMarkAsRedSmallTag  = notificationManager._createSmallTag([isReadClass, "mark-as-read"], isReadTextContent, notification.id);        
+        const isReadTextContent              = notification.unread ? "mark as read": "mark as unread";
+        const isReadClass                    = notification.unread ? "red" : "green";
+        const markAsClass                    = notification.unread ? "mark-as-read" : "mark-as-unread";
+        const notificationMarkAsRedSmallTag  = notificationManager._createSmallTag([isReadClass, markAsClass], isReadTextContent, notification.id);        
 
         // mark as delete link
         const notificationDeleteAnchorTag    = notificationManager._createAnchorTag(["delete", "action"], notification.id);
@@ -264,8 +278,6 @@ export const notificationManager = {
         mainNotificationDiv.appendChild(notificationDeleteAnchorTag);
 
         return mainNotificationDiv;
-        
-
     },
 
     /**
@@ -307,6 +319,24 @@ export const notificationManager = {
         smallTag.classList.add(...smallTagClassList);
         
         return smallTag;
+    },
+
+    /**
+     * Retrieves a notification index based on ID by searching for it in the given notifications list.
+     * If the notification is not found, a warning is logged and NOT_FOUND is returned.
+     *
+     * @param {string|number} id - The ID of the notification index to find.
+     * @returns {number} The index of the notification if found, otherwise NOT_FOUND.
+     */
+      _getNotificationIndexOrWarn: (id) => {
+        const notificationIndex = findByIndex(parseInt(id), notificationManager._notifications);
+        
+        if (notificationIndex === notificationManager._NOT_FOUND) {
+            console.warn(`Notification with ID ${id} not found.`);
+            return notificationManager._NOT_FOUND;
+        }
+
+        return notificationIndex
     },
     
     
