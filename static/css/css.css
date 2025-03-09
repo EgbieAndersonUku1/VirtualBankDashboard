@@ -308,6 +308,7 @@ a:hover {
     display: none;
   }
 
+  
  
   .dropdown {
 
@@ -491,6 +492,38 @@ a:hover {
     left: 60%;
     right: 50%;
     bottom: 50%;
+}
+
+
+
+/* notification buttons */ 
+.mark-all-as-read-btn {
+    background-color: #2D6A4F; /* Dark Green */
+  
+}
+
+.mark-all-as-unread-btn {
+    background-color: #6C9DC6; /* Soft Blue */
+   
+}
+
+.delete-all-notifications-btn {
+    background-color: #B74D57; /* Dark Red */
+    
+}
+
+
+.small-btn {
+    cursor: pointer;
+    color: white;
+    margin-right: var(--size-xs);
+    border: none;
+    padding: var(--size-sm);
+    
+}
+button:hover {
+    opacity: 0.8;
+    
 }
 
 

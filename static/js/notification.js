@@ -1,10 +1,11 @@
-import { setLocalStorage, removeFromLocalStorage, getLocalStorage } from "./db.js"
+import { setLocalStorage, getLocalStorage } from "./db.js"
 import { generateRandomID, checkIfHTMLElement, findByIndex } from "./utils.js"
 
 
-const notificationElement = document.getElementById("notification");
-const notificationDropdownWrapper = document.querySelector(".notification-dropdown .wrapper")
-const noNotificationDiv           = document.getElementById("no-notification")
+const notificationElement         = document.getElementById("notification");
+const notificationDropdownWrapper = document.querySelector(".notification-dropdown .wrapper");
+const noNotificationDiv           = document.getElementById("no-notification");
+const notificationBtns            = document.getElementById("notification-btns");
 
 validatePageElements();
 
@@ -22,6 +23,9 @@ validatePageElements();
  * - deleteNotification(id): Deletes a notification.
  * - renderNotificationsToUI(): Renders notifications in the UI.
  * - updateNotificationBadgeIcon(count): Updates the notification badge.
+ * - markAllAsRead: Marks all notification as read
+ * - markAllAsUnread: Marks all notification as unread
+ * - deleteAllNotifications: Deletes all notifications
  *
  * Private Methods:
  * - _createNotification(notification): Creates a notification object.
@@ -150,12 +154,51 @@ export const notificationManager = {
     },
 
     /**
-     * Marks a notification as read by its ID. (To be implemented)
+     * Marks all notification as read 
+     */
+      markAllAsRead: () => {
+        if (notificationManager._notifications === null) {
+            notificationManager.getNotifications();
+        }
+
+        notificationManager._notifications.forEach((notifcation) => {
+            if (notifcation.unread) {
+                notifcation.unread = false;
+            }
+           
+        })
+        notificationManager._save();
+        notificationManager.renderNotificationsToUI();
+
+     },
+
+    /**
+     * Marks a notification as read by its ID.
      * @param {string} id - The notification ID.
      */
     markAsRead: (id) => {
        return notificationManager._setReadStatus(id, false);
     },
+
+
+    /**
+     * Marks all notification as unread 
+     */
+      markAllAsUnRead: () => {
+        if (notificationManager._notifications === null) {
+            notificationManager.getNotifications();
+        }
+
+        notificationManager._notifications.forEach((notifcation) => {
+            if (!notifcation.unread) {
+                notifcation.unread = true;
+            }
+          
+        })
+        notificationManager._save();
+        notificationManager.renderNotificationsToUI();
+
+     },
 
     /**
      * Marks a notification as read by its ID. (To be implemented)
@@ -190,7 +233,7 @@ export const notificationManager = {
     },
 
     /**
-     * Deletes a notification by its ID. (To be implemented)
+     * Deletes a notification by its ID.
      * @param {string} id - The notification ID.
      */
     deleteNotification: (id) => {
@@ -202,6 +245,17 @@ export const notificationManager = {
         };
         
         notificationManager._notifications = notificationManager._notifications.filter((notification) => notification.id != id)
+        notificationManager._save();
+        notificationManager.renderNotificationsToUI();
+        return true;
+    },
+
+     /**
+     * Deletes all notifications
+     */
+     deleteAllNotifications: () => {
+       
+        notificationManager._notifications = [];
         notificationManager._save();
         notificationManager.renderNotificationsToUI();
         return true;
@@ -219,6 +273,7 @@ export const notificationManager = {
         if (notificationManager._notifications.length === 0) {
             noNotificationDiv.style.display           = "block";
             notificationDropdownWrapper.style.display = "none"
+            notificationBtns.style.display            = "none";
             return;
         }
 
@@ -350,4 +405,5 @@ function validatePageElements() {
     checkIfHTMLElement(notificationElement, "The notification badge");
     checkIfHTMLElement(notificationDropdownWrapper, "The dropdown container");
     checkIfHTMLElement(noNotificationDiv, "The empty notifcation div");
+    checkIfHTMLElement(notificationBtns, "The notification btns")
 }
