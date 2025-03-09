@@ -23,18 +23,19 @@ validatePageElements();
  * - deleteNotification(id): Deletes a notification.
  * - renderNotificationsToUI(): Renders notifications in the UI.
  * - updateNotificationBadgeIcon(count): Updates the notification badge.
- * - markAllAsRead: Marks all notification as read
- * - markAllAsUnread: Marks all notification as unread
- * - deleteAllNotifications: Deletes all notifications
+ * - markAllAsRead(): Marks all notification as read
+ * - markAllAsUnread(): Marks all notification as unread
+ * - deleteAllNotifications(): Deletes all notifications
  *
  * Private Methods:
  * - _createNotification(notification): Creates a notification object.
  * - _save(): Saves notifications to local storage.
- * - _filterNotificationByUnread(unread): Filters notifications by unread status.
+ * - _filterNotificationByReadStatus(unread): Filters notifications by read status default unread status.
  * - _createSingleNotificationDiv(notification): Creates a notification UI element.
  * - _createAnchorTag(className, datasetID): Creates an anchor element.
  * - _createSmallTag(smallTagClassList, textContent, dataset): Creates a small element.
- * -  _getNotificationIndexOrWarn: Checks for a given notification index based on the id
+ * - _getNotificationIndexOrWarn(id): Checks for a given notification index based on the id
+ *  _ensureNotificationsLoaded(): Ensures that the notifications are fully loaded
  */
 export const notificationManager = {
 
@@ -127,15 +128,15 @@ export const notificationManager = {
             }
         }
     
-        return notificationManager._filterNotificationByUnread(unread);
+        return notificationManager._filterNotificationByReadStatus(unread);
     },
     
     /**
-     * Filters notifications by unread status.
+     * Filters notifications by read status.
      * @param {boolean} unread - Whether to return only unread notifications.
      * @returns {Array} Filtered list of notifications.
      */
-    _filterNotificationByUnread: (unread=true) => {
+    _filterNotificationByReadStatus: (unread=true) => {
         return notificationManager._notifications.filter((notification) => notification.unread === unread);
     },
 
@@ -157,9 +158,8 @@ export const notificationManager = {
      * Marks all notification as read 
      */
       markAllAsRead: () => {
-        if (notificationManager._notifications === null) {
-            notificationManager.getNotifications();
-        }
+
+        notificationManager._ensureNotificationsLoaded();
 
         notificationManager._notifications.forEach((notifcation) => {
             if (notifcation.unread) {
@@ -185,9 +185,8 @@ export const notificationManager = {
      * Marks all notification as unread 
      */
       markAllAsUnRead: () => {
-        if (notificationManager._notifications === null) {
-            notificationManager.getNotifications();
-        }
+       
+        notificationManager._ensureNotificationsLoaded();
 
         notificationManager._notifications.forEach((notifcation) => {
             if (!notifcation.unread) {
@@ -266,9 +265,7 @@ export const notificationManager = {
      */
     renderNotificationsToUI: () => {
      
-        if (!notificationManager._notifications) {
-            notificationManager.getNotifications();   
-        }
+        notificationManager._ensureNotificationsLoaded();
 
         if (notificationManager._notifications.length === 0) {
             noNotificationDiv.style.display           = "block";
@@ -394,6 +391,17 @@ export const notificationManager = {
         return notificationIndex
     },
     
+    /**
+     * Ensures that notifications are loaded.
+     * If the notifications are not yet initialized (null),
+     * it triggers the retrieval of notifications.
+     */
+    _ensureNotificationsLoaded: () => {
+        if (notificationManager._notifications === null) {
+            notificationManager.getNotifications();
+        }
+    }
+
     
 }
 

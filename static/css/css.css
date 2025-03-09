@@ -27,6 +27,9 @@
     --size-xlg: 128px;
 
     --box-shadow : rgba(0, 0, 0, 0.16) 0px 10px 36px 0px, rgba(0, 0, 0, 0.06) 0px 0px 0px 1px;
+    --background-primary: linear-gradient(135deg, #6a11cb, #2575fc);
+
+    --font-family-secondary: 'Inter', sans-serif;
 }
 
 
@@ -47,6 +50,11 @@ a:hover {
     text-decoration: underline;
 }
 
+input,
+select {
+    height: var(--size-lg);
+    border: 2px solid lavender;
+}
 
 /* fonts */
 .poppins-regular {
@@ -96,7 +104,19 @@ a:hover {
     color: var(--steel-blue);
 }
 
+
+.flex-direction-column {
+    display: flex;
+    flex-direction: column;
+}
+
+.flex-end {
+    display: flex;
+    justify-content: flex-end;
+}
+
 /* padding */
+
 .padding-xsm {
     padding: var(--size-xs);
 }
@@ -143,6 +163,13 @@ a:hover {
     margin-top: var(--size-lg);
 }
 
+.margin-top-sm {
+    margin-top: var(--size-sm);
+}
+
+.margin-top-md {
+    margin-top: var(--size-md);
+}
 .margin-bottom-lg {
     margin-bottom: var(--size-lg);
 }
@@ -151,6 +178,7 @@ a:hover {
     margin-bottom: var(--size-sm);
 }
 
+/* display */
 .lightbox-display {
     background: ghostwhite;
     padding-top: var(--size-md);
@@ -165,7 +193,42 @@ a:hover {
 
 }
 
+.subtitle {
+    font-weight: 300;
+    opacity: 0.5;
+    text-transform: capitalize;
+}
 
+.two-column-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: auto;
+    column-gap: var(--size-sm);
+}
+
+.triple-column-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: auto;
+    column-gap: var(--size-sm);
+}
+
+/* buttons */
+.button {
+    background: #00eaff; /* Bright cyan */
+    color: #1e1e2f; 
+    padding: var(--size-sm);
+    font-weight: bold;
+    transition: 0.3s;
+    opacity: 0.8;
+    cursor: pointer;
+    
+}
+
+.button:hover {
+    background: #6a11cb; /* Shift to purple */
+    color: white;
+}
 
 /* icons */
 /* nav icons */
@@ -308,7 +371,14 @@ a:hover {
     display: none;
   }
 
+  #notification-bell-icon {
+    animation: fadeIn 0.5s ease-in-out;
+  }
   
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
  
   .dropdown {
 
@@ -524,6 +594,119 @@ a:hover {
 button:hover {
     opacity: 0.8;
     
+}
+
+
+/* Section add account information */
+#dashboard-header {
+    background: var(--white);
+    margin-top: var(--size-sm);
+    border: 2px solid lavender;
+    cursor: pointer;
+}
+
+#dashboard-header .wrapper {
+    padding-left: var(--size-lg);
+    padding-right: var(--size-lg);
+}
+
+
+
+.dashboard-info {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    grid-template-rows: auto;
+    
+}
+
+.dashboard-info p {
+    text-align: center;
+    border: 2px solid lavender;
+    color: white;
+    font-weight: 600;
+    background: var(--background-primary);
+    padding: var(--size-sm);
+    
+}
+
+
+#add-account-info .wrapper {
+    display: grid;
+    grid-template-columns: 25% 75%;
+    column-gap: var(--size-xs);
+    cursor: pointer;
+}
+
+
+#dashboard-header .wrapper,
+#add-account-info  {
+    font-family: var(--font-family-secondary);
+}
+
+#add-account-info h3 {
+    font-weight: 300;
+}
+
+#add-account-info {
+    margin-top: var(--size-sm);
+}
+
+
+.account-information {
+    display: flex;
+    justify-content: space-between;
+}
+
+
+
+/* The profile/form part */
+.profile-img {
+    height: 150px;
+    width: 150px;
+}
+
+.profile {
+    border: 2px solid lavender;
+    background: var(--white);
+    padding: var(--size-md);
+    cursor: pointer;
+}
+
+.profile div p {
+    font-family: var(--font-family-secondary);
+    font-size: 0.95rem;
+    font-weight: 500;
+    text-transform: capitalize;
+}
+
+.profile-form {
+    background: var(--white);
+    padding: var(--size-md);
+    font-family: var(--font-family-secondary);
+    border: 2px solid lavender;
+}
+
+
+.profile-form-img {
+    height: 80px;
+    width: 80px;
+}
+
+.avatar {
+    display: flex;
+    column-gap: var(--size-md);
+    margin-top: var(--size-md);
+}
+
+
+
+
+
+label {
+    font-size: 0.875rem; /* 14px */
+    font-weight: 500;
+    color: #909090; 
+    margin-top: var(--size-xs);
 }
 
 
