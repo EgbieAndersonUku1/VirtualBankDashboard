@@ -30,9 +30,12 @@ function handleEventDelegation(e) {
     console.log(e.target)
     handleProfileIconClick(e);
     handleNotificationIconClick(e);
-    handleMarkAsRedClick(e);
+    handleMarkAsReadClick(e);
     handleMarkAsUnreadClick(e);
     handleDeleteLinkClick(e);
+    handleDeleteAllNotificationsBtnClick(e);
+    handleMarkAllAsReadClick(e);
+    handleMarkAllAsUnReadClick(e);
 }
 
 
@@ -73,7 +76,7 @@ function handleNotificationIconClick(e) {
 }
 
 
-function handleMarkAsRedClick(e) {
+function handleMarkAsReadClick(e) {
     const MARK_AS_READ_CLASS = "mark-as-read";
 
     if (e.target.classList.contains(MARK_AS_READ_CLASS)){
@@ -81,9 +84,29 @@ function handleMarkAsRedClick(e) {
     }
 }
 
+function handleMarkAllAsReadClick(e) {
+    const MARK_AS_READ_CLASS = "mark-all-as-read-btn";
+
+    if (e.target.classList.contains(MARK_AS_READ_CLASS)){
+        showSpinnerFor(spinnerElement);
+        notificationManager.markAllAsRead();
+    }
+}
+
+
+function handleMarkAllAsUnReadClick(e) {
+    const MARK_AS_UNREAD_CLASS = "mark-all-as-unread-btn";
+
+    if (e.target.classList.contains(MARK_AS_UNREAD_CLASS)){
+        showSpinnerFor(spinnerElement);
+        notificationManager.markAllAsUnRead();
+    }
+}
+
+
 
 function handleMarkAsUnreadClick(e) {
-    const MARK_AS_UNREAD_CLASS = "mark-as-unread";
+    const MARK_AS_UNREAD_CLASS = "mark-all-as-unread-btn";
 
     if (e.target.classList.contains(MARK_AS_UNREAD_CLASS)){
         notificationManager.markAsUnRead(e.target.dataset.id);
@@ -99,6 +122,18 @@ function handleDeleteLinkClick(e) {
         notificationManager.deleteNotification(e.target.dataset.id);
     }
 }
+
+
+function handleDeleteAllNotificationsBtnClick(e) {
+    const DELETE_ALL_CLASS = "delete-all-notifications-btn";
+
+    if (e.target.classList.contains(DELETE_ALL_CLASS)){
+        showSpinnerFor(spinnerElement);
+        notificationManager.deleteAllNotifications();
+    }
+}
+
+
 
 /**
  * Hides the dropdown menu when the user scrolls the page.
