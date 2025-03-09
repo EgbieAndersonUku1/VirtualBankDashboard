@@ -16,6 +16,7 @@
     --color-one: #8D6E63 ;
     --steel-blue: #2D3E50;
     --darker-red: #CC0000;
+    --deep-navy-blue: #0A2540;
     --white: #FFFFFF;
 
     --size-xs: 4px;
@@ -335,18 +336,14 @@ a:hover {
     transition: opacity 0.3s ease-in-out, visibility 0s 0.3s;
 }
 
-.dropdown.show {
+.dropdown.show,
+.notification-dropdown.show {
+    border: 2px solid lavender;
     opacity: 1;
     visibility: visible;
     transition: opacity 0.3s ease-in-out, visibility 0s 0s;
   }
   
-.notification-dropdown.show {
-    opacity: 1;
-    visibility: visible;
-    transition: opacity 0.3s ease-in-out, visibility 0s 0s;
-}
-
 
 .notification-dropdown {
     /* positioning */
@@ -464,12 +461,19 @@ a:hover {
     overflow: hidden;
  }
 
+ .no-notification p {
+    opacity: 0.5;
+ }
+
  .no-notification img {
     height: 60px;
     width: 60px;
     opacity: 0.4;
  }
 
+ .notification-id  {
+    color: var(--deep-navy-blue);
+ }
 
  /* The spinner */
 .spinner {
