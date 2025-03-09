@@ -106,9 +106,10 @@ function handleMarkAllAsUnReadClick(e) {
 
 
 function handleMarkAsUnreadClick(e) {
-    const MARK_AS_UNREAD_CLASS = "mark-all-as-unread-btn";
+    const MARK_AS_UNREAD_CLASS = "mark-as-unread";
 
     if (e.target.classList.contains(MARK_AS_UNREAD_CLASS)){
+        console.log("here")
         notificationManager.markAsUnRead(e.target.dataset.id);
     }
 }
