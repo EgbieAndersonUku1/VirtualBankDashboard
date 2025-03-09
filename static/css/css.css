@@ -405,6 +405,7 @@ select {
     opacity: 0;
     visibility: hidden;
     transition: opacity 0.3s ease-in-out, visibility 0s 0.3s;
+    z-index: 100000;
 }
 
 .dropdown.show,
