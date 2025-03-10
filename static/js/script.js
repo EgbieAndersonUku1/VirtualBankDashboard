@@ -1,6 +1,7 @@
 import { checkIfHTMLElement } from "./utils.js";
 import { notificationManager } from "./notification.js";
 import { toggleSpinner, showSpinnerFor } from "./utils.js";
+import { handleMobileUserInputField } from "./profile.js";
 
 // elements
 const dashboardElement            = document.getElementById("virtualbank-dashboard");
@@ -23,11 +24,15 @@ notificationManager.add("This is a test and it will be remove. Refresh the page 
 
 // event listeners
 dashboardElement.addEventListener("click", handleEventDelegation);
+dashboardElement.addEventListener("focus", handleEventDelegation);
+dashboardElement.addEventListener("blur", handleEventDelegation);
+dashboardElement.addEventListener("input", handleEventDelegation);
+
 window.addEventListener('scroll', handleHideDropdownOnScroll);
 
 
 function handleEventDelegation(e) {
-    console.log(e.target)
+
     handleProfileIconClick(e);
     handleNotificationIconClick(e);
     handleMarkAsReadClick(e);
@@ -36,6 +41,7 @@ function handleEventDelegation(e) {
     handleDeleteAllNotificationsBtnClick(e);
     handleMarkAllAsReadClick(e);
     handleMarkAllAsUnReadClick(e);
+    handleMobileUserInputField(e);
 }
 
 
