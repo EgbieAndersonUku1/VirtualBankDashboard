@@ -1,4 +1,6 @@
+import { specialChars } from "./specialChars.js";
 
+  
 export function checkIfHTMLElement(element, elementName = "Unknown") {
     if (!(element instanceof HTMLElement)) {
         console.error(`Could not find the element: '${elementName}'. Ensure the selector is correct.`);
@@ -24,12 +26,16 @@ export function generateRandomID(maxDigit=10000000) {
  * @param {boolean} [show=true] - A boolean indicating whether to show or hide the spinner.
  *                               If `true`, the spinner is shown; if `false`, it is hidden.
  */
-export function toggleSpinner(spinnerElement, show=true) {
+export function toggleSpinner(spinnerElement, show=true, hideScroller=false) {
     if (!checkIfHTMLElement(spinnerElement)) {
         console.error("Missing spinner element");
     }
     spinnerElement.style.display = show ? "block"  : "none";
-    toggleScrolling(show);
+
+    if (hideScroller) {
+        toggleScrolling(show);
+    }
+   
 }
 
 
@@ -69,12 +75,73 @@ export function findByIndex(id, items) {
 }
 
 
-export function sanitizeText(text, onlyNumbers=false) {
-    if (onlyNumbers) {
-        const digitsOnly = text.replace(/\D+/g, "");
-        return digitsOnly;
+/**
+ * Sanitizes the input text based on the specified criteria:
+ * - Optionally removes non-numeric characters.
+ * - Optionally removes non-alphabet characters.
+ * - Optionally ensures that specific special characters are included and valid.
+ * - Removes hyphens from the input text.
+ *
+ * @param {string} text - The input text to be sanitized.
+ * @param {boolean} [onlyNumbers=false] - If true, removes all non-numeric characters.
+ * @param {boolean} [onlyChars=false] - If true, removes all non-alphabetic characters.
+ * @param {Array<string>} [includeChars=[]] - An array of special characters that should be included in the text.
+ * @throws {Error} If `includeChars` is not an array or contains invalid characters that are not in the `specialChars` list.
+ * @returns {string} - The sanitized version of the input text.
+ *
+ * @example
+ * // Only numbers will remain (non-numeric characters removed)
+ * sanitizeText('abc123', true); 
+ * // Output: '123'
+ *
+ * @example
+ * // Only alphabetic characters will remain (non-alphabet characters removed)
+ * sanitizeText('abc123!@#', false, true);
+ * // Output: 'abc'
+ *
+ * @example
+ * // Ensures specific special characters are valid (will remove invalid ones)
+ * sanitizeText('@hello!world', false, false, ['!', '@']);
+ * // Output: '@hello!world' (if both '!' and '@' are in the valid list of special characters)
+ *
+ * @example
+ * // Removes hyphens from the input
+ * sanitizeText('my-name-is', false, false);
+ * // Output: 'mynameis'
+ */
+export function sanitizeText(text, onlyNumbers = false, onlyChars = false, includeChars = []) {
+    if (!Array.isArray(includeChars)) {
+        throw new Error(`Expected an array but got type ${typeof includeChars}`);
     }
-    return text?.split("-").join("");
+
+    const INCLUDE_CHARS_ARRAY_LENGTH = includeChars.length;
+
+    if (!Array.isArray(includeChars)) {
+        throw new Error(`Expected an array but got ${typeof includeChars}`);
+    }
+
+    if (INCLUDE_CHARS_ARRAY_LENGTH > 0) {
+        const invalidChar = includeChars.find(char => !specialChars[char]);
+        if (invalidChar) {
+            throw new Error(`Expected a special character but got ${invalidChar}`);
+        }
+    }
+
+    if (onlyNumbers) {
+        return text.replace(/\D+/g, ""); 
+    }
+
+    if (onlyChars) {
+        if (INCLUDE_CHARS_ARRAY_LENGTH > 0) {
+            return text.replace(/[^A-Za-z]/g, (match) => {
+                return includeChars.includes(match) ? match : '';  // Keep if allowed, otherwise remove
+            });
+        }
+     
+        return text.replace(/[^A-Za-z]/g, '');
+    }
+
+    return text ? text.split("-").join("") : ''; 
 }
 
 
@@ -174,4 +241,14 @@ export function cleanUKMobileNumber(mobileNumber) {
     throw new Error(`UK mobile numbers always start with a "07". Expected a prefix of "07" but got ${digitsOnly.slice(START_INDEX, END_INDEX)}`);
     }
    return digitsOnly;
+}
+
+
+export function toTitle(text) {
+    if (typeof text != "string") {
+        throw new Error(`Expected a string but got text with type ${text} `);
+    }
+
+    const title = `${text.charAt(0).toUpperCase()}${text.slice(1).toLowerCase()}`;
+    return title;
 }

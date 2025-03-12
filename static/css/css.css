@@ -115,6 +115,11 @@ select {
     justify-content: flex-end;
 }
 
+.wrap-text {
+    white-space: normal;
+    overflow-wrap: anywhere;
+}
+
 /* padding */
 
 .padding-xsm {
@@ -137,6 +142,22 @@ select {
     padding: var(--size-lg);
 }
 
+
+.padding-top-sm {
+    padding-top: var(--size-sm);
+}
+
+.padding-bottom-sm {
+    padding-bottom: var(--size-sm);
+}
+
+.padding-top-md {
+    padding-top: var(--size-md);
+}
+
+.padding-bottom-md {
+    padding-bottom: var(--size-md);
+}
 
 /* margin */
 .margin-xsm {
@@ -645,8 +666,16 @@ button:hover {
 }
 
 #add-account-info h3 {
-    font-weight: 300;
+    font-weight: 200;
+    border-bottom: 1px solid rgb(171, 169, 169);
+    margin-top: var(--size-md);
+    opacity: 0.7;
 }
+
+#add-account-info h3:first-child {
+ margin-top: none;   
+}
+
 
 #add-account-info {
     margin-top: var(--size-sm);
@@ -710,6 +739,34 @@ label {
     margin-top: var(--size-xs);
 }
 
+
+.profile-information {
+    color: #0d3b66; 
+    font-weight: 300; 
+    font-size: 1rem; 
+    line-height: 1.1; 
+    opacity: 0.9; 
+    padding: 0.3rem;
+}
+
+#dashboard-title {
+    opacity: 0.8;
+    text-transform: capitalize;
+
+}
+
+
+/* The  profile field */
+#first-name,
+#surname,
+#country {
+    text-transform: capitalize;
+}
+
+
+#email {
+    text-transform: lowercase;
+}
 
 /* Keyframes for spin animation */
 @keyframes spin {

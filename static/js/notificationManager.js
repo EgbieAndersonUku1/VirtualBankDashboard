@@ -269,7 +269,7 @@ export const notificationManager = {
 
         if (notificationManager._notifications.length === 0) {
             noNotificationDiv.style.display           = "block";
-            notificationDropdownWrapper.style.display = "none"
+            notificationDropdownWrapper.style.display = "none";
             notificationBtns.style.display            = "none";
             return;
         }
@@ -280,6 +280,7 @@ export const notificationManager = {
         notificationManager._notifications.forEach(( notification ) => {
             const notificationDiv = notificationManager._createSingleNotificationDiv(notification);
             fragment.insertBefore(notificationDiv, fragment.firstChild);
+            console.log(fragment)
         })
 
         notificationDropdownWrapper.textContent = "";
