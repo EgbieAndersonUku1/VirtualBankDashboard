@@ -1,33 +1,41 @@
-import { checkIfHTMLElement } from "./utils.js";
-import { notificationManager } from "./notification.js";
-import { toggleSpinner, showSpinnerFor } from "./utils.js";
+import { handleMobileUserInputField, 
+         handleUserFirstNameInputField, 
+         handleUserSurnameInputField,
+         handleUserEmailInputField,
+         handleUserLocationInputField,
+         handleUserStateInputField,
+         handleUserPostCodeInputField,
+        } from "./profile.js";
+
+import { handleProfileIconClick, 
+         handleNotificationIconClick, 
+         handleMarkAsReadClick,
+         handleMarkAsUnreadClick,
+         handleMarkAllAsReadClick,
+         handleMarkAllAsUnReadClick,
+         handleDeleteLinkClick,
+         handleDeleteAllNotificationsBtnClick,
+         handleHideDropdownOnScroll,
+
+        } from "./notifications.js";
+
 
 // elements
-const dashboardElement            = document.getElementById("virtualbank-dashboard");
-const profileDropdownElement      = document.getElementById("profile-dropdown");
-const notificationDropdownWrapper = document.querySelector(".notification-dropdown")
-const spinnerElement              = document.getElementById("spinner");
-
-
-const run = {
-    init: () => {
-        validatePageElements();
-    }
-}
-
-run.init();
-
-notificationManager.setKey("notifications");
-notificationManager.add("This is a test and it will be remove. Refresh the page to add more notifications");
+const dashboardElement  = document.getElementById("virtualbank-dashboard");
 
 
 // event listeners
 dashboardElement.addEventListener("click", handleEventDelegation);
+dashboardElement.addEventListener("focus", handleEventDelegation);
+dashboardElement.addEventListener("blur",  handleEventDelegation);
+dashboardElement.addEventListener("input", handleEventDelegation);
+
 window.addEventListener('scroll', handleHideDropdownOnScroll);
 
 
 function handleEventDelegation(e) {
-    console.log(e.target)
+
+   
     handleProfileIconClick(e);
     handleNotificationIconClick(e);
     handleMarkAsReadClick(e);
@@ -36,119 +44,14 @@ function handleEventDelegation(e) {
     handleDeleteAllNotificationsBtnClick(e);
     handleMarkAllAsReadClick(e);
     handleMarkAllAsUnReadClick(e);
-}
-
-
-
-function handleProfileIconClick(e) {
-
-    const PROFILE_ICON_ID = "profile-icon-img";
-
-    if (e.target.id === PROFILE_ICON_ID ) {
-        profileDropdownElement.classList.toggle("show");
-    }
-
-    // Ensure that if the user clicks outside of the dropdown, it disappears
-    if (e.target.id !== PROFILE_ICON_ID && profileDropdownElement.classList.contains("show") ) {
-        profileDropdownElement.classList.remove("show");
-    }
-
-}
-
-
-function handleNotificationIconClick(e) {
-
-    const NOTIFICATION_ICON_ID = "notification";
-    const NOTIFICATION_BELL_ID = "notification-bell-icon";
-    const NOTIFICATION_LINK_ID = "notification-link";
-    const TiME_IN_MS           = 100;
-
-    if (e.target.id === NOTIFICATION_ICON_ID  || e.target.id === NOTIFICATION_BELL_ID || e.target.id === NOTIFICATION_LINK_ID ){
-
-        toggleSpinner(spinnerElement);
-        setTimeout(() => {
-            notificationDropdownWrapper.classList.toggle("show");
-            notificationManager.renderNotificationsToUI();
-            toggleSpinner(spinnerElement, false)
-        }, TiME_IN_MS)
-     
-    }
-}
-
-
-function handleMarkAsReadClick(e) {
-    const MARK_AS_READ_CLASS = "mark-as-read";
-
-    if (e.target.classList.contains(MARK_AS_READ_CLASS)){
-        notificationManager.markAsRead(e.target.dataset.id);
-    }
-}
-
-function handleMarkAllAsReadClick(e) {
-    const MARK_AS_READ_CLASS = "mark-all-as-read-btn";
-
-    if (e.target.classList.contains(MARK_AS_READ_CLASS)){
-        showSpinnerFor(spinnerElement);
-        notificationManager.markAllAsRead();
-    }
-}
-
-
-function handleMarkAllAsUnReadClick(e) {
-    const MARK_AS_UNREAD_CLASS = "mark-all-as-unread-btn";
-
-    if (e.target.classList.contains(MARK_AS_UNREAD_CLASS)){
-        showSpinnerFor(spinnerElement);
-        notificationManager.markAllAsUnRead();
-    }
-}
-
-
-
-function handleMarkAsUnreadClick(e) {
-    const MARK_AS_UNREAD_CLASS = "mark-as-unread";
-
-    if (e.target.classList.contains(MARK_AS_UNREAD_CLASS)){
-        notificationManager.markAsUnRead(e.target.dataset.id);
-    }
-}
-
-
-function handleDeleteLinkClick(e) {
-    const DELETE_CLASS = "delete";
-
-    if (e.target.classList.contains(DELETE_CLASS)){
-        showSpinnerFor(spinnerElement);
-        notificationManager.deleteNotification(e.target.dataset.id);
-    }
-}
-
-
-function handleDeleteAllNotificationsBtnClick(e) {
-    const DELETE_ALL_CLASS = "delete-all-notifications-btn";
-
-    if (e.target.classList.contains(DELETE_ALL_CLASS)){
-        showSpinnerFor(spinnerElement);
-        notificationManager.deleteAllNotifications();
-    }
-}
-
-
-
-/**
- * Hides the dropdown menu when the user scrolls the page.
- */
-function handleHideDropdownOnScroll() {
-    const dropdown = document.querySelectorA('.dropdown.show');
-    
-    if (dropdown) {
-        dropdown.classList.remove('show');
-    }
-
-    if (notificationDropdownWrapper) {
-    
-        notificationDropdownWrapper.remove("show");
-    }
+    handleMobileUserInputField(e);
+    handleUserFirstNameInputField(e);
+    handleUserSurnameInputField(e);
+    handleUserEmailInputField(e);
+    handleUserLocationInputField(e);
+    handleUserStateInputField(e);
+    handleUserPostCodeInputField(e);
+        
 }
 
 
@@ -157,13 +60,3 @@ function handleHideDropdownOnScroll() {
 
 
 
-
-
-
-
-
-function validatePageElements() {
-    checkIfHTMLElement(dashboardElement, "Dashboard element section");
-    checkIfHTMLElement(profileDropdownElement, "Dashboard element section");
-    checkIfHTMLElement(spinnerElement, "spinner element section");
-}

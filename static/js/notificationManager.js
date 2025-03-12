@@ -253,9 +253,11 @@ export const notificationManager = {
      * Deletes all notifications
      */
      deleteAllNotifications: () => {
-       
+
+        const ZERO_NOTIFICATIONS = 0;
         notificationManager._notifications = [];
         notificationManager._save();
+        notificationManager.updateNotificationBadgeIcon(ZERO_NOTIFICATIONS);
         notificationManager.renderNotificationsToUI();
         return true;
     },
@@ -269,7 +271,7 @@ export const notificationManager = {
 
         if (notificationManager._notifications.length === 0) {
             noNotificationDiv.style.display           = "block";
-            notificationDropdownWrapper.style.display = "none"
+            notificationDropdownWrapper.style.display = "none";
             notificationBtns.style.display            = "none";
             return;
         }

@@ -225,7 +225,7 @@
                             <div class="info">
                                 <div class="head flex-direction-column">
                     
-                                    <h1 id="dashboard-title">Welcome, <span aria-live="polite">Name to go here</span></h1>
+                                    <h1 id="dashboard-title" aria-live="polite"></h1>
                                     <p class="subtitle">Account / My Dashboard</p>
                                 </div>
                     
@@ -242,9 +242,15 @@
 
                             <!-- Profile Section -->
                             <div class="profile">
-                                <div class="head center flex-direction-column">
+                                <div class="head center flex-direction-column wrap-text">
                                     <img src="static/images/icons/profile.png" alt="Profile Image" class="profile-img">
-                                    <p>John Smith</p>
+                                    <span id="account-name" class="profile-information padding-top-md"></span>
+                                    <span id="account-surname" class="profile-information padding-top-md"></span>
+                                    <span id="account-email" class="profile-information padding-top-md"></span>
+                                    <span id="account-location" class="profile-information"></span>
+                                    <span id="account-state" class="profile-information"></span>
+                                    <span id="account-postcode" class="profile-information"></span>
+                                    <span id="account-mobile" class="profile-information"></span>
                                     <p class="status green">Active</p>
                                 </div>
 
@@ -301,24 +307,24 @@
                                         <div class="two-column-grid">
                                             <div class="form-group flex-direction-column">
                                                 <label for="first-name">First Name</label>
-                                                <input type="text" id="first-name" name="first_name" required>
+                                                <input type="text" id="first-name" name="first_name" required minlength="3" maxlength="50">
                                             </div>
 
                                             <div class="form-group flex-direction-column">
                                                 <label for="surname">Surname</label>
-                                                <input type="text" id="surname" name="surname" required>
+                                                <input type="text" id="surname" name="surname" required minlength="3" maxlength="50">
                                             </div>
                                         </div>
 
                                         <div class="two-column-grid">
                                             <div class="form-group flex-direction-column">
                                                 <label for="email">Email</label>
-                                                <input type="email" id="email" name="email" required>
+                                                <input type="email" id="email" name="email" required maxlength="50">
                                             </div>
 
                                             <div class="form-group flex-direction-column">
                                                 <label for="mobile">Mobile</label>
-                                                <input type="tel" id="mobile" name="mobile" required>
+                                                <input type="tel" id="mobile" name="mobile" required class="center" maxlength="11" minlength="11">
                                             </div>
                                         </div>
 
@@ -358,7 +364,7 @@
                                         <div class="triple-column-grid">
                                             <div class="form-group flex-direction-column">
                                                 <label for="country">Country</label>
-                                                <input type="text" id="country" name="country" required>
+                                                <input type="text" id="country" name="country" required minlength="4" maxlength="50">
                                             </div>
 
                                             <div class="form-group flex-direction-column">
@@ -368,7 +374,7 @@
 
                                             <div class="form-group flex-direction-column">
                                                 <label for="postcode">Postcode</label>
-                                                <input type="text" id="postcode" name="postcode" required>
+                                                <input type="text" id="postcode" name="postcode" required minlength="5" maxlength="7">
                                             </div>
                                         </div>
 
