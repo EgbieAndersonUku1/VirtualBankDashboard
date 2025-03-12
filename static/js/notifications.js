@@ -1,6 +1,6 @@
 import { checkIfHTMLElement } from "./utils.js";
 import { notificationManager } from "./notificationManager.js";
-import { toggleSpinner, showSpinnerFor } from "./utils.js";
+import { toggleSpinner, showSpinnerFor, toggleScrolling } from "./utils.js";
 
 
 // elements
@@ -145,20 +145,14 @@ export function handleDeleteLinkClick(e) {
 
 
 
-/**
- * Hides the dropdown menu when the user scrolls the page.
- */
+// /**
+//  * Hides the dropdown menu when the user scrolls the page.
+//  */
 export function handleHideDropdownOnScroll() {
-    const dropdown = document.querySelector('.dropdown.show');
-    
-    if (dropdown) {
-        dropdown.classList.remove('show');
-    }
-
-    if (notificationDropdownWrapper) {
-    
-        notificationDropdownWrapper.remove("show");
-    }
+   // Write the logic for this correct logic removes the toggle bar after
+   // user scrolls. This means that the notification bar no longer shows
+   // up when the user clicks on it.
+   
 }
 
 

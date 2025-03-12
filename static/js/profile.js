@@ -6,6 +6,8 @@ const accountSurnameElement  = document.getElementById("account-surname");
 const accountEmailElement    = document.getElementById("account-email"); 
 const accountMobileElement   = document.getElementById("account-mobile"); 
 const accountLocationElement = document.getElementById("account-location");
+const accountStateElement    = document.getElementById("account-state");
+const accountPostcodeElement = document.getElementById("account-postcode")
 const dashboardTitleElement  = document.getElementById("dashboard-title");
 
 validatePageElements();
@@ -85,6 +87,7 @@ export function handleUserEmailInputField(e) {
     try {
         e.target.setCustomValidity("");
         isValidEmail(sanitizedEmail)
+        accountEmailElement.textContent = sanitizedEmail;
     } catch (error) {
         e.target.setCustomValidity(error.message);
         e.target.reportValidity();  
@@ -97,6 +100,17 @@ export function handleUserEmailInputField(e) {
 
 export function handleUserLocationInputField(e) {
     handleInputField({e : e, id: "country", element : accountLocationElement, capitalize : true});
+}
+
+
+export function handleUserStateInputField(e) {
+    handleInputField({e : e, id: "state", element : accountStateElement, capitalize : true});
+}
+
+
+export function handleUserPostCodeInputField(e) {
+    const includeChars   = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '.'];
+    handleInputField({e : e, id: "postcode", element : accountPostcodeElement, capitalize : true,  inclueChars: includeChars});
 }
 
 
@@ -122,10 +136,6 @@ function handleInputField({e, id, element, capitalize=false, onlyChars=true, inc
     if (e.target.id != id ) {
         return;
     }
-
-    // if (e.target.value.startsWith("-")) {
-    //     e.target.value = e.target.value.replace("-", "")
-    // }
 
     let text;
 
@@ -158,6 +168,8 @@ function validatePageElements() {
     checkIfHTMLElement(accountEmailElement, "The account email element");
     checkIfHTMLElement(accountMobileElement, "The account mobile element");
     checkIfHTMLElement(accountLocationElement, "The account location element");
+    checkIfHTMLElement(accountStateElement, "The account state element");
+    checkIfHTMLElement(accountPostcodeElement, "The account postcode element");
     checkIfHTMLElement(dashboardTitleElement, "The dashboard title element");
     
 }

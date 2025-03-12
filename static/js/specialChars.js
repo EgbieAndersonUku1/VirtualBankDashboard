@@ -1,4 +1,4 @@
-// Convert specialChars array into an object for O(1) lookup.
+// Convert specialChars array into an object for O(1) lookup instead of 0(n) lookup.
 export const specialChars = {
     '!': true,
     '"': true,

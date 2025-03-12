@@ -253,9 +253,11 @@ export const notificationManager = {
      * Deletes all notifications
      */
      deleteAllNotifications: () => {
-       
+
+        const ZERO_NOTIFICATIONS = 0;
         notificationManager._notifications = [];
         notificationManager._save();
+        notificationManager.updateNotificationBadgeIcon(ZERO_NOTIFICATIONS);
         notificationManager.renderNotificationsToUI();
         return true;
     },
@@ -280,7 +282,6 @@ export const notificationManager = {
         notificationManager._notifications.forEach(( notification ) => {
             const notificationDiv = notificationManager._createSingleNotificationDiv(notification);
             fragment.insertBefore(notificationDiv, fragment.firstChild);
-            console.log(fragment)
         })
 
         notificationDropdownWrapper.textContent = "";

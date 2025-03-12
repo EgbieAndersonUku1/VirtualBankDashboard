@@ -3,6 +3,8 @@ import { handleMobileUserInputField,
          handleUserSurnameInputField,
          handleUserEmailInputField,
          handleUserLocationInputField,
+         handleUserStateInputField,
+         handleUserPostCodeInputField,
         } from "./profile.js";
 
 import { handleProfileIconClick, 
@@ -47,8 +49,9 @@ function handleEventDelegation(e) {
     handleUserSurnameInputField(e);
     handleUserEmailInputField(e);
     handleUserLocationInputField(e);
-    
-    
+    handleUserStateInputField(e);
+    handleUserPostCodeInputField(e);
+        
 }
 
 
