@@ -48,11 +48,11 @@ export function toggleSpinner(spinnerElement, show=true, hideScroller=false) {
  * @param {HTMLElement} spinnerElement - The spinner element to display.
  * @param {number} [timeToDisplay=500] - The duration (in milliseconds) to display the spinner. Defaults to 500ms.
  */
-export function showSpinnerFor(spinnerElement, timeToDisplay = 500) {
+export function showSpinnerFor(spinnerElement, timeToDisplay = 500, hideToggle=false) {
     toggleSpinner(spinnerElement); 
 
     setTimeout(() => {
-        toggleSpinner(spinnerElement, false);  
+        toggleSpinner(spinnerElement, false, hideToggle);  
     }, timeToDisplay);
 }
 
@@ -252,3 +252,53 @@ export function toTitle(text) {
     const title = `${text.charAt(0).toUpperCase()}${text.slice(1).toLowerCase()}`;
     return title;
 }
+
+
+/**
+ * Compares two non-nested objects to check if they have identical keys and values.
+ *
+ * @param {Object} object1 - The first object to compare.
+ * @param {Object} object2 - The second object to compare.
+ * @returns {Object} - Returns an object with comparison result and changes, if any.
+ * @throws {Error} - Throws an error if either argument is not a valid object.
+ *
+ * @example
+ * const obj1 = { name: "Alice", age: "25", location: "London" };
+ * const obj2 = { name: "Alice", age: "26", location: "Manchester" };
+ * console.log(compareTwoObjects(obj1, obj2));
+ * // Output: { areEqual: false, changes: { age: { previous: "25", current: "26" }, location: { previous: "London", current: "Manchester" } } }
+ */
+export function compareTwoObjects(object1, object2) {
+    if (typeof object1 !== "object" || object1 === null || Array.isArray(object1)) {
+        throw new Error(`The first argument must be a non-null object. Got type ${typeof object1} and ${object1}`);
+    }
+
+    if (typeof object2 !== "object" || object2 === null || Array.isArray(object2)) {
+        throw new Error(`The second argument must be a non-null object. Got type ${typeof object2} and ${object2}`);
+    }
+
+    const keys1 = Object.keys(object1);
+    const keys2 = Object.keys(object2);
+
+    if (keys1.length !== keys2.length) {
+        return { areEqual: false, changes: null };
+    }
+
+    const changes = {};
+
+    for (const key of keys1) {
+        const value1 = object1[key]?.trim?.() || object1[key];
+        const value2 = object2[key]?.trim?.() || object2[key];
+
+        if (value1 !== value2) {
+            changes[key] = { previous: value1, current: value2 };
+        }
+    }
+
+    const areEqual = Object.keys(changes).length === 0;
+    return { areEqual, changes: areEqual ? null : changes };
+}
+
+
+
+
