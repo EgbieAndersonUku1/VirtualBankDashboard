@@ -27,9 +27,14 @@
     --size-xlg: 128px;
 
     --box-shadow : rgba(0, 0, 0, 0.16) 0px 10px 36px 0px, rgba(0, 0, 0, 0.06) 0px 0px 0px 1px;
-    --background-primary: linear-gradient(135deg, #6a11cb, #2575fc);
-
+  
     --font-family-secondary: 'Inter', sans-serif;
+    --background-primary: linear-gradient(135deg, #6a11cb, #2575fc);
+    --background-secondary: linear-gradient(135deg, #43e97b, #38f9d7);
+    --background-tertiary: linear-gradient(135deg, #1f4037, #99f2c8);
+    --background-quaternary: linear-gradient(135deg, #ff758c, #ff7eb3);
+    --background-quinary: linear-gradient(135deg, #8e2de2, #4a00e0);
+    --background-senary: linear-gradient(135deg, #ff6a00, #ee0979)
 }
 
 
@@ -77,6 +82,10 @@ select {
 
 .bold {
     font-weight: bold;
+}
+
+.capitalize {
+    text-transform: capitalize;
 }
 
 .center {
@@ -796,7 +805,108 @@ label {
 }
 
 
+/* my wallet */
 
+#wallet .wrapper {
+    display: grid;
+    grid-template-columns: 70% 30%;
+    grid-template-rows: auto;
+    background: white;
+}
+
+.wallet-card {
+    background: var(--background-primary);
+    padding: var(--size-md);
+    margin-top: var(--size-md);
+    color: white;
+    box-shadow: var(--box-shadow);
+    border-radius: var(--size-sm);
+}
+
+#bank-amount {
+    font-size: var(--size-xl);
+    font-weight: 900;
+}
+
+.amount {
+    font-size: var(--size-lg);
+    font-weight: 700;
+}
+
+#transactions {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: auto;
+    column-gap: var(--size-md);
+}
+
+
+
+.btn-medium {
+    padding: var(--size-md);
+}
+
+.bank-card {
+    margin: var(--size-md);
+    font-family: "Roboto", sans-serif;
+    font-optical-sizing: auto;
+    border: 1px solid black;
+    padding: var(--size-md);
+    font-family: "Montserrat", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 300;
+    border-radius: 8px;
+    box-shadow: var(--box-shadow);
+    color: white;
+    font-weight: bolder;
+    cursor: pointer;
+   
+    
+}
+
+.bank-card:hover {
+    transform: scale(1.04);
+    opacity: 0.8;
+}
+
+
+
+.account-btn {
+    width: 100%;
+    cursor: pointer;
+    background: white;
+    border: 2px solid lavender;
+    margin-right: var(--size-xs);
+    font-weight: bold;
+    color: white;
+    background: var(--background-primary);
+    font-size: var(--size-md);
+}
+
+.account-btn:hover {
+    transform: scale(1.02);
+}
+
+.card-icon {
+    width: 60px;
+    height: 60px;
+}
+
+.visa {
+    background: var(--background-quinary);
+}
+
+.mastercard {
+    background: var(--background-tertiary);
+}
+
+.discover {
+    background: var(--background-senary);
+}
+
+.card-name {
+    text-transform: capitalize;
+}
 
 /* Keyframes for spin animation */
 @keyframes spin {

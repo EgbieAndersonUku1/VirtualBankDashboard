@@ -2,6 +2,7 @@ import { formatUKMobileNumber, sanitizeText, toTitle, checkIfHTMLElement, toggle
 import { parseFormData, populateForm, profileCache } from "./formUtils.js";
 import { isValidEmail } from "./emailValidator.js";
 import { notificationManager } from "./notificationManager.js";
+import { logError } from "./logger.js";
 
 
 const accountNameElement     = document.getElementById("account-name");
@@ -320,7 +321,8 @@ export function handleProfileBtnClick(e) {
 
 function updateProfileSideBar(profile) {
     if (profile === "null" || typeof profile != "object") {
-        console.error(`The profile data cannot be empty and it must be an object. Expected object but got ${typeof profile}`);
+        const error = `The profile data cannot be empty and it must be an object. Expected object but got ${typeof profile}`;
+        logError("updatedProfile", error);
         return;
     }
 
