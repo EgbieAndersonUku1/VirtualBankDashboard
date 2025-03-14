@@ -1,5 +1,8 @@
-import { formatUKMobileNumber, sanitizeText, toTitle, checkIfHTMLElement } from "./utils.js"
+import { formatUKMobileNumber, sanitizeText, toTitle, checkIfHTMLElement, toggleSpinner, showSpinnerFor } from "./utils.js"
+import { parseFormData, populateForm, profileCache } from "./formUtils.js";
 import { isValidEmail } from "./emailValidator.js";
+import { notificationManager } from "./notificationManager.js";
+
 
 const accountNameElement     = document.getElementById("account-name");
 const accountSurnameElement  = document.getElementById("account-surname"); 
@@ -9,8 +12,30 @@ const accountLocationElement = document.getElementById("account-location");
 const accountStateElement    = document.getElementById("account-state");
 const accountPostcodeElement = document.getElementById("account-postcode")
 const dashboardTitleElement  = document.getElementById("dashboard-title");
+const profileFormElement     = document.getElementById("profile-form");
+const profileBtn             = document.getElementById("profileBtn");
+const spinnerElement         = document.getElementById("spinner2");
+const formButtonElement      = document.getElementById("formBtn");
+
 
 validatePageElements();
+
+const PROFILE_KEY = "profile";
+
+notificationManager.setKey("notifications");
+
+profileCache.setStorageKey(PROFILE_KEY);
+
+
+document.addEventListener("DOMContentLoaded", () => {
+   updateProfileSideBar(profileCache.getProfileData()); 
+   notificationManager.renderUnReadMessagesCount();
+   updateProfileButtonText();
+ 
+})
+
+
+profileFormElement.addEventListener("submit",  handleProfileForm);
 
 
 export function handleMobileUserInputField(e) {
@@ -161,6 +186,155 @@ function getFullName(firstName='', surname='') {
 }
 
 
+// The profile form
+function handleProfileForm(e) {
+    e.preventDefault();
+    
+    const TiME_IN_MS = 1000;
+
+    if (profileFormElement.checkValidity()) {
+        const formData = new FormData(profileFormElement);
+
+        const requiredFields = [
+            "firstName", "surname", "email", "mobile", "gender",
+            "maritalStatus", "country", "state", "postcode",
+            "idType", "signature"
+        ]
+
+        try {
+            const profileData = parseFormData(formData, requiredFields);
+
+            const response = profileCache.addProfileData(profileData);
+            
+            if (response === null) {
+                return;
+            }
+
+            if (response.areEqual === undefined ){
+                return;
+            }
+
+
+            if (!response.areEqual) {
+             
+                handleProfileSaveNotification(formButtonElement, response.changes);    
+                toggleSpinner(spinnerElement, true, false);
+
+               
+                updateProfileButtonText();
+
+                setTimeout(() => {
+                    profileFormElement.reset();
+                    toggleSpinner(spinnerElement, false);
+                }, TiME_IN_MS);
+            }
+            
+
+        } catch (error) {
+            console.error(error.message);
+            return;
+        }
+        
+    }
+   
+}
+
+
+function handleProfileSaveNotification(formButtonElement, data) {
+    const actionType = formButtonElement.textContent.trim();
+   
+    if (actionType === "Edit Profile") {
+        const msg = createProfileEditMessage(data);
+       
+        if (!msg) {
+            return;
+        }
+        notificationManager.add(msg);
+
+    } else {
+        notificationManager.add("You have successfully added your profile data to local storage");
+    }
+
+  
+}
+
+
+function createProfileEditMessage(updatedData) {
+
+    if (updatedData === null || typeof updatedData != "object") {
+        return;
+    }
+
+    const messages = Object.entries(updatedData).map(([field, { previous, current }]) => 
+            `Field <${field}> changed from <${previous}> to <${current}>. `
+    );
+
+    return messages.join("\n"); 
+    ;
+
+}
+
+/**
+ * Updates the profile button text based on the presence of profile data in local storage.
+ */
+function updateProfileButtonText() {
+ 
+    const profile = profileCache.getProfileData();
+  
+    if (typeof profile != "object") {
+        throw new Error("Profile data must be an array.");
+    }
+
+    profileBtn.textContent = profile.length === 0 
+        ? "Add profile information" 
+        : "Edit profile information";
+}
+
+
+export function handleProfileBtnClick(e) {
+    const PROFilE_BTN = "profileBtn";
+  
+    if (e.target.id != PROFilE_BTN) {
+        return;
+    }
+
+    const profile = profileCache.getProfileData();
+    if (typeof profile != "object") {
+        console.warn("No profile data found");
+        return;
+    }
+
+    const TiME_IN_MS = 200;
+
+    showSpinnerFor(spinnerElement, TiME_IN_MS);
+    updateProfileSideBar(profile);
+    const isPopulated = populateForm(profileFormElement, profile);
+
+    if (isPopulated) {
+        formButtonElement.textContent = "Edit Profile";
+    }
+   
+
+}
+
+
+function updateProfileSideBar(profile) {
+    if (profile === "null" || typeof profile != "object") {
+        console.error(`The profile data cannot be empty and it must be an object. Expected object but got ${typeof profile}`);
+        return;
+    }
+
+    accountNameElement.textContent      = toTitle(profile.firstName || '') || "Not added";
+    accountSurnameElement.textContent   = toTitle(profile.surname  || '') || "Not added";
+    accountMobileElement.textContent    = profile.mobile || "Not added";
+    accountLocationElement.textContent  = toTitle(profile.country  || '') || "Not added";
+    accountPostcodeElement.textContent  = profile.postcode?.toUpperCase() || "Not added";
+    accountEmailElement.textContent     = profile.email?.toLowerCase()
+    accountStateElement.textContent     = toTitle(profile.state || '') || "Not added";
+
+}
+
+
 
 function validatePageElements() {
     checkIfHTMLElement(accountNameElement, "The account name element");
@@ -171,5 +345,7 @@ function validatePageElements() {
     checkIfHTMLElement(accountStateElement, "The account state element");
     checkIfHTMLElement(accountPostcodeElement, "The account postcode element");
     checkIfHTMLElement(dashboardTitleElement, "The dashboard title element");
+    checkIfHTMLElement(profileFormElement, "profile form element");
+    checkIfHTMLElement(formButtonElement, "form button element");
     
 }

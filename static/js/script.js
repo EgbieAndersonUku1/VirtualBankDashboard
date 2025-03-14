@@ -5,6 +5,7 @@ import { handleMobileUserInputField,
          handleUserLocationInputField,
          handleUserStateInputField,
          handleUserPostCodeInputField,
+         handleProfileBtnClick,
         } from "./profile.js";
 
 import { handleProfileIconClick, 
@@ -30,7 +31,6 @@ dashboardElement.addEventListener("focus", handleEventDelegation);
 dashboardElement.addEventListener("blur",  handleEventDelegation);
 dashboardElement.addEventListener("input", handleEventDelegation);
 
-window.addEventListener('scroll', handleHideDropdownOnScroll);
 
 
 function handleEventDelegation(e) {
@@ -51,6 +51,7 @@ function handleEventDelegation(e) {
     handleUserLocationInputField(e);
     handleUserStateInputField(e);
     handleUserPostCodeInputField(e);
+    handleProfileBtnClick(e);
         
 }
 

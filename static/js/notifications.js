@@ -18,7 +18,6 @@ const run = {
 run.init();
 
 notificationManager.setKey("notifications");
-notificationManager.add("This is a test and it will be remove. Refresh the page to add more notifications");
 
 
 
@@ -45,10 +44,9 @@ export function handleNotificationIconClick(e) {
     const NOTIFICATION_LINK_ID = "notification-link";
     const NOTIFICATION_DIV     = "notification-div";
     const TiME_IN_MS           = 100;
-
-    const id = e.target.id;
+    const id                   = e.target.id;
+    
     const isValid = id === NOTIFICATION_ICON_ID  || id === NOTIFICATION_BELL_ID || id === NOTIFICATION_LINK_ID || id === NOTIFICATION_DIV
-    console.log(e.target.id)
    
     if (isValid){
 
@@ -56,8 +54,11 @@ export function handleNotificationIconClick(e) {
         toggleDivState(e.target, false);
         
         setTimeout(() => {
-            notificationDropdownWrapper.classList.toggle("show");
-            notificationManager.renderNotificationsToUI();
+            const status = notificationDropdownWrapper.classList.toggle("show");
+            if (status) {
+                notificationManager.renderNotificationsToUI();
+            }
+          
             toggleSpinner(spinnerElement, false)
             toggleDivState(e.target, true, false);
         }, TiME_IN_MS)

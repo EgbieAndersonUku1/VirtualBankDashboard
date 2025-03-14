@@ -1,5 +1,6 @@
 import { setLocalStorage, getLocalStorage } from "./db.js"
 import { generateRandomID, checkIfHTMLElement, findByIndex } from "./utils.js"
+import { logError } from "./logger.js";
 
 
 const notificationElement         = document.getElementById("notification");
@@ -26,7 +27,10 @@ validatePageElements();
  * - markAllAsRead(): Marks all notification as read
  * - markAllAsUnread(): Marks all notification as unread
  * - deleteAllNotifications(): Deletes all notifications
- *
+ * - getNumOfUnreadMessage(): Returns the number of unread notifications
+ * - getNumOfReadMessage(): Returns the number of read notifications
+ * - renderUnReadMessagesCount(): Renders the number of unread messages as number in the UI page
+ * 
  * Private Methods:
  * - _createNotification(notification): Creates a notification object.
  * - _save(): Saves notifications to local storage.
@@ -35,13 +39,29 @@ validatePageElements();
  * - _createAnchorTag(className, datasetID): Creates an anchor element.
  * - _createSmallTag(smallTagClassList, textContent, dataset): Creates a small element.
  * - _getNotificationIndexOrWarn(id): Checks for a given notification index based on the id
- *  _ensureNotificationsLoaded(): Ensures that the notifications are fully loaded
+ * - _ensureNotificationsLoaded(): Ensures that the notifications are fully loaded
+ * - _createNotificationsFragment(): Creates a DocumentFragment containing all notifications.
+ * - _isNoNotifications(): Checks if there are no notifications available.
+ * - _handleNoNotifications(): Handles the scenario where there are no notifications to display
+ * -  _toggleNotificationDropdown(show): toggles a notification dropdown div  
+ * - _updateReadCount():  Updates the unread and read message count.
  */
 export const notificationManager = {
 
     _NOTIFICATION_KEY: null,
     _notifications: null,  // create a cache
     _NOT_FOUND: -1,
+    _UNREAD: 0,
+    _READ: 0,
+
+    /**
+     * Sets the notification key used for local storage.
+     * @param {string} [notificationKey="notification"] - The key for storing notifications.
+     */
+     setKey: (notificationKey = "notification") => {  
+        notificationManager._NOTIFICATION_KEY = notificationKey;
+    },
+
 
      /**
      * Adds a new notification to local storage.
@@ -51,7 +71,8 @@ export const notificationManager = {
     add: (notification) => {
 
         if (notificationManager._NOTIFICATION_KEY === null) {
-            throw new Error("The notification key is not set. Please set before carrying on.");
+            const error = "The notification key is not set. Please set before carrying on.";
+            throw new Error(error);
         }
 
         let notificationsArray = getLocalStorage(notificationManager._NOTIFICATION_KEY);
@@ -83,35 +104,6 @@ export const notificationManager = {
         return notificationObject;
     },
 
-    /**
-     * Saves the current notifications to local storage and updates the notification badge.
-     * @returns {boolean} True if saved successfully, otherwise false.
-     */
-    _save:() => {
-        try {
-
-            setLocalStorage(notificationManager._NOTIFICATION_KEY, notificationManager._notifications);
-            
-            const unreadNotifications = notificationManager.getNotifications();
-
-            notificationManager.updateNotificationBadgeIcon(unreadNotifications.length);
-            
-            return true;
-
-        } catch (error) {
-            console.error(error);
-            return false;
-        }
-    },
-
-    /**
-     * Sets the notification key used for local storage.
-     * @param {string} [notificationKey="notification"] - The key for storing notifications.
-     */
-    setKey: (notificationKey = "notification") => {  
-        notificationManager._NOTIFICATION_KEY = notificationKey;
-    },
-
      /**
      * Retrieves notifications from local storage if the cache is null.
      * @param {boolean} [unread=true] - Whether to retrieve only unread notifications.
@@ -123,7 +115,7 @@ export const notificationManager = {
                 const notificationsArray           = getLocalStorage(notificationManager._NOTIFICATION_KEY) || [];
                 notificationManager._notifications = notificationsArray;
             } catch (error) {
-                console.error(error.message);
+                logError("getNotifications", error);
                 return [];
             }
         }
@@ -146,8 +138,10 @@ export const notificationManager = {
      * @throws {Error} If count is not an integer.
      */
     updateNotificationBadgeIcon: (count=0) => {
+
         if (!Number.isInteger(count)) {
-            throw new Error(`The count parameter must be a number. Expected integer but got ${typeof count} `);
+            const error = `The count parameter must be a number. Expected integer but got ${typeof count} `;
+            throw new Error(error);
         }
 
         notificationElement.textContent    = count;
@@ -216,7 +210,8 @@ export const notificationManager = {
      */
     _setReadStatus: (id, unReadSatus) => {
         if (typeof unReadSatus != "boolean") {
-            throw new Error(`Expected a boolean value of either true or false but got unexpected value ${typeof unReadSatus}`);
+            const error = `Expected a boolean value of either true or false but got unexpected value ${typeof unReadSatus}`;
+            throw new Error(error);
         }
 
         const notificationIndex = notificationManager._getNotificationIndexOrWarn(id);
@@ -254,7 +249,7 @@ export const notificationManager = {
      */
      deleteAllNotifications: () => {
 
-        const ZERO_NOTIFICATIONS = 0;
+        const ZERO_NOTIFICATIONS           = 0;
         notificationManager._notifications = [];
         notificationManager._save();
         notificationManager.updateNotificationBadgeIcon(ZERO_NOTIFICATIONS);
@@ -263,30 +258,97 @@ export const notificationManager = {
     },
 
     /**
-     * Renders notifications in the UI.
-     */
+    * Renders the notifications to the UI by either displaying the notifications
+    * or showing a "no notifications" message if there are none.
+    */
     renderNotificationsToUI: () => {
-     
+
         notificationManager._ensureNotificationsLoaded();
 
-        if (notificationManager._notifications.length === 0) {
-            noNotificationDiv.style.display           = "block";
-            notificationDropdownWrapper.style.display = "none";
-            notificationBtns.style.display            = "none";
+        if (notificationManager._isNoNotifications()) {
+            notificationManager._handleNoNotifications();
             return;
         }
+        try {
+            
+            const fragment = notificationManager._createNotificationFragment();
+            notificationManager._displayNotifications(fragment);
+            notificationManager.renderUnReadMessagesCount();
+        } catch (error) {
+            logError("renderNotificationsToUI", error)
+            return;   
+            
+        }
 
-        noNotificationDiv.style.display = "none";
-        const fragment                  = document.createDocumentFragment();
-        
-        notificationManager._notifications.forEach(( notification ) => {
-            const notificationDiv = notificationManager._createSingleNotificationDiv(notification);
-            fragment.insertBefore(notificationDiv, fragment.firstChild);
-        })
+    },
 
-        notificationDropdownWrapper.textContent = "";
-        notificationDropdownWrapper.appendChild(fragment);
+    /**
+     * Creates a DocumentFragment containing all notifications.
+     * @returns {DocumentFragment} - A fragment containing the notification elements.
+     */
+    _createNotificationFragment: () => {
+        const fragment = document.createDocumentFragment();
+        try {
+            notificationManager._notifications.forEach((notification) => {
+                const notificationDiv = notificationManager._createSingleNotificationDiv(notification);
+                fragment.insertBefore(notificationDiv, fragment.firstChild);
+            });
+        } catch (error) {
+            logError("_createNotificationFragment", error)
+        }
+        return fragment;
+    },
 
+    /**
+     * Checks if there are no notifications available.
+     * @returns {boolean} - Returns true if there are no notifications, false otherwise.
+     */
+    _isNoNotifications: () => {
+        return notificationManager._notifications.length === 0;
+    },
+
+    /**
+     * Handles the scenario where there are no notifications to display by 
+     * showing the appropriate UI elements and hiding others.
+     */
+    _handleNoNotifications: () => {
+        notificationManager._toggleNotificationDropdown(false);
+    },
+
+    /**
+     * Displays the notifications by appending them to the notification dropdown wrapper.
+     * @param {DocumentFragment} fragment - The fragment containing the notifications to display.
+     */
+    _displayNotifications: (fragment) => {
+
+        try {
+            notificationManager._toggleNotificationDropdown(true);
+            notificationDropdownWrapper.textContent = "";
+    
+            if (!(fragment instanceof DocumentFragment)) {
+                const error = "Error: 'fragment' is not a valid DocumentFragment.";
+                logError("_displayNotifications", error);
+                return;
+            }
+    
+            notificationDropdownWrapper.appendChild(fragment);
+        } catch (error) {
+            const errorMsg = `An error occurred trying to display the notifications: ${error}`;
+            logError("_displayNotificatons", errorMsg);
+        }
+      
+    },
+
+    /**
+     * Toggles between showing a notification dropdown or not. If value of `show` is
+     * true, it displays the dropdown and if false hides the dropdown.
+     * @param {*} show A bool value that determines whether the notification dropdown
+     * is shown.
+     */
+    _toggleNotificationDropdown(show) {
+        noNotificationDiv.style.display           = show ? "none" : "block";
+        notificationDropdownWrapper.style.display = show ? "block" : "none";
+        notificationBtns.style.display            = show ? "block" : "none";
     },
 
     /**
@@ -363,7 +425,9 @@ export const notificationManager = {
     _createSmallTag: (smallTagClassList=[], textContent='', dataset='') => {
         
         if (!Array.isArray(smallTagClassList)) {
-            throw new Error(`Expected a list of class names but got type ${typeof smallTagClassList}, ${smallTagClassList}`);
+            const error = `Expected a list of class names but got type ${typeof smallTagClassList}, ${smallTagClassList}`;
+            logError("_createSmallTag", error)
+            throw new Error(error);
             
         }
        
@@ -386,7 +450,7 @@ export const notificationManager = {
         const notificationIndex = findByIndex(parseInt(id), notificationManager._notifications);
         
         if (notificationIndex === notificationManager._NOT_FOUND) {
-            console.warn(`Notification with ID ${id} not found.`);
+            console.warn(`Notification with ID ${id} not found in "_getNotificationIndexOrWarn".`);
             return notificationManager._NOT_FOUND;
         }
 
@@ -402,7 +466,86 @@ export const notificationManager = {
         if (notificationManager._notifications === null) {
             notificationManager.getNotifications();
         }
-    }
+    },
+
+    /**
+     * Returns the number of unread messages as an integer.
+     * 
+     * @returns The number of unread messages
+     */
+    getNumOfUnreadMessage: () => {
+
+       if (notificationManager._UNREAD === 0) {
+        notificationManager._updateReadCount();
+       }
+       return notificationManager._UNREAD;
+    },
+
+    /**
+     * Returns the number of read messages as integer.
+     * 
+     * @returns The number of read messages
+     */
+    getNumOfReadMessage: () => {
+        if (notificationManager._READ === 0) {
+            notificationManager._updateReadCount();
+        }
+      
+        return notificationManager._READ;
+     },
+
+
+     /**
+      * Renders the number of unread messages as number in the UI page
+      */
+     renderUnReadMessagesCount: () => {
+        if (notificationManager._UNREAD === 0) {
+            notificationManager._updateReadCount();
+        }
+      
+        notificationManager.updateNotificationBadgeIcon(notificationManager.getNumOfUnreadMessage());
+     },
+
+     /**
+      * Updates the unread and read message count.
+      */
+    _updateReadCount: () => {
+        notificationManager._ensureNotificationsLoaded();
+
+        let unRead = 0;
+        let read   = 0;
+
+        notificationManager._notifications.forEach((notifcation) => {
+            if (notifcation.unread) {
+                unRead += 1;
+            } else {
+                read += 1;
+            }
+        })
+        notificationManager._UNREAD = unRead;
+        notificationManager._READ   = read;
+
+    },
+
+     /**
+     * Saves the current notifications to local storage and updates the notification badge.
+     * @returns {boolean} True if saved successfully, otherwise false.
+     */
+     _save:() => {
+        try {
+
+            setLocalStorage(notificationManager._NOTIFICATION_KEY, notificationManager._notifications);
+            notificationManager._updateReadCount();
+
+            const unReadNotificationCount = notificationManager.getNumOfUnreadMessage()
+            notificationManager.updateNotificationBadgeIcon(unReadNotificationCount);
+            return true;
+
+        } catch (error) {
+            logError("_save", "An error occured trying to save the notifications: " + error.message);
+            return false;
+        }
+    },
 
     
 }
