@@ -87,6 +87,10 @@
                             <a href="#add-account-info">Add account info</a>
                         </div>
 
+                        <div class="sidebar-links lightbox-display">
+                            <img src="" alt="" srcset="">
+                            <a href="#add-account-info">My Wallet</a>
+                        </div>
                     </div>
 
 
@@ -139,7 +143,7 @@
                                             <div class="wrapper">
 
 
-                                                    <!-- Dynamic generated -->
+                                                <!-- Dynamic generated -->
 
 
                                             </div>
@@ -222,20 +226,20 @@
                     <!-- account information -->
                     <section id="dashboard-header" aria-labelledby="dashboard-title">
                         <div class="wrapper">
-                    
+
                             <div class="info">
                                 <div class="head flex-direction-column">
-                    
+
                                     <h1 id="dashboard-title" aria-live="polite"></h1>
                                     <p class="subtitle">Account / My Dashboard</p>
                                 </div>
-                    
-    
+
+
                             </div>
-                    
+
                         </div>
                     </section>
-                    
+
 
                     <!-- Add account information -->
                     <section id="add-account-info">
@@ -307,12 +311,14 @@
                                         <div class="two-column-grid">
                                             <div class="form-group flex-direction-column">
                                                 <label for="first-name">First Name</label>
-                                                <input type="text" id="first-name" name="firstName" required minlength="3" maxlength="50">
+                                                <input type="text" id="first-name" name="firstName" required
+                                                    minlength="3" maxlength="50">
                                             </div>
 
                                             <div class="form-group flex-direction-column">
                                                 <label for="surname">Surname</label>
-                                                <input type="text" id="surname" name="surname" required minlength="3" maxlength="50">
+                                                <input type="text" id="surname" name="surname" required minlength="3"
+                                                    maxlength="50">
                                             </div>
                                         </div>
 
@@ -324,7 +330,8 @@
 
                                             <div class="form-group flex-direction-column">
                                                 <label for="mobile">Mobile</label>
-                                                <input type="tel" id="mobile" name="mobile" required class="center" maxlength="11" minlength="11">
+                                                <input type="tel" id="mobile" name="mobile" required class="center"
+                                                    maxlength="11" minlength="11">
                                             </div>
                                         </div>
 
@@ -352,7 +359,8 @@
                                                     <option value="in_relationship">In a relationship</option>
                                                     <option value="engaged">Engaged</option>
                                                     <option value="civil_partnership">In a civil partnership</option>
-                                                    <option value="domestic_partnership">In a domestic partnership</option>
+                                                    <option value="domestic_partnership">In a domestic partnership
+                                                    </option>
                                                     <option value="complicated">It's complicated</option>
                                                     <option value="prefer_not_to_say">Prefer not to say</option>
                                                 </select>
@@ -364,7 +372,8 @@
                                         <div class="triple-column-grid">
                                             <div class="form-group flex-direction-column">
                                                 <label for="country">Country</label>
-                                                <input type="text" id="country" name="country" required minlength="4" maxlength="50">
+                                                <input type="text" id="country" name="country" required minlength="4"
+                                                    maxlength="50">
                                             </div>
 
                                             <div class="form-group flex-direction-column">
@@ -374,7 +383,8 @@
 
                                             <div class="form-group flex-direction-column">
                                                 <label for="postcode">Postcode</label>
-                                                <input type="text" id="postcode" name="postcode" required minlength="5" maxlength="7">
+                                                <input type="text" id="postcode" name="postcode" required minlength="5"
+                                                    maxlength="7">
                                             </div>
                                         </div>
 
@@ -404,21 +414,161 @@
                                         <div class="flex-end margin-top-md">
                                             <button type="submit" class="button" id="formBtn">Save Changes</button>
                                         </div>
-                                       
+
                                     </form>
                                 </div>
                             </div>
                         </div>
                     </section>
 
-                </div>
-
-            </div>
 
 
+                    <section id="dashboard-header" aria-labelledby="dashboard-title">
+                        <div class="wrapper">
 
-        </section>
+                            <div class="info">
+                                <div class="head flex-direction-column">
 
+                                    <h1 id="dashboard-title" aria-live="polite"></h1>
+                                    <p class="subtitle">Account / Wallet</p>
+                                </div>
+
+
+                            </div>
+
+                        </div>
+                    </section>
+
+                    <!-- my wallet  -->
+                    <section id="wallet" aria-labelledby="wallet-heading" role="region" class="margin-top-md">
+
+                        <div class="wrapper">
+
+                            <div class="main-body wallet-ui">
+
+                                <div class="wallet-card" role="region" aria-labelledby="wallet-heading">
+                                    <div class="head">
+                                        <p>Hi, <span aria-label="User's name">John Smith</span></p>
+                                    </div>
+
+                                    <hr>
+                                    <div class="body">
+                                        <div class="account-balance">
+                                            <p>Account Balance</p>
+                                            <span id="bank-amount" aria-live="polite">£15,000,000</span>
+                                        </div>
+
+                                        <div id="transactions">
+
+                                            <div class="transfer">
+                                                <p>Last transfer</p>
+                                                <span id="last-transfer" class="amount" aria-live="polite">£500</span>
+                                            </div>
+
+                                            <div class="received">
+                                                <p>Last received</p>
+                                                <span id="last-received" class="amount" aria-live="polite">£500</span>
+                                            </div>
+
+                                            <div class="received">
+                                                <p>Number of cards</p>
+                                                <span id="number-of-cards" class="amount" aria-live="polite">3</span>
+                                            </div>
+
+                                            <div class="received">
+                                                <p>Total amount in cards</p>
+                                                <span id="total-amount-in-cards" class="amount"
+                                                    aria-live="polite">£5,000</span>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <hr>
+                                    <div class="footer center">
+                                        <button class="btn-medium account-btn" aria-label="Add Funds">Add Funds</button>
+                                        <button class="btn-medium account-btn" aria-label="Add New Card">Add New
+                                            Card</button>
+                                        <button class="btn-medium account-btn" aria-label="Transfer Funds">Transfer
+                                            Funds</button>
+                                        <button class="btn-medium account-btn" aria-label="Remove Card">Remove card</button>
+                                    </div>
+                                </div>
+
+                                <div id="my-transactions" aria-live="polite">
+                                </div>
+                            </div>
+
+                            <div class="sides cards" role="region" aria-labelledby="linked-cards-heading">
+                                <h3 class="center capitalize" id="linked-cards-heading">Linked Account Cards</h3>
+
+                                <div class="cards">
+                                    <!-- Visa Card -->
+                                    <div class="card bank-card visa" aria-label="Visa Card">
+                                        <div class="head flex-space-between">
+                                            <div class="card-amount flex-direction-column">
+                                                <span>EUSBC</span>
+                                                <span class="card-amount">£1,000.00</span>
+                                            </div>
+                                            <img src="static/images/icons/visa.svg" alt="Visa card logo"
+                                                class="card-icon">
+                                        </div>
+                                        <div class="body">
+                                            <img src="static/images/icons/sim-card-chip.svg" alt="Sim card chip"
+                                                class="card-icon">
+                                            <span class="card-account-number">1234 5678 9101 1112</span>
+                                        </div>
+                                        <div class="footer flex-space-between padding-top-md">
+                                            <span class="card-name">Lois Lane</span>
+                                            <span class="card-expiry">09/2027</span>
+                                        </div>
+                                    </div>
+
+                                    <!-- Discover Card -->
+                                    <div class="card bank-card discover" aria-label="Discover Card">
+                                        <div class="head flex-space-between">
+                                            <div class="card-amount flex-direction-column">
+                                                <span>EUSBC</span>
+                                                <span class="card-amount">£3,000.00</span>
+                                            </div>
+                                            <img src="static/images/icons/discover.svg" alt="Discover card logo"
+                                                class="card-icon">
+                                        </div>
+                                        <div class="body">
+                                            <img src="static/images/icons/sim-card-chip.svg" alt="Sim card chip"
+                                                class="card-icon">
+                                            <span class="card-account-number">1234 5678 9101 1112</span>
+                                        </div>
+                                        <div class="footer flex-space-between padding-top-md">
+                                            <span class="card-name">Clark Kent</span>
+                                            <span class="card-expiry">09/2027</span>
+                                        </div>
+                                    </div>
+
+                                    <!-- Mastercard -->
+                                    <div class="card bank-card mastercard" aria-label="Mastercard">
+                                        <div class="head flex-space-between">
+                                            <div class="card-amount flex-direction-column">
+                                                <span>EUSBC</span>
+                                                <span class="card-amount">£1,000.00</span>
+                                            </div>
+                                            <img src="static/images/icons/mastercard.svg" alt="Mastercard logo"
+                                                class="card-icon">
+                                        </div>
+                                        <div class="body">
+                                            <img src="static/images/icons/sim-card-chip.svg" alt="Sim card chip"
+                                                class="card-icon">
+                                            <span class="card-account-number">1234 5678 9101 1112</span>
+                                        </div>
+                                        <div class="footer flex-space-between padding-top-md">
+                                            <span class="card-name">Egbie U</span>
+                                            <span class="card-expiry">09/2027</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </section>
 
 
     </main>
