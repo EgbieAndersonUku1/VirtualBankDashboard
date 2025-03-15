@@ -225,7 +225,7 @@
 
                     <!-- account information -->
                     <section id="dashboard-header" aria-labelledby="dashboard-title">
-                        <div class="wrapper">
+                        <div class="wrapper padding-bottom-md padding-top-md">
 
                             <div class="info">
                                 <div class="head flex-direction-column">
@@ -249,9 +249,9 @@
                             <div class="profile">
                                 <div class="head center flex-direction-column wrap-text">
                                     <img src="static/images/icons/profile.png" alt="Profile Image" class="profile-img">
-                                    <span id="account-name" class="profile-information padding-top-md"></span>
-                                    <span id="account-surname" class="profile-information padding-top-md"></span>
-                                    <span id="account-email" class="profile-information padding-top-md"></span>
+                                    <span id="account-name" class="profile-information"></span>
+                                    <span id="account-surname" class="profile-information"></span>
+                                    <span id="account-email" class="profile-information"></span>
                                     <span id="account-location" class="profile-information"></span>
                                     <span id="account-state" class="profile-information"></span>
                                     <span id="account-postcode" class="profile-information"></span>
@@ -424,7 +424,7 @@
 
 
                     <section id="dashboard-header" aria-labelledby="dashboard-title">
-                        <div class="wrapper">
+                        <div class="wrapper padding-bottom-md padding-top-md">
 
                             <div class="info">
                                 <div class="head flex-direction-column">
@@ -453,7 +453,7 @@
                                     </div>
 
                                     <hr>
-                                    <div class="body">
+                                    <div class="body padding-bottom-md padding-top-md">
                                         <div class="account-balance">
                                             <p>Account Balance</p>
                                             <span id="bank-amount" aria-live="polite">£15,000,000</span>
@@ -477,7 +477,7 @@
                                             </div>
 
                                             <div class="received">
-                                                <p>Total amount in cards</p>
+                                                <p>Cards amount</p>
                                                 <span id="total-amount-in-cards" class="amount"
                                                     aria-live="polite">£5,000</span>
                                             </div>
@@ -496,8 +496,8 @@
                                 </div>
 
                                 <div id="my-transactions" aria-live="polite">
-                                    <h3 class="capitalize">My transactions history</h3>
-                                    <p class="margin-bottom-md">A maximum of the ten most recent transactions are displayed at any given time.</p>
+                                    <h3 class="capitalize padding-top-md padding-bottom-sm">My transactions history</h3>
+                                    <p class="padding-bottom-md red">A maximum of the ten most recent transactions are displayed at any given time.</p>
 
                                     <div class="transaction-table padding-top-md">
                                         <table id="transaction-history-table">
@@ -610,11 +610,12 @@
                                         <div class="body">
                                             <img src="static/images/icons/sim-card-chip.svg" alt="Sim card chip"
                                                 class="card-icon">
+                                            <span class="card-type">Debit</span>
                                             <span class="card-account-number highlight-number">1234-5678-9101-1112</span>
                                         </div>
                                         <div class="footer flex-space-between padding-top-md">
                                             <span class="card-name">Lois Lane</span>
-                                            <span class="card-expiry">09/2027</span>
+                                            <span class="card-expiry capitalize"><span class="date">expiry date </span>09/2027</span>
                                         </div>
                                     </div>
 
@@ -631,11 +632,12 @@
                                         <div class="body">
                                             <img src="static/images/icons/sim-card-chip.svg" alt="Sim card chip"
                                                 class="card-icon">
+                                            <span class="card-type">Credit</span>
                                             <span class="card-account-number highlight-number">1234-5678-9101-1112</span>
                                         </div>
                                         <div class="footer flex-space-between padding-top-md">
                                             <span class="card-name">Clark Kent</span>
-                                            <span class="card-expiry">09/2027</span>
+                                            <span class="card-expiry capitalize"><span class="date">expiry date </span>09/2027</span>
                                         </div>
                                     </div>
 
@@ -652,11 +654,13 @@
                                         <div class="body">
                                             <img src="static/images/icons/sim-card-chip.svg" alt="Sim card chip"
                                                 class="card-icon">
+                                            
+                                                <span class="card-type">Debit</span>
                                             <span class="card-account-number highlight-number">1234-5678-9101-1112</span>
                                         </div>
                                         <div class="footer flex-space-between padding-top-md">
                                             <span class="card-name">Egbie U</span>
-                                            <span class="card-expiry">09/2027</span>
+                                            <span class="card-expiry capitalize"><span class="date">expiry date </span>09/2027</span>
                                         </div>
                                     </div>
                                 </div>

@@ -1,13 +1,21 @@
-<>
+
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
 
 
-* {
+*,
+*::before,
+*::after {
     box-sizing: border-box;
-    padding: 0;
+}
+
+/* Reset margin and padding for common elements */
+body, h1, h2, h3, h4, p, ul, ol, li, div, section {
     margin: 0;
+    padding: 0;
+}
+
+html {
     scroll-behavior: smooth;
-    
 }
 
 
@@ -34,13 +42,15 @@
     --background-tertiary: linear-gradient(135deg, #1f4037, #99f2c8);
     --background-quaternary: linear-gradient(135deg, #ff758c, #ff7eb3);
     --background-quinary: linear-gradient(135deg, #8e2de2, #4a00e0);
-    --background-senary: linear-gradient(135deg, #ff6a00, #ee0979)
+    --background-senary: linear-gradient(135deg, #ff6a00, #ee0979);
+
+    --font-roboto: 'Roboto', Arial, sans-serif;
 }
 
 
 body {
-    margin: 0;
-    padding: 0;
+
+    font-family: "Poppins", sans-serif;
   }
 
   
@@ -380,7 +390,7 @@ select {
     /* position elements */
     position: absolute;
     top: -10px;
-    right: -14px;
+    right: -8px;
 
     background-color: red;
     color: white;
@@ -694,6 +704,7 @@ button:hover {
 .account-information {
     display: flex;
     justify-content: space-between;
+    margin-bottom: var(--size-md);
 }
 
 
@@ -752,10 +763,9 @@ label {
 .profile-information {
     color: #0d3b66; 
     font-weight: 300; 
-    font-size: 1rem; 
-    line-height: 1.1; 
-    opacity: 0.9; 
-    padding: 0.3rem;
+    font-size: 0.95rem; 
+    line-height: 1.5; 
+    opacity: 0.7; 
 }
 
 #dashboard-title {
@@ -866,12 +876,10 @@ button {
 
 .bank-card {
     margin: var(--size-md);
-    font-family: "Roboto", sans-serif;
-    font-optical-sizing: auto;
-    border: 1px solid black;
+    border: 2px solid #A9A9A9;
     padding: var(--size-md);
     font-family: "Montserrat", sans-serif;
-    font-optical-sizing: auto;
+    
     font-weight: 300;
     border-radius: 8px;
     box-shadow: var(--box-shadow);
@@ -918,6 +926,8 @@ button {
 .card-account-number {
     display: flex;
     justify-content: flex-end;
+    letter-spacing: var(--size-xs);
+    color: #B0B0B0; /* Subtle silver text */
 }
 
 .visa {
@@ -947,10 +957,11 @@ tr {
 
 table {
     width: 100%;
-    font-family: 'Roboto', Arial, sans-serif;
+    font-family: var(--font-roboto);
     line-height: 1.1;
     border-collapse: collapse;
     cursor: pointer;
+    font-weight: 300;
 }
 
 th {
@@ -978,6 +989,16 @@ tr:hover {
 
 .highlight-number {
     box-shadow: var(--box-shadow);
+}
+
+.card-type {
+    display: flex;
+    justify-content: flex-end;
+    font-size: 0.8rem;
+}
+
+.date {
+    font-size: 0.8rem;
 }
 
 /* Keyframes for spin animation */
