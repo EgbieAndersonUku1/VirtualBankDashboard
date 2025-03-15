@@ -1,11 +1,89 @@
+// For testing purposes - will be removed.
+// Node.js doesn't support `localStorage` in the backend,
+// so I recreated an `inMemoryStorage` to mimic `localStorage` and all related functions,
+// such as `setLocalStorage` and `getLocalStorage` and brought in functions that use it generateRandomID, excludeKey.
+// These functions now interact with `inMemoryStorage` instead.
+// This file will be deleted once I have tested the other classes: `BankAccount`, `Card`, and the controller `Wallet`.
 
-import { excludeKey } from "./utils.js";
-import { generateRandomID } from "./utils.js";
+
+
+const inMemoryStorage = {}
 
 CARD_STORAGE_KEY = "cards";
 
 
-export class Card {
+function generateRandomID(maxDigit=10000000) {
+    if (maxDigit <= 0) {
+        throw Error(`The max digit cannot be less or equal to 0. Expected a number higher than 0 but got ${maxDigit}`)
+    }
+    return Math.ceil(Math.random() * maxDigit);
+}
+
+
+function setLocalStorage(key, value) {
+    try {
+        inMemoryStorage[key] = value;
+    } catch (error) {
+        console.error('LocalStorage set error:', error);
+    }
+}
+
+
+
+function getLocalStorage(key) {
+    try {
+        const data = inMemoryStorage[key];
+        if (data?.length === 0) {
+            return []
+        }
+        return data
+     
+    } catch (error) {
+        console.error('LocalStorage get error:', error);
+        return [];
+    }
+}
+
+function excludeKey(obj, key) {
+  
+    if (typeof obj !== 'object' || obj === null) {
+        throw new TypeError('Expected an object or array');
+    }
+
+    // Handle an array
+    if (Array.isArray(obj)) {
+        if (typeof key !== 'number' || key < 0 || key >= obj.length) {
+            throw new RangeError('Invalid array index');
+        }
+        return [...obj.slice(0, key), ...obj.slice(key + 1)];
+    }
+
+    const { [key]: _, ...rest } = obj;
+    return rest;
+}
+
+function generateRandomID(maxDigit=10000000) {
+    if (maxDigit <= 0) {
+        throw Error(`The max digit cannot be less or equal to 0. Expected a number higher than 0 but got ${maxDigit}`)
+    }
+    return Math.ceil(Math.random() * maxDigit);
+}
+
+
+/**
+ * Logs errors to the console with a consistent format.
+ * @param {string} functionName - The name of the function where the error occurred.
+ * @param {Error} error - The error object to log.
+ */
+function logError(functionName, error)  {
+    const timestamp = new Date().toISOString();
+    console.error(`[${timestamp}] Error in ${functionName}:`, error);
+}
+
+
+
+
+class Card {
     /**
      * Creates an instance of a Card.
      * @param {string} cardHolderName - The name of the card holder.
@@ -45,7 +123,11 @@ export class Card {
 
     static _doesCardExists(cardNumber) {
         const storage = getLocalStorage(CARD_STORAGE_KEY);
-        return storage[CARD_STORAGE_KEY].hasOwnProperty(cardNumber);
+
+        if (typeof storage !== "object") {
+            return false;
+        }
+        return storage[CARD_STORAGE_KEY]?.hasOwnProperty(cardNumber);
     }
 
     static deleteCard(cardNumber) {
@@ -62,7 +144,7 @@ export class Card {
 
     }
 
-
+    
     /**
      * Retrieves a card by its card number.
      * @param {string} cardNumber - The card number to search for.
@@ -72,7 +154,7 @@ export class Card {
         const cardDetails = getLocalStorage(CARD_STORAGE_KEY);
 
         if (Array.isArray(cardDetails) || typeof cardDetails !== "object") {
-            logError("getByCardNumber", `Expected an object but got type ${typeof cardDetails}`);
+            logError("getByCardNumber", `Expected an object but got type ${cardDetails}`);
             return null;
         }
 
@@ -101,8 +183,12 @@ export class Card {
      * This also saves the updated card state to local storage.
      */
     freezeCard() {
-        this._isCardBlocked = true;  
-        this.save();  
+
+        if (!this._isCardBlocked) {
+            this._isCardBlocked = true;  
+            this.save();  
+        }
+      
     }
 
     /**
@@ -110,8 +196,11 @@ export class Card {
      * This also saves the updated card state to local storage.
      */
     unfreezeCard() {
-        this._isCardBlocked = false;  
-        this.save();  
+        if (this._isCardBlocked) {
+            this._isCardBlocked = false;  
+            this.save(); 
+        }
+        
     }
 
     /**
@@ -152,6 +241,7 @@ export class Card {
 
         try {
             let storage = getLocalStorage(CARD_STORAGE_KEY);
+            console.log(storage);
 
             if (!storage || typeof storage !== 'object') {
                 storage = { [CARD_STORAGE_KEY]: {} };
@@ -190,22 +280,39 @@ export class Card {
 }
 
 
-
-// Testing purpose remove after words
+// Testing purpose - Remove afterward
 
 // Creating a new card
+console.log("Creating a new card for Alice Smith...");
 const newCard = Card.createCard("Alice Smith", "1234-5678-9876-5432", 12, 2028);
 
 // Updating the card amount
 newCard.amount = 500;  
-newCard.save()
+const isSaved = newCard.save();
+console.log(isSaved ? "Card successfully saved." : "Failed to save the card.");
+console.log(newCard.amount ? "Card has been credited with 500": "Failed to credit card")
+console.log("-----------------------------------------------------");
 
 // Freezing the card
+console.log("Checking if the card is blocked...");
 newCard.freezeCard();
+const blockedCard = Card.getByCardNumber("1234-5678-9876-5432");
+console.log(`Card block status (expected: true): ${blockedCard._isCardBlocked}`);
+console.log("-----------------------------------------------------");
 
-// Unfreezing the card
-newCard.unfreezeCard();
+// Checking if the card is still blocked before unblocking
+console.log("Verifying card block status before unblocking...");
+console.log(`Card block status (expected: true): ${blockedCard._isCardBlocked}`);
+console.log("Unblocking card by running the unfreezeCard method...");
+blockedCard.unfreezeCard();
 
-// Retrieving a card by its number
+// Retrieving the card again from in-memory storage to confirm it's unblocked
+const unblockedCard = Card.getByCardNumber("1234-5678-9876-5432");
+console.log(`Card block status after unblocking (expected: false): ${unblockedCard._isCardBlocked}`);
+console.log("-----------------------------------------------------");
+
+// Retrieving a card by its number to check if all details are correct
+console.log("Retrieving card by card number...");
 const retrievedCard = Card.getByCardNumber("1234-5678-9876-5432");
-console.log(retrievedCard);
+console.log("Retrieved Card Details:", retrievedCard);
+console.log("-----------------------------------------------------");
