@@ -9,9 +9,10 @@
 }
 
 /* Reset margin and padding for common elements */
-body, h1, h2, h3, h4, p, ul, ol, li, div, section {
+body, h1, h2, h3, h4, ul, ol, li, div, section {
     margin: 0;
     padding: 0;
+    font-family: var(--font-roboto);
 }
 
 html {
@@ -707,6 +708,10 @@ button:hover {
     margin-bottom: var(--size-md);
 }
 
+.account-information p {
+    margin: 0;
+}
+
 
 
 /* The profile/form part */
@@ -835,6 +840,10 @@ label {
     color: white;
     box-shadow: var(--box-shadow);
     border-radius: var(--size-sm);
+}
+
+.wallet-card p {
+    margin: 0;
 }
 
 #bank-amount {
