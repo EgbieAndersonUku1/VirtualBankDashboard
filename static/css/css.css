@@ -806,12 +806,16 @@ label {
 
 
 /* my wallet */
+#wallet {
+    background: white;
 
+}
 #wallet .wrapper {
     display: grid;
     grid-template-columns: 70% 30%;
     grid-template-rows: auto;
-    background: white;
+    padding: var(--size-md);
+  
 }
 
 .wallet-card {
@@ -841,9 +845,23 @@ label {
 }
 
 
+button {
+    cursor: pointer;
+}
+
+.btn-small {
+    padding: var(--size-sm);
+}
+
 
 .btn-medium {
     padding: var(--size-md);
+}
+
+#clear-transaction-btn {
+    background: var(--background-primary);
+    color: white;
+    font-weight: bold;
 }
 
 .bank-card {
@@ -883,6 +901,11 @@ label {
     font-size: var(--size-md);
 }
 
+.account-btn:last-child {
+    margin-right: none;
+}
+
+
 .account-btn:hover {
     transform: scale(1.02);
 }
@@ -890,6 +913,11 @@ label {
 .card-icon {
     width: 60px;
     height: 60px;
+}
+
+.card-account-number {
+    display: flex;
+    justify-content: flex-end;
 }
 
 .visa {
@@ -906,6 +934,50 @@ label {
 
 .card-name {
     text-transform: capitalize;
+}
+
+
+table {
+    border-collapse: collapse;
+}
+
+tr {
+    text-align: center;
+}
+
+table {
+    width: 100%;
+    font-family: 'Roboto', Arial, sans-serif;
+    line-height: 1.1;
+    border-collapse: collapse;
+    cursor: pointer;
+}
+
+th {
+    font-size: 0.9rem; /* 16px = 1.6rem */
+    font-weight: bold;
+    text-align: left;
+    padding: 0.8rem;
+    text-align: center;
+    background: ghostwhite;
+}
+
+td {
+    font-size: 0.85rem;
+    padding: 0.6rem;
+}
+
+tr {
+    border-top: 1px solid lavender;
+    border-bottom: 1px solid lavender;
+}
+
+tr:hover {
+    background: ghostwhite;
+}
+
+.highlight-number {
+    box-shadow: var(--box-shadow);
 }
 
 /* Keyframes for spin animation */
