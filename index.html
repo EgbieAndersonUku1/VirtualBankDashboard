@@ -442,13 +442,14 @@
                     <!-- my wallet  -->
                     <section id="wallet" aria-labelledby="wallet-heading" role="region" class="margin-top-md">
 
-                        <div class="wrapper">
+                        <div class="wrapper padding-md">
 
                             <div class="main-body wallet-ui">
 
                                 <div class="wallet-card" role="region" aria-labelledby="wallet-heading">
-                                    <div class="head">
-                                        <p>Hi, <span aria-label="User's name">John Smith</span></p>
+                                    <div class="head flex-space-between">
+                                        <p>Hi, <span aria-label="User's name" id="account-holder-name">John Smith</span></p>
+                                        <p>Maximum cards: <span>3/3</span></p>
                                     </div>
 
                                     <hr>
@@ -495,11 +496,105 @@
                                 </div>
 
                                 <div id="my-transactions" aria-live="polite">
+                                    <h3 class="capitalize">My transactions history</h3>
+                                    <p class="margin-bottom-md">A maximum of the ten most recent transactions are displayed at any given time.</p>
+
+                                    <div class="transaction-table padding-top-md">
+                                        <table id="transaction-history-table">
+                                            <thead>
+                                                <tr>
+                                                    <th>ID</th>
+                                                    <th>Description</th>
+                                                    <th>Date</th>
+                                                    <th>Amount</th>
+                                                    <th>Action</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td>1</td>
+                                                    <td>Created a new card</td>
+                                                    <td>15 Feb 2025</td>
+                                                    <td>N/A</td>
+                                                    <td>Processed</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>2</td>
+                                                    <td>Transferred money to another card</td>
+                                                    <td>15 Feb 2025</td>
+                                                    <td>£1000</td>
+                                                    <td>Processed</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>3</td>
+                                                    <td>Removed a card</td>
+                                                    <td>15 Feb 2025</td>
+                                                    <td>N/A</td>
+                                                    <td class="green">Processed</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>4</td>
+                                                    <td>Linked card to a new account</td>
+                                                    <td>16 Feb 2025</td>
+                                                    <td>N/A</td>
+                                                    <td>Completed</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>5</td>
+                                                    <td>Updated billing address for the card</td>
+                                                    <td>17 Feb 2025</td>
+                                                    <td>N/A</td>
+                                                    <td>Approved</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>6</td>
+                                                    <td>Requested a new PIN</td>
+                                                    <td>18 Feb 2025</td>
+                                                    <td>£2.50</td>
+                                                    <td>Processed</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>7</td>
+                                                    <td>Suspended card due to fraud</td>
+                                                    <td>19 Feb 2025</td>
+                                                    <td>N/A</td>
+                                                    <td>Pending</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>8</td>
+                                                    <td>Unlocked card after fraud investigation</td>
+                                                    <td>20 Feb 2025</td>
+                                                    <td>N/A</td>
+                                                    <td>Completed</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>9</td>
+                                                    <td>Transferred rewards points to account</td>
+                                                    <td>21 Feb 2025</td>
+                                                    <td>£50 equivalent</td>
+                                                    <td>Completed</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>10</td>
+                                                    <td>Closed account linked to the card</td>
+                                                    <td>22 Feb 2025</td>
+                                                    <td>N/A</td>
+                                                    <td>Finalized</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                        
+                                        <div class="btn flex-end margin-top-md">
+                                            <button class="btn-small" id="clear-transaction-btn">
+                                                Clear Transaction history
+                                            </button>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
 
                             <div class="sides cards" role="region" aria-labelledby="linked-cards-heading">
-                                <h3 class="center capitalize" id="linked-cards-heading">Linked Account Cards</h3>
+                                <h3 class="center capitalize subtitle" id="linked-cards-heading">Linked Account Cards</h3>
 
                                 <div class="cards">
                                     <!-- Visa Card -->
@@ -515,7 +610,7 @@
                                         <div class="body">
                                             <img src="static/images/icons/sim-card-chip.svg" alt="Sim card chip"
                                                 class="card-icon">
-                                            <span class="card-account-number">1234 5678 9101 1112</span>
+                                            <span class="card-account-number highlight-number">1234-5678-9101-1112</span>
                                         </div>
                                         <div class="footer flex-space-between padding-top-md">
                                             <span class="card-name">Lois Lane</span>
@@ -536,7 +631,7 @@
                                         <div class="body">
                                             <img src="static/images/icons/sim-card-chip.svg" alt="Sim card chip"
                                                 class="card-icon">
-                                            <span class="card-account-number">1234 5678 9101 1112</span>
+                                            <span class="card-account-number highlight-number">1234-5678-9101-1112</span>
                                         </div>
                                         <div class="footer flex-space-between padding-top-md">
                                             <span class="card-name">Clark Kent</span>
@@ -557,7 +652,7 @@
                                         <div class="body">
                                             <img src="static/images/icons/sim-card-chip.svg" alt="Sim card chip"
                                                 class="card-icon">
-                                            <span class="card-account-number">1234 5678 9101 1112</span>
+                                            <span class="card-account-number highlight-number">1234-5678-9101-1112</span>
                                         </div>
                                         <div class="footer flex-space-between padding-top-md">
                                             <span class="card-name">Egbie U</span>
