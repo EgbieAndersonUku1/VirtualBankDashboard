@@ -1,6 +1,8 @@
 
 import { excludeKey } from "./utils.js";
 import { generateRandomID } from "./utils.js";
+import { checkNumber } from "./utils.js";
+
 
 CARD_STORAGE_KEY = "cards";
 
@@ -38,14 +40,17 @@ export class Card {
             throw new Error("Card already exists.");
         }
         const card = new Card(cardHolderName, cardNumber, expiryMonth, expiryYear);
-        card.id = generateRandomID(); 
         card.save(); 
         return card;
     }
 
     static _doesCardExists(cardNumber) {
         const storage = getLocalStorage(CARD_STORAGE_KEY);
-        return storage[CARD_STORAGE_KEY].hasOwnProperty(cardNumber);
+
+        if (typeof storage !== "object") {
+            return false;
+        }
+        return storage[CARD_STORAGE_KEY]?.hasOwnProperty(cardNumber);
     }
 
     static deleteCard(cardNumber) {
@@ -55,14 +60,14 @@ export class Card {
             return null;
         }
 
-        const userCard = cardDetails[cardNumber];
+        const userCard           = cardDetails[CARD_STORAGE_KEY][cardNumber];
         const updatedCardDetails = excludeKey(userCard, cardNumber);
         setLocalStorage(CARD_STORAGE_KEY, updatedCardDetails);
         return true;
 
     }
 
-
+    
     /**
      * Retrieves a card by its card number.
      * @param {string} cardNumber - The card number to search for.
@@ -72,7 +77,7 @@ export class Card {
         const cardDetails = getLocalStorage(CARD_STORAGE_KEY);
 
         if (Array.isArray(cardDetails) || typeof cardDetails !== "object") {
-            logError("getByCardNumber", `Expected an object but got type ${typeof cardDetails}`);
+            logError("getByCardNumber", `Expected an object but got type ${cardDetails}`);
             return null;
         }
 
@@ -101,8 +106,12 @@ export class Card {
      * This also saves the updated card state to local storage.
      */
     freezeCard() {
-        this._isCardBlocked = true;  
-        this.save();  
+
+        if (!this._isCardBlocked) {
+            this._isCardBlocked = true;  
+            this.save();  
+        }
+      
     }
 
     /**
@@ -110,8 +119,11 @@ export class Card {
      * This also saves the updated card state to local storage.
      */
     unfreezeCard() {
-        this._isCardBlocked = false;  
-        this.save();  
+        if (this._isCardBlocked) {
+            this._isCardBlocked = false;  
+            this.save(); 
+        }
+        
     }
 
     /**
@@ -152,6 +164,7 @@ export class Card {
 
         try {
             let storage = getLocalStorage(CARD_STORAGE_KEY);
+            console.log(storage);
 
             if (!storage || typeof storage !== 'object') {
                 storage = { [CARD_STORAGE_KEY]: {} };
@@ -190,22 +203,3 @@ export class Card {
 }
 
 
-
-// Testing purpose remove after words
-
-// Creating a new card
-const newCard = Card.createCard("Alice Smith", "1234-5678-9876-5432", 12, 2028);
-
-// Updating the card amount
-newCard.amount = 500;  
-newCard.save()
-
-// Freezing the card
-newCard.freezeCard();
-
-// Unfreezing the card
-newCard.unfreezeCard();
-
-// Retrieving a card by its number
-const retrievedCard = Card.getByCardNumber("1234-5678-9876-5432");
-console.log(retrievedCard);

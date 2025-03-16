@@ -361,3 +361,14 @@ export function excludeKey(obj, key) {
 }
 
 
+
+
+function checkNumber(value) {
+    const numberValue = parseFloat(value);  
+
+    return {
+        isNumber: !isNaN(numberValue) && isFinite(numberValue),
+        isInteger: Number.isInteger(numberValue),
+        isFloat: !Number.isInteger(numberValue) && !isNaN(numberValue) && isFinite(numberValue)
+    };
+}

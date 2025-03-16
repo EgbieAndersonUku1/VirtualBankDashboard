@@ -116,7 +116,6 @@ class Card {
             throw new Error("Card already exists.");
         }
         const card = new Card(cardHolderName, cardNumber, expiryMonth, expiryYear);
-        card.id = generateRandomID(); 
         card.save(); 
         return card;
     }
@@ -137,7 +136,7 @@ class Card {
             return null;
         }
 
-        const userCard = cardDetails[cardNumber];
+        const userCard           = cardDetails[CARD_STORAGE_KEY][cardNumber];
         const updatedCardDetails = excludeKey(userCard, cardNumber);
         setLocalStorage(CARD_STORAGE_KEY, updatedCardDetails);
         return true;
