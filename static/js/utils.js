@@ -302,3 +302,73 @@ export function compareTwoObjects(object1, object2) {
 
 
 
+/**
+ * Returns a new object (or array) excluding the specified `key` or `property`.
+ *
+ * @param {Object|Array} obj - The object or array to be processed.
+ * @param {String|Number} key - The key (for objects) or index (for arrays) to exclude.
+ *
+ * @returns {Object|Array} - A new object or array excluding the specified key or index.
+ * 
+ * @throws {TypeError} - If `obj` is not an object or array.
+ * @throws {RangeError} - If the provided index is out of range for arrays.
+ *
+ * @example
+ * // Usage with an object
+ * const user = { id: 1, name: 'Marcus', group: 'admin' };
+ * console.log(excludeKey(user, 'group'));
+ * // Expected Output: { id: 1, name: 'Marcus' }
+ * 
+ * @example
+ * // Usage with an array
+ * const numbers = [10, 20, 30, 40];
+ * console.log(excludeKey(numbers, 2));
+ * // Expected Output: [10, 20, 40]
+ * 
+ * @example
+ * // Handling invalid index for array
+ * const numbers = [10, 20, 30, 40];
+ * try {
+ *     console.log(excludeKey(numbers, -1));  // Invalid index
+ * } catch (error) {
+ *     console.log(error.message);  // Expected Output: Invalid array index
+ * }
+ * 
+ * @example
+ * // Handling invalid object
+ * try {
+ *     console.log(excludeKey(123, 'group'));  // Invalid object (not an array or object)
+ * } catch (error) {
+ *     console.log(error.message);  // Expected Output: Expected an object or array
+ * }
+ */
+export function excludeKey(obj, key) {
+  
+    if (typeof obj !== 'object' || obj === null) {
+        throw new TypeError('Expected an object or array');
+    }
+
+    // Handle an array
+    if (Array.isArray(obj)) {
+        if (typeof key !== 'number' || key < 0 || key >= obj.length) {
+            throw new RangeError('Invalid array index');
+        }
+        return [...obj.slice(0, key), ...obj.slice(key + 1)];
+    }
+
+    const { [key]: _, ...rest } = obj;
+    return rest;
+}
+
+
+
+
+export function checkNumber(value) {
+    const numberValue = parseFloat(value);  
+
+    return {
+        isNumber: !isNaN(numberValue) && isFinite(numberValue),
+        isInteger: Number.isInteger(numberValue),
+        isFloat: !Number.isInteger(numberValue) && !isNaN(numberValue) && isFinite(numberValue)
+    };
+}
