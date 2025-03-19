@@ -363,7 +363,7 @@ export function excludeKey(obj, key) {
 
 
 
-function checkNumber(value) {
+export function checkNumber(value) {
     const numberValue = parseFloat(value);  
 
     return {

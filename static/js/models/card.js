@@ -1,13 +1,17 @@
 
-import { excludeKey } from "./utils.js";
-import { generateRandomID } from "./utils.js";
-import { checkNumber } from "./utils.js";
+import { excludeKey } from "../utils.js";
+import { generateRandomID } from "../utils.js";
+import { DataStorage } from "../base/baseDataStorage.js";
 
 
 CARD_STORAGE_KEY = "cards";
 
 
-export class Card {
+/*
+ * Class: Card
+ * Manages card operations including adding and deducting amount.
+ */
+export class Card extends DataStorage {
     /**
      * Creates an instance of a Card.
      * @param {string} cardHolderName - The name of the card holder.
@@ -16,14 +20,29 @@ export class Card {
      * @param {number} expiryYear - The expiry year of the card.
      */
     constructor(cardHolderName, cardNumber, expiryMonth, expiryYear) {
-        this.id              = generateRandomID();  
-        this.cardHolderName  = cardHolderName;  
-        this.cardNumber      = cardNumber;  
-        this.expiryMonth     = expiryMonth;  
-        this.expiryYear      = expiryYear;  
-        this._isCardBlocked  = false;  
-        this._amount         = 0;  
-        this._timeStamp      =  new Date().toISOString();  
+        super();
+        this.id             = generateRandomID();
+        this.cardHolderName = cardHolderName;
+        this.cardNumber     = cardNumber;
+        this.expiryMonth    = expiryMonth;
+        this.expiryYear     = expiryYear;
+        this._isCardBlocked = false;
+        this._balance       = 0
+        this._amountManager = new AmountManager(this._balance);
+        this._timeStamp     = new Date().toISOString();
+    }
+
+    addAmount(amount) {
+        this._amountManager.validateAmount(amount);
+        this._amountManager.addAmount(amount)
+
+    }
+
+    deductAmount(amount) {
+
+        this._amountManager.validateAmount(amount)
+        this._amountManager.deductAmount(amount);
+
     }
 
     /**
@@ -36,11 +55,14 @@ export class Card {
      */
     static createCard(cardHolderName, cardNumber, expiryMonth, expiryYear) {
 
+        if (!cardHolderName || !cardNumber || !expiryMonth || !expiryYear) {
+            throw Error(`One or more of the fields are missing. Cardholder: ${cardHolderName}, ${cardNumber}, ${expiryMonth}, ${expiryYear}`)
+        }
         if (Card._doesCardExists(cardNumber)) {
             throw new Error("Card already exists.");
         }
         const card = new Card(cardHolderName, cardNumber, expiryMonth, expiryYear);
-        card.save(); 
+        card.save();
         return card;
     }
 
@@ -54,20 +76,20 @@ export class Card {
     }
 
     static deleteCard(cardNumber) {
-        const cardDetails = getLocalStorage(CARD_STORAGE_KEY);   
+        const cardDetails = getLocalStorage(CARD_STORAGE_KEY);
         if (Array.isArray(cardDetails) || typeof cardDetails !== "object") {
             logError("deleteCard", `Expected an object but got type ${typeof cardDetails}`);
             return null;
         }
 
-        const userCard           = cardDetails[CARD_STORAGE_KEY][cardNumber];
+        const userCard = cardDetails[CARD_STORAGE_KEY][cardNumber];
         const updatedCardDetails = excludeKey(userCard, cardNumber);
         setLocalStorage(CARD_STORAGE_KEY, updatedCardDetails);
         return true;
 
     }
 
-    
+
     /**
      * Retrieves a card by its card number.
      * @param {string} cardNumber - The card number to search for.
@@ -83,20 +105,21 @@ export class Card {
 
         const userCard = cardDetails[CARD_STORAGE_KEY][cardNumber];
         if (!userCard) {
-            return null;  
+            return null;
         }
 
         const card = new Card(
-            userCard.cardHolderName, 
-            userCard.cardNumber, 
-            userCard.expiryMonth, 
+            userCard.cardHolderName,
+            userCard.cardNumber,
+            userCard.expiryMonth,
             userCard.expiryYear
         );
 
-        card.id             = userCard.id;
-        card._amount        = userCard.amount;
+        card.id = userCard.id;
+        card._amountManager.balance = userCard._balance;
         card._isCardBlocked = userCard.isCardBlocked;
-        card._timeStamp     = userCard.timeStamp;
+        card._timeStamp = userCard.timeStamp;
+        card._balance = userCard._balance;
 
         return card;
     }
@@ -108,10 +131,10 @@ export class Card {
     freezeCard() {
 
         if (!this._isCardBlocked) {
-            this._isCardBlocked = true;  
-            this.save();  
+            this._isCardBlocked = true;
+            this.save();
         }
-      
+
     }
 
     /**
@@ -120,18 +143,28 @@ export class Card {
      */
     unfreezeCard() {
         if (this._isCardBlocked) {
-            this._isCardBlocked = false;  
-            this.save(); 
+            this._isCardBlocked = false;
+            this.save();
         }
-        
+
     }
 
+    /**
+     * Getter for the card is blocked. Returns
+     * true if the card is block or false otherwise.
+     * 
+     * @returns {boolean} - Returns true if the card is block or false.
+     */
+    get isBlocked() {
+        return this._isCardBlocked;
+    }
     /**
      * Getter for the amount (balance) on the card.
      * @returns {number} - The amount (balance) on the card.
      */
-    get amount() {
-        return this._amount;
+    get balance() {
+        return this._amountManager.balance
+
     }
 
     /**
@@ -139,14 +172,9 @@ export class Card {
      * @param {number} amount - The amount to set on the card.
      * @throws {Error} - Throws an error if the amount is not a number or is negative.
      */
-    set amount(amount) {
-        if (typeof amount !== "number") {
-            throw new Error(`Expected an integer or float but got ${typeof amount}`);
-        }
-        if (amount < 0) {
-            throw new Error(`Cannot set a negative value. Got ${amount}`);
-        }
-        this._amount = amount;
+    set balance(amount) {
+        this._amountManager.validateAmount(amount);
+        this._amountManager.balance = amount;
     }
 
     /**
@@ -156,50 +184,61 @@ export class Card {
      * @throws {Error} - Throws an error if the maximum number of cards is exceeded or if the card already exists.
      */
     save() {
-        const MAXIMUM_CARDS_ALLOWED = 3;  
 
-        if (this._timeStamp === null) {
-            this._timeStamp = new Date().toISOString();  
-        }
+        return this.constructor.saveData(CARD_STORAGE_KEY, this.cardNumber, this.toJson())
 
-        try {
-            let storage = getLocalStorage(CARD_STORAGE_KEY);
-            console.log(storage);
-
-            if (!storage || typeof storage !== 'object') {
-                storage = { [CARD_STORAGE_KEY]: {} };
-            }
-
-            if (Object.keys(storage[CARD_STORAGE_KEY]).length >= MAXIMUM_CARDS_ALLOWED) {
-                throw new Error("You can only store a maximum of three cards.");
-            }
-
-            storage[CARD_STORAGE_KEY][this.cardNumber] = this.getCardDetails();
-            setLocalStorage(CARD_STORAGE_KEY, storage);
-            return true;  
-
-        } catch (error) {
-            logError("save", error);  
-            return false;  
-        }
     }
 
     /**
-     * Retrieves the card details as an object.
+     * Retrieves the card details as an object/json.
      * @returns {Object} - An object containing the card details.
      */
-    getCardDetails() {
+    toJson() {
         return {
             cardHolderName: this.cardHolderName,
             cardNumber: this.cardNumber,
             expiryMonth: this.expiryMonth,
             expiryYear: this.expiryYear,
             isCardBlocked: this._isCardBlocked,
-            amount: this._amount,
+            _balance: this._amountManager.balance,
             timeStamp: this._timeStamp,
             id: this.id,
         };
     }
+
+    /**
+     * Converts a JSON string or an already parsed object into a `Card` instance. This method is useful for
+     * converting an object that has been stringfy by the JSON method and stored in a localStorage back into a class
+     * 
+     * This method checks if the provided `data` is a JSON string. If it is, the string is parsed into an object.
+     * If the `data` is already an object, it is used directly. The method then assigns selected properties 
+     * (e.g., `cardHolderName`, `cardNumber`, `expiryMonth`, etc.) from the `data` to a new instance of the `Card` class.
+     * 
+     * @param {string|Object} data - The data to be converted. It can either be a JSON string or an already parsed object.
+     * @returns {Card|null} A new `Card` instance populated with the selected properties, or `null` if there is an error parsing the data.
+     * 
+     * @throws {Error} If the JSON parsing fails (when `data` is a string), an error is logged and `null` is returned.
+     */
+    static fromStorage(data) {
+
+        const keys = ['cardHolderName', 'cardNumber', 'expiryMonth', 'expiryYear', '_isCardBlocked', '_balance', '_timeStamp', 'id'];
+
+        const selectedCardJson = super.fromStorage(data, keys);
+        const card = Object.assign(new Card(), selectedCardJson);
+        card.balance = selectedCardJson._balance;
+        return card;
+
+    }
+
+    refreshBalance() {
+        const cardDetails = Card.getByCardNumber(this.cardNumber);
+        if (!cardDetails) {
+            return;
+        }
+
+        this._balance                = cardDetails.balance;
+        this._amountManager._balance = cardDetails.balance;
+    }
+
+
 }
-
-
