@@ -4,7 +4,7 @@ import { generateRandomID } from "../utils.js";
 import { DataStorage } from "../base/baseDataStorage.js";
 
 
-CARD_STORAGE_KEY = "cards";
+const CARD_STORAGE_KEY = "cards";
 
 
 /*

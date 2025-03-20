@@ -9,7 +9,7 @@
 </head>
 
 <body>
-
+   <div class="dim-background" id="dim"></div>
 
     <header>
         <nav>
@@ -487,12 +487,12 @@
 
                                     <hr>
                                     <div class="footer center">
-                                        <button class="btn-medium account-btn" aria-label="Add Funds">Add Funds</button>
-                                        <button class="btn-medium account-btn" aria-label="Add New Card">Add New
+                                        <button class="btn-medium account-btn" aria-label="Add Funds" id="add-funds">Add Funds</button>
+                                        <button class="btn-medium account-btn" aria-label="Add New Card" id="add-new-card">Add New
                                             Card</button>
-                                        <button class="btn-medium account-btn" aria-label="Transfer Funds">Transfer
+                                        <button class="btn-medium account-btn" aria-label="Transfer Funds" id="transfer-funds">Transfer
                                             Funds</button>
-                                        <button class="btn-medium account-btn" aria-label="Remove Card">Remove
+                                        <button class="btn-medium account-btn" aria-label="Remove Card" id="remove-card">Remove
                                             card</button>
                                     </div>
                                 </div>
@@ -679,19 +679,20 @@
                         </div>
                     </section>
 
-                    <div class="pin">
+                    <div class="pin" id="pin">
                         <form id="pin-form" class="center">
 
                             <div class="head center margin-bottom-sm">
-                                <img src="static/images/icons/lock.svg" alt="lock" class="pin-image-icon center">
+                                <img src="static/images/icons/lock.svg" alt="lock" class="pin-image-icon center" id="pin-form-icon">
 
                             </div>
-                            <label for="pin" class="padding-bottom-md bold capitalize center">Enter your 4-digit PIN:</label>
-                            <input type="tel" id="pin" name="pin" minlength="4" maxlength="4" aria-label="Enter your 4-digit PIN" required class="center">
+                            <p class="form-error-msg red" id="pin-error-msg"></p>
+                            <label for="pinInputField" class="padding-bottom-md bold capitalize center">Enter your 4-digit PIN:</label>
+                            <input type="tel" id="pinInputField" name="pin" minlength="4" maxlength="4" aria-label="Enter your 4-digit PIN" required class="center">
 
                             <div class="buttons">
                                 <button type="button" id="cancel-pin">Cancel Pin</button>
-                                <button type="button" id="enter-pin">Enter Pin</button>
+                                <button type="submit" id="enter-pin">Enter Pin</button>
                             </div>
                           </form>
                           

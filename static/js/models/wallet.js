@@ -1,7 +1,11 @@
 import { Card } from "./card.js";
-import { BankAccount } from "./bankAccount.js";
+import { BankAccount } from "../models/bankAccount.js";
 import { DataStorage } from "../base/baseDataStorage.js";
+import { AmountManager } from "../base/baseAmountManger.js";
+import { checkNumber, generateRandomID } from "../utils.js";
+import { logError, warnError } from "../logger.js";
 
+const WALLET_STORAGE_KEY = "wallet";
 
 export class Wallet extends DataStorage {
 
@@ -24,7 +28,7 @@ export class Wallet extends DataStorage {
         this._MAXIMUM_CARDS_ALLOWED = 3;
         this._cards                 = {}; // For cache
         this._linkedAccountNumber   = null;
-        this.pin                    = pin
+        this._pin                   = pin
         this._walletAmount          = 0;
         this._amountManager         = new AmountManager(this._walletAmount);
         this._bankAccount           = bankAccount;
@@ -37,7 +41,7 @@ export class Wallet extends DataStorage {
      * linked.
      */
     _linkBankAccountToWallet() {
-        if (!(bankAccount instanceof BankAccount)) {
+        if (!(this._bankAccount instanceof BankAccount)) {
             throw new Error("The bank account is not an instant of the Bank class")
         }
     }
@@ -66,7 +70,18 @@ export class Wallet extends DataStorage {
         return this._bankAccount.accountNumber;
     }
 
-     /**
+    get pin() {
+        return this._pin
+    }
+
+    set pin(pin) {
+        if (!checkNumber(pin).isNumber) {
+            logError("Wallet.SetPin", `The pin must be an integer. Expected a number but got type ${typeof pin}`);
+            throw new Error("The pin is not an intege")
+        }
+        this._pin = pin;
+    }
+    /**
      * set the account number for easy viewing
      * @returns {number} The number of cards in the wallet
     */
@@ -119,7 +134,7 @@ export class Wallet extends DataStorage {
      * @returns {boolean} True if the pin matches, otherwise false.
      */
     verifyPin(pin) {
-        return pin === this.pin;
+        return pin == this._pin;
     }
 
     /**
@@ -462,4 +477,110 @@ export class Wallet extends DataStorage {
         return cards;
 
     }
+
+
+    /**
+     * Saves the wallet data to the localStorage.
+     * 
+     * This method ensures that the wallet has a valid ID and PIN before saving. 
+     * If the wallet does not already have an ID or PIN, they will be generated.
+     *
+     * @returns {Wallet} The wallet instance after it has been saved.
+     */
+    save() {
+        if (!this._id) {
+            this._id = generateRandomID();
+        }
+        if (!this.pin) {
+            this.pin = generateRandomID();
+        }
+
+        return this.constructor.saveData(WALLET_STORAGE_KEY, this.linkedAccountNumber, this.toJson())
+    }
+
+    static loadWallet(accountNumber) {
+
+        if (!accountNumber || typeof accountNumber != "string" || accountNumber.trim() == "") {
+            logError("Wallet.loadWallet", `Got an invalid accountNumber. Expected a string but got ${typeof accountNumber}`);
+            throw new Error("Invalid account string provided")
+        }
+        const walletDataStorage = Wallet._getWalletData();
+
+      
+        if (!walletDataStorage) {
+            warnError("Wallet.loadWallet", "The wallet data was not found");
+            console.info("not found")
+            return false;
+        }
+
+        const userWalletData = walletDataStorage[WALLET_STORAGE_KEY][accountNumber];
+        if (!userWalletData || userWalletData === undefined) {
+            warnError("Wallet.loadWallet", `Failed to load wallet because your account information couldn't be found ${userWalletData}`);
+        }
+
+    
+        const requiredKeys = ['sortCode',
+            'accountNumber',
+            '_lastTransfer',
+            '_lastAmountReceived',
+            '_totalCards',
+            '_bankAccount',
+            '_cards',
+            '_linkedAccountNumber',
+            '_id',
+            'pin',
+            'walletAmount',
+        ];
+
+        const walletJson = super.fromStorage(userWalletData, requiredKeys);
+        const wallet = Object.assign(new Wallet, walletJson);
+        
+        return wallet;
+
+    }
+
+    /**
+     * Checks if a user wallet has already been created for a given account number.
+     * 
+     * This static method determines whether a wallet associated with the specified 
+     * account number exists in the system. It returns true if the wallet exists, false if it 
+     * does not, and null if the system storage mechanism is not accessible or not initialized.
+     * 
+     * @param {string} accountNumber - The account number to check for an existing wallet.
+     * 
+     * @throws {TypeError} - If the account number is not a valid non-empty string.
+     * 
+     * @returns {boolean | null} - Returns true if the wallet exists, false if it doesn't,
+     *                             and null if the storage mechanism is unavailable.
+     */
+    static doesUserWalletExist(accountNumber) {
+        if (!accountNumber || typeof accountNumber != "string" || accountNumber.trim() === '') {
+            logError("Wallet.hasUserWallet", `The account number provided is invalid: Got type ${typeof accountNumber} but expected string`);
+            throw new TypeError("Invalid string");
+        }
+        const walletStorage = Wallet._getWalletData();
+      
+        if (!walletStorage) {
+            warnError("Wallet.hasUserWallet", "The wallet storage in the local storage wasn't found");
+            return null;
+        }
+        
+        return walletStorage[WALLET_STORAGE_KEY].hasOwnProperty(accountNumber.trim());
+    }
+
+    static _getWalletData() {
+        return getLocalStorage(WALLET_STORAGE_KEY);
+    }
+
+    static createWallet(bankAccount, pin, initialAmount) {
+        const wallet = new Wallet(bankAccount);
+        wallet.pin = pin;
+        wallet._walletAmount = initialAmount;
+        wallet.linkedAccountNumber = bankAccount.accountNumber
+        wallet.save()
+        return wallet
+    }
+
 }
+
+

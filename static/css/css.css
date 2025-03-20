@@ -449,8 +449,10 @@ select {
     z-index: 100000;
 }
 
+
 .dropdown.show,
-.notification-dropdown.show {
+.notification-dropdown.show,
+.pin.show {
     border: 2px solid lavender;
     opacity: 1;
     visibility: visible;
@@ -1027,8 +1029,14 @@ tr:hover {
     box-shadow: var(--box-shadow);
     width: 35%;
     font-family: var(--font-roboto);
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease-in-out, visibility 0s 0.3s;
+    z-index: 1000000;
     
 }
+
+
 
 .pin form {
     display: grid;
@@ -1080,4 +1088,24 @@ tr:hover {
 .pin-image-icon{
     height: 80px;
     width: 80px;
+}
+
+
+#dim {
+    position: fixed;  
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);  
+    z-index: 1000; 
+    display: none;
+}
+
+.form-error-msg {
+    display: none;
+}
+
+.form-error-msg.show {
+    display: block;
 }
