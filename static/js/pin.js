@@ -1,7 +1,7 @@
 
 import { checkIfHTMLElement, dimBackground } from "./utils.js";
 import { sanitizeText } from "./utils.js";
-import { Wallet } from "./models/wallet.js";
+import { Wallet } from "./wallet.js";
 import { logError } from "./logger.js";
 
 const pinElement           = document.getElementById("pin");

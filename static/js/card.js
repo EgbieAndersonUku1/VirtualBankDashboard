@@ -1,7 +1,7 @@
 
-import { excludeKey } from "../utils.js";
-import { generateRandomID } from "../utils.js";
-import { DataStorage } from "../base/baseDataStorage.js";
+import { excludeKey } from "./utils.js";
+import { generateRandomID } from "./utils.js";
+import { DataStorage } from "./baseDataStorage.js";
 
 
 const CARD_STORAGE_KEY = "cards";

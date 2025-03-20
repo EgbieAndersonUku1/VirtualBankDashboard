@@ -1,9 +1,9 @@
-import { getLocalStorage } from "../db.js";
-import { getCombinedCode, generateRandomID, checkNumber } from '../utils.js';
-import { logError } from "../logger.js";
+import { getLocalStorage } from "./db.js";
+import { getCombinedCode, generateRandomID, checkNumber } from './utils.js';
+import { logError } from "./logger.js";
 import { Card } from "./card.js";
-import { DataStorage } from "../base/baseDataStorage.js";
-import { AmountManager } from "../base/baseAmountManger.js";
+import { DataStorage } from "./baseDataStorage.js";
+import { AmountManager } from "./baseAmountManger.js";
 
 const BANK_ACCOUNT_STORAGE_KEY = "bankAccount";
 
