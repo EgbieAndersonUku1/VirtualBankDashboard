@@ -1,9 +1,9 @@
 import { Card } from "./card.js";
-import { BankAccount } from "../models/bankAccount.js";
-import { DataStorage } from "../base/baseDataStorage.js";
-import { AmountManager } from "../base/baseAmountManger.js";
-import { checkNumber, generateRandomID } from "../utils.js";
-import { logError, warnError } from "../logger.js";
+import { BankAccount } from "./bankAccount.js";
+import { DataStorage } from "./baseDataStorage.js";
+import { AmountManager } from "./baseAmountManger.js";
+import { checkNumber, generateRandomID } from "./utils.js";
+import { logError, warnError } from "./logger.js";
 
 const WALLET_STORAGE_KEY = "wallet";
 

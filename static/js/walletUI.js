@@ -1,5 +1,5 @@
-import { Wallet } from "./models/wallet.js";
-import { BankAccount } from "./models/bankAccount.js";
+import { Wallet } from "./wallet.js";
+import { BankAccount } from "./bankAccount.js";
 
 
 

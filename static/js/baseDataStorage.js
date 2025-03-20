@@ -1,5 +1,5 @@
-import { getLocalStorage, setLocalStorage } from "../db.js";
-import { warnError, logError } from "../logger.js";
+import { getLocalStorage, setLocalStorage } from "./db.js";
+import { warnError, logError } from "./logger.js";
 
 
 // Base class to handle common logic
