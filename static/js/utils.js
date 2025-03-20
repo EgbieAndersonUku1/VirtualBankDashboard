@@ -372,3 +372,23 @@ export function checkNumber(value) {
         isFloat: !Number.isInteger(numberValue) && !isNaN(numberValue) && isFinite(numberValue)
     };
 }
+
+
+export function dimBackground(dimBackgroundElement, dim=false) {
+    dimBackgroundElement.style.display  = dim ? "block" : "none";
+};
+
+
+
+export function getCombinedCode(a, b) {
+    if (typeof a !== 'string' || typeof b !== 'string') {
+        throw new TypeError('Both inputs must be strings.');
+    }
+
+    if (!a.trim() || !b.trim()) {
+        throw new Error('Inputs cannot be empty or whitespace only.');
+    }
+
+    return `${a} ${b}`;
+}
+

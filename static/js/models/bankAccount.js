@@ -1,9 +1,9 @@
 import { getLocalStorage } from "../db.js";
-import { getFullName as getCombinedCode, generateRandomID, checkNumber } from '../utils.js';
+import { getCombinedCode, generateRandomID, checkNumber } from '../utils.js';
 import { logError } from "../logger.js";
 import { Card } from "./card.js";
 import { DataStorage } from "../base/baseDataStorage.js";
-
+import { AmountManager } from "../base/baseAmountManger.js";
 
 const BANK_ACCOUNT_STORAGE_KEY = "bankAccount";
 
@@ -14,6 +14,13 @@ const BANK_ACCOUNT_STORAGE_KEY = "bankAccount";
  */
 export class BankAccount extends DataStorage {
 
+    /**
+   * Constructs a new Bank instance.
+   * @param {object | BankAccount}  - An instance of the BankAccount class.
+   * @param {string|null} sortCode - The sort code for the bank account.
+   * @param {string|null} accountNumber - The account number for the bank account.
+   * @param {number|null} initialBalance - The initial balance for the account.
+   */
     constructor(sortCode, accountNumber, initialBalance = 0) {
         super();
         this.accountNumber = accountNumber;
