@@ -1016,3 +1016,68 @@ tr:hover {
     0% { transform: rotate(0deg); }
     100% { transform: rotate(360deg); }
 }
+
+.pin {
+    padding: var(--size-xlg);
+    position: fixed;
+    top: 10%;
+    left: 35%;
+    border: 6px soiid ghostwhite;
+    background: white;
+    box-shadow: var(--box-shadow);
+    width: 35%;
+    font-family: var(--font-roboto);
+    
+}
+
+.pin form {
+    display: grid;
+    width: 100%;
+}
+
+.pin form img {
+    height: 70px;
+    width: 70px;
+    text-align: center;
+    opacity: 0.7;
+}
+
+.pin form label {
+    color: black;
+    font-size: var(--size-md);
+}
+
+.pin form input {
+    font-size: var(--size-md);
+}
+
+
+.pin form .buttons {
+    display: flex;
+    padding-top: var(--size-sm);
+}
+
+
+.pin form .buttons button {
+    width: 100%;
+    padding: var(--size-xs);
+    font-size: 0.9rem;
+   
+
+    
+}
+
+#cancel-pin {
+    background: #b2bec3; 
+    color: white;
+}
+#enter-pin {
+    background: #27ae60; 
+    color: white;
+    
+}
+
+.pin-image-icon{
+    height: 80px;
+    width: 80px;
+}
