@@ -33,7 +33,7 @@ export function handlePinShowage(e) {
    showPinErrorMsg('', false);
    pinElement.classList.add("show");
    dimBackground(dimBackgroundElement, true);
-   console.log(dimBackgroundElement)
+
 }
 
 

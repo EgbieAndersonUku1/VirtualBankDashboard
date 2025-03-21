@@ -288,7 +288,7 @@ select {
 /* The virtual bank dashboard */
 #virtualbank-dashboard .container {
     display: grid;
-    grid-template-columns: 25% 75%;
+    grid-template-columns: 20% 80%;
     grid-template-rows: auto;
    
     height: 100vh; /* Full viewport height */
@@ -449,8 +449,10 @@ select {
     z-index: 100000;
 }
 
+
 .dropdown.show,
-.notification-dropdown.show {
+.notification-dropdown.show,
+.pin.show {
     border: 2px solid lavender;
     opacity: 1;
     visibility: visible;
@@ -1015,4 +1017,95 @@ tr:hover {
 @keyframes spin {
     0% { transform: rotate(0deg); }
     100% { transform: rotate(360deg); }
+}
+
+.pin {
+    padding: var(--size-xlg);
+    position: fixed;
+    top: 10%;
+    left: 35%;
+    border: 6px soiid ghostwhite;
+    background: white;
+    box-shadow: var(--box-shadow);
+    width: 35%;
+    font-family: var(--font-roboto);
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease-in-out, visibility 0s 0.3s;
+    z-index: 1000000;
+    
+}
+
+
+
+.pin form {
+    display: grid;
+    width: 100%;
+}
+
+.pin form img {
+    height: 70px;
+    width: 70px;
+    text-align: center;
+    opacity: 0.7;
+}
+
+.pin form label {
+    color: black;
+    font-size: var(--size-md);
+}
+
+.pin form input {
+    font-size: var(--size-md);
+}
+
+
+.pin form .buttons {
+    display: flex;
+    padding-top: var(--size-sm);
+}
+
+
+.pin form .buttons button {
+    width: 100%;
+    padding: var(--size-xs);
+    font-size: 0.9rem;
+   
+
+    
+}
+
+#cancel-pin {
+    background: #b2bec3; 
+    color: white;
+}
+#enter-pin {
+    background: #27ae60; 
+    color: white;
+    
+}
+
+.pin-image-icon{
+    height: 80px;
+    width: 80px;
+}
+
+
+#dim {
+    position: fixed;  
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);  
+    z-index: 1000; 
+    display: none;
+}
+
+.form-error-msg {
+    display: none;
+}
+
+.form-error-msg.show {
+    display: block;
 }

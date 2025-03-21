@@ -1,7 +1,7 @@
 import { Card } from "./card.js";
 import { BankAccount } from "./bankAccount.js";
 import { DataStorage } from "./baseDataStorage.js";
-import { AmountManager } from "./baseAmountManger.js";
+import { AmountManager } from "./baseAmountManager.js";
 import { checkNumber, generateRandomID, getCombinedCode } from "./utils.js";
 import { logError, warnError } from "./logger.js";
 import { getLocalStorage } from "./db.js";
@@ -563,6 +563,7 @@ export class Wallet extends DataStorage {
         if (!wallet.linkedAccountNumber) {
             warnError("Wallet.loadWallet", "The bank account wasn't loaded into the wallet.")
         }
+        wallet.save();
         return wallet;
 
     }
