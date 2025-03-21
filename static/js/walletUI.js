@@ -20,6 +20,7 @@ document.addEventListener("DOMContentLoaded", handleInitialSetup);
 function handleInitialSetup() {
     
     console.log("Attempting to retrieve bank account information from localStorage...");
+    
     bankAccount = BankAccount.getByAccount(SORT_CODE, ACCOUNT_NUMBER);
     
     if (!bankAccount) {
@@ -34,8 +35,6 @@ function handleInitialSetup() {
         console.log("Attempting to retrieve linked wallet from localStorage...");
         wallet = Wallet.loadWallet(bankAccount.sortCode, bankAccount.accountNumber);
 
-       
-        
         if (!wallet) {
             console.log("Retrieval failed - Wallet not found. Creating a new wallet...");
             wallet = Wallet.createWallet(bankAccount, PIN, INITIAL_BALANCE);
@@ -48,8 +47,6 @@ function handleInitialSetup() {
         logError("handleInitialSetup", "Failed to load the bank account and wallet.");
         return;
     }
-
-
 
     console.log("Wallet and bank account successfully loaded.");
 }
