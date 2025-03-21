@@ -21,9 +21,6 @@ import { handleProfileIconClick,
         } from "./notifications.js";
 
 
-import { handleWalletPin } from "./walletUI.js";
-import { handleSantizationOfInputField } from "./pin.js";
-
 // elements
 const dashboardElement  = document.getElementById("virtualbank-dashboard");
 
@@ -55,9 +52,6 @@ function handleEventDelegation(e) {
     handleUserStateInputField(e);
     handleUserPostCodeInputField(e);
     handleProfileBtnClick(e);
-    handleSantizationOfInputField(e);
-    handleWalletPin(e);
- 
         
 }
 

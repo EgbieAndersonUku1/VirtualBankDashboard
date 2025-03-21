@@ -178,16 +178,12 @@ function handleInputField({e, id, element, capitalize=false, onlyChars=true, inc
 }
 
 
-export function getFullName(a, b) {
-    if (typeof a !== 'string' || typeof b !== 'string') {
-        throw new TypeError('Both inputs must be strings.');
-    }
-    
-    if (!a.trim() || !b.trim()) {
-        throw new Error('Inputs cannot be empty or whitespace only.');
-    }
 
-    return `${a} ${b}`;
+function getFullName(firstName='', surname='') {
+    if (typeof firstName != "string" || typeof surname != "string") {
+        throw new Error(`The names must be string. Expected string but got ${firstName} ${surname}`);
+    }
+    return `${toTitle(firstName)} ${toTitle(surname)}`;
 }
 
 

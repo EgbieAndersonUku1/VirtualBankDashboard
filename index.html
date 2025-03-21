@@ -9,7 +9,7 @@
 </head>
 
 <body>
-   <div class="dim-background" id="dim"></div>
+
 
     <header>
         <nav>
@@ -448,8 +448,7 @@
 
                                 <div class="wallet-card" role="region" aria-labelledby="wallet-heading">
                                     <div class="head flex-space-between">
-                                        <p>Hi, <span aria-label="User's name" id="account-holder-name">John Smith</span>
-                                        </p>
+                                        <p>Hi, <span aria-label="User's name" id="account-holder-name">John Smith</span></p>
                                         <p>Maximum cards: <span>3/3</span></p>
                                     </div>
 
@@ -487,20 +486,18 @@
 
                                     <hr>
                                     <div class="footer center">
-                                        <button class="btn-medium account-btn" aria-label="Add Funds" id="add-funds">Add Funds</button>
-                                        <button class="btn-medium account-btn" aria-label="Add New Card" id="add-new-card">Add New
+                                        <button class="btn-medium account-btn" aria-label="Add Funds">Add Funds</button>
+                                        <button class="btn-medium account-btn" aria-label="Add New Card">Add New
                                             Card</button>
-                                        <button class="btn-medium account-btn" aria-label="Transfer Funds" id="transfer-funds">Transfer
+                                        <button class="btn-medium account-btn" aria-label="Transfer Funds">Transfer
                                             Funds</button>
-                                        <button class="btn-medium account-btn" aria-label="Remove Card" id="remove-card">Remove
-                                            card</button>
+                                        <button class="btn-medium account-btn" aria-label="Remove Card">Remove card</button>
                                     </div>
                                 </div>
 
                                 <div id="my-transactions" aria-live="polite">
                                     <h3 class="capitalize padding-top-md padding-bottom-sm">My transactions history</h3>
-                                    <p class="padding-bottom-md red">A maximum of the ten most recent transactions are
-                                        displayed at any given time.</p>
+                                    <p class="padding-bottom-md red">A maximum of the ten most recent transactions are displayed at any given time.</p>
 
                                     <div class="transaction-table padding-top-md">
                                         <table id="transaction-history-table">
@@ -586,7 +583,7 @@
                                                 </tr>
                                             </tbody>
                                         </table>
-
+                                        
                                         <div class="btn flex-end margin-top-md">
                                             <button class="btn-small" id="clear-transaction-btn">
                                                 Clear Transaction history
@@ -597,8 +594,7 @@
                             </div>
 
                             <div class="sides cards" role="region" aria-labelledby="linked-cards-heading">
-                                <h3 class="center capitalize subtitle" id="linked-cards-heading">Linked Account Cards
-                                </h3>
+                                <h3 class="center capitalize subtitle" id="linked-cards-heading">Linked Account Cards</h3>
 
                                 <div class="cards">
                                     <!-- Visa Card -->
@@ -615,13 +611,11 @@
                                             <img src="static/images/icons/sim-card-chip.svg" alt="Sim card chip"
                                                 class="card-icon">
                                             <span class="card-type">Debit</span>
-                                            <span
-                                                class="card-account-number highlight-number">1234-5678-9101-1112</span>
+                                            <span class="card-account-number highlight-number">1234-5678-9101-1112</span>
                                         </div>
                                         <div class="footer flex-space-between padding-top-md">
                                             <span class="card-name">Lois Lane</span>
-                                            <span class="card-expiry capitalize"><span class="date">expiry date
-                                                </span>09/2027</span>
+                                            <span class="card-expiry capitalize"><span class="date">expiry date </span>09/2027</span>
                                         </div>
                                     </div>
 
@@ -639,13 +633,11 @@
                                             <img src="static/images/icons/sim-card-chip.svg" alt="Sim card chip"
                                                 class="card-icon">
                                             <span class="card-type">Credit</span>
-                                            <span
-                                                class="card-account-number highlight-number">1234-5678-9101-1112</span>
+                                            <span class="card-account-number highlight-number">1234-5678-9101-1112</span>
                                         </div>
                                         <div class="footer flex-space-between padding-top-md">
                                             <span class="card-name">Clark Kent</span>
-                                            <span class="card-expiry capitalize"><span class="date">expiry date
-                                                </span>09/2027</span>
+                                            <span class="card-expiry capitalize"><span class="date">expiry date </span>09/2027</span>
                                         </div>
                                     </div>
 
@@ -662,15 +654,13 @@
                                         <div class="body">
                                             <img src="static/images/icons/sim-card-chip.svg" alt="Sim card chip"
                                                 class="card-icon">
-
-                                            <span class="card-type">Debit</span>
-                                            <span
-                                                class="card-account-number highlight-number">1234-5678-9101-1112</span>
+                                            
+                                                <span class="card-type">Debit</span>
+                                            <span class="card-account-number highlight-number">1234-5678-9101-1112</span>
                                         </div>
                                         <div class="footer flex-space-between padding-top-md">
                                             <span class="card-name">Egbie U</span>
-                                            <span class="card-expiry capitalize"><span class="date">expiry date
-                                                </span>09/2027</span>
+                                            <span class="card-expiry capitalize"><span class="date">expiry date </span>09/2027</span>
                                         </div>
                                     </div>
                                 </div>
@@ -679,24 +669,6 @@
                         </div>
                     </section>
 
-                    <div class="pin" id="pin">
-                        <form id="pin-form" class="center">
-
-                            <div class="head center margin-bottom-sm">
-                                <img src="static/images/icons/lock.svg" alt="lock" class="pin-image-icon center" id="pin-form-icon">
-
-                            </div>
-                            <p class="form-error-msg red" id="pin-error-msg"></p>
-                            <label for="pinInputField" class="padding-bottom-md bold capitalize center">Enter your 4-digit PIN:</label>
-                            <input type="tel" id="pinInputField" name="pin" minlength="4" maxlength="4" aria-label="Enter your 4-digit PIN" required class="center">
-
-                            <div class="buttons">
-                                <button type="button" id="cancel-pin">Cancel Pin</button>
-                                <button type="submit" id="enter-pin">Enter Pin</button>
-                            </div>
-                          </form>
-                          
-                    </div>
 
     </main>
 
