@@ -32,7 +32,9 @@ function handleInitialSetup() {
     if (bankAccount) {
         console.log("Bank account successfully loaded into the system.");
         console.log("Attempting to retrieve linked wallet from localStorage...");
-        wallet = Wallet.loadWallet(bankAccount.accountNumber);
+        wallet = Wallet.loadWallet(bankAccount.sortCode, bankAccount.accountNumber);
+
+       
         
         if (!wallet) {
             console.log("Retrieval failed - Wallet not found. Creating a new wallet...");
@@ -46,6 +48,8 @@ function handleInitialSetup() {
         logError("handleInitialSetup", "Failed to load the bank account and wallet.");
         return;
     }
+
+
 
     console.log("Wallet and bank account successfully loaded.");
 }
