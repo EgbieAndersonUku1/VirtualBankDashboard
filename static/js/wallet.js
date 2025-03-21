@@ -2,8 +2,9 @@ import { Card } from "./card.js";
 import { BankAccount } from "./bankAccount.js";
 import { DataStorage } from "./baseDataStorage.js";
 import { AmountManager } from "./baseAmountManger.js";
-import { checkNumber, generateRandomID } from "./utils.js";
+import { checkNumber, generateRandomID, getCombinedCode } from "./utils.js";
 import { logError, warnError } from "./logger.js";
+import { getLocalStorage } from "./db.js";
 
 const WALLET_STORAGE_KEY = "wallet";
 
@@ -18,7 +19,7 @@ export class Wallet extends DataStorage {
    * @param {number} numberOfCards - The number of cards currently in the wallet (default: 0).
    * @param {string|null} pin - The PIN associated with the wallet (default: null).
    */
-    constructor(bankAccount, lastTransfer = null, lastAmountReceived = null, numberOfCards = 0, pin = null) {
+    constructor(bankAccount=null, lastTransfer = null, lastAmountReceived = null, numberOfCards = 0, pin = null) {
         super();
         this._id                    = null;
         this._lastTransfer          = lastTransfer;
@@ -41,6 +42,10 @@ export class Wallet extends DataStorage {
      * linked.
      */
     _linkBankAccountToWallet() {
+        if (this._bankAccount == null) {
+            return;
+        }
+
         if (!(this._bankAccount instanceof BankAccount)) {
             throw new Error("The bank account is not an instant of the Bank class")
         }
@@ -68,6 +73,13 @@ export class Wallet extends DataStorage {
     */
     get linkedAccountNumber() {
         return this._bankAccount.accountNumber;
+    }
+
+    /**
+     * Returns the bank account attached to the wallet.
+     */
+    get bankAccount() {
+        return this._bankAccount;
     }
 
     get pin() {
@@ -498,8 +510,10 @@ export class Wallet extends DataStorage {
         return this.constructor.saveData(WALLET_STORAGE_KEY, this.linkedAccountNumber, this.toJson())
     }
 
-    static loadWallet(accountNumber) {
+    static loadWallet(sortCode, accountNumber) {
 
+        accountNumber = getCombinedCode(sortCode, accountNumber);
+     
         if (!accountNumber || typeof accountNumber != "string" || accountNumber.trim() == "") {
             logError("Wallet.loadWallet", `Got an invalid accountNumber. Expected a string but got ${typeof accountNumber}`);
             throw new Error("Invalid account string provided")
@@ -513,9 +527,18 @@ export class Wallet extends DataStorage {
             return false;
         }
 
-        const userWalletData = walletDataStorage[WALLET_STORAGE_KEY][accountNumber];
+        let userWalletData;
+
+        try {
+            userWalletData = walletDataStorage[WALLET_STORAGE_KEY][accountNumber];
+        } catch (error) {
+            warnError("Wallet.loadWallet", error.message)
+            return null;
+        }
+       
         if (!userWalletData || userWalletData === undefined) {
             warnError("Wallet.loadWallet", `Failed to load wallet because your account information couldn't be found ${userWalletData}`);
+            return null;
         }
 
     
@@ -535,6 +558,11 @@ export class Wallet extends DataStorage {
         const walletJson = super.fromStorage(userWalletData, requiredKeys);
         const wallet = Object.assign(new Wallet, walletJson);
         
+        wallet.linkedAccountNumber = BankAccount.getByAccount(sortCode, accountNumber);
+
+        if (!wallet.linkedAccountNumber) {
+            warnError("Wallet.loadWallet", "The bank account wasn't loaded into the wallet.")
+        }
         return wallet;
 
     }
