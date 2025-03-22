@@ -18,14 +18,16 @@ export class Card extends DataStorage {
      * @param {string} cardNumber - The card number.
      * @param {number} expiryMonth - The expiry month of the card.
      * @param {number} expiryYear - The expiry year of the card.
+     * @param {number} cvc        - The security code at the back of the card 
      */
-    constructor(cardHolderName, cardNumber, expiryMonth, expiryYear) {
+    constructor(cardHolderName, cardNumber, expiryMonth, expiryYear, cvc) {
         super();
         this.id             = generateRandomID();
         this.cardHolderName = cardHolderName;
         this.cardNumber     = cardNumber;
         this.expiryMonth    = expiryMonth;
         this.expiryYear     = expiryYear;
+        this.cvc            = cvc;
         this._isCardBlocked = false;
         this._balance       = 0
         this._amountManager = new AmountManager(this._balance);
@@ -51,17 +53,18 @@ export class Card extends DataStorage {
      * @param {string} cardNumber - The card number.
      * @param {number} expiryMonth - The expiry month of the card.
      * @param {number} expiryYear - The expiry year of the card.
+     * @param {number} cvc        - The security code for the back of the card
      * @returns {Card} - The newly created and saved card.
      */
-    static createCard(cardHolderName, cardNumber, expiryMonth, expiryYear) {
+    static createCard(cardHolderName, cardNumber, expiryMonth, expiryYear, cvc) {
 
         if (!cardHolderName || !cardNumber || !expiryMonth || !expiryYear) {
-            throw Error(`One or more of the fields are missing. Cardholder: ${cardHolderName}, ${cardNumber}, ${expiryMonth}, ${expiryYear}`)
+            throw Error(`One or more of the fields are missing. Cardholder: ${cardHolderName}, ${cardNumber}, ${expiryMonth}, ${expiryYear}, ${cvc}`);
         }
         if (Card._doesCardExists(cardNumber)) {
             throw new Error("Card already exists.");
         }
-        const card = new Card(cardHolderName, cardNumber, expiryMonth, expiryYear);
+        const card = new Card(cardHolderName, cardNumber, expiryMonth, expiryYear, cvc);
         card.save();
         return card;
     }
@@ -112,7 +115,8 @@ export class Card extends DataStorage {
             userCard.cardHolderName,
             userCard.cardNumber,
             userCard.expiryMonth,
-            userCard.expiryYear
+            userCard.expiryYear,
+            userCard.cvc,
         );
 
         card.id = userCard.id;
@@ -221,7 +225,7 @@ export class Card extends DataStorage {
      */
     static fromStorage(data) {
 
-        const keys = ['cardHolderName', 'cardNumber', 'expiryMonth', 'expiryYear', '_isCardBlocked', '_balance', '_timeStamp', 'id'];
+        const keys = ['cardHolderName', 'cardNumber', 'expiryMonth', 'expiryYear', 'cvc', '_isCardBlocked', '_balance', '_timeStamp', 'id'];
 
         const selectedCardJson = super.fromStorage(data, keys);
         const card = Object.assign(new Card(), selectedCardJson);

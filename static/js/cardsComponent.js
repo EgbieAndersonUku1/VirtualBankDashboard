@@ -6,7 +6,8 @@ const CARD_IMAGES = {
 
     visa: {
         src: "static/images/icons/visa.svg",
-        alt: "Visa card logo"
+        alt: "Visa card logo",
+       
     },
 
     masterCard: {
@@ -80,6 +81,8 @@ createSingleCreateCard(cardDetails) {
     cardDiv.appendChild(cardBodyDiv);
     cardDiv.appendChild(cardFooterDiv);
 
+    cardDiv.classList.add("card", "bank-card", cardDetails.cardOptions);
+    cardDiv.ariaLabel = `${cardDetails} card`;
     return cardDiv;
 }
 
@@ -114,19 +117,25 @@ function createCardBodyDiv(cardDetails) {
     const imgElement                  = document.createElement("img");
     const spanCardTypeElement         = document.createElement("span");
     const spanCardNumberElement       = document.createElement("span");
+    const hiddenInputField            = document.createElement("input");
 
     bodyDivElement.className          = "body";
     imgElement.src                    = "static/images/icons/sim-card-chip.svg";
     spanCardTypeElement.textContent   = cardDetails.cardType;
     spanCardNumberElement.textContent = cardDetails.cardNumber;
+    hiddenInputField.hidden           = true;
+    hiddenInputField.name             = "card"
+    hiddenInputField.value            = cardDetails.cardNumber;
 
     imgElement.className              = "card-icon";
     imgElement.alt                    = "Sim card chip";
 
     spanCardTypeElement.className     = "card-type";
+    spanCardTypeElement.textContent   = cardDetails.cardType;
 
     spanCardNumberElement.classList.add("card-account-number", "highlight-number");
 
+    bodyDivElement.appendChild(hiddenInputField);
     bodyDivElement.appendChild(imgElement);
     bodyDivElement.appendChild(spanCardTypeElement);
     bodyDivElement.appendChild(spanCardNumberElement);
@@ -140,31 +149,22 @@ function createCardBodyDiv(cardDetails) {
 function createImageElementBasedOnCardType(cardDetails) {
 
     const imgElement = document.createElement("img");
+    const cardType   = cardDetails.cardType.toLowerCase();
 
-   switch(cardDetails) {
-        case cardDetails.cardType.toLowerCase() === CARD_IMAGES.visa:
-            imgElement.src = CARD_IMAGES.visa.src;
-            imgElement.alt = CARD_IMAGES.visa.alt;
-            break;
-        
-        case cardDetails.cardType.toLowerCase() === CARD_IMAGES.discover:
-            imgElement.src = CARD_IMAGES.discover.src;
-            imgElement.alt = CARD_IMAGES.discover.alt;
-            break;
-        
-        case cardDetails.cardType.toLowerCase() === CARD_IMAGES.masterCard:
-            imgElement.src = CARD_IMAGES.masterCard.src;
-            imgElement.alt = CARD_IMAGES.masterCard.alt;
-            break;
-        
-        default:
-            imgElement.src = "";
-            imgElement.alt = "";
-        
-        imgElement.className = "card-icon";
-        return imgElement;
+    if (CARD_IMAGES[cardType]) {
 
-   }
+        imgElement.src = CARD_IMAGES[cardType].src;
+        imgElement.alt = CARD_IMAGES[cardType].alt;
+
+    } else {
+
+        imgElement.src = "";
+        imgElement.alt = "";
+    }
+    
+    imgElement.className = "card-icon";
+    return imgElement;
+
 }
 
 
@@ -178,9 +178,8 @@ function createFooterDiv(cardDetails) {
 
     footerDivElement.classList.add("footer", "flex-space-between", "padding-top-md");
     spanCardNameElement.classList.add("card-expiry", "capitalize");
+
     spanCardExpiryDate.className    = "date";
-
-
     spanCardNameElement.textContent = cardDetails.cardName;
     spanCardExpiryDate.textContent  = cardDetails.cardExpiryDate;
 

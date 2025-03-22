@@ -254,6 +254,13 @@ select {
     column-gap: var(--size-sm);
 }
 
+.four-column-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: auto;
+    column-gap: var(--size-sm);
+}
+
 /* buttons */
 .button {
     background: #00eaff; /* Bright cyan */
@@ -1108,4 +1115,43 @@ tr:hover {
 
 .form-error-msg.show {
     display: block;
+}
+
+#new-card {
+    position: fixed;
+    top: 15%;
+    left: 32%;
+    background: white;
+    padding: var(--size-lg);
+    box-shadow: var(--box-shadow);
+    border: 3px solid lavender;
+}
+
+#new-card label {
+    text-transform: capitalize;
+}
+
+#new-card h2 {
+    font-family: var(--font-roboto);
+}
+.card-details {
+    display: flex;
+    flex-direction: column;
+}
+
+#card-details {
+    width: 100%;
+}
+
+#create-card-btn {
+  width: 100%;  
+  margin-top: var(--size-md);
+  background: var(--background-primary);
+  color: var(--white);
+  text-transform: capitalize;
+
+}
+
+.cards-options-img img {
+   padding-right: var(--size-md);
 }

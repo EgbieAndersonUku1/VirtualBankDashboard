@@ -636,6 +636,7 @@
                                                 class="card-icon">
                                         </div>
                                         <div class="body">
+                                            <input type="hidden" name="card" value="card-number-here">
                                             <img src="static/images/icons/sim-card-chip.svg" alt="Sim card chip"
                                                 class="card-icon">
                                             <span class="card-type">Credit</span>
@@ -679,6 +680,7 @@
                         </div>
                     </section>
 
+                    <!-- The pin section -->
                     <div class="pin" id="pin">
                         <form id="pin-form" class="center">
 
@@ -696,6 +698,67 @@
                             </div>
                           </form>
                           
+                    </div>
+
+                    <!-- add new card -->
+
+                    <div class="card" id="new-card">
+                        <div class="logo center">EUSBC</div>
+
+                        <h3 class="capitalize center margin-bottom-sm">Create New Card</h3>
+                        <div class="cards-options-img center">
+                            <img src="static/images/icons/discover.svg" alt="discover" class="pin-image-icon">
+                            <img src="static/images/icons/visa.svg" alt="visa" class="pin-image-icon">
+                            <img src="static/images/icons/mastercard.svg" alt="discover" class="pin-image-icon">
+                        </div>
+                        <form action="/" method="post" id="card-form">
+                           <div class="card-number form-group card-details">
+                                <label for="card-number">Card number</label>
+                                <input type="tel" name="card-number" id="card-mumber">
+                           </div>
+
+                           <div class="two-column-grid">
+                                <div class="expiry-month card-details">
+                                    <label for="expiry-month">Expiry month</label>
+                                    <input type="number" name="expiry-month" id="expiry-month">
+                                </div>
+
+                                <div class="expiry-year card-details">
+                                    <label for="expiry-year">Expiry year</label>
+                                    <input type="number" name="expiry-year" id="expiry-year">
+                                </div>
+                           </div>
+
+                           <div class="triple-column-grid">
+
+                                <div class="card-type card-details">
+                                    <label for="card-option">Card options</label>
+                                    <select name="card-option" id="card-option">
+                                        <option value="visa">Visa</option>
+                                        <option value="mastercard">MasterCard</option>
+                                        <option value="discover">Discover</option>
+                                    </select>
+                                </div>
+
+                                <div class="card-type card-details">
+                                    <label for="card-type">Card Type</label>
+                                    <select name="card-type" id="card-type">
+                                        <option value="credit">Credit</option>
+                                        <option value="Debit">Debit</option>
+                                    </select>
+                                </div>
+
+                                <div class="cvc card-details">
+                                    <label for="cvc">CVC</label>
+                                     <input type="tel" name="cvc" id="cvc">
+                                </div>
+                              
+                           </div>
+
+                          <button type="submit" id="create-card-btn" class="btn-small">Create Card</button>
+                          <small class="red margin-top-sm center">This is a demo please do not enter your real details</small>
+                        </form>
+
                     </div>
 
     </main>
