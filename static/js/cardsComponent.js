@@ -10,7 +10,7 @@ const CARD_IMAGES = {
        
     },
 
-    masterCard: {
+    mastercard: {
         src: "static/images/icons/discover.svg",
         alt: "Mastercard logo",
     },
@@ -23,14 +23,6 @@ const CARD_IMAGES = {
 }
 
 
-
-/**
- * A set of utility functions for handling card elements.
- * 
- * The `cards` object provides methods to create a card and place a card element inside a specified location in the DOM.
- * 
- * @namespace cards
- */
 export const cards = {
 
     /**
@@ -43,7 +35,7 @@ export const cards = {
      * @param {Object} cardDetails - An object containing the details to create the card.
      * @returns {HTMLElement} The newly created card element.
      */
-    createCard: (cardDetails) => {
+    createCardDiv: (cardDetails) => {
         return createSingleCreateCard(cardDetails);
     },
 
@@ -58,19 +50,25 @@ export const cards = {
      * @param {HTMLElement} cardDiv - The card div element that will be added to the location div.
      */
     placeCardDivIn: (locationDiv, cardDiv) => {
+
         if (!checkIfHTMLElement(locationDiv, "Location card div") ||  !checkIfHTMLElement(cardDiv, "Card div element")) {
             logError("cards.placeCardDivIn", "An error occurred trying to place card div element inside the given location");
             return;
         }
-        locationDiv.appendChild(cardDiv);
-    },
 
-}
+        try {
+            locationDiv.appendChild(cardDiv);
+            return true;
+        } catch (error) {
+            logError("cards.placeCardDivIn", `An error occurred while appending the card div: ${error.message}`);
+            return false;
+        }
+    }
+};
 
 
 
-
-createSingleCreateCard(cardDetails) {
+function createSingleCreateCard(cardDetails) {
 
     const cardDiv        = document.createElement("div");
     const cardHeadDiv    = createCardHeadDiv(cardDetails)
@@ -81,10 +79,13 @@ createSingleCreateCard(cardDetails) {
     cardDiv.appendChild(cardBodyDiv);
     cardDiv.appendChild(cardFooterDiv);
 
-    cardDiv.classList.add("card", "bank-card", cardDetails.cardOptions);
+    cardDiv.classList.add("card", "bank-card", cardDetails.cardOption);
     cardDiv.ariaLabel = `${cardDetails} card`;
     return cardDiv;
 }
+
+
+
 
 
 function createCardHeadDiv(cardDetails) {
@@ -96,18 +97,18 @@ function createCardHeadDiv(cardDetails) {
     const imageElement           = createImageElementBasedOnCardType(cardDetails);
 
     headDivElement.classList.add("head", "flex-space-between");
-    cardAmountDivElement.add("card-amount", "flex-direction-column");
+    cardAmountDivElement.classList.add("card-amount", "flex-direction-column");
     
     spanCardAmountElement.className   = "card-amount";
     spanBankLogoElement.textContent   = cardDetails.bankName;
     spanCardAmountElement.textContent = cardDetails.cardAmount;
 
     cardAmountDivElement.appendChild(spanBankLogoElement);
-    cardAmountDivElement.appendChild(cardAmountDivElement);
+    cardAmountDivElement.appendChild(spanCardAmountElement);
 
     headDivElement.appendChild(cardAmountDivElement);
     headDivElement.appendChild(imageElement);
-
+    return headDivElement;
 }
 
 
@@ -124,13 +125,13 @@ function createCardBodyDiv(cardDetails) {
     spanCardTypeElement.textContent   = cardDetails.cardType;
     spanCardNumberElement.textContent = cardDetails.cardNumber;
     hiddenInputField.hidden           = true;
-    hiddenInputField.name             = "card"
+    hiddenInputField.name             = "card";
     hiddenInputField.value            = cardDetails.cardNumber;
 
     imgElement.className              = "card-icon";
     imgElement.alt                    = "Sim card chip";
 
-    spanCardTypeElement.className     = "card-type";
+    spanCardTypeElement.classList.add("card-type", "capitalize");
     spanCardTypeElement.textContent   = cardDetails.cardType;
 
     spanCardNumberElement.classList.add("card-account-number", "highlight-number");
@@ -148,13 +149,14 @@ function createCardBodyDiv(cardDetails) {
 
 function createImageElementBasedOnCardType(cardDetails) {
 
+
     const imgElement = document.createElement("img");
-    const cardType   = cardDetails.cardType.toLowerCase();
+    const cardOption  = cardDetails.cardOption.toLowerCase();
+    
+    if (CARD_IMAGES[cardOption]) {
 
-    if (CARD_IMAGES[cardType]) {
-
-        imgElement.src = CARD_IMAGES[cardType].src;
-        imgElement.alt = CARD_IMAGES[cardType].alt;
+        imgElement.src = CARD_IMAGES[cardOption].src;
+        imgElement.alt = CARD_IMAGES[cardOption].alt;
 
     } else {
 
@@ -179,13 +181,16 @@ function createFooterDiv(cardDetails) {
     footerDivElement.classList.add("footer", "flex-space-between", "padding-top-md");
     spanCardNameElement.classList.add("card-expiry", "capitalize");
 
+    spanCardExpiry.classList.add("card-expiry", "capitalize");
     spanCardExpiryDate.className    = "date";
+
+    spanCardExpiry.textContent      = "Expiry date"
     spanCardNameElement.textContent = cardDetails.cardName;
-    spanCardExpiryDate.textContent  = cardDetails.cardExpiryDate;
+    spanCardExpiryDate.textContent  = ` ${cardDetails.expiryMonth} ${cardDetails.expiryYear}`;
 
     footerDivElement.appendChild(spanCardNameElement);
-    spanCardExpiry.appendChild(spanCardExpiry);
-    footerDivElement.appendChild(spanCardExpiryDate);
+    spanCardExpiry.appendChild(spanCardExpiryDate);
+    footerDivElement.appendChild(spanCardExpiry);
 
     return footerDivElement;
 

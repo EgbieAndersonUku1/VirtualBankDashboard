@@ -20,10 +20,13 @@ import { handleProfileIconClick,
 
         } from "./notifications.js";
 
-import { handleWalletPin } from "./walletUI.js";
+import { handleWalletPin, handleAddNewCard } from "./walletUI.js";
+import { handleAddNewCardInputFields } from "./add-new-card.js";
+
 
 // elements
-const dashboardElement  = document.getElementById("virtualbank-dashboard");
+const dashboardElement       = document.getElementById("virtualbank-dashboard");
+const cardNumberInputElement = document.getElementById("card-number");
 
 
 // event listeners
@@ -54,6 +57,8 @@ function handleEventDelegation(e) {
     handleUserPostCodeInputField(e);
     handleProfileBtnClick(e);
     handleWalletPin(e);
+    handleAddNewCard(e);
+    handleAddNewCardInputFields(e);
         
 }
 

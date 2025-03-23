@@ -2,7 +2,8 @@
 import { excludeKey } from "./utils.js";
 import { generateRandomID } from "./utils.js";
 import { DataStorage } from "./baseDataStorage.js";
-
+import { getLocalStorage } from "./db.js";
+import { AmountManager } from "./baseAmountManager.js";
 
 const CARD_STORAGE_KEY = "cards";
 
@@ -58,7 +59,7 @@ export class Card extends DataStorage {
      */
     static createCard(cardHolderName, cardNumber, expiryMonth, expiryYear, cvc) {
 
-        if (!cardHolderName || !cardNumber || !expiryMonth || !expiryYear) {
+        if (!cardHolderName || !cardNumber || !expiryMonth || !expiryYear || !cvc) {
             throw Error(`One or more of the fields are missing. Cardholder: ${cardHolderName}, ${cardNumber}, ${expiryMonth}, ${expiryYear}, ${cvc}`);
         }
         if (Card._doesCardExists(cardNumber)) {
@@ -75,7 +76,7 @@ export class Card extends DataStorage {
         if (typeof storage !== "object") {
             return false;
         }
-        return storage[CARD_STORAGE_KEY]?.hasOwnProperty(cardNumber);
+        return storage[CARD_STORAGE_KEY]?.hasOwnProperty(cardNumber.trim());
     }
 
     static deleteCard(cardNumber) {
@@ -200,7 +201,7 @@ export class Card extends DataStorage {
     toJson() {
         return {
             cardHolderName: this.cardHolderName,
-            cardNumber: this.cardNumber,
+            cardNumber: this.cardNumber.trim(),
             expiryMonth: this.expiryMonth,
             expiryYear: this.expiryYear,
             isCardBlocked: this._isCardBlocked,

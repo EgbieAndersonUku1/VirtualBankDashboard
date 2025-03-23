@@ -125,6 +125,8 @@ select {
 }
 
 
+
+
 .flex-direction-column {
     display: flex;
     flex-direction: column;
@@ -459,6 +461,7 @@ select {
 
 .dropdown.show,
 .notification-dropdown.show,
+#new-card.show,
 .pin.show {
     border: 2px solid lavender;
     opacity: 1;
@@ -1117,14 +1120,21 @@ tr:hover {
     display: block;
 }
 
+.d-none {
+    display: none;
+}
+
 #new-card {
     position: fixed;
     top: 15%;
-    left: 32%;
+    left: 29%;
     background: white;
     padding: var(--size-lg);
     box-shadow: var(--box-shadow);
     border: 3px solid lavender;
+    /* opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease-in-out, visibility 0s 0.3s; */
 }
 
 #new-card label {
@@ -1149,9 +1159,29 @@ tr:hover {
   background: var(--background-primary);
   color: var(--white);
   text-transform: capitalize;
+  font-size: 1rem;
+  cursor: pointer;
 
 }
 
 .cards-options-img img {
    padding-right: var(--size-md);
+}
+
+#card-form input {
+    text-align: center;
+    font-size: 1rem;
+}
+
+input::placeholder {
+    opacity: 0.5;
+}
+
+#cardholder-name {
+    text-transform: capitalize;
+}
+
+.card-expiry, 
+.card-name {
+    font-size: 0.9rem;
 }

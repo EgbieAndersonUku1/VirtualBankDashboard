@@ -600,80 +600,10 @@
                                 <h3 class="center capitalize subtitle" id="linked-cards-heading">Linked Account Cards
                                 </h3>
 
-                                <div class="cards">
-                                    <!-- Visa Card -->
-                                    <div class="card bank-card visa" aria-label="Visa Card">
-                                        <div class="head flex-space-between">
-                                            <div class="card-amount flex-direction-column">
-                                                <span>EUSBC</span>
-                                                <span class="card-amount">£1,000.00</span>
-                                            </div>
-                                            <img src="static/images/icons/visa.svg" alt="Visa card logo"
-                                                class="card-icon">
-                                        </div>
-                                        <div class="body">
-                                            <img src="static/images/icons/sim-card-chip.svg" alt="Sim card chip"
-                                                class="card-icon">
-                                            <span class="card-type">Debit</span>
-                                            <span
-                                                class="card-account-number highlight-number">1234-5678-9101-1112</span>
-                                        </div>
-                                        <div class="footer flex-space-between padding-top-md">
-                                            <span class="card-name">Lois Lane</span>
-                                            <span class="card-expiry capitalize"><span class="date">expiry date
-                                                </span>09/2027</span>
-                                        </div>
-                                    </div>
+                                <div class="cards" id="cards">
+                                    
+                                    <!-- cards will be dynamically added -->
 
-                                    <!-- Discover Card -->
-                                    <div class="card bank-card discover" aria-label="Discover Card">
-                                        <div class="head flex-space-between">
-                                            <div class="card-amount flex-direction-column">
-                                                <span>EUSBC</span>
-                                                <span class="card-amount">£3,000.00</span>
-                                            </div>
-                                            <img src="static/images/icons/discover.svg" alt="Discover card logo"
-                                                class="card-icon">
-                                        </div>
-                                        <div class="body">
-                                            <input type="hidden" name="card" value="card-number-here">
-                                            <img src="static/images/icons/sim-card-chip.svg" alt="Sim card chip"
-                                                class="card-icon">
-                                            <span class="card-type">Credit</span>
-                                            <span
-                                                class="card-account-number highlight-number">1234-5678-9101-1112</span>
-                                        </div>
-                                        <div class="footer flex-space-between padding-top-md">
-                                            <span class="card-name">Clark Kent</span>
-                                            <span class="card-expiry capitalize"><span class="date">expiry date
-                                                </span>09/2027</span>
-                                        </div>
-                                    </div>
-
-                                    <!-- Mastercard -->
-                                    <div class="card bank-card mastercard" aria-label="Mastercard">
-                                        <div class="head flex-space-between">
-                                            <div class="card-amount flex-direction-column">
-                                                <span>EUSBC</span>
-                                                <span class="card-amount">£1,000.00</span>
-                                            </div>
-                                            <img src="static/images/icons/mastercard.svg" alt="Mastercard logo"
-                                                class="card-icon">
-                                        </div>
-                                        <div class="body">
-                                            <img src="static/images/icons/sim-card-chip.svg" alt="Sim card chip"
-                                                class="card-icon">
-
-                                            <span class="card-type">Debit</span>
-                                            <span
-                                                class="card-account-number highlight-number">1234-5678-9101-1112</span>
-                                        </div>
-                                        <div class="footer flex-space-between padding-top-md">
-                                            <span class="card-name">Egbie U</span>
-                                            <span class="card-expiry capitalize"><span class="date">expiry date
-                                                </span>09/2027</span>
-                                        </div>
-                                    </div>
                                 </div>
                             </div>
 
@@ -701,66 +631,121 @@
                     </div>
 
                     <!-- add new card -->
-
-                    <div class="card" id="new-card">
-                        <div class="logo center">EUSBC</div>
-
-                        <h3 class="capitalize center margin-bottom-sm">Create New Card</h3>
-                        <div class="cards-options-img center">
-                            <img src="static/images/icons/discover.svg" alt="discover" class="pin-image-icon">
-                            <img src="static/images/icons/visa.svg" alt="visa" class="pin-image-icon">
-                            <img src="static/images/icons/mastercard.svg" alt="discover" class="pin-image-icon">
+                    <div class="card" id="new-card" role="region" aria-labelledby="new-card-heading">
+                        <div class="logo center" aria-label="EUSBC Logo">EUSBC</div>
+                    
+                        <h3 class="capitalize center margin-bottom-sm" id="new-card-heading">Create New Card</h3>
+                        <p class="new-card-error red center d-none" id="new-card-error">One or more of the fields is not filled</p>
+                    
+                        <div class="cards-options-img center" aria-label="Supported Card Types">
+                            <img src="static/images/icons/discover.svg" alt="Discover Card" class="pin-image-icon">
+                            <img src="static/images/icons/visa.svg" alt="Visa Card" class="pin-image-icon">
+                            <img src="static/images/icons/mastercard.svg" alt="MasterCard" class="pin-image-icon">
                         </div>
-                        <form action="/" method="post" id="card-form">
-                           <div class="card-number form-group card-details">
-                                <label for="card-number">Card number</label>
-                                <input type="tel" name="card-number" id="card-mumber">
-                           </div>
+                    
+                        <form action="/" method="post" id="card-form" aria-describedby="form-description">
+                            <div class="card-number form-group two-column-grid">
 
-                           <div class="two-column-grid">
+                                <div class="cardholder-name card-details" id="cardholder-name">
+                                    <label for="cardholder-name">Card holder name</label>
+                                    <input type="text" name="card-name" id="cardholder-name" aria-required="true"
+                                                    autocomplete="cc-number" placeholder="John Smith..."
+                                                    minlength="3"
+                                                    maxlength="50"
+                                                    required
+                                                    >
+                                </div>
+
+                                <div class="card-number card-details">
+                                    <label for="card-number">Card number</label>
+                                    <input type="text" name="card-number" id="card-number" aria-required="true"
+                                                    autocomplete="cc-number" placeholder="1234 5678 9012 3456"
+                                                    minlength="19"
+                                                    maxlength="19"
+                                                    required
+                                                    >
+                                </div>
+                               
+                            </div>
+                    
+                            <div class="two-column-grid">
                                 <div class="expiry-month card-details">
                                     <label for="expiry-month">Expiry month</label>
-                                    <input type="number" name="expiry-month" id="expiry-month">
+                                    <select name="expiry-month" id="expiry-month" required>
+                                        <option value="" disabled selected>Select Month</option>
+                                        <option value="jan">Jan</option>
+                                        <option value="feb">Feb</option>
+                                        <option value="mar">Mar</option>
+                                        <option value="apr">Apr</option>
+                                        <option value="may">May</option>
+                                        <option value="jun">Jun</option>
+                                        <option value="jul">Jul</option>
+                                        <option value="aug">Aug</option>
+                                        <option value="sep">Sep</option>
+                                        <option value="oct">Oct</option>
+                                        <option value="nov">Nov</option>
+                                        <option value="dec">Dec</option>
+                                    </select>
+                                    
                                 </div>
-
+                    
                                 <div class="expiry-year card-details">
-                                    <label for="expiry-year">Expiry year</label>
-                                    <input type="number" name="expiry-year" id="expiry-year">
+                                    <label for="expiry-year">Expiry Year</label>
+                                    <select name="expiry-year" id="expiry-year" required>
+                                        <option value="" disabled selected>Select Year</option>
+                                        <!-- Generating years from 2025 to 2050 -->
+                                        <option value="2025">2025</option>
+                                        <option value="2026">2026</option>
+                                        <option value="2027">2027</option>
+                                        <option value="2028">2028</option>
+                                        <option value="2029">2029</option>
+                                        <option value="2030">2030</option>
+                                        <option value="2031">2031</option>
+                                        <option value="2032">2032</option>
+                                        <option value="2033">2033</option>
+                                        <option value="2034">2034</option>
+                                        <option value="2035">2035</option>
+                                        <option value="2036">2036</option>
+                                        <option value="2037">2037</option>
+                                        <option value="2038">2038</option>
+                                   
+                                    </select>
                                 </div>
-                           </div>
-
-                           <div class="triple-column-grid">
-
+                                
+                            </div>
+                    
+                            <div class="triple-column-grid">
                                 <div class="card-type card-details">
                                     <label for="card-option">Card options</label>
-                                    <select name="card-option" id="card-option">
+                                    <select name="card-option" id="card-option" aria-required="true" required>
                                         <option value="visa">Visa</option>
                                         <option value="mastercard">MasterCard</option>
                                         <option value="discover">Discover</option>
                                     </select>
                                 </div>
-
+                    
                                 <div class="card-type card-details">
                                     <label for="card-type">Card Type</label>
-                                    <select name="card-type" id="card-type">
+                                    <select name="card-type" id="card-type" aria-required="true" required>
                                         <option value="credit">Credit</option>
-                                        <option value="Debit">Debit</option>
+                                        <option value="debit">Debit</option>
                                     </select>
                                 </div>
-
+                    
                                 <div class="cvc card-details">
                                     <label for="cvc">CVC</label>
-                                     <input type="tel" name="cvc" id="cvc">
+                                    <input type="tel" name="cvc" id="cvc" aria-required="true" 
+                                    inputmode="numeric" autocomplete="cc-csc" 
+                                    placeholder="123" minlength="3" maxlength="3" required>
                                 </div>
-                              
-                           </div>
-
-                          <button type="submit" id="create-card-btn" class="btn-small">Create Card</button>
-                          <small class="red margin-top-sm center">This is a demo please do not enter your real details</small>
+                            </div>
+                    
+                            <button type="submit" id="create-card-btn" class="btn-small" aria-label="Create Card">Create Card</button>
+                            <small class="red margin-top-sm center" id="form-description">This is a demo, please do not enter your real details.</small>
                         </form>
-
                     </div>
-
+                    
+                 
     </main>
 
     <script src="static/js/script.js" type="module" defer></script>

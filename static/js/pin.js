@@ -3,6 +3,7 @@ import { checkIfHTMLElement, dimBackground } from "./utils.js";
 import { sanitizeText } from "./utils.js";
 import { Wallet } from "./wallet.js";
 import { logError } from "./logger.js";
+import { parseFormData } from "./formUtils.js";
 
 const pinElement           = document.getElementById("pin");
 const dimBackgroundElement = document.querySelector(".dim-background");
@@ -10,6 +11,7 @@ const pinFormElement       = document.getElementById("pin-form");
 const pinFormIconElement   = document.getElementById("pin-form-icon");
 const pinErrorMsg          = document.getElementById("pin-error-msg");
 const pinInputElement      = document.getElementById("pinInputField");
+const cardFormElement      = document.getElementById("card-form")
 
 
 const ADD_FUNDS_ID         = "add-funds";
@@ -21,7 +23,6 @@ validatePageElements();
 
 
 pinElement.addEventListener("submit", handlePinFormSubmission);
-
 
 export function handlePinShowage(e) {
    const id = e.target.id;
@@ -96,20 +97,11 @@ export function handleSantizationOfInputField(e) {
     if (e.target.id != PIN_ID) {
         return;
     }
-    const sanitizedText = sanitizeText(e.target.value, true);
-    e.target.value = sanitizedText;
+    e.target.value = sanitizeText(e.target.value, true);
+  
 
 }
 
-
-function validatePageElements() {
-    checkIfHTMLElement(pinElement, "Pin element");
-    checkIfHTMLElement(dimBackgroundElement, "Dim background element");
-    checkIfHTMLElement(pinFormElement, "Pin form element");
-    checkIfHTMLElement(pinFormIconElement, "pin icon element");
-    checkIfHTMLElement(pinErrorMsg, "The pin error message element");
-    checkIfHTMLElement(pinInputElement, "The pin input element")
-}
 
 
 function showUnlockIcon(show) {
@@ -143,4 +135,15 @@ function removePinForm() {
 function showInputErrorColor(show=true, color="red") {
     pinInputElement.style.borderColor  = show ? color : "black";
    
+}
+
+
+function validatePageElements() {
+    checkIfHTMLElement(pinElement, "Pin element");
+    checkIfHTMLElement(dimBackgroundElement, "Dim background element");
+    checkIfHTMLElement(pinFormElement, "Pin form element");
+    checkIfHTMLElement(pinFormIconElement, "pin icon element");
+    checkIfHTMLElement(pinErrorMsg, "The pin error message element");
+    checkIfHTMLElement(pinInputElement, "The pin input element");
+    checkIfHTMLElement(cardFormElement, "The card form element");
 }

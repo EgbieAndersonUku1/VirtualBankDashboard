@@ -2,6 +2,7 @@ import { Wallet } from "./wallet.js";
 import { BankAccount } from "./bankAccount.js";
 
 import { handlePinShowage, handlePinFormSubmission, handlePinFormClosure } from "./pin.js";
+import { handleCardFormSubmission } from "./add-new-card.js";
 import { logError } from "./logger.js";
 
 const SORT_CODE       = "400217";
@@ -20,7 +21,7 @@ document.addEventListener("DOMContentLoaded", handleInitialSetup);
 function handleInitialSetup() {
     
     console.log("Attempting to retrieve bank account information from localStorage...");
-    
+
     bankAccount = BankAccount.getByAccount(SORT_CODE, ACCOUNT_NUMBER);
     
     if (!bankAccount) {
@@ -57,6 +58,10 @@ export function handleWalletPin(e) {
     handlePinShowage(e);
     handlePinFormSubmission(e, wallet);
     handlePinFormClosure(e);
-
+    handleCardFormSubmission(e, wallet);
 }
 
+
+export function handleAddNewCard(e) {
+    handleCardFormSubmission(e);
+}
