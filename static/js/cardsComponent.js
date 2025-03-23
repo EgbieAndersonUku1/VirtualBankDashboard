@@ -11,7 +11,7 @@ const CARD_IMAGES = {
     },
 
     mastercard: {
-        src: "static/images/icons/discover.svg",
+        src: "static/images/icons/mastercard.svg",
         alt: "Mastercard logo",
     },
 
@@ -79,7 +79,8 @@ function createSingleCreateCard(cardDetails) {
     cardDiv.appendChild(cardBodyDiv);
     cardDiv.appendChild(cardFooterDiv);
 
-    cardDiv.classList.add("card", "bank-card", cardDetails.cardOption);
+    console.log(cardDetails.cardOption.toLowerCase())
+    cardDiv.classList.add("card", "bank-card", cardDetails.cardOption.toLowerCase());
     cardDiv.ariaLabel = `${cardDetails} card`;
     return cardDiv;
 }

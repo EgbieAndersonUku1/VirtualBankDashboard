@@ -1,14 +1,18 @@
 
-import { checkIfHTMLElement, dimBackground, applyDashToInput, sanitizeText  } from "./utils.js";
+import { checkIfHTMLElement, dimBackground, applyDashToInput, sanitizeText, toggleSpinner  } from "./utils.js";
 import { parseFormData } from "./formUtils.js";
 import { Card } from "./card.js";
 import { cards } from "./cardsComponent.js";
+import { AlertUtils } from "./alerts.js";
+import { logError } from "./logger.js";
+
 
 const cardFormElement        = document.getElementById("card-form");
-const formMsgErrorElement    = document.getElementById("new-card-error");
+const formMsgErrorElement    = document.getElementById("new-card-error-msg");
 const cardNumberInputElement =  document.getElementById("card-number");
-const cardsDiv               = document.getElementById("cards")
+const cardDisplayArea        = document.getElementById("cards")
 const submitBtnElement       = document.getElementById("create-card-btn");
+const spinnerElement         = document.querySelector(".spinner3")
 
 validatePageElements();
 
@@ -19,107 +23,73 @@ cardFormElement.addEventListener("submit", handleCardFormSubmission);
 submitBtnElement.addEventListener("click", handleSubmitBtnClick);
 
 
-function handleSubmitBtnClick(e) {
-    const CREATE_CARD_BTN_ID = "create-card-btn";
-
-    if (e.target.id === CREATE_CARD_BTN_ID) {
-        isSubmitButtonClick = true;
-    }
-}
-
 
 export function handleCardFormSubmission(e, wallet) {
 
     e.preventDefault();
 
     if (!cardFormElement.checkValidity() && isSubmitButtonClick) {
+
         isSubmitButtonClick = false;
-        showFormErrorMsg();
+        showFormErrorMsg(true, "One or more of the fields are invalid");
         return;
     }
 
     if (isSubmitButtonClick) {
 
-    showFormErrorMsg(false);
-    const formData = new FormData(cardFormElement);
-    const requiredFields = [
-                "card-name",
-                "card-number",
-                "expiry-month",
-                "expiry-year",
-                "card-option",
-                "card-type",
-                "cvc"
-        
-            ];
+        const parsedCardData = getParsedCardFormData();
+        const card           = generateCardFromParsedData(parsedCardData);
 
-     
-    const parsedFormData = parseFormData(formData, requiredFields);
-
-    let card;
-    try {
-        card = Card.createCard(parsedFormData.cardName, 
-            parsedFormData.cardNumber, 
-            parsedFormData.expiryMonth,
-            parsedFormData.expiryYear,
-            parsedFormData.cvc,
-            )
-    } catch (error) {
-        showFormErrorMsg(true, error.message);
-        return;
-    }
-  
-    
-    if (!card) {
-        logError("handleCardFormSubmission", "Something went wrong and the card object wasn't created");
-        return;
-    }
-
-    const isCardAdded = wallet.addCardToWallet(card.cardNumber);
-
-    if (!isCardAdded) {
-        logError("handleCardFormSubmission", "Something went wrong and the card wasn't added to the wallet");
-        return;
-    }
-
-
-    // add a couple of things amount = 0 since the card is newly created, the name of the card
-    parsedFormData.bankName   = "EUSBC";
-    parsedFormData.cardAmount = `£0.00`;
-
-    const cardCard = cards.createCardDiv(parsedFormData);
-
-    if (!cardCard) {
-        logError("handleCardFormSubmission", "Something went wrong and the HTML card wasn't created");
-        return;
-    }
-
-    if (isSubmitButtonClick) {
-        const isPlaced = cards.placeCardDivIn(cardsDiv, cardCard);
-        if (isPlaced) {
-            cardFormElement.reset();
-            showFormErrorMsg(false, '');
-            isSubmitButtonClick = false;
-            console.log("Added a card")
+        if (!card) {
+            logError("handleCardFormSubmission", "something went wrong and the card was created - likely card already exists");
+            return;
         }
-    }
-  
+
+        if (!addCardToUIWallet(wallet, card)) {
+            return;
+        }
+        
+        const cardComponentElement = cards.createCardDiv(parsedCardData);
+
+        if (!cardComponentElement) {
+            logError("handleCardFormSubmission", "Something went wrong and the HTML card wasn't created");
+            return;
+        }
+
+        if (isSubmitButtonClick) {
+
+            const TIME_IN_MS = 1000;
+            const isPlaced   = cards.placeCardDivIn(cardDisplayArea, cardComponentElement);
+
+            toggleSpinner(spinnerElement, isSubmitButtonClick)
+            disableCreateButton(isSubmitButtonClick);
+
+            setTimeout(() => {
+
+                if (isPlaced) {
+
+                    cardFormElement.reset();
+                    showFormErrorMsg(false, '');
+
+                    isSubmitButtonClick = false;
+                    toggleSpinner(spinnerElement, isSubmitButtonClick)
+                    disableCreateButton(isSubmitButtonClick);
+
+                    AlertUtils.showAlert({
+                        title: "Card Created Successfully",
+                        text: "Your card has been created and added to your wallet.",
+                        icon: "success",
+                        confirmButtonText: "Great!"
+                    });
+                    
+                }
+            }, TIME_IN_MS)
+        
+        }
     
-
- 
-   
-}
-
-  
-}
-
-function showFormErrorMsg(show=true, msg) {
-    if (msg) {
-        formMsgErrorElement.textContent = msg;
+    
     }
 
-    show ? formMsgErrorElement.classList.add("show") : formMsgErrorElement.classList.remove("show");
- 
 }
 
 
@@ -144,10 +114,98 @@ export function handleAddNewCardInputFields(e) {
 }
 
 
+function addCardToUIWallet(wallet, card) {
+   
+    try {
+        const isCardAdded = wallet.addCardToWallet(card.cardNumber);
+        if (!isCardAdded) {
+            const error = "Something went wrong and the card wasn't added to the wallet";
+            logError("handleCardFormSubmission", error);
+            showFormErrorMsg(true, error)
+            return false;
+        }
+        return true;
+    } catch (error) {
+        showFormErrorMsg(true, error.message);
+        return false
+    }
+
+    
+}
+
+
+function handleSubmitBtnClick(e) {
+    const CREATE_CARD_BTN_ID = "create-card-btn";
+
+    if (e.target.id === CREATE_CARD_BTN_ID) {
+        isSubmitButtonClick = true;
+    }
+}
+
+
+function getParsedCardFormData() {
+
+    const formData       = new FormData(cardFormElement);
+    const requiredFields = [
+                "card-name",
+                "card-number",
+                "expiry-month",
+                "expiry-year",
+                "card-option",
+                "card-type",
+                "cvc"
+        
+            ];
+
+    const parsedFormData      = parseFormData(formData, requiredFields);
+    parsedFormData.bankName   = "EUSBC";
+    parsedFormData.cardAmount = `£0.00`;
+    return parsedFormData;
+
+}
+
+
+function generateCardFromParsedData(parsedCardData) {
+
+    try {
+       return Card.createCard(parsedCardData.cardName, 
+            parsedCardData.cardNumber, 
+            parsedCardData.expiryMonth,
+            parsedCardData.expiryYear,
+            parsedCardData.cvc,
+            )
+        
+    } catch (error) {
+        // showFormErrorMsg(true, error.message);
+        return false;
+    }
+}
+
+
+function showFormErrorMsg(show=true, msg) {
+    if (msg) {
+        formMsgErrorElement.textContent = msg;
+    }
+
+    show ? formMsgErrorElement.classList.add("show") : formMsgErrorElement.classList.remove("show");
+ 
+}
+
+
+function disableCreateButton(disable=true) {
+    submitBtnElement.disabled      = disable;
+    submitBtnElement.style.opacity = disable ? "0.4" : "1";
+}
+
+
+
+
 function validatePageElements() {
     checkIfHTMLElement(cardFormElement, "The card form element");
     checkIfHTMLElement(formMsgErrorElement, "The form message element");
     checkIfHTMLElement(cardNumberInputElement, "The card number element");
-    checkIfHTMLElement(submitBtnElement, "The submit for creating card")
+    checkIfHTMLElement(submitBtnElement, "The submit for creating card");
+
+    
 }
 

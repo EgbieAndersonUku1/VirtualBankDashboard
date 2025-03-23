@@ -63,7 +63,7 @@ export class Card extends DataStorage {
             throw Error(`One or more of the fields are missing. Cardholder: ${cardHolderName}, ${cardNumber}, ${expiryMonth}, ${expiryYear}, ${cvc}`);
         }
         if (Card._doesCardExists(cardNumber)) {
-            throw new Error("Card already exists.");
+            throw new Error(`Card with account number ${cardNumber} already exists.`);
         }
         const card = new Card(cardHolderName, cardNumber, expiryMonth, expiryYear, cvc);
         card.save();
@@ -72,12 +72,23 @@ export class Card extends DataStorage {
 
     static _doesCardExists(cardNumber) {
         const storage = getLocalStorage(CARD_STORAGE_KEY);
-
-        if (typeof storage !== "object") {
+    
+        if (typeof storage !== "object" || storage === null) {
             return false;
         }
-        return storage[CARD_STORAGE_KEY]?.hasOwnProperty(cardNumber.trim());
+    
+        const trimmedCardNumber = cardNumber.trim();
+        const cardData          = storage[CARD_STORAGE_KEY] ? storage[CARD_STORAGE_KEY][trimmedCardNumber] : null;
+    
+        if (!cardData) {
+            console.log(`Card with number ${trimmedCardNumber} does not exist.`);
+            return false;
+        }
+        
+        console.log(`Card with number ${trimmedCardNumber} exists.`);
+        return true;
     }
+    
 
     static deleteCard(cardNumber) {
         const cardDetails = getLocalStorage(CARD_STORAGE_KEY);
@@ -93,24 +104,53 @@ export class Card extends DataStorage {
 
     }
 
+    static getAllUserCards(cardNumber, returnAsJson=false) {
 
-    /**
-     * Retrieves a card by its card number.
-     * @param {string} cardNumber - The card number to search for.
-     * @returns {Card|null} - The card instance, or null if not found.
-     */
-    static getByCardNumber(cardNumber) {
+        let cards       = Card._fetchCardFromStorage();
+        const userCards = [];
+
+        if (!cards) {
+            return userCards;
+        }
+        
+        cards = cards[cardNumber];
+
+        for (const cardObj in cards) {
+            if (returnAsJson) {
+                userCards.push(cardObj);
+            } else {
+                const card = Card.fromStorage(cardObj);
+                userCards.push(card);
+            }
+          
+        }
+        return userCards;
+    }
+
+    static _fetchCardFromStorage() {
         const cardDetails = getLocalStorage(CARD_STORAGE_KEY);
 
         if (Array.isArray(cardDetails) || typeof cardDetails !== "object") {
             logError("getByCardNumber", `Expected an object but got type ${cardDetails}`);
             return null;
         }
+        return cardDetails[CARD_STORAGE_KEY];
+    }
+    
+    /**
+     * Retrieves a card by its card number.
+     * @param {string} cardNumber - The card number to search for.
+     * @returns {Card|null} - The card instance, or null if not found.
+     */
+    static getByCardNumber(cardNumber) {
+        
+        const cards = Card._fetchCardFromStorage(cardNumber);
 
-        const userCard = cardDetails[CARD_STORAGE_KEY][cardNumber];
-        if (!userCard) {
+        if (!cards) {
             return null;
         }
+
+        const userCard = cards[cardNumber];
 
         const card = new Card(
             userCard.cardHolderName,

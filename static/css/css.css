@@ -619,6 +619,20 @@ select {
 }
 
 
+.spinner3 {
+    display: none;
+    width: 30px;
+    height: 30px;
+    border: 8px solid #f3f3f3;      /* Light grey */
+    border-top: 8px solid #3498db;  /* Blue */
+    border-radius: 50%;
+    animation: spin 1.5s linear infinite;
+    position: absolute;
+    left: 37%;
+    top: 0;
+
+}
+
 
 /* notification buttons */ 
 .mark-all-as-read-btn {
@@ -1116,6 +1130,9 @@ tr:hover {
     display: none;
 }
 
+
+
+.spinner3.show,
 .form-error-msg.show {
     display: block;
 }
@@ -1154,6 +1171,7 @@ tr:hover {
 }
 
 #create-card-btn {
+  position: relative;
   width: 100%;  
   margin-top: var(--size-md);
   background: var(--background-primary);
@@ -1161,6 +1179,7 @@ tr:hover {
   text-transform: capitalize;
   font-size: 1rem;
   cursor: pointer;
+  min-width: 30px;
 
 }
 
@@ -1184,4 +1203,12 @@ input::placeholder {
 .card-expiry, 
 .card-name {
     font-size: 0.9rem;
+}
+
+#new-card-error-msg {
+    display: none;
+}
+
+#new-card-error-msg.show {
+    display: block;
 }
