@@ -4,6 +4,7 @@ import { sanitizeText } from "./utils.js";
 import { Wallet } from "./wallet.js";
 import { logError } from "./logger.js";
 import { showNewCardForm} from "./add-new-card.js";
+import { AlertUtils } from "./alerts.js";
 
 
 const pinElement           = document.getElementById("pin");
@@ -46,6 +47,16 @@ export function handlePinShowage(e) {
      showNewCardForm(e);
      return;
      
+   }
+
+   if (id === ADD_FUNDS_ID || id === TRANSFER_FUNDS || id === REMOVE_CARD) {
+    AlertUtils.showAlert({
+        title: "Feature Not Implemented",
+        text: "You are seeing this because the functionality is not yet available.",
+        icon: "warning",
+        confirmButtonText: "OK",
+    });
+     return;
    }
  
 }
