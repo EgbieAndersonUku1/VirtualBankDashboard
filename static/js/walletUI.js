@@ -4,9 +4,9 @@ import { BankAccount } from "./bankAccount.js";
 
 import { handlePinShowage, handlePinFormSubmission, handlePinFormClosure } from "./pin.js";
 import { handleCardFormSubmission, showCardInUIWallet } from "./add-new-card.js";
-import { getLocalStorage } from "./db.js";
 import { logError } from "./logger.js";
 import { config } from "./config.js";
+
 const cardDisplayArea  = document.getElementById("cards")
 
 let bankAccount;
@@ -79,6 +79,7 @@ function loadUserCardsInUI(wallet) {
         cardData.bankName   = "EUSBC";
         cardData.cardAmount = formatCardBalance(card);
 
+        cardData.cardName   = card.cardHolderName;
         showCardInUIWallet(cardData, cardDisplayArea);
         
     }

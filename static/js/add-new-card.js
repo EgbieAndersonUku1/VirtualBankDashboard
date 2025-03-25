@@ -7,6 +7,7 @@ import { AlertUtils } from "./alerts.js";
 import { logError } from "./logger.js";
 import { notificationManager } from "./notificationManager.js";
 import { config } from "./config.js";
+import { warnError } from "./logger.js";
 
 
 const cardFormElement         = document.getElementById("card-form");
@@ -153,11 +154,30 @@ function addCardToUIWallet(wallet, card) {
         return true;
 
     } catch (error) {
+        const error1 = "You can only store a maximum of three cards.";
+        const error2 = "This card is already added to the wallet.";
+        const pattern = /^Expected a card number in form of a string but got card number with .*/;
+        const pattern2 = /^Cannot set properties of undefined \(setting '.*'\)$/;
 
-        logError("handleCardFormSubmission", error);
-        showFormErrorMsg(true, error.message);        
+        if (error.message.trim() === error1 || error.message.trim() === error2 || pattern.test(error.message)) {
+            logError("handleCardFormSubmission", error);
+            console.log("here");
+            showFormErrorMsg(true, error.message);
+            return false;
+        }
+
+        if (pattern2.test(error.message)) {
+            warnError("addCardToUIWallet", "An occurred because the wallet in the localstorage is out of sync")
+            showFormErrorMsg(true, "Oops something went wrong, refresh your web page and try again.");
+            removeWalletFromStorage();
+            return false;
+        }
+
+        showFormErrorMsg(true, error.message);
         return false;
-        
+       
+       
+
     }
 
 
