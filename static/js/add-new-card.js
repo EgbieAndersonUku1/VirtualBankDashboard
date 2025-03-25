@@ -142,11 +142,10 @@ function addCardToUIWallet(wallet, card) {
     try {
         const isCardAdded = wallet.addCardToWallet(card.cardNumber);
         if (!isCardAdded) {
-
+            
             const error = "Something went wrong and the card wasn't added to the wallet";
             logError("handleCardFormSubmission", error);
-            showFormErrorMsg(true, "An error occured, please refresh the page and try again");
-            removeWalletFromStorage();
+            showFormErrorMsg(true, error.message);
             return false;
         }
 
@@ -154,11 +153,9 @@ function addCardToUIWallet(wallet, card) {
         return true;
 
     } catch (error) {
-        
+
         logError("handleCardFormSubmission", error);
-        showFormErrorMsg(true, "An error occured, please refresh the page and try again");
-        removeWalletFromStorage();
-        
+        showFormErrorMsg(true, error.message);        
         return false;
         
     }
