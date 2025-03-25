@@ -4,9 +4,10 @@ import { logError } from "./logger.js";
 import { Card } from "./card.js";
 import { DataStorage } from "./baseDataStorage.js";
 import { AmountManager } from "./baseAmountManager.js";
+import { config } from "./config.js";
 
 
-const BANK_ACCOUNT_STORAGE_KEY = "bankAccount";
+const BANK_ACCOUNT_STORAGE_KEY = config.BANK_ACCOUNT_STORAGE_KEY;
 
 
 /*

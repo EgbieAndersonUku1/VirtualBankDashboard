@@ -3,6 +3,7 @@ import { parseFormData, populateForm, profileCache } from "./formUtils.js";
 import { isValidEmail } from "./emailValidator.js";
 import { notificationManager } from "./notificationManager.js";
 import { logError } from "./logger.js";
+import { config }  from "./config.js";
 
 
 const accountNameElement     = document.getElementById("account-name");
@@ -21,11 +22,10 @@ const formButtonElement      = document.getElementById("formBtn");
 
 validatePageElements();
 
-const PROFILE_KEY = "profile";
 
-notificationManager.setKey("notifications");
 
-profileCache.setStorageKey(PROFILE_KEY);
+notificationManager.setKey(config.NOTIFICATION_KEY);
+profileCache.setStorageKey(config.PROFILE_KEY);
 
 
 document.addEventListener("DOMContentLoaded", () => {

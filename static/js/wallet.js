@@ -2,11 +2,13 @@ import { Card } from "./card.js";
 import { BankAccount } from "./bankAccount.js";
 import { DataStorage } from "./baseDataStorage.js";
 import { AmountManager } from "./baseAmountManager.js";
-import { checkNumber, generateRandomID, getCombinedCode } from "./utils.js";
+import { checkNumber, generateRandomID } from "./utils.js";
 import { logError, warnError } from "./logger.js";
 import { getLocalStorage } from "./db.js";
+import { config } from "./config.js";
 
-const WALLET_STORAGE_KEY = "wallet";
+const WALLET_STORAGE_KEY = config.WALLET_STORAGE_KEY;
+
 
 export class Wallet extends DataStorage {
 
@@ -24,7 +26,6 @@ export class Wallet extends DataStorage {
         this._id                    = null;
         this._lastTransfer          = lastTransfer;
         this._lastAmountReceived    = lastAmountReceived;
-        this._numberOfCards         = numberOfCards;
         this._totalCards            = 0;
         this._MAXIMUM_CARDS_ALLOWED = 3;
         this._cards                 = {}; // For cache
@@ -34,6 +35,7 @@ export class Wallet extends DataStorage {
         this._amountManager         = new AmountManager(this._walletAmount);
         this._bankAccount           = bankAccount;
         this._linkBankAccountToWallet();
+        this._cardNumbers           = {};
     }
 
     /**
@@ -60,6 +62,12 @@ export class Wallet extends DataStorage {
     }
 
     /**
+     * Sets a wallet amount to the wallet
+     */
+    set walletAmount(walletAmount) {
+        this._walletAmount = walletAmount
+    }
+    /**
      * Retrieves the number of virtual cards attached to the wallet.
      * @returns {number} The number of cards in the wallet
     */
@@ -71,7 +79,7 @@ export class Wallet extends DataStorage {
      * Returns the account
      * @returns {number} The number of cards in the wallet
     */
-    get linkedAccountNumber() {
+    get linkedAccount() {
         return this._bankAccount.accountNumber;
     }
 
@@ -80,6 +88,13 @@ export class Wallet extends DataStorage {
      */
     get bankAccount() {
         return this._bankAccount;
+    }
+
+    /**
+     * Set the bank account to wallet
+     */
+    set bankAccount(bankAccount) {
+        this._bankAccount = bankAccount;
     }
 
     get pin() {
@@ -97,7 +112,7 @@ export class Wallet extends DataStorage {
      * set the account number for easy viewing
      * @returns {number} The number of cards in the wallet
     */
-    set linkedAccountNumber(accountNumber) {
+    set linkedAccount(accountNumber) {
         this._bankAccount.accountNumber = accountNumber
     }
 
@@ -113,14 +128,14 @@ export class Wallet extends DataStorage {
         const wallet = {
             lastTransfer: this._lastTransfer,
             lastAmountReceived: this._lastAmountReceived,
-            numberOfCards: this._numberOfCards,
             totalCards: this._totalCards,
             MAXIMUM_CARDS_ALLOWED: this._MAXIMUM_CARDS_ALLOWED,
             cards: this._cards,
-            linkedAccountNumber: this._linkedAccountNumber,
+            linkedAccount: this._linkedAccountNumber,
             id: this._id,
             pin: this.pin,
-            _walletAmount: this._amountManager.balance,
+            walletAmount: this._amountManager.balance,
+            cardNumbers: this._cardNumbers,
         }
         try {
             if (!this._bankAccount) {
@@ -133,7 +148,7 @@ export class Wallet extends DataStorage {
 
         }
 
-        wallet.bankAccount = this._bankAccount.toJson()
+        wallet.bankAccount = this._bankAccount;
         return wallet;
     }
 
@@ -173,7 +188,6 @@ export class Wallet extends DataStorage {
         this.save();
     }
 
-
     /**
      * Removes all cards from the wallet.
      * 
@@ -185,7 +199,6 @@ export class Wallet extends DataStorage {
         this._totalCards = 0;
         this.save()
     }
-
 
     /**
     * Updated the total cards count in the wallet.
@@ -358,7 +371,11 @@ export class Wallet extends DataStorage {
      */
     addCardToWallet(cardNumber) {
 
-        if (this._totalCards >= this._MAXIMUM_CARDS_ALLOWED) {
+        if (typeof cardNumber != "string") {
+            throw new Error(`Expected a card number in form of a string but got card number with type ${typeof cardNumber}`);
+        }
+
+        if (this.numOfCardsInWallet >= this._MAXIMUM_CARDS_ALLOWED) {
             throw new Error("You can only store a maximum of three cards.");
         }
 
@@ -367,14 +384,17 @@ export class Wallet extends DataStorage {
         }
 
         const card = Card.getByCardNumber(cardNumber);
-
-        if (card) {
-            this._cards[cardNumber] = card.toJson();  // localStorage can't save classes needs to be converted to json and then saved then rebuild when loaded
-            this._totalCards += 1;
-            this.save();
-            return card;
+        if (!card) {
+            warnError("addCardToWallet", "Failed to add card to the wallet");
+            return false;
         }
-        return false;
+
+        this._cards[cardNumber] = card;  
+        this._totalCards        += 1;
+        this._cardNumbers[card.cardNumber] = true; // reference to card added
+        this.save();
+        return card;
+        
     }
 
     /**
@@ -460,6 +480,9 @@ export class Wallet extends DataStorage {
         card.cardNumber = cardFromStorage.cardNumber;
         card.expiryMonth = cardFromStorage.expiryMonth;
         card.expiryYear = cardFromStorage.expiryYear;
+        card.cvc        = cardFromStorage.cvc;
+        card.cardType   = cardFromStorage.cardType;
+        card.cardOption = cardFromStorage.cardOption;
         card._amountManager.balance = cardFromStorage._balance;
         card._isCardBlocked = cardFromStorage.isCardBlocked;
         card._balance = cardFromStorage._balance
@@ -473,23 +496,9 @@ export class Wallet extends DataStorage {
      * @returns {Card[]} An array of Card objects in the wallet, or an empty array if no cards are found.
      */
     getAllCards() {
-        const cards = []
-        if (!this.numOfCardsInWallet) {
-            return cards;
-        }
-
-        const cardNumbers = Object.keys(this._cards)
-
-        cardNumbers.forEach((cardNumber) => {
-            const cardJson = this._cards[cardNumber];
-            const card = Object.assign(new Card, cardJson)
-            cards.push(card);
-        })
-
-        return cards;
+        return this._cards;
 
     }
-
 
     /**
      * Saves the wallet data to the localStorage.
@@ -507,20 +516,20 @@ export class Wallet extends DataStorage {
             this.pin = generateRandomID();
         }
 
-        return this.constructor.saveData(WALLET_STORAGE_KEY, this.linkedAccountNumber, this.toJson())
+        const saveAs = this.linkedAccount.accountNumber || this._bankAccount.accountNumber;
+
+        return this.constructor.saveData(WALLET_STORAGE_KEY, saveAs , this.toJson())
     }
 
     static loadWallet(sortCode, accountNumber) {
-
-        accountNumber = getCombinedCode(sortCode, accountNumber);
      
         if (!accountNumber || typeof accountNumber != "string" || accountNumber.trim() == "") {
             logError("Wallet.loadWallet", `Got an invalid accountNumber. Expected a string but got ${typeof accountNumber}`);
-            throw new Error("Invalid account string provided")
+            throw new Error("Invalid account string provided");
         }
-        const walletDataStorage = Wallet._getWalletData();
 
-      
+        const walletDataStorage = Wallet._getDataFromLocalStorage();
+
         if (!walletDataStorage) {
             warnError("Wallet.loadWallet", "The wallet data was not found");
             console.info("not found")
@@ -530,7 +539,7 @@ export class Wallet extends DataStorage {
         let userWalletData;
 
         try {
-            userWalletData = walletDataStorage[WALLET_STORAGE_KEY][accountNumber];
+            userWalletData = walletDataStorage[accountNumber];
         } catch (error) {
             warnError("Wallet.loadWallet", error.message)
             return null;
@@ -541,31 +550,51 @@ export class Wallet extends DataStorage {
             return null;
         }
 
-    
-        const requiredKeys = ['sortCode',
-            'accountNumber',
-            '_lastTransfer',
-            '_lastAmountReceived',
-            '_totalCards',
-            '_bankAccount',
-            '_cards',
-            '_linkedAccountNumber',
-            '_id',
+        const requiredKeys = [
+            'lastTransfer',
+            'lastAmountReceived',
+            'totalCards',
+            'bankAccount',
+            'linkedAccount',
+            'id',
             'pin',
             'walletAmount',
+            'cardNumbers',
         ];
 
-        const walletJson = super.fromStorage(userWalletData, requiredKeys);
-        const wallet = Object.assign(new Wallet, walletJson);
-        
-        wallet.linkedAccountNumber = BankAccount.getByAccount(sortCode, accountNumber);
 
-        if (!wallet.linkedAccountNumber) {
+        const walletJson     = super.fromStorage(userWalletData, requiredKeys);
+        const wallet         = Object.assign(new Wallet, walletJson);
+        wallet._cardNumbers  = walletJson.cardNumbers;
+        wallet.linkedAccount = BankAccount.getByAccount(sortCode, accountNumber);
+        wallet._totalCards   = walletJson.totalCards;
+        console.log(walletJson.totalCards)
+        wallet._populateCardsIntoWallet();
+
+
+        if (!wallet.linkedAccount) {
             warnError("Wallet.loadWallet", "The bank account wasn't loaded into the wallet.")
         }
-        wallet.save();
+        // wallet.save();
         return wallet;
 
+    }
+
+    /**
+     * Populates the wallet with Card objects based on the existing card numbers.
+     * Each card number is fetched and converted into a Card object using `Card.getByCardNumber`.
+     * 
+     * This method assumes that `_cards` contains a mapping of card numbers.
+     */
+    _populateCardsIntoWallet() {
+        if (this._cards) {
+            if (!this._cardNumbers) {
+                return;
+            }
+            Object.keys(this._cardNumbers).forEach(cardNumber => {
+                this._cards[cardNumber] = Card.getByCardNumber(cardNumber);
+            });
+        }
     }
 
     /**
@@ -587,25 +616,28 @@ export class Wallet extends DataStorage {
             logError("Wallet.hasUserWallet", `The account number provided is invalid: Got type ${typeof accountNumber} but expected string`);
             throw new TypeError("Invalid string");
         }
-        const walletStorage = Wallet._getWalletData();
+        const walletStorage = Wallet._getDataFromLocalStorage();
       
         if (!walletStorage) {
             warnError("Wallet.hasUserWallet", "The wallet storage in the local storage wasn't found");
             return null;
         }
         
-        return walletStorage[WALLET_STORAGE_KEY].hasOwnProperty(accountNumber.trim());
+        return walletStorage.hasOwnProperty(accountNumber.trim());
     }
 
-    static _getWalletData() {
-        return getLocalStorage(WALLET_STORAGE_KEY);
+    static _getDataFromLocalStorage() {
+        const walletData = getLocalStorage(WALLET_STORAGE_KEY)
+        if (walletData) {
+            return walletData[WALLET_STORAGE_KEY]
+        }
     }
 
     static createWallet(bankAccount, pin, initialAmount) {
-        const wallet = new Wallet(bankAccount);
-        wallet.pin = pin;
+        const wallet         = new Wallet(bankAccount);
+        wallet.pin           = pin;
         wallet._walletAmount = initialAmount;
-        wallet.linkedAccountNumber = bankAccount.accountNumber
+        wallet.linkedAccount = bankAccount.accountNumber
         wallet.save()
         return wallet
     }

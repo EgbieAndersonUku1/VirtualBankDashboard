@@ -125,6 +125,8 @@ select {
 }
 
 
+
+
 .flex-direction-column {
     display: flex;
     flex-direction: column;
@@ -254,6 +256,13 @@ select {
     column-gap: var(--size-sm);
 }
 
+.four-column-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: auto;
+    column-gap: var(--size-sm);
+}
+
 /* buttons */
 .button {
     background: #00eaff; /* Bright cyan */
@@ -281,6 +290,17 @@ select {
 .nav-icon:hover {
     transform: scale(1.1);
     opacity: 0.6;
+}
+
+.window-close-icon {
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
+}
+
+.window-close-icon:hover {
+    transform: rotate(360deg); 
+    transition: transform 0.3s ease-in-out; 
 }
 
 
@@ -452,6 +472,7 @@ select {
 
 .dropdown.show,
 .notification-dropdown.show,
+#new-card.show,
 .pin.show {
     border: 2px solid lavender;
     opacity: 1;
@@ -608,6 +629,20 @@ select {
     bottom: 50%;
 }
 
+
+.spinner3 {
+    display: none;
+    width: 30px;
+    height: 30px;
+    border: 8px solid #f3f3f3;      /* Light grey */
+    border-top: 8px solid #3498db;  /* Blue */
+    border-radius: 50%;
+    animation: spin 1.5s linear infinite;
+    position: absolute;
+    left: 37%;
+    top: 0;
+
+}
 
 
 /* notification buttons */ 
@@ -1106,6 +1141,85 @@ tr:hover {
     display: none;
 }
 
+
+
+.spinner3.show,
 .form-error-msg.show {
+    display: block;
+}
+
+.d-none {
+    display: none;
+}
+
+#new-card {
+    position: fixed;
+    top: 15%;
+    left: 29%;
+    background: white;
+    padding: var(--size-lg);
+    box-shadow: var(--box-shadow);
+    border: 3px solid lavender;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease-in-out, visibility 0s 0.3s;
+}
+
+#new-card label {
+    text-transform: capitalize;
+}
+
+#new-card h2 {
+    font-family: var(--font-roboto);
+}
+.card-details {
+    display: flex;
+    flex-direction: column;
+}
+
+#card-details {
+    width: 100%;
+}
+
+#create-card-btn {
+  position: relative;
+  width: 100%;  
+  margin-top: var(--size-md);
+  background: var(--background-primary);
+  color: var(--white);
+  text-transform: capitalize;
+  font-size: 1rem;
+  cursor: pointer;
+  min-width: 30px;
+
+}
+
+.cards-options-img img {
+   padding-right: var(--size-md);
+}
+
+#card-form input {
+    text-align: center;
+    font-size: 1rem;
+}
+
+input::placeholder {
+    opacity: 0.5;
+}
+
+#cardholder-name {
+    text-transform: capitalize;
+}
+
+.card-expiry, 
+.card-name {
+    font-size: 0.9rem;
+}
+
+#new-card-error-msg {
+    display: none;
+}
+
+#new-card-error-msg.show {
     display: block;
 }

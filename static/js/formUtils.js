@@ -49,7 +49,7 @@ export function parseFormData(formData, requiredFields = []) {
             throw new Error(`Missing or empty required field: ${field}`);
         }
         
-        const camelCaseField = field.replace(/_([a-z])/g, (_, char) => char.toUpperCase());
+        const camelCaseField = field.toLowerCase().replace(/[-_](.)/g, (_, char) => char.toUpperCase());
         result[camelCaseField] = value;
     }
 
