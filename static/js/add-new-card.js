@@ -8,6 +8,7 @@ import { logError } from "./logger.js";
 import { notificationManager } from "./notificationManager.js";
 import { config } from "./config.js";
 import { warnError } from "./logger.js";
+import { walletDashboard } from "./walletUI.js";
 
 
 const cardFormElement         = document.getElementById("card-form");
@@ -93,7 +94,8 @@ export function handleCardFormSubmission(e, wallet) {
 
                 const notificationMsg = `A new card with the number #${parsedCardData.cardNumber} has been added to your account`;
                 notificationManager.add(notificationMsg);
-            
+                
+                walletDashboard.updateNumOfCardsText(wallet);
                 AlertUtils.showAlert({
                     title: "Card Created Successfully",
                     text: "Your card has been added to your wallet, and a notification has been sent.",
@@ -161,7 +163,6 @@ function addCardToUIWallet(wallet, card) {
 
         if (error.message.trim() === error1 || error.message.trim() === error2 || pattern.test(error.message)) {
             logError("handleCardFormSubmission", error);
-            console.log("here");
             showFormErrorMsg(true, error.message);
             return false;
         }
@@ -169,6 +170,12 @@ function addCardToUIWallet(wallet, card) {
         if (pattern2.test(error.message)) {
             warnError("addCardToUIWallet", "An occurred because the wallet in the localstorage is out of sync")
             showFormErrorMsg(true, "Oops something went wrong, refresh your web page and try again.");
+            AlertUtils.showAlert({title: "An error occurred",
+                                  text: "Oops something went wrong, refresh your web page and try again.",
+                                  icon: "error",
+                                  confirmButtonText: "Sorry!",
+
+            })
             removeWalletFromStorage();
             return false;
         }

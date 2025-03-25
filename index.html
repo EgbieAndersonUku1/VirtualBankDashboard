@@ -448,39 +448,39 @@
 
                                 <div class="wallet-card" role="region" aria-labelledby="wallet-heading">
                                     <div class="head flex-space-between">
-                                        <p>Hi, <span aria-label="User's name" id="account-holder-name">John Smith</span>
+                                        <p>Hi, <span aria-label="User's name" id="wallet__holder-name" class="wallet__holder-name">John Smith</span>
                                         </p>
-                                        <p>Maximum cards: <span>3/3</span></p>
+                                        <p>Maximum cards: <span class="wallet wallet__total-cards">0/3</span></p>
                                     </div>
 
                                     <hr>
                                     <div class="body padding-bottom-md padding-top-md">
                                         <div class="account-balance">
                                             <p>Account Balance</p>
-                                            <span id="bank-amount" aria-live="polite">£15,000,000</span>
+                                            <span id="bank-amount" aria-live="polite" class="wallet__bank-amount">£0.00</span>
                                         </div>
 
                                         <div id="transactions">
 
                                             <div class="transfer">
                                                 <p>Last transfer</p>
-                                                <span id="last-transfer" class="amount" aria-live="polite">£500</span>
+                                                <span id="last-transfer" class="amount wallet__last-transfer" aria-live="polite">£0.00</span>
                                             </div>
 
                                             <div class="received">
                                                 <p>Last received</p>
-                                                <span id="last-received" class="amount" aria-live="polite">£500</span>
+                                                <span id="last-received" class="amount wallet__last-received" aria-live="polite">£0.00</span>
                                             </div>
 
                                             <div class="received">
                                                 <p>Number of cards</p>
-                                                <span id="number-of-cards" class="amount" aria-live="polite">3</span>
+                                                <span id="wallet__number-of-cards" class="amount wallet__num-of-cards" aria-live="polite">0</span>
                                             </div>
 
                                             <div class="received">
                                                 <p>Cards amount</p>
-                                                <span id="total-amount-in-cards" class="amount"
-                                                    aria-live="polite">£5,000</span>
+                                                <span id="total-amount-in-cards" class="amount wallet__cards-amount"
+                                                    aria-live="polite">£0.00</span>
                                             </div>
                                         </div>
                                     </div>

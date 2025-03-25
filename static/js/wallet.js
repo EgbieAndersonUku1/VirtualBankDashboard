@@ -101,6 +101,13 @@ export class Wallet extends DataStorage {
         return this._pin
     }
 
+    /**
+     * Return the maximum amount of cards allowed in the wallet.
+     */
+    get maximumCardsAllow() {
+        return this._MAXIMUM_CARDS_ALLOWED;
+    }
+
     set pin(pin) {
         if (!checkNumber(pin).isNumber) {
             logError("Wallet.SetPin", `The pin must be an integer. Expected a number but got type ${typeof pin}`);

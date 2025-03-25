@@ -1,13 +1,28 @@
 import { Wallet } from "./wallet.js";
 import { BankAccount } from "./bankAccount.js";
-
-
+import { profileCache } from "./formUtils.js";
 import { handlePinShowage, handlePinFormSubmission, handlePinFormClosure } from "./pin.js";
 import { handleCardFormSubmission, showCardInUIWallet } from "./add-new-card.js";
 import { logError } from "./logger.js";
 import { config } from "./config.js";
+import { getCombinedCode as combineFirstAndLastName, checkIfHTMLElement, getCombinedCode, toTitle } from "./utils.js";
 
-const cardDisplayArea  = document.getElementById("cards")
+const cardDisplayArea  = document.getElementById("cards");
+
+const walletNameElement             = document.querySelector(".wallet__holder-name");
+const walletTotalsCardAmountElement = document.querySelector(".wallet__cards-amount");
+const walletTotalCardsElement       = document.querySelector(".wallet__total-cards");
+const walletAmountElement           = document.querySelector(".wallet__bank-amount");
+const walletLastTransferElement     = document.querySelector(".wallet__last-transfer");
+const walletLastReceivedElement     = document.querySelector(".wallet__last-received");
+const walletNumCardsAddedElement    = document.querySelector(".wallet__num-of-cards");
+
+
+validatePageElements();
+
+
+profileCache.setStorageKey(config.PROFILE_KEY);
+
 
 let bankAccount;
 let wallet;
@@ -50,6 +65,7 @@ function handleInitialSetup() {
     console.log("Wallet and bank account successfully loaded.");
 
     loadUserCardsInUI(wallet);
+    updateAllWalletDashoardText(wallet)
 }
 
 
@@ -98,3 +114,50 @@ function formatCardBalance(card, currency="£") {
     return `${currency}${card.balance.toFixed(2)}`;
 }
 
+
+
+export const walletDashboard = {
+    updateNumOfCardsText(wallet) {
+        walletNumCardsAddedElement.textContent = wallet.numOfCardsInWallet;
+        walletTotalCardsElement.textContent    = `${wallet.numOfCardsInWallet}/${wallet.maximumCardsAllow}`;
+        console.log(wallet.numOfCardsInWallet)
+    },
+
+    updateLastTransferText(wallet) {
+
+    },
+
+    updateLastReceivedText(wallet) {},
+
+    updateTotalCardAmountText(wallet) {},
+
+    updateAccountBalanceText(wallet) {},
+
+    updateWalletDashboardNameText(profile) {}
+};
+
+
+function updateAllWalletDashoardText(wallet) {
+    const profile = profileCache.getProfileData();
+    walletDashboard.updateNumOfCardsText(wallet);
+    
+    try {
+        const fullName                = getCombinedCode(toTitle(profile.firstName), toTitle(profile.surname));
+        walletNameElement.textContent = fullName;
+    } catch (error) {
+        walletNameElement.textContent = "User";
+    }
+   
+ 
+}
+
+
+function validatePageElements() {
+    checkIfHTMLElement(walletNameElement, "The wallet holder name element for wallet dashboard");
+    checkIfHTMLElement(walletTotalsCardAmountElement, "The total card element for wallet dashboard");
+    checkIfHTMLElement(walletAmountElement, "The bank amount element for wallet dashboard");
+    checkIfHTMLElement(walletLastTransferElement, "The last transfer element for wallet dashboard");
+    checkIfHTMLElement(walletLastReceivedElement, "The last received element for wallet dashboard");
+    checkIfHTMLElement(walletNumCardsAddedElement, "The number of cards added element for wallet dashboard");
+    checkIfHTMLElement(walletTotalCardsElement, "The total amount of cards e.g 1/3 element")
+}
