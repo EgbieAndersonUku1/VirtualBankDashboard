@@ -145,8 +145,7 @@ function addCardToUIWallet(wallet, card) {
             
             const error = "Something went wrong and the card wasn't added to the wallet";
             logError("handleCardFormSubmission", error);
-            showFormErrorMsg(true, "An error occured, please refresh the page and try again");
-            // removeWalletFromStorage(); // uncomment this if an error occurs run and then comment it again
+            showFormErrorMsg(true, error.message);
             return false;
         }
 
@@ -156,9 +155,7 @@ function addCardToUIWallet(wallet, card) {
     } catch (error) {
 
         logError("handleCardFormSubmission", error);
-        showFormErrorMsg(true, "An error occured, please refresh the page and try again");
-        removeWalletFromStorage();
-        
+        showFormErrorMsg(true, error.message);        
         return false;
         
     }
