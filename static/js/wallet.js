@@ -2,11 +2,13 @@ import { Card } from "./card.js";
 import { BankAccount } from "./bankAccount.js";
 import { DataStorage } from "./baseDataStorage.js";
 import { AmountManager } from "./baseAmountManager.js";
-import { checkNumber, generateRandomID, getCombinedCode } from "./utils.js";
+import { checkNumber, generateRandomID } from "./utils.js";
 import { logError, warnError } from "./logger.js";
 import { getLocalStorage } from "./db.js";
+import { config } from "./config.js";
 
-const WALLET_STORAGE_KEY = "wallet";
+const WALLET_STORAGE_KEY = config.WALLET_STORAGE_KEY;
+
 
 export class Wallet extends DataStorage {
 
@@ -33,6 +35,7 @@ export class Wallet extends DataStorage {
         this._amountManager         = new AmountManager(this._walletAmount);
         this._bankAccount           = bankAccount;
         this._linkBankAccountToWallet();
+        this._cardNumbers           = {};
     }
 
     /**
@@ -132,6 +135,7 @@ export class Wallet extends DataStorage {
             id: this._id,
             pin: this.pin,
             walletAmount: this._amountManager.balance,
+            cardNumbers: this._cardNumbers,
         }
         try {
             if (!this._bankAccount) {
@@ -184,7 +188,6 @@ export class Wallet extends DataStorage {
         this.save();
     }
 
-
     /**
      * Removes all cards from the wallet.
      * 
@@ -196,7 +199,6 @@ export class Wallet extends DataStorage {
         this._totalCards = 0;
         this.save()
     }
-
 
     /**
     * Updated the total cards count in the wallet.
@@ -369,7 +371,11 @@ export class Wallet extends DataStorage {
      */
     addCardToWallet(cardNumber) {
 
-        if (this._totalCards >= this._MAXIMUM_CARDS_ALLOWED) {
+        if (typeof cardNumber != "string") {
+            throw new Error(`Expected a card number in form of a string but got card number with type ${typeof cardNumber}`);
+        }
+
+        if (this.numOfCardsInWallet >= this._MAXIMUM_CARDS_ALLOWED) {
             throw new Error("You can only store a maximum of three cards.");
         }
 
@@ -378,14 +384,17 @@ export class Wallet extends DataStorage {
         }
 
         const card = Card.getByCardNumber(cardNumber);
-
-        if (card) {
-            this._cards[cardNumber] = card.toJson();  // localStorage can't save classes needs to be converted to json and then saved then rebuild when loaded
-            this._totalCards += 1;
-            this.save();
-            return card;
+        if (!card) {
+            warnError("addCardToWallet", "Failed to add card to the wallet");
+            return false;
         }
-        return false;
+
+        this._cards[cardNumber] = card;  
+        this._totalCards        += 1;
+        this._cardNumbers[card.cardNumber] = true; // reference to card added
+        this.save();
+        return card;
+        
     }
 
     /**
@@ -471,6 +480,9 @@ export class Wallet extends DataStorage {
         card.cardNumber = cardFromStorage.cardNumber;
         card.expiryMonth = cardFromStorage.expiryMonth;
         card.expiryYear = cardFromStorage.expiryYear;
+        card.cvc        = cardFromStorage.cvc;
+        card.cardType   = cardFromStorage.cardType;
+        card.cardOption = cardFromStorage.cardOption;
         card._amountManager.balance = cardFromStorage._balance;
         card._isCardBlocked = cardFromStorage.isCardBlocked;
         card._balance = cardFromStorage._balance
@@ -484,23 +496,9 @@ export class Wallet extends DataStorage {
      * @returns {Card[]} An array of Card objects in the wallet, or an empty array if no cards are found.
      */
     getAllCards() {
-        const cards = []
-        if (!this.numOfCardsInWallet) {
-            return cards;
-        }
-
-        const cardNumbers = Object.keys(this._cards)
-
-        cardNumbers.forEach((cardNumber) => {
-            const cardJson = this._cards[cardNumber];
-            const card = Object.assign(new Card, cardJson)
-            cards.push(card);
-        })
-
-        return cards;
+        return this._cards;
 
     }
-
 
     /**
      * Saves the wallet data to the localStorage.
@@ -557,26 +555,46 @@ export class Wallet extends DataStorage {
             'lastAmountReceived',
             'totalCards',
             'bankAccount',
-            'cards',
             'linkedAccount',
             'id',
             'pin',
             'walletAmount',
+            'cardNumbers',
         ];
 
 
-        const walletJson = super.fromStorage(userWalletData, requiredKeys);
-
-        const wallet = Object.assign(new Wallet, walletJson);
-        
+        const walletJson     = super.fromStorage(userWalletData, requiredKeys);
+        const wallet         = Object.assign(new Wallet, walletJson);
+        wallet._cardNumbers  = walletJson.cardNumbers;
         wallet.linkedAccount = BankAccount.getByAccount(sortCode, accountNumber);
+        wallet._totalCards   = walletJson.totalCards;
+        console.log(walletJson.totalCards)
+        wallet._populateCardsIntoWallet();
+
 
         if (!wallet.linkedAccount) {
             warnError("Wallet.loadWallet", "The bank account wasn't loaded into the wallet.")
         }
-        wallet.save();
+        // wallet.save();
         return wallet;
 
+    }
+
+    /**
+     * Populates the wallet with Card objects based on the existing card numbers.
+     * Each card number is fetched and converted into a Card object using `Card.getByCardNumber`.
+     * 
+     * This method assumes that `_cards` contains a mapping of card numbers.
+     */
+    _populateCardsIntoWallet() {
+        if (this._cards) {
+            if (!this._cardNumbers) {
+                return;
+            }
+            Object.keys(this._cardNumbers).forEach(cardNumber => {
+                this._cards[cardNumber] = Card.getByCardNumber(cardNumber);
+            });
+        }
     }
 
     /**
@@ -616,8 +634,8 @@ export class Wallet extends DataStorage {
     }
 
     static createWallet(bankAccount, pin, initialAmount) {
-        const wallet = new Wallet(bankAccount);
-        wallet.pin = pin;
+        const wallet         = new Wallet(bankAccount);
+        wallet.pin           = pin;
         wallet._walletAmount = initialAmount;
         wallet.linkedAccount = bankAccount.accountNumber
         wallet.save()

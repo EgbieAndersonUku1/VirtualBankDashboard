@@ -632,6 +632,9 @@
 
                     <!-- add new card -->
                     <div class="card" id="new-card" role="region" aria-labelledby="new-card-heading">
+                        <div class="window-close flex-end">
+                            <img src="static/images/icons/window-close.svg" alt="Window" class="icon window-close-icon" id="window-close-icon">
+                        </div>
                         <div class="logo center" aria-label="EUSBC Logo">EUSBC</div>
                     
                         <h3 class="capitalize center margin-bottom-sm" id="new-card-heading">Create New Card</h3>
@@ -715,9 +718,10 @@
                             </div>
                     
                             <div class="triple-column-grid">
+                                
                                 <div class="card-type card-details">
-                                    <label for="card-option">Card options</label>
-                                    <select name="card-option" id="card-option" aria-required="true" required>
+                                    <label for="card-brand">Card options</label>
+                                    <select name="card-brand" id="card-brand" aria-required="true" required>
                                         <option value="" disabled selected>Card selection</option>
                                         <option value="visa">Visa</option>
                                         <option value="mastercard">MasterCard</option>

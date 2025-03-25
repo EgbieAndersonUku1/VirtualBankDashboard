@@ -79,8 +79,8 @@ function createSingleCreateCard(cardDetails) {
     cardDiv.appendChild(cardBodyDiv);
     cardDiv.appendChild(cardFooterDiv);
 
-    console.log(cardDetails.cardOption.toLowerCase())
-    cardDiv.classList.add("card", "bank-card", cardDetails.cardOption.toLowerCase());
+    console.log(cardDetails.cardBrand.toLowerCase())
+    cardDiv.classList.add("card", "bank-card", cardDetails.cardBrand.toLowerCase());
     cardDiv.ariaLabel = `${cardDetails} card`;
     return cardDiv;
 }
@@ -152,12 +152,12 @@ function createImageElementBasedOnCardType(cardDetails) {
 
 
     const imgElement = document.createElement("img");
-    const cardOption  = cardDetails.cardOption.toLowerCase();
+    const cardBrand  = cardDetails.cardBrand.toLowerCase();
     
-    if (CARD_IMAGES[cardOption]) {
+    if (CARD_IMAGES[cardBrand]) {
 
-        imgElement.src = CARD_IMAGES[cardOption].src;
-        imgElement.alt = CARD_IMAGES[cardOption].alt;
+        imgElement.src = CARD_IMAGES[cardBrand].src;
+        imgElement.alt = CARD_IMAGES[cardBrand].alt;
 
     } else {
 

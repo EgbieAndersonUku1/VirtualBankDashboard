@@ -3,7 +3,8 @@ import { checkIfHTMLElement, dimBackground } from "./utils.js";
 import { sanitizeText } from "./utils.js";
 import { Wallet } from "./wallet.js";
 import { logError } from "./logger.js";
-import { parseFormData } from "./formUtils.js";
+import { showNewCardForm} from "./add-new-card.js";
+
 
 const pinElement           = document.getElementById("pin");
 const dimBackgroundElement = document.querySelector(".dim-background");
@@ -24,6 +25,8 @@ validatePageElements();
 
 pinElement.addEventListener("submit", handlePinFormSubmission);
 
+let PIN_ENTERED = false;
+
 export function handlePinShowage(e) {
    const id = e.target.id;
 
@@ -31,14 +34,28 @@ export function handlePinShowage(e) {
         return;
    }
 
-   showPinErrorMsg('', false);
-   pinElement.classList.add("show");
-   dimBackground(dimBackgroundElement, true);
+   if (!PIN_ENTERED) {
+        showPinErrorMsg('', false);
+        pinElement.classList.add("show");
+        dimBackground(dimBackgroundElement, true);
+        return;
+   }
 
+   if (id === ADD_NEW_CARD) {
+     dimBackground(dimBackgroundElement, true);
+     showNewCardForm(e);
+     return;
+     
+   }
+ 
 }
 
 
 export function handlePinFormSubmission(e, wallet) {
+    
+    if (e.target.id == null) {
+        return;
+    }
     e.preventDefault();
     const TIME_IN_MS = 1000;
 
@@ -70,9 +87,10 @@ export function handlePinFormSubmission(e, wallet) {
     showPinErrorMsg('', false);
 
     if (isCorrect && pinFormElement.checkValidity()) {
-       
+        PIN_ENTERED = true;
         setTimeout(() => {
             removePinForm();
+
             }, TIME_IN_MS);
         
     }

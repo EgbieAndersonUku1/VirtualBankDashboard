@@ -292,6 +292,17 @@ select {
     opacity: 0.6;
 }
 
+.window-close-icon {
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
+}
+
+.window-close-icon:hover {
+    transform: rotate(360deg); 
+    transition: transform 0.3s ease-in-out; 
+}
+
 
 
 /* The virtual bank dashboard */
@@ -1149,9 +1160,9 @@ tr:hover {
     padding: var(--size-lg);
     box-shadow: var(--box-shadow);
     border: 3px solid lavender;
-    /* opacity: 0;
+    opacity: 0;
     visibility: hidden;
-    transition: opacity 0.3s ease-in-out, visibility 0s 0.3s; */
+    transition: opacity 0.3s ease-in-out, visibility 0s 0.3s;
 }
 
 #new-card label {

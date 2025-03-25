@@ -21,7 +21,8 @@ import { handleProfileIconClick,
         } from "./notifications.js";
 
 import { handleWalletPin, handleAddNewCard } from "./walletUI.js";
-import { handleAddNewCardInputFields } from "./add-new-card.js";
+import { handleAddNewCardInputFields, handleNewCardCloseIcon, handleCVCInputField } from "./add-new-card.js";
+
 
 
 // elements
@@ -59,6 +60,8 @@ function handleEventDelegation(e) {
     handleWalletPin(e);
     handleAddNewCard(e);
     handleAddNewCardInputFields(e);
+    handleNewCardCloseIcon(e);
+    handleCVCInputField(e);
         
 }
 

@@ -26,7 +26,7 @@ export class AmountManager {
     addAmount(amount) {
         this.validateAmount(amount);
         this._balance += amount;
-        this._setBalanceToDecimalPlaces();
+       
     }
 
     /**
@@ -43,7 +43,6 @@ export class AmountManager {
             throw new Error(`Insufficient funds for this operation. Amount to transfer: ${amount}, balance: ${this._balance}`);
         }
         this._balance -= amount;
-        this._setBalanceToDecimalPlaces();
     }
 
     /**
@@ -52,6 +51,7 @@ export class AmountManager {
      * @returns {number} The current balance.
      */
     get balance() {
+        this._setBalanceToDecimalPlaces();
         return this._balance;
     }
 
@@ -62,6 +62,7 @@ export class AmountManager {
      */
     set balance(balance) {
         this._balance = balance;
+        this._setBalanceToDecimalPlaces();
     }
 
     /**
