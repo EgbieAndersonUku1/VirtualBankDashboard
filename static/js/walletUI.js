@@ -6,6 +6,7 @@ import { handleCardFormSubmission, showCardInUIWallet } from "./add-new-card.js"
 import { logError } from "./logger.js";
 import { config } from "./config.js";
 import { getCombinedCode as combineFirstAndLastName, checkIfHTMLElement, getCombinedCode, toTitle } from "./utils.js";
+import { Card } from "./card.js";
 
 const cardDisplayArea  = document.getElementById("cards");
 
@@ -71,8 +72,7 @@ function handleInitialSetup() {
 
 
 export function handleWalletPin(e) {
-    handlePinShowage(e);
-    handlePinFormClosure(e);
+    handlePinShowage(e, wallet);
     handlePinFormClosure(e);
     handlePinFormSubmission(e, wallet)
     
@@ -90,16 +90,24 @@ function loadUserCardsInUI(wallet) {
 
     for (const cardNumber in cards) {
 
-        const card          = cards[cardNumber];
-        const cardData      = card.toJson()
-        cardData.bankName   = "EUSBC";
-        cardData.cardAmount = formatCardBalance(card);
-
-        cardData.cardName   = card.cardHolderName;
+        const card      = cards[cardNumber];
+        const cardData  = prepareCardData(card);
         showCardInUIWallet(cardData, cardDisplayArea);
         
     }
     
+}
+
+export function prepareCardData(card)  {
+    if (!(card instanceof Card)) {
+        logError("prepareCardData", "Card data is not an object");
+        return
+    }
+    const cardData      = card.toJson();
+    cardData.bankName   = "EUSBC";
+    cardData.cardAmount = formatCardBalance(card);
+    cardData.cardName   = card.cardHolderName;
+    return cardData;
 }
 
 
@@ -142,7 +150,7 @@ function updateAllWalletDashoardText(wallet) {
     walletDashboard.updateNumOfCardsText(wallet);
     
     try {
-        const fullName                = getCombinedCode(toTitle(profile.firstName), toTitle(profile.surname));
+        const fullName                = combineFirstAndLastName(toTitle(profile.firstName), toTitle(profile.surname));
         walletNameElement.textContent = fullName;
     } catch (error) {
         walletNameElement.textContent = "User";

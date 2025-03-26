@@ -1,5 +1,7 @@
-import { checkIfHTMLElement } from "./utils.js";
+import { checkIfHTMLElement, checkNumber } from "./utils.js";
 import { logError } from "./logger.js";
+import { Wallet } from "./wallet.js";
+import { prepareCardData } from "./walletUI.js";
 
 
 const CARD_IMAGES = {
@@ -51,6 +53,7 @@ export const cards = {
      */
     placeCardDivIn: (locationDiv, cardDiv) => {
 
+
         if (!checkIfHTMLElement(locationDiv, "Location card div") ||  !checkIfHTMLElement(cardDiv, "Card div element")) {
             logError("cards.placeCardDivIn", "An error occurred trying to place card div element inside the given location");
             return;
@@ -63,6 +66,60 @@ export const cards = {
             logError("cards.placeCardDivIn", `An error occurred while appending the card div: ${error.message}`);
             return false;
         }
+    },
+
+    createNoCardDiv: (id) => {
+        return noCardToRemoveDiv(id)
+    },
+
+    createXnumbersOfCardDiv: (numToCreate, divToAppendTo) => {
+        if (!checkIfHTMLElement(divToAppendTo, "The div to append to is not a valid html")){
+            throw new Error("Invalid div element")
+        }
+
+        console.log(checkNumber(numToCreate))
+        if (!checkNumber(numToCreate).isInteger || !(checkNumber(numToCreate).isNumber)) {
+            throw new Error(`The number to create divs is not an integer. Expected integer but got ${typeof numToCreate}`);
+        }
+        for (let i=0; i <= numToCreate; i++) {
+            const noCardDiv = cards.createNoCardDiv(i + 1);
+            if (noCardDiv) {
+                divToAppendTo.appendChild(noCardDiv);
+            }
+            
+        }
+    }, 
+
+    createCardsToRemove: (wallet) => {
+
+        if (!wallet || !(wallet instanceof Wallet)) {
+            const error = "The wallet is either empty or not an instance of wallet"
+            logError("createCardsToRemove", error);
+            throw new Error(error);
+        }
+
+        const fragment = document.createDocumentFragment()
+        
+        const storedCards = wallet.getAllCards();
+
+        for (const cardNumber in storedCards) {
+            if (cardNumber) {
+                const card = storedCards[cardNumber];
+                const cardData = prepareCardData(card);
+                const cardElement = cards.createCardDiv(cardData);
+                console.log(cardElement)
+                if (cardElement) {
+                    fragment.appendChild(cardElement)
+                }
+
+            }
+        }
+
+        if (wallet.numOfCardsInWallet < parseInt(wallet.maximumCardsAllow)) {
+            cards.createXnumbersOfCardDiv(wallet.numOfCardsInWallet, fragment);
+        }
+
+        return fragment;
     }
 };
 
@@ -79,9 +136,8 @@ function createSingleCreateCard(cardDetails) {
     cardDiv.appendChild(cardBodyDiv);
     cardDiv.appendChild(cardFooterDiv);
 
-    console.log(cardDetails.cardBrand.toLowerCase())
     cardDiv.classList.add("card", "bank-card", cardDetails.cardBrand.toLowerCase());
-    cardDiv.ariaLabel = `${cardDetails} card`;
+    cardDiv.ariaLabel = `${cardDetails.cardName} card`;
     return cardDiv;
 }
 
@@ -194,5 +250,30 @@ function createFooterDiv(cardDetails) {
     footerDivElement.appendChild(spanCardExpiry);
 
     return footerDivElement;
+
+}
+
+
+function noCardToRemoveDiv(id) {
+
+    const divElement   = document.createElement("div");
+    const spanElement  = document.createElement("span");
+    const imgElement   = document.createElement("img");
+    const smallElement = document.createElement("small");
+
+    divElement.className = "card";
+    divElement.id        = `removable-cards__card${id}`;
+
+    spanElement.classList.add("center", "capitalize", "red");
+    smallElement.textContent = "No card to remove";
+    spanElement.appendChild(smallElement);
+
+    imgElement.src       = "static/images/icons/credit-card.svg";
+    imgElement.alt       = "removable card icon";
+    imgElement.className = "removable-card-icon";
+
+    divElement.appendChild(spanElement);
+    divElement.appendChild(imgElement);
+    return divElement;
 
 }

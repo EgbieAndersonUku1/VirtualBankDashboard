@@ -96,6 +96,7 @@ export function handleCardFormSubmission(e, wallet) {
                 notificationManager.add(notificationMsg);
                 
                 walletDashboard.updateNumOfCardsText(wallet);
+                
                 AlertUtils.showAlert({
                     title: "Card Created Successfully",
                     text: "Your card has been added to your wallet, and a notification has been sent.",

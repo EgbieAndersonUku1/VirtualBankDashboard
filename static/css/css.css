@@ -473,7 +473,8 @@ select {
 .dropdown.show,
 .notification-dropdown.show,
 #new-card.show,
-.pin.show {
+.pin.show,
+#remove-cards.show {
     border: 2px solid lavender;
     opacity: 1;
     visibility: visible;
@@ -1152,7 +1153,8 @@ tr:hover {
     display: none;
 }
 
-#new-card {
+#new-card,
+#remove-cards {
     position: fixed;
     top: 15%;
     left: 29%;
@@ -1165,6 +1167,8 @@ tr:hover {
     transition: opacity 0.3s ease-in-out, visibility 0s 0.3s;
 }
 
+
+/* To be removed after it is built */
 #new-card label {
     text-transform: capitalize;
 }
@@ -1222,4 +1226,80 @@ input::placeholder {
 
 #new-card-error-msg.show {
     display: block;
+}
+
+
+#selectable-cards  {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: auto;
+   
+    column-gap: var(--size-xs);
+
+}
+
+
+#selectable-cards .card {
+  border: 2px solid lavender;
+  cursor: pointer;
+  position: relative;
+  margin: 0;
+  border-radius: 3%;
+}
+
+
+
+
+#selectable-cards .card .card-account-number,
+#selectable-cards .card .card-expiry,
+#selectable-cards .card .date,
+#selectable-cards .card .card-amount,
+#selectable-cards .card .card-type {
+    font-size: 0.6875rem;
+}
+
+#selectable-cards .card .card-icon {
+    height: 25px;
+    width: 25px;
+}
+
+.hightlight-box {
+    border: 2px solid lavender; 
+    background: ghostwhite;
+    cursor: pointer;
+    opacity: 0.7;
+  }
+
+.removable-card-icon {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    /* opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease-in-out, visibility 0s 0.3s; */
+   
+   
+
+}
+
+.removable-card-icon.show {
+    opacity: 1;
+    visibility: visible;
+    transition: opacity 0.3s ease-in-out, visibility 0s 0s;
+}
+
+
+#selectable-cards .card:hover {
+    transform: scale(1.04);
+    opacity: 0.8;
+}
+
+#removable-card-area {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: var(--size-xlg);
+    width: 100%;
+    border: 2px solid lavender;
+    padding: var(--size-md);
+    margin-top: var(--size-md);
 }

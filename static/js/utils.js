@@ -2,12 +2,13 @@ import { specialChars } from "./specialChars.js";
 
   
 export function checkIfHTMLElement(element, elementName = "Unknown") {
-    if (!(element instanceof HTMLElement)) {
+    if (!(element instanceof HTMLElement || element instanceof DocumentFragment)) {
         console.error(`Could not find the element: '${elementName}'. Ensure the selector is correct.`);
         return false;
     }
     return true;
 }
+
 
 
 export function generateRandomID(maxDigit=10000000) {

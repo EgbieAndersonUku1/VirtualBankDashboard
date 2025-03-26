@@ -5,6 +5,7 @@ import { Wallet } from "./wallet.js";
 import { logError } from "./logger.js";
 import { showNewCardForm} from "./add-new-card.js";
 import { AlertUtils } from "./alerts.js";
+import { cards } from "./cardsComponent.js";
 
 
 const pinElement           = document.getElementById("pin");
@@ -13,7 +14,9 @@ const pinFormElement       = document.getElementById("pin-form");
 const pinFormIconElement   = document.getElementById("pin-form-icon");
 const pinErrorMsg          = document.getElementById("pin-error-msg");
 const pinInputElement      = document.getElementById("pinInputField");
-const cardFormElement      = document.getElementById("card-form")
+const cardFormElement      = document.getElementById("card-form");
+const removableSelectableCardsDiv = document.getElementById("selectable-cards");
+const removeDivElement            = document.getElementById("remove-cards");
 
 
 const ADD_FUNDS_ID         = "add-funds";
@@ -28,7 +31,7 @@ pinElement.addEventListener("submit", handlePinFormSubmission);
 
 let PIN_ENTERED = false;
 
-export function handlePinShowage(e) {
+export function handlePinShowage(e, wallet) {
    const id = e.target.id;
 
    if (id !== ADD_FUNDS_ID && id !== ADD_NEW_CARD && id !== TRANSFER_FUNDS && id !== REMOVE_CARD) {
@@ -49,7 +52,18 @@ export function handlePinShowage(e) {
      
    }
 
-   if (id === ADD_FUNDS_ID || id === TRANSFER_FUNDS || id === REMOVE_CARD) {
+   if (id === REMOVE_CARD) {
+     const cardsToRemoveElements = cards.createCardsToRemove(wallet);
+     
+    //  console.log(removableSelectableCardsDiv)
+     removeDivElement.classList.add("show");
+     removableSelectableCardsDiv.classList.add("show");
+     cards.placeCardDivIn(removableSelectableCardsDiv, cardsToRemoveElements);
+
+    
+   }
+
+   if (id === ADD_FUNDS_ID || id === TRANSFER_FUNDS ) {
     AlertUtils.showAlert({
         title: "Feature Not Implemented",
         text: "You are seeing this because the functionality is not yet available.",
@@ -175,4 +189,6 @@ function validatePageElements() {
     checkIfHTMLElement(pinErrorMsg, "The pin error message element");
     checkIfHTMLElement(pinInputElement, "The pin input element");
     checkIfHTMLElement(cardFormElement, "The card form element");
+    checkIfHTMLElement(removableSelectableCardsDiv, "Removable cards div");
+    checkIfHTMLElement(removeDivElement, "The remove div element")
 }
