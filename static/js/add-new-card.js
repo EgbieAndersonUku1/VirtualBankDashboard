@@ -34,7 +34,7 @@ submitBtnElement.addEventListener("click", handleSubmitBtnClick);
 notificationManager.setKey(config.NOTIFICATION_KEY);
 
 
-export function handleCardFormSubmission(e, wallet) {
+export async function handleCardFormSubmission(e, wallet) {
 
     e.preventDefault();
     const CREATE_CARD_BTN_ID = "create-card-btn";
@@ -64,7 +64,27 @@ export function handleCardFormSubmission(e, wallet) {
             return;
         }
 
-        const card = generateCardFromParsedData(parsedCardData);
+        let card;
+
+        try {
+            card = generateCardFromParsedData(parsedCardData);
+        } catch (error) {
+            const resp = await AlertUtils.showConfirmationAlert({
+                confirmButtonText: "Load Card",
+                denyButtonText: "Cancel",
+                title: "An existing card is already in the system. Do you want to load it into the wallet?",
+                cancelMessage: "The card was not loaded.",
+                messageToDisplayOnSuccess: "Card successfully loaded.",
+                icon: "info",
+            
+            });
+
+            if (resp) {
+                card = Card.getByCardNumber(parsedCardData.cardNumber);
+            } else {
+                card = false;
+            }
+        }
 
         if (!card) {
             isSubmitButtonClick = false;
@@ -263,7 +283,7 @@ function generateCardFromParsedData(parsedCardData) {
 
     } catch (error) {
         showFormErrorMsg(true, error.message);
-        return false;
+        throw new Error("Card already exists");
     }
 }
 

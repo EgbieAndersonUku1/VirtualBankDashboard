@@ -380,7 +380,7 @@ export class Wallet extends DataStorage {
      * This method checks if the wallet has room for more cards, if the card is not 
      * already added, and if the card number is valid. If all conditions are met, 
      * the card is added to the wallet and returned as an object. If any condition fails, 
-     * an error is thrown.
+     * an error is thrown. 
      *
      * @param {string} cardNumber - The card number to add to the wallet.
      * @returns {Object|boolean} - Returns the card object if successfully added to the wallet, 

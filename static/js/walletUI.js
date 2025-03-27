@@ -243,7 +243,7 @@ export async function handleRemoveCardButtonClick(e) {
             return;
         }
 
-      const resp = await AlertUtils.showRemovalAlert();
+      const resp = await AlertUtils.showConfirmationAlert();
 
       if (resp) {
           const [isRemoved, cardNumbers] = wallet.removeAllCardsMarkedForRemoval();
