@@ -5,21 +5,25 @@ import { Wallet } from "./wallet.js";
 import { logError } from "./logger.js";
 import { showNewCardForm} from "./add-new-card.js";
 import { AlertUtils } from "./alerts.js";
+import { cards } from "./cardsComponent.js";
 
 
-const pinElement           = document.getElementById("pin");
-const dimBackgroundElement = document.querySelector(".dim-background");
-const pinFormElement       = document.getElementById("pin-form");
-const pinFormIconElement   = document.getElementById("pin-form-icon");
-const pinErrorMsg          = document.getElementById("pin-error-msg");
-const pinInputElement      = document.getElementById("pinInputField");
-const cardFormElement      = document.getElementById("card-form")
+const pinElement                     = document.getElementById("pin");
+const dimBackgroundElement           = document.querySelector(".dim-background");
+const pinFormElement                 = document.getElementById("pin-form");
+const pinFormIconElement             = document.getElementById("pin-form-icon");
+const pinErrorMsg                    = document.getElementById("pin-error-msg");
+const pinInputElement                = document.getElementById("pinInputField");
+const cardFormElement                = document.getElementById("card-form");
+const removableSelectableCardsDiv    = document.getElementById("selectable-cards");
+const removeDivElement               = document.getElementById("remove-cards");
+const removeCardsDivCloseIconElement = document.getElementById("remove-close-icon");
 
 
-const ADD_FUNDS_ID         = "add-funds";
-const ADD_NEW_CARD         = "add-new-card";
-const TRANSFER_FUNDS       = "transfer-funds";
-const REMOVE_CARD          = "remove-card";
+const ADD_FUNDS_ID     = "add-funds";
+const ADD_NEW_CARD     = "add-new-card";
+const TRANSFER_FUNDS   = "transfer-funds";
+const REMOVE_CARD      = "remove-card";
 
 validatePageElements();
 
@@ -28,7 +32,7 @@ pinElement.addEventListener("submit", handlePinFormSubmission);
 
 let PIN_ENTERED = false;
 
-export function handlePinShowage(e) {
+export function handlePinShowage(e, wallet) {
    const id = e.target.id;
 
    if (id !== ADD_FUNDS_ID && id !== ADD_NEW_CARD && id !== TRANSFER_FUNDS && id !== REMOVE_CARD) {
@@ -49,7 +53,19 @@ export function handlePinShowage(e) {
      
    }
 
-   if (id === ADD_FUNDS_ID || id === TRANSFER_FUNDS || id === REMOVE_CARD) {
+   if (id === REMOVE_CARD) {
+    
+     
+     removeDivElement.classList.add("show");
+     removableSelectableCardsDiv.classList.add("show");
+
+     const cardsToRemoveElements = cards.createCardsToRemove(wallet);
+     cards.placeCardDivIn(removableSelectableCardsDiv, cardsToRemoveElements, true);
+
+    
+   }
+
+   if (id === ADD_FUNDS_ID || id === TRANSFER_FUNDS ) {
     AlertUtils.showAlert({
         title: "Feature Not Implemented",
         text: "You are seeing this because the functionality is not yet available.",
@@ -167,6 +183,15 @@ function showInputErrorColor(show=true, color="red") {
 }
 
 
+export function handleRemoveCloseIcon(e) {
+    const WINDOW_CLOSE_ICON = "remove-close-icon";
+
+    if (e.target.id === WINDOW_CLOSE_ICON) {
+        removeDivElement.classList.remove("show")
+    }
+}
+
+
 function validatePageElements() {
     checkIfHTMLElement(pinElement, "Pin element");
     checkIfHTMLElement(dimBackgroundElement, "Dim background element");
@@ -175,4 +200,7 @@ function validatePageElements() {
     checkIfHTMLElement(pinErrorMsg, "The pin error message element");
     checkIfHTMLElement(pinInputElement, "The pin input element");
     checkIfHTMLElement(cardFormElement, "The card form element");
+    checkIfHTMLElement(removableSelectableCardsDiv, "Removable cards div");
+    checkIfHTMLElement(removeDivElement, "The remove div element");
+    checkIfHTMLElement(removeCardsDivCloseIconElement, "The remove div close element");
 }

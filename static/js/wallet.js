@@ -2,7 +2,7 @@ import { Card } from "./card.js";
 import { BankAccount } from "./bankAccount.js";
 import { DataStorage } from "./baseDataStorage.js";
 import { AmountManager } from "./baseAmountManager.js";
-import { checkNumber, generateRandomID } from "./utils.js";
+import { checkNumber, generateRandomID, excludeKey } from "./utils.js";
 import { logError, warnError } from "./logger.js";
 import { getLocalStorage } from "./db.js";
 import { config } from "./config.js";
@@ -67,6 +67,7 @@ export class Wallet extends DataStorage {
     set walletAmount(walletAmount) {
         this._walletAmount = walletAmount
     }
+
     /**
      * Retrieves the number of virtual cards attached to the wallet.
      * @returns {number} The number of cards in the wallet
@@ -144,6 +145,7 @@ export class Wallet extends DataStorage {
             walletAmount: this._amountManager.balance,
             cardNumbers: this._cardNumbers,
         }
+
         try {
             if (!this._bankAccount) {
                 logError("BankAccount.toJson", "The '_bankAccount' field is null");
@@ -168,20 +170,25 @@ export class Wallet extends DataStorage {
      * @returns {boolean} True if the pin matches, otherwise false.
      */
     verifyPin(pin) {
-        return pin == this._pin;
+        return pin === this._pin.toString().trim();
     }
 
+   
     /**
      * Removes a card from the wallet by its card number.
      * 
      * This method checks if the card exists in the wallet before removing it. 
-     * If the card is successfully removed, the total card count is updated, 
-     * and changes are saved.
+     * If the card is successfully removed, the total card count is updated.
+     * 
+     * By default, the change is saved immediately. However, you can disable 
+     * saving by setting `save` to `false`, which is useful when performing 
+     * multiple deletions.
      * 
      * @param {string} cardNumber - The card number to be removed.
+     * @param {boolean} [save=true] - Whether to save changes immediately.
      * @throws {Error} If the card number is not a valid string.
      */
-    removeCard(cardNumber) {
+    removeCard(cardNumber, save=true) {
         if (typeof cardNumber !== "string" || !cardNumber.trim()) {
             throw new Error(`Invalid card number. Expected a non-empty string but got ${typeof cardNumber}`);
         }
@@ -190,9 +197,16 @@ export class Wallet extends DataStorage {
             return;
         }
 
-        this._cards = excludeKey(this._cards, cardNumber);
+        this._cards        = excludeKey(this._cards, cardNumber);
+        this._cardNumbers  = excludeKey(this._cardNumbers, cardNumber);
+
         this._deductTotalCardsByOne();
-        this.save();
+
+        if (save) {
+            this.save();
+        }
+        return true;
+       
     }
 
     /**
@@ -398,7 +412,7 @@ export class Wallet extends DataStorage {
 
         this._cards[cardNumber] = card;  
         this._totalCards        += 1;
-        this._cardNumbers[card.cardNumber] = true; // reference to card added
+        this._cardNumbers[card.cardNumber] = { added: true, flaggedForRemoval: false, id: card.id}; // reference to card added
         this.save();
         return card;
         
@@ -421,10 +435,9 @@ export class Wallet extends DataStorage {
         if (!card || !(card instanceof Card)) {
             throw new Error("The card cannot be empty and it must be an instance of Card")
         }
-        this._cards[card.cardNumber] = card.toJson();
+        this._cards[card.cardNumber] = card;
 
     };
-
 
     /**
      * Retrieves the card object associated with the given card number, 
@@ -453,9 +466,8 @@ export class Wallet extends DataStorage {
             return null;
         }
 
-        return Card.fromStorage(this._cards[cardNumber]);
+        return this._cards[cardNumber];
     }
-
 
     /**
      * A static method that ensures the given card object's data is synchronized with
@@ -481,18 +493,18 @@ export class Wallet extends DataStorage {
             throw new Error("The wallet is not instance of the wallet class")
         }
 
-        const cardFromStorage = wallet.getByCardNumber(card.cardNumber);
-        card.id = cardFromStorage.id;
-        card.cardHolderName = cardFromStorage.cardHolderName;
-        card.cardNumber = cardFromStorage.cardNumber;
-        card.expiryMonth = cardFromStorage.expiryMonth;
-        card.expiryYear = cardFromStorage.expiryYear;
-        card.cvc        = cardFromStorage.cvc;
-        card.cardType   = cardFromStorage.cardType;
-        card.cardOption = cardFromStorage.cardOption;
+        const cardFromStorage       = wallet.getByCardNumber(card.cardNumber);
+        card.id                     = cardFromStorage.id;
+        card.cardHolderName         = cardFromStorage.cardHolderName;
+        card.cardNumber             = cardFromStorage.cardNumber;
+        card.expiryMonth            = cardFromStorage.expiryMonth;
+        card.expiryYear             = cardFromStorage.expiryYear;
+        card.cvc                    = cardFromStorage.cvc;
+        card.cardType               = cardFromStorage.cardType;
+        card.cardOption             = cardFromStorage.cardOption;
         card._amountManager.balance = cardFromStorage._balance;
-        card._isCardBlocked = cardFromStorage.isCardBlocked;
-        card._balance = cardFromStorage._balance
+        card._isCardBlocked         = cardFromStorage.isCardBlocked;
+        card._balance               = cardFromStorage._balance
 
     }
 
@@ -504,7 +516,6 @@ export class Wallet extends DataStorage {
      */
     getAllCards() {
         return this._cards;
-
     }
 
     /**
@@ -575,14 +586,12 @@ export class Wallet extends DataStorage {
         wallet._cardNumbers  = walletJson.cardNumbers;
         wallet.linkedAccount = BankAccount.getByAccount(sortCode, accountNumber);
         wallet._totalCards   = walletJson.totalCards;
-        console.log(walletJson.totalCards)
         wallet._populateCardsIntoWallet();
-
 
         if (!wallet.linkedAccount) {
             warnError("Wallet.loadWallet", "The bank account wasn't loaded into the wallet.")
         }
-        // wallet.save();
+
         return wallet;
 
     }
@@ -604,6 +613,62 @@ export class Wallet extends DataStorage {
         }
     }
 
+    /**
+     * Checks if the given card number exists in the user's wallet. 
+     * If the card exists, it is toggled between being marked or unmarked for removal, and `true` is returned. 
+     * If the card does not exist, a warning is logged, and `false` is returned.
+     *
+     * @param {string} cardNumber - The card number to mark for removal.
+     * @returns {boolean} - `true` if the card exists and its removal status is toggled, otherwise `false`.
+     */
+      markCardForRemoval(cardNumber) {
+        if (!cardNumber || typeof cardNumber != "string" ) {
+            warnError("markCardForRemoval", `The card was not marked for removal because it is not a string. Expected string but type ${cardNumber}`);
+            return false;
+        }
+
+        cardNumber = cardNumber.trim();
+
+        if (!this.isCardInWallet(cardNumber)) {
+            warnError("markCardForRemoval", `The card was not marked for removal because it was not found in the wallet`);
+            return false;   
+        }
+
+        if (!this._cardNumbers[cardNumber].hasOwnProperty("flaggedForRemoval")) {
+
+            this._cardNumbers[cardNumber] = {
+                                    added: true,
+                                    flaggedForRemoval: true,
+                                    id: this._cards[cardNumber].id,
+                                }          
+           
+        } else {
+            this._cardNumbers[cardNumber].flaggedForRemoval = this._cardNumbers[cardNumber].flaggedForRemoval ? false : true;
+        }
+     
+        this.save();
+        return true;
+        
+    }
+
+    /**
+     * Removes all cards marked for deletion and returns the card numbers
+     * @returns {[true, [string]]} - True and the card numbers removed
+     */
+    removeAllCardsMarkedForRemoval() {
+        const cardNumberKeysCopy = Object.keys(this._cardNumbers); // Copy only the keys not the type object
+        const removalCardIds =   [];
+        for (const cardNumber of cardNumberKeysCopy) {
+            if (this._cardNumbers[cardNumber]?.flaggedForRemoval) {
+                removalCardIds.push(this._cardNumbers[cardNumber]?.id?.toString().trim());
+                this.removeCard(cardNumber, false);        // false = Disable the ability to save it on every removal.
+            }
+        }
+    
+        this.save();
+        return [true, removalCardIds];
+    }
+    
     /**
      * Checks if a user wallet has already been created for a given account number.
      * 
@@ -633,6 +698,11 @@ export class Wallet extends DataStorage {
         return walletStorage.hasOwnProperty(accountNumber.trim());
     }
 
+    /**
+     * Retrieves the entire data belong to the wallet.
+     * 
+     * @returns {object} - Returns the entire data belong to the wallet
+     */
     static _getDataFromLocalStorage() {
         const walletData = getLocalStorage(WALLET_STORAGE_KEY)
         if (walletData) {
@@ -640,7 +710,20 @@ export class Wallet extends DataStorage {
         }
     }
 
+    /**
+     * Takes a bank account instance, a pin and initial amount and creates a 
+     * new wallet for the user.
+     * 
+     * @param {*} bankAccount : The bank account to link to the wallet
+     * @param {*} pin : The pin that will be used to verify any given transaction
+     * @param {*} initialAmount - The initial amount to add to wallet
+     * @returns {Wallet} returns a wallet instance
+     */
     static createWallet(bankAccount, pin, initialAmount) {
+
+        if (!(bankAccount instanceof BankAccount)) {
+            throw new Error("The bank account is not an instance of the BankAccount class.")
+        }
         const wallet         = new Wallet(bankAccount);
         wallet.pin           = pin;
         wallet._walletAmount = initialAmount;

@@ -46,15 +46,9 @@ html {
     --background-senary: linear-gradient(135deg, #ff6a00, #ee0979);
 
     --font-roboto: 'Roboto', Arial, sans-serif;
+    --font-poppins: "Poppins", sans-serif;
 }
 
-
-body {
-
-    font-family: "Poppins", sans-serif;
-  }
-
-  
 
 a {
     text-decoration: none;
@@ -264,6 +258,10 @@ select {
 }
 
 /* buttons */
+button {
+    cursor: pointer;
+}
+
 .button {
     background: #00eaff; /* Bright cyan */
     color: #1e1e2f; 
@@ -278,6 +276,7 @@ select {
 .button:hover {
     background: #6a11cb; /* Shift to purple */
     color: white;
+    opacity: 0.8;
 }
 
 /* icons */
@@ -473,7 +472,8 @@ select {
 .dropdown.show,
 .notification-dropdown.show,
 #new-card.show,
-.pin.show {
+.pin.show,
+#remove-cards.show {
     border: 2px solid lavender;
     opacity: 1;
     visibility: visible;
@@ -668,10 +668,6 @@ select {
     margin-right: var(--size-xs);
     border: none;
     padding: var(--size-sm);
-    
-}
-button:hover {
-    opacity: 0.8;
     
 }
 
@@ -902,9 +898,6 @@ label {
 }
 
 
-button {
-    cursor: pointer;
-}
 
 .btn-small {
     padding: var(--size-sm);
@@ -1152,7 +1145,8 @@ tr:hover {
     display: none;
 }
 
-#new-card {
+#new-card,
+#remove-cards {
     position: fixed;
     top: 15%;
     left: 29%;
@@ -1165,6 +1159,12 @@ tr:hover {
     transition: opacity 0.3s ease-in-out, visibility 0s 0.3s;
 }
 
+#remove-cards {
+    top: 5%;
+}
+
+
+/* To be removed after it is built */
 #new-card label {
     text-transform: capitalize;
 }
@@ -1222,4 +1222,82 @@ input::placeholder {
 
 #new-card-error-msg.show {
     display: block;
+}
+
+
+#selectable-cards  {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: auto;
+   
+    column-gap: var(--size-xs);
+
+}
+
+
+#selectable-cards .card {
+  border: 2px solid lavender;
+  cursor: pointer;
+  position: relative;
+  margin: 0;
+  cursor: pointer;
+  /* border-radius: 3%; */
+}
+
+
+#selectable-cards .card .card-account-number,
+#selectable-cards .card .card-expiry,
+#selectable-cards .card .date,
+#selectable-cards .card .card-amount,
+#selectable-cards .card .card-type {
+    font-size: 0.6875rem;
+}
+
+#selectable-cards .card .card-icon {
+    height: 25px;
+    width: 25px;
+}
+
+.hightlight-removable-box {
+    opacity: 0.5;
+    transform: scale(0.8);
+    background: rgb(160, 22, 22);
+  }
+
+.removable-card-icon {
+  
+    width: 100%;
+    height: 165px;
+
+}
+
+
+
+#selectable-cards .card:hover {
+    transform: scale(1.04);
+    opacity: 0.8;
+}
+
+#removable-card-area {
+    display: grid;
+    grid-template-rows: var(--size-xlg);
+    width: 100%;
+    border: 2px solid lavender;
+    padding: var(--size-md);
+    margin-top: var(--size-md);
+    font-size: 0.85rem;
+    font-family: var(--font-poppins);  
+    font-weight: 300;
+    overflow-y: scroll;
+}
+
+
+#removalCardButton {
+    color: black;
+}
+
+.grid_20_50_30 {
+    display: grid;
+    grid-template-columns: 20% 50% 30%;
+    grid-template-rows: auto;
 }
