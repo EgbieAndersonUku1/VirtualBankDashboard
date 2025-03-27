@@ -20,8 +20,9 @@ import { handleProfileIconClick,
 
         } from "./notifications.js";
 
-import { handleWalletPin, handleAddNewCard } from "./walletUI.js";
+import { handleWalletPin, handleAddNewCard, handleCardRemovalClick, handleRemoveCardButtonClick } from "./walletUI.js";
 import { handleAddNewCardInputFields, handleNewCardCloseIcon, handleCVCInputField } from "./add-new-card.js";
+import { handleRemoveCloseIcon } from "./pin.js";
 
 
 
@@ -40,7 +41,6 @@ dashboardElement.addEventListener("input", handleEventDelegation);
 
 function handleEventDelegation(e) {
 
-   
     handleProfileIconClick(e);
     handleNotificationIconClick(e);
     handleMarkAsReadClick(e);
@@ -62,6 +62,9 @@ function handleEventDelegation(e) {
     handleAddNewCardInputFields(e);
     handleNewCardCloseIcon(e);
     handleCVCInputField(e);
+    handleCardRemovalClick(e);
+    handleRemoveCardButtonClick(e);
+    handleRemoveCloseIcon(e);
         
 }
 

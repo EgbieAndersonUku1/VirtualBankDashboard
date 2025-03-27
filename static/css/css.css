@@ -46,15 +46,9 @@ html {
     --background-senary: linear-gradient(135deg, #ff6a00, #ee0979);
 
     --font-roboto: 'Roboto', Arial, sans-serif;
+    --font-poppins: "Poppins", sans-serif;
 }
 
-
-body {
-
-    font-family: "Poppins", sans-serif;
-  }
-
-  
 
 a {
     text-decoration: none;
@@ -264,6 +258,10 @@ select {
 }
 
 /* buttons */
+button {
+    cursor: pointer;
+}
+
 .button {
     background: #00eaff; /* Bright cyan */
     color: #1e1e2f; 
@@ -278,6 +276,7 @@ select {
 .button:hover {
     background: #6a11cb; /* Shift to purple */
     color: white;
+    opacity: 0.8;
 }
 
 /* icons */
@@ -671,10 +670,6 @@ select {
     padding: var(--size-sm);
     
 }
-button:hover {
-    opacity: 0.8;
-    
-}
 
 
 /* Section add account information */
@@ -903,9 +898,6 @@ label {
 }
 
 
-button {
-    cursor: pointer;
-}
 
 .btn-small {
     padding: var(--size-sm);
@@ -1167,6 +1159,10 @@ tr:hover {
     transition: opacity 0.3s ease-in-out, visibility 0s 0.3s;
 }
 
+#remove-cards {
+    top: 5%;
+}
+
 
 /* To be removed after it is built */
 #new-card label {
@@ -1244,10 +1240,9 @@ input::placeholder {
   cursor: pointer;
   position: relative;
   margin: 0;
-  border-radius: 3%;
+  cursor: pointer;
+  /* border-radius: 3%; */
 }
-
-
 
 
 #selectable-cards .card .card-account-number,
@@ -1263,30 +1258,19 @@ input::placeholder {
     width: 25px;
 }
 
-.hightlight-box {
-    border: 2px solid lavender; 
-    background: ghostwhite;
-    cursor: pointer;
-    opacity: 0.7;
+.hightlight-removable-box {
+    opacity: 0.5;
+    transform: scale(0.8);
+    background: rgb(160, 22, 22);
   }
 
 .removable-card-icon {
-    position: absolute;
+  
     width: 100%;
-    height: 100%;
-    /* opacity: 0;
-    visibility: hidden;
-    transition: opacity 0.3s ease-in-out, visibility 0s 0.3s; */
-   
-   
+    height: 165px;
 
 }
 
-.removable-card-icon.show {
-    opacity: 1;
-    visibility: visible;
-    transition: opacity 0.3s ease-in-out, visibility 0s 0s;
-}
 
 
 #selectable-cards .card:hover {
@@ -1296,10 +1280,24 @@ input::placeholder {
 
 #removable-card-area {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
     grid-template-rows: var(--size-xlg);
     width: 100%;
     border: 2px solid lavender;
     padding: var(--size-md);
     margin-top: var(--size-md);
+    font-size: 0.85rem;
+    font-family: var(--font-poppins);  
+    font-weight: 300;
+    overflow-y: scroll;
+}
+
+
+#removalCardButton {
+    color: black;
+}
+
+.grid_20_50_30 {
+    display: grid;
+    grid-template-columns: 20% 50% 30%;
+    grid-template-rows: auto;
 }

@@ -4,7 +4,7 @@ import { generateRandomID, checkNumber } from "./utils.js";
 import { DataStorage } from "./baseDataStorage.js";
 import { getLocalStorage } from "./db.js";
 import { AmountManager } from "./baseAmountManager.js";
-
+import { logError } from "./logger.js";
 import { config } from "./config.js";
 
 const CARD_STORAGE_KEY = config.CARD_STORAGE_KEY;

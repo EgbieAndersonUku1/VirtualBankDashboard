@@ -8,21 +8,22 @@ import { AlertUtils } from "./alerts.js";
 import { cards } from "./cardsComponent.js";
 
 
-const pinElement           = document.getElementById("pin");
-const dimBackgroundElement = document.querySelector(".dim-background");
-const pinFormElement       = document.getElementById("pin-form");
-const pinFormIconElement   = document.getElementById("pin-form-icon");
-const pinErrorMsg          = document.getElementById("pin-error-msg");
-const pinInputElement      = document.getElementById("pinInputField");
-const cardFormElement      = document.getElementById("card-form");
-const removableSelectableCardsDiv = document.getElementById("selectable-cards");
-const removeDivElement            = document.getElementById("remove-cards");
+const pinElement                     = document.getElementById("pin");
+const dimBackgroundElement           = document.querySelector(".dim-background");
+const pinFormElement                 = document.getElementById("pin-form");
+const pinFormIconElement             = document.getElementById("pin-form-icon");
+const pinErrorMsg                    = document.getElementById("pin-error-msg");
+const pinInputElement                = document.getElementById("pinInputField");
+const cardFormElement                = document.getElementById("card-form");
+const removableSelectableCardsDiv    = document.getElementById("selectable-cards");
+const removeDivElement               = document.getElementById("remove-cards");
+const removeCardsDivCloseIconElement = document.getElementById("remove-close-icon");
 
 
-const ADD_FUNDS_ID         = "add-funds";
-const ADD_NEW_CARD         = "add-new-card";
-const TRANSFER_FUNDS       = "transfer-funds";
-const REMOVE_CARD          = "remove-card";
+const ADD_FUNDS_ID     = "add-funds";
+const ADD_NEW_CARD     = "add-new-card";
+const TRANSFER_FUNDS   = "transfer-funds";
+const REMOVE_CARD      = "remove-card";
 
 validatePageElements();
 
@@ -53,12 +54,13 @@ export function handlePinShowage(e, wallet) {
    }
 
    if (id === REMOVE_CARD) {
-     const cardsToRemoveElements = cards.createCardsToRemove(wallet);
+    
      
-    //  console.log(removableSelectableCardsDiv)
      removeDivElement.classList.add("show");
      removableSelectableCardsDiv.classList.add("show");
-     cards.placeCardDivIn(removableSelectableCardsDiv, cardsToRemoveElements);
+
+     const cardsToRemoveElements = cards.createCardsToRemove(wallet);
+     cards.placeCardDivIn(removableSelectableCardsDiv, cardsToRemoveElements, true);
 
     
    }
@@ -181,6 +183,15 @@ function showInputErrorColor(show=true, color="red") {
 }
 
 
+export function handleRemoveCloseIcon(e) {
+    const WINDOW_CLOSE_ICON = "remove-close-icon";
+
+    if (e.target.id === WINDOW_CLOSE_ICON) {
+        removeDivElement.classList.remove("show")
+    }
+}
+
+
 function validatePageElements() {
     checkIfHTMLElement(pinElement, "Pin element");
     checkIfHTMLElement(dimBackgroundElement, "Dim background element");
@@ -190,5 +201,6 @@ function validatePageElements() {
     checkIfHTMLElement(pinInputElement, "The pin input element");
     checkIfHTMLElement(cardFormElement, "The card form element");
     checkIfHTMLElement(removableSelectableCardsDiv, "Removable cards div");
-    checkIfHTMLElement(removeDivElement, "The remove div element")
+    checkIfHTMLElement(removeDivElement, "The remove div element");
+    checkIfHTMLElement(removeCardsDivCloseIconElement, "The remove div close element");
 }
