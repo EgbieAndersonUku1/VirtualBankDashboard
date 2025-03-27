@@ -18,12 +18,14 @@ export const AlertUtils = {
         });
     },
 
-    async showRemovalAlert({showDenyButton = true,  
+    async showConfirmationAlert({showDenyButton = true,  
         showCancelButton = true, 
         confirmButtonText = "Remove", 
         denyButtonText = "Don't remove", 
         title = "Do you want to remove these cards from your wallet?",
         icon = "info",
+        cancelMessage = "Cards were not removed",
+        messageToDisplayOnSuccess="removed!",
       } = {}) {
           return Swal.fire({
               title: title,
@@ -34,10 +36,10 @@ export const AlertUtils = {
               icon: icon,
           }).then((result) => {
               if (result.isConfirmed) {
-                  Swal.fire("Removed!", "", "success");
+                  Swal.fire(messageToDisplayOnSuccess, "", "success");
                   return true;
               } else if (result.isDenied) {
-                  Swal.fire("Cards were not removed", "", "info");
+                  Swal.fire(cancelMessage, "", "info");
                   return false;
               }
               return null;
