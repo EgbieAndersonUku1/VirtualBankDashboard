@@ -29,27 +29,27 @@ export class Wallet extends DataStorage {
         this._totalCards            = 0;
         this._MAXIMUM_CARDS_ALLOWED = 3;
         this._cards                 = {}; // For cache
-        this._linkedAccountNumber   = null;
         this._pin                   = pin
         this._walletAmount          = 0;
         this._amountManager         = new AmountManager(this._walletAmount);
         this._bankAccount           = bankAccount;
-        this._linkBankAccountToWallet();
         this._cardNumbers           = {};
+
+        this._validateBankAccountLinkage();
     }
 
     /**
-     * Links the user's bank Account to their wallet. If the bank account is not a valid
-     * instance of the BankAccount class, an error is thrown otherwise the bank account is
-     * linked.
+     * Validates the bank account linkage to the user's wallet.
+     * If the bank account is null, the function exits silently.
+     * If the bank account is not an instance of the BankAccount class, an error is thrown.
      */
-    _linkBankAccountToWallet() {
+    _validateBankAccountLinkage() {
         if (this._bankAccount == null) {
             return;
         }
 
         if (!(this._bankAccount instanceof BankAccount)) {
-            throw new Error("The bank account is not an instant of the Bank class")
+            throw new Error("The bank account is not an instance of the BankAccount class");
         }
     }
 
@@ -62,9 +62,21 @@ export class Wallet extends DataStorage {
     }
 
     /**
+     * Returns the bank balance amount
+     */
+    get bankAmountBalance() {
+        return parseFloat(this.bankAccount.balance).toFixed(2);
+    }
+
+    /**
      * Sets a wallet amount to the wallet
      */
     set walletAmount(walletAmount) {
+
+        if (walletAmount != 0) {
+            this._amountManager.validateAmount(walletAmount)
+        }
+       
         this._walletAmount = walletAmount
     }
 
@@ -77,18 +89,14 @@ export class Wallet extends DataStorage {
     }
 
     /**
-     * Returns the account
-     * @returns {number} The number of cards in the wallet
-    */
-    get linkedAccount() {
-        return this._bankAccount.accountNumber;
-    }
-
-    /**
      * Returns the bank account attached to the wallet.
      */
     get bankAccount() {
-        return this._bankAccount;
+        // ensure that the latest bank details is returned e.g balance.
+        return BankAccount.getByAccount(this._bankAccount.sortCode,
+                                                     this._bankAccount.accountNumber,
+                                                      this._bankAccount.balance);
+        
     }
 
     /**
@@ -116,14 +124,7 @@ export class Wallet extends DataStorage {
         }
         this._pin = pin;
     }
-    /**
-     * set the account number for easy viewing
-     * @returns {number} The number of cards in the wallet
-    */
-    set linkedAccount(accountNumber) {
-        this._bankAccount.accountNumber = accountNumber
-    }
-
+  
     /**
      * Converts the Wallet class data to a JSON object.
      * 
@@ -139,10 +140,9 @@ export class Wallet extends DataStorage {
             totalCards: this._totalCards,
             MAXIMUM_CARDS_ALLOWED: this._MAXIMUM_CARDS_ALLOWED,
             cards: this._cards,
-            linkedAccount: this._linkedAccountNumber,
             id: this._id,
             pin: this.pin,
-            walletAmount: this._amountManager.balance,
+            walletAmount: this.walletAmount,
             cardNumbers: this._cardNumbers,
         }
 
@@ -352,8 +352,10 @@ export class Wallet extends DataStorage {
      */
     addFundToWallet(amount) {
         this._amountManager.validateAmount(amount)
-        this._walletAmount = amount;
+        this._walletAmount = (parseFloat(this._walletAmount) + parseFloat(amount)).toFixed(2);
+        this.save();
     }
+
 
     /**
     * Checks if a card with the given card number exists in the wallet.
@@ -534,7 +536,7 @@ export class Wallet extends DataStorage {
             this.pin = generateRandomID();
         }
 
-        const saveAs = this.linkedAccount.accountNumber || this._bankAccount.accountNumber;
+        const saveAs = this._bankAccount.accountNumber;
 
         return this.constructor.saveData(WALLET_STORAGE_KEY, saveAs , this.toJson())
     }
@@ -573,7 +575,6 @@ export class Wallet extends DataStorage {
             'lastAmountReceived',
             'totalCards',
             'bankAccount',
-            'linkedAccount',
             'id',
             'pin',
             'walletAmount',
@@ -581,14 +582,18 @@ export class Wallet extends DataStorage {
         ];
 
 
-        const walletJson     = super.fromStorage(userWalletData, requiredKeys);
-        const wallet         = Object.assign(new Wallet, walletJson);
-        wallet._cardNumbers  = walletJson.cardNumbers;
-        wallet.linkedAccount = BankAccount.getByAccount(sortCode, accountNumber);
-        wallet._totalCards   = walletJson.totalCards;
+        const walletJson      = super.fromStorage(userWalletData, requiredKeys);
+        const wallet          = Object.assign(new Wallet, walletJson);
+        wallet._cardNumbers   = walletJson.cardNumbers;
+        wallet.bankAccount    = BankAccount.getByAccount(sortCode, accountNumber);
+        wallet._totalCards    = walletJson.totalCards;
+
+        console.log(walletJson.walletAmount)
+        wallet.walletAmount   = parseFloat(walletJson.walletAmount).toFixed(2) || 0;
+
         wallet._populateCardsIntoWallet();
 
-        if (!wallet.linkedAccount) {
+        if (!wallet._bankAccount) {
             warnError("Wallet.loadWallet", "The bank account wasn't loaded into the wallet.")
         }
 
@@ -726,10 +731,9 @@ export class Wallet extends DataStorage {
         }
         const wallet         = new Wallet(bankAccount);
         wallet.pin           = pin;
-        wallet._walletAmount = initialAmount;
-        wallet.linkedAccount = bankAccount.accountNumber
-        wallet.save()
-        return wallet
+        wallet._walletAmount = initialAmount
+        wallet.save();
+        return wallet;
     }
 
 }

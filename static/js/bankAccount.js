@@ -18,24 +18,28 @@ export class BankAccount extends DataStorage {
 
     constructor(sortCode, accountNumber, initialBalance = 0) {
         super();
-        this.accountNumber = accountNumber;
-        this.sortCode      = sortCode;
-        this.id            = generateRandomID();
-        this._createdOn    = null;
-        this._amountManger = new AmountManager(initialBalance);
-        this._balance      = initialBalance;
+        this.accountNumber  = accountNumber;
+        this.sortCode       = sortCode;
+        this.id             = generateRandomID();
+        this._createdOn     = null;
+        this._amountManager = new AmountManager(initialBalance);
+        this._balance       = initialBalance;
     }
 
     get balance() {
-        return this._amountManger.balance;
+        return this._amountManager.balance
     }
 
     set balance(balance) {
 
-        this._amountManger.validateAmount(balance)
-        this._amountManger.balance = balance;
+        this._amountManager.validateAmount(balance)
+        this._amountManager.balance = balance;
     }
 
+    addAmount(amount) {
+        this._amountManager.addAmount(amount);
+    }
+    
     static getByAccount(sortCode, accountNumber) {
 
         if (!sortCode || !accountNumber) {
@@ -55,7 +59,7 @@ export class BankAccount extends DataStorage {
         }
 
         const bankAccount = bankAccounts[BANK_ACCOUNT_STORAGE_KEY][fullAccountNumber];
-        return new BankAccount(bankAccount.sortCode, bankAccount.accountNumber, bankAccount.balance)
+        return new BankAccount(bankAccount.sortCode, bankAccount.accountNumber, parseFloat(bankAccount._balance).toFixed(2))
 
     }
 
@@ -78,7 +82,7 @@ export class BankAccount extends DataStorage {
     transferToAccount(card, amount) {
 
         this._validateCard(card);
-        this._amountManger.validateAmount(amount);
+        this._amountManager.validateAmount(amount);
 
         const hasFunds = this._checkIfCardHasAvailableFunds(card, amount);
 
@@ -89,7 +93,7 @@ export class BankAccount extends DataStorage {
 
         try {
             card.deductAmount(amount);
-            this._amountManger.addAmount(amount);
+            this._amountManager.addAmount(amount);
 
             card.save();
             this.save();
@@ -128,7 +132,7 @@ export class BankAccount extends DataStorage {
             throw new Error("Transfer failed: The source and target cards are the same. You cannot transfer to the same card.");
         }
 
-        this._amountManger.validateAmount(amount);
+        this._amountManager.validateAmount(amount);
         const hasSufficientFunds = this._checkIfCardHasAvailableFunds(sourceCard, amount);
 
         if (!hasSufficientFunds) {
@@ -205,7 +209,7 @@ export class BankAccount extends DataStorage {
         return {
             sortCode: this.sortCode,
             accountNumber: this.accountNumber,
-            _balance: this._amountManger.balance,
+            _balance: this._amountManager.balance,
             id: this.id,
             createdOn: this._createdOn,
         };

@@ -1,3 +1,5 @@
+import { checkNumber } from "./utils.js";
+
 /**
  * The AmountManager class is responsible for managing and validating monetary transactions 
  * across the Card, Balance, and Wallet classes. It serves as a composite class that provides 
@@ -25,8 +27,7 @@ export class AmountManager {
      */
     addAmount(amount) {
         this.validateAmount(amount);
-        this._balance += amount;
-       
+        this._balance = this._calculate(this._balance, amount, this._add);
     }
 
     /**
@@ -42,8 +43,45 @@ export class AmountManager {
         if (amount > this._balance) {
             throw new Error(`Insufficient funds for this operation. Amount to transfer: ${amount}, balance: ${this._balance}`);
         }
-        this._balance -= amount;
+       
+        this._balance = this._calculate(this._balance, amount, this._subtract);
     }
+
+
+    /**
+     * Performs a mathematical operation on two amounts and returns the result formatted to two decimal places.
+     * 
+     * @param {number|string} sourceAmount - The base amount to be modified.
+     * @param {number|string} adjustmentAmount - The amount to add or subtract from the source amount.
+     * @param {Function} operate - The operation function (e.g., addition or subtraction).
+     * @returns {string} The calculated result as a string, rounded to two decimal places.
+     */
+    _calculate(sourceAmount, adjustmentAmount, operate) {
+        return operate(parseFloat(sourceAmount), parseFloat(adjustmentAmount)).toFixed(2);
+    }
+
+    /**
+     * Adds two amounts together.
+     * 
+     * @param {number} amount - The first amount.
+     * @param {number} amount2 - The second amount to be added.
+     * @returns {number} The sum of both amounts.
+     */
+    _add(amount, amount2) {
+        return amount + amount2;
+    }
+
+    /**
+     * Subtracts one amount from another.
+     * 
+     * @param {number} amount - The base amount.
+     * @param {number} amount2 - The amount to subtract from the base.
+     * @returns {number} The result after subtraction.
+     */
+    _subtract(amount, amount2) {
+        return amount - amount2;
+    }
+
 
     /**
      * Retrieves the current balance.
@@ -51,7 +89,6 @@ export class AmountManager {
      * @returns {number} The current balance.
      */
     get balance() {
-        this._setBalanceToDecimalPlaces();
         return this._balance;
     }
 
@@ -97,6 +134,7 @@ export class AmountManager {
      * Sets the balance to two decimal places
      */
     _setBalanceToDecimalPlaces() {
-        this._balance = parseFloat((this._balance).toFixed(2))
+        this._balance = this._balance === "" ? 0 : this._balance;
+        this._balance = parseFloat(this._balance).toFixed(2)
     }
 }

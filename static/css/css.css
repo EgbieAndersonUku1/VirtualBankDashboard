@@ -473,6 +473,7 @@ button {
 .notification-dropdown.show,
 #new-card.show,
 .pin.show,
+#fund.show,
 #remove-cards.show {
     border: 2px solid lavender;
     opacity: 1;
@@ -901,11 +902,13 @@ label {
 
 .btn-small {
     padding: var(--size-sm);
+    cursor: pointer;
 }
 
 
 .btn-medium {
     padding: var(--size-md);
+    cursor: pointer;
 }
 
 #clear-transaction-btn {
@@ -1300,4 +1303,46 @@ input::placeholder {
     display: grid;
     grid-template-columns: 20% 50% 30%;
     grid-template-rows: auto;
+}
+
+
+/* fund account */
+
+#fund {
+    width: 30%;
+    position: fixed;
+    top: 5%;
+    left: 36%;
+    background: white;
+    box-shadow: var(--box-shadow);
+    padding: var(--size-lg);
+
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease-in-out, visibility 0s 0.3s;
+    z-index: 1000;
+    
+}
+
+#add-fund-icon {
+    height: 200px;
+    width: 200px;
+}
+
+#fund-account-btn {
+    width: 100%;
+    background: var(--background-primary);
+    color: var(--white);
+    font-size: var(--size-md);
+}
+
+#fund-account-select-field {
+    width: 100%;
+}
+
+#fund-form select,
+#fund-form input {
+    font-size: 0.98;
+    font-family: var(--font-poppins);
+    color: var(--deep-navy-blue);
 }
