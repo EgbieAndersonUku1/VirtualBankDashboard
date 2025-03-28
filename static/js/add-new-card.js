@@ -81,6 +81,7 @@ export async function handleCardFormSubmission(e, wallet) {
 
             if (resp) {
                 card = Card.getByCardNumber(parsedCardData.cardNumber);
+               
             } else {
                 card = false;
             }

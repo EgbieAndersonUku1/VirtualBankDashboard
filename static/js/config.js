@@ -4,7 +4,7 @@
 export const config  = {
     SORT_CODE:"400217",
     ACCOUNT_NUMBER:"00327502",
-    INITIAL_BALANCE: 10000,
+    INITIAL_BALANCE: 0.00,
     PIN:1025,
     BANK_ACCOUNT_STORAGE_KEY: "bankAccount",
     CARD_STORAGE_KEY: "cards",

@@ -6,7 +6,13 @@ import { logError } from "./logger.js";
 import { showNewCardForm} from "./add-new-card.js";
 import { AlertUtils } from "./alerts.js";
 import { cards } from "./cardsComponent.js";
+import { handleFundDiv } from "./fund-account.js";
 
+
+const ADD_FUNDS_ID     = "add-funds";
+const ADD_NEW_CARD     = "add-new-card";
+const TRANSFER_FUNDS   = "transfer-funds";
+const REMOVE_CARD      = "remove-card";
 
 const pinElement                     = document.getElementById("pin");
 const dimBackgroundElement           = document.querySelector(".dim-background");
@@ -16,19 +22,19 @@ const pinErrorMsg                    = document.getElementById("pin-error-msg");
 const pinInputElement                = document.getElementById("pinInputField");
 const cardFormElement                = document.getElementById("card-form");
 const removableSelectableCardsDiv    = document.getElementById("selectable-cards");
-const removeDivElement               = document.getElementById("remove-cards");
+const removeCardsDivElement          = document.getElementById("remove-cards");
 const removeCardsDivCloseIconElement = document.getElementById("remove-close-icon");
+const addFundsDivElement             = document.getElementById("fund");
+const addNewCardDivElement           = document.getElementById("new-card");
+// const transferFundsDivElement        = document.getElementById(TRANSFER_FUNDS);  // to be built
 
-
-const ADD_FUNDS_ID     = "add-funds";
-const ADD_NEW_CARD     = "add-new-card";
-const TRANSFER_FUNDS   = "transfer-funds";
-const REMOVE_CARD      = "remove-card";
 
 validatePageElements();
 
 
 pinElement.addEventListener("submit", handlePinFormSubmission);
+
+
 
 let PIN_ENTERED = false;
 
@@ -49,23 +55,30 @@ export function handlePinShowage(e, wallet) {
    if (id === ADD_NEW_CARD) {
      dimBackground(dimBackgroundElement, true);
      showNewCardForm(e);
+
+     closeDivs([removeCardsDivElement, addFundsDivElement])
      return;
      
    }
 
+   if (id === ADD_FUNDS_ID) {
+        handleFundDiv(e);
+        closeDivs([addNewCardDivElement, removeCardsDivElement])
+        return
+   }
+
    if (id === REMOVE_CARD) {
     
-     
-     removeDivElement.classList.add("show");
+     removeCardsDivElement.classList.add("show");
      removableSelectableCardsDiv.classList.add("show");
 
      const cardsToRemoveElements = cards.createCardsToRemove(wallet);
      cards.placeCardDivIn(removableSelectableCardsDiv, cardsToRemoveElements, true);
+     closeDivs([addNewCardDivElement, addFundsDivElement]);
 
-    
    }
 
-   if (id === ADD_FUNDS_ID || id === TRANSFER_FUNDS ) {
+   if (id === TRANSFER_FUNDS ) {
     AlertUtils.showAlert({
         title: "Feature Not Implemented",
         text: "You are seeing this because the functionality is not yet available.",
@@ -187,9 +200,25 @@ export function handleRemoveCloseIcon(e) {
     const WINDOW_CLOSE_ICON = "remove-close-icon";
 
     if (e.target.id === WINDOW_CLOSE_ICON) {
-        removeDivElement.classList.remove("show")
+        removeCardsDivElement.classList.remove("show")
     }
 }
+
+
+
+function closeDivs(divsToClose) {
+    if (!Array.isArray(divsToClose)) {
+        throw new Error(`The divs to close must be an array. Expected an array but got ${typeof divsToClose}`);
+    }
+
+    divsToClose.forEach((div) => {
+        if (div) {
+            div.classList.remove("show");
+        }
+       
+    })
+}
+
 
 
 function validatePageElements() {
@@ -201,6 +230,8 @@ function validatePageElements() {
     checkIfHTMLElement(pinInputElement, "The pin input element");
     checkIfHTMLElement(cardFormElement, "The card form element");
     checkIfHTMLElement(removableSelectableCardsDiv, "Removable cards div");
-    checkIfHTMLElement(removeDivElement, "The remove div element");
+    checkIfHTMLElement(removeCardsDivElement, "The remove div element");
     checkIfHTMLElement(removeCardsDivCloseIconElement, "The remove div close element");
+    checkIfHTMLElement(addFundsDivElement, "The adding of new funds div");
+    checkIfHTMLElement(addNewCardDivElement, "Adding new card div element")
 }

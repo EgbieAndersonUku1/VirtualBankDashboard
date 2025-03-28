@@ -19,10 +19,11 @@ const cardDisplayArea  = document.getElementById("cards");
 const walletNameElement             = document.querySelector(".wallet__holder-name");
 const walletTotalsCardAmountElement = document.querySelector(".wallet__cards-amount");
 const walletTotalCardsElement       = document.querySelector(".wallet__total-cards");
-const walletAmountElement           = document.querySelector(".wallet__bank-amount");
+const walletAmountElement           = document.querySelector(".wallet__wallet-amount");
 const walletLastTransferElement     = document.querySelector(".wallet__last-transfer");
 const walletLastReceivedElement     = document.querySelector(".wallet__last-received");
 const walletNumCardsAddedElement    = document.querySelector(".wallet__num-of-cards");
+const walletBankBalanceElement      = document.getElementById("wallet__bank-amount");
 const removeCardButtonElement       = document.getElementById("removalCardButton");
 const removableSelectableCardsDiv   = document.getElementById("selectable-cards");
 const spinnerElement                = document.getElementById("spinner");
@@ -139,7 +140,7 @@ export function prepareCardData(card)  {
  * @returns {string} The formatted balance as a string (e.g., "£10.00", "£0.00").
  */
 function formatCardBalance(card, currency="£") {
-    return `${currency}${card.balance.toFixed(2)}`;
+    return `${currency}${parseFloat(card.balance).toFixed(2)}`;
 }
 
 
@@ -155,10 +156,19 @@ export const walletDashboard = {
     },
 
     updateLastReceivedText(wallet) {},
+    
+    updateTotalCardAmountText(wallet) {
+       
 
-    updateTotalCardAmountText(wallet) {},
+    },
 
-    updateAccountBalanceText(wallet) {},
+    updateBankAccountBalanceText(wallet) {
+        walletBankBalanceElement.textContent = `£${wallet.bankAmountBalance}`;
+    },
+
+    updateWalletAccountBalanceText(wallet) {
+        walletAmountElement.textContent = `£${wallet.walletAmount}`;
+    },
 
     updateWalletDashboardNameText(profile) {}
 };
@@ -174,6 +184,9 @@ function updateAllWalletDashoardText(wallet) {
     } catch (error) {
         walletNameElement.textContent = "User";
     }
+
+    walletDashboard.updateWalletAccountBalanceText(wallet);
+    walletDashboard.updateBankAccountBalanceText(wallet);
    
 }
 
@@ -276,5 +289,6 @@ function validatePageElements() {
     checkIfHTMLElement(walletTotalCardsElement, "The total amount of cards e.g 1/3 element");
     checkIfHTMLElement(removeCardButtonElement, "The remove card button");
     checkIfHTMLElement(removableSelectableCardsDiv, "Removable cards div");
+    checkIfHTMLElement(walletBankBalanceElement, "The bank balance element");
     checkIfHTMLElement(spinnerElement, "The spinner element");
 }

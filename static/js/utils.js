@@ -1,3 +1,4 @@
+import { logError } from "./logger.js";
 import { specialChars } from "./specialChars.js";
 
   
@@ -446,4 +447,54 @@ export function concatenateWithDelimiter(first, second, delimiter = "") {
 }
 
 
+
+
+/**
+ * Restricts the length of a given  input field to a maximum of 10 characters which is default.
+ * 
+ * This function ensures that the user cannot enter more than the allowed number of characters
+ * in the input field. It also performs safety checks to prevent errors
+ * when accessing `e.target.value`.
+ * 
+ * @errors {Error}  - Raises two errors:
+ *                      - If the maximum length value is not a valid number
+ *                      - If an attempt is made to convert the value returned from input field to an integer or a float,
+ *                        however the value is a text and not a digit.
+ * 
+ * @param {Event} e         - The input event triggered when the user types in the field.
+ * @param {maximumLength}   - The maximum lenght to a given character. Default is 10
+ * @param {convertToFloat } - An optional value that allows the given value to be converted to a float. 
+ *                            If true converts to a float else leaves the value as it is. 
+ *                            Note - To convert to a float the digit must be an integer or a float otherwise
+ *                            an error is raised
+ */
+export function handleInputFieldValueLength({e, maximumLength=10, convertToFloat=false}) {
+ 
+    if (!e.target || typeof e.target.value !== "string") {
+        return;
+    }
+
+    const isNumberValid = checkNumber(maximumLength).isInteger || checkNumber(maximumLength).isNumber;
+
+    if (!isNumberValid) {
+        logError("handleFundAmountLength", `The maximum length must be an integer. Expected an integer but got type: ${typeof maximumLength}`);
+        throw new Error("The number is not a valid number");
+    }
+
+    const trimmedValue = e.target.value.slice(0, maximumLength);
+
+    if (convertToFloat) {
+        const canBeConverted = checkNumber(trimmedValue).isInteger || checkNumber(trimmedValue).isNumber;
+        if (!canBeConverted) {
+            logError("handleFundAmountLength", `The value cannot be converted to a float because it is not digit. Expected an integer/float but got text: ${trimmedValue}`);
+            throw new Error(`Cannot convert to a float because the value is not an integer or a float. Value received ${trimmedValue}`)
+        }
+    }
+
+    if (trimmedValue !== e.target.value) {
+        e.target.value = convertToFloat ? parseFloat(trimmedValue) : trimmedValue; 
+    }
+
+    
+}
 
