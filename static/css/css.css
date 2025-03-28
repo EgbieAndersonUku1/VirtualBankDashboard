@@ -881,6 +881,7 @@ label {
     margin: 0;
 }
 
+#bank-account-amount,
 #bank-amount {
     font-size: var(--size-xl);
     font-weight: 900;
