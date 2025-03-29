@@ -77,15 +77,14 @@ export function handleFundCloseDivIconClick(e) {
 export function chooseAccountTypeAndFund(accountType, amount) {
    const wallet = Wallet.loadWallet(config.SORT_CODE, config.ACCOUNT_NUMBER);
 
-   if (accountType  === "wallet") {
-     
-      if (!wallet) {
+   if (!wallet) {
         warnError("chooseAccountTypeAndFund", "The wallet was not found");
         return false;
       }
 
+   if (accountType  === "wallet") {
+    
         wallet.addFundToWallet(amount);
-        wallet.save();
         walletDashboard.updateWalletAccountBalanceText(wallet);
         return true;
 
@@ -140,7 +139,6 @@ export function handleFundAmountLength(e) {
      
     }
 
-    console.log(e.target.id)
     handleInputFieldValueLength({e:e, convertToFloat:true})
 
 }

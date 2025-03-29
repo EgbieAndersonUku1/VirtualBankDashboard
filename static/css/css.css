@@ -1347,3 +1347,21 @@ input::placeholder {
     font-family: var(--font-poppins);
     color: var(--deep-navy-blue);
 }
+
+
+
+/* transfer funds */
+#transfer {
+    position: fixed;
+    top: 2%;
+    background: var(--white);
+    width: 60%;
+    box-shadow: var(--box-shadow);
+    padding: var(--size-xlg);
+    cursor: pointer;
+}
+
+.button-close-icon {
+    background: none;
+    border: none;
+}
