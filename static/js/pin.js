@@ -72,7 +72,7 @@ export function handlePinShowage(e, wallet) {
      removeCardsDivElement.classList.add("show");
      removableSelectableCardsDiv.classList.add("show");
 
-     const cardsToRemoveElements = cards.createCardsToRemove(wallet);
+     const cardsToRemoveElements = cards.createCardsToShow(wallet);
      cards.placeCardDivIn(removableSelectableCardsDiv, cardsToRemoveElements, true);
      closeDivs([addNewCardDivElement, addFundsDivElement]);
 

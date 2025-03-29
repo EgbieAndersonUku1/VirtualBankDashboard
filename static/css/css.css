@@ -1228,7 +1228,7 @@ input::placeholder {
     display: block;
 }
 
-
+#wallet-cards,
 #selectable-cards  {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -1237,15 +1237,19 @@ input::placeholder {
     column-gap: var(--size-xs);
 
 }
+#wallet-cards {
+    transform: scale(0.8);
+}
 
 
+
+#wallet-cards .card,
 #selectable-cards .card {
   border: 2px solid lavender;
   cursor: pointer;
   position: relative;
   margin: 0;
   cursor: pointer;
-  /* border-radius: 3%; */
 }
 
 
@@ -1276,11 +1280,11 @@ input::placeholder {
 }
 
 
-
 #selectable-cards .card:hover {
     transform: scale(1.04);
     opacity: 0.8;
 }
+
 
 #removable-card-area {
     display: grid;
@@ -1353,15 +1357,28 @@ input::placeholder {
 /* transfer funds */
 #transfer {
     position: fixed;
-    top: 2%;
+    top: 0;
+    left: 25%;
     background: var(--white);
     width: 60%;
     box-shadow: var(--box-shadow);
-    padding: var(--size-xlg);
+    padding: var(--size-lg);
     cursor: pointer;
 }
 
 .button-close-icon {
     background: none;
     border: none;
+}
+
+#wallet-cards {
+    display: none;
+}
+
+#wallet-cards.show {
+    display: grid;
+}
+
+#transfer-card-fund-amount {
+    font-size: 2.7rem;
 }

@@ -264,7 +264,7 @@ export async function handleRemoveCardButtonClick(e) {
     
           if (isRemoved) {
                 removeCardTable.upateCellPosition(cardNumbers);
-                const cardsToRemoveElements = cards.createCardsToRemove(wallet);
+                const cardsToRemoveElements = cards.createCardsToShow(wallet);
                 cards.placeCardDivIn(removableSelectableCardsDiv, cardsToRemoveElements, true);
                 loadUserCardsInUI(wallet);
                 updateAllWalletDashoardText(wallet);

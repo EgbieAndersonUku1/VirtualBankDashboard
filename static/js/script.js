@@ -20,11 +20,25 @@ import { handleProfileIconClick,
 
         } from "./notifications.js";
 
-import { handleWalletPin, handleAddNewCard, handleCardRemovalClick, handleRemoveCardButtonClick } from "./walletUI.js";
-import { handleAddNewCardInputFields, handleNewCardCloseIcon, handleCVCInputField } from "./add-new-card.js";
+import { handleWalletPin, 
+        handleAddNewCard, 
+        handleCardRemovalClick,
+         handleRemoveCardButtonClick
+         } from "./walletUI.js";
+
+import { handleAddNewCardInputFields, 
+        handleNewCardCloseIcon, 
+        handleCVCInputField 
+       } from "./add-new-card.js";
+
 import { handleRemoveCloseIcon } from "./pin.js";
 import { handleFundForm, handleFundCloseDivIconClick, handleFundAmountLength } from "./fund-account.js";
-import { handleTransferButtonClick, handleDisableMatchingTransferOption } from "./transfer-funds.js";
+import { handleTransferButtonClick, 
+         handleDisableMatchingTransferOption,
+         handleCardOptionSelect,
+         handleTransferFundCardsClick,
+       
+} from "./transfer-funds.js";
 
 
 
@@ -71,6 +85,9 @@ function handleEventDelegation(e) {
     handleFundAmountLength(e);
     handleTransferButtonClick(e);
     handleDisableMatchingTransferOption(e);
+    handleCardOptionSelect(e);
+    handleTransferFundCardsClick(e)
+  
         
 }
 

@@ -588,7 +588,6 @@ export class Wallet extends DataStorage {
         wallet.bankAccount    = BankAccount.getByAccount(sortCode, accountNumber);
         wallet._totalCards    = walletJson.totalCards;
 
-        console.log(walletJson.walletAmount)
         wallet.walletAmount   = parseFloat(walletJson.walletAmount).toFixed(2) || 0;
 
         wallet._populateCardsIntoWallet();
