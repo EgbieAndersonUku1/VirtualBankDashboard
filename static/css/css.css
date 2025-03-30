@@ -1362,7 +1362,10 @@ input::placeholder {
     background: var(--white);
     width: 60%;
     box-shadow: var(--box-shadow);
-    padding: var(--size-lg);
+    padding-top: var(--size-sm);
+    padding-left: var(--size-lg);
+    padding-right: var(--size-lg);
+    padding-bottom: var(--size-lg);
     cursor: pointer;
 }
 
@@ -1379,6 +1382,8 @@ input::placeholder {
     display: grid;
 }
 
+
+#transfer-to-amount,
 #transfer-card-fund-amount {
     font-size: 2.7rem;
 }

@@ -6,13 +6,13 @@ import { toTitle } from "./utils.js";
 import { warnError } from "./logger.js";
 
 
-const transferFormElement           = document.getElementById("wallet-transfer-form");
-const transferButtonElement         = document.getElementById("wallet-transfer-btn");
-const transferFromBankSelectElement = document.getElementById("transfer-from-bank");
-const transferToBankSelectOptionElement   = document.getElementById("transfer-to-bank");
-const transferToWalletSelectOptionElement   = document.getElementById("transfer-to-wallet");
-const transferFromSelectElement     = document.getElementById("transfer-from");
-const transferToSelectElement     = document.getElementById("transfer-to");
+const transferFormElement                  = document.getElementById("wallet-transfer-form");
+const transferButtonElement                = document.getElementById("wallet-transfer-btn");
+const transferFromBankSelectElement        = document.getElementById("transfer-from-bank");
+const transferToBankSelectOptionElement    = document.getElementById("transfer-to-bank");
+const transferToWalletSelectOptionElement  = document.getElementById("transfer-to-wallet");
+const transferFromSelectElement            = document.getElementById("transfer-from");
+const transferToSelectElement              = document.getElementById("transfer-to");
 const cardsAreaElement                     = document.getElementById("wallet-cards");
 const accountTypeLabelElement              = document.getElementById("account-balance-type");
 const accountTypeAmountLabelElement        = document.getElementById("transfer-card-fund-amount");
@@ -36,15 +36,22 @@ export function handleDisableMatchingTransferOption(e) {
     if (selectValue === BANK_ID){
         transferToBankSelectOptionElement.disabled   = true;
         transferToWalletSelectOptionElement.disabled = false;
-        displayTransferDetails("Bank Account", wallet.bankAmountBalance);
              
     } else if (selectValue === WALLET_ID){
         transferToBankSelectOptionElement.disabled   = false;
         transferToWalletSelectOptionElement.disabled = true;
-        displayTransferDetails("Wallet Account", wallet.walletAmount);
-      
+           
     }  
 
+    if (e.target.matches("#transfer-from")) {
+        if (selectValue === BANK_ID){
+            displayTransferDetails("Bank Account", wallet.bankAmountBalance);
+                 
+        } else if (selectValue === WALLET_ID){
+            displayTransferDetails("Wallet Account", wallet.walletAmount);
+          
+        }  
+    }
     
 }
 

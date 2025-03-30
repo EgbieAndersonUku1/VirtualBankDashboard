@@ -18,10 +18,9 @@ export class Wallet extends DataStorage {
    * @param {object | BankAccount}  - An instance of the BankAccount class.
    * @param {number|null} lastTransfer - The last transfer amount made by the wallet (default: null).
    * @param {number|null} lastAmountReceived - The last amount received by the wallet (default: null).
-   * @param {number} numberOfCards - The number of cards currently in the wallet (default: 0).
    * @param {string|null} pin - The PIN associated with the wallet (default: null).
    */
-    constructor(bankAccount=null, lastTransfer = null, lastAmountReceived = null, numberOfCards = 0, pin = null) {
+    constructor(bankAccount=null, lastTransfer = null, lastAmountReceived = null, pin = null) {
         super();
         this._id                    = null;
         this._lastTransfer          = lastTransfer;
