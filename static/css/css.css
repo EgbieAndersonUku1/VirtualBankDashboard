@@ -1266,7 +1266,7 @@ input::placeholder {
     width: 25px;
 }
 
-.hightlight-removable-box {
+.highlight-credit-card {
     opacity: 0.5;
     transform: scale(0.8);
     background: rgb(160, 22, 22);
@@ -1362,11 +1362,12 @@ input::placeholder {
     background: var(--white);
     width: 60%;
     box-shadow: var(--box-shadow);
-    padding-top: var(--size-sm);
-    padding-left: var(--size-lg);
-    padding-right: var(--size-lg);
+    padding-top: var(--size-xs);
+    padding-left: var(--size-md);
+    padding-right: var(--size-md);
     padding-bottom: var(--size-lg);
     cursor: pointer;
+    border: 3px solid lavender;
 }
 
 .button-close-icon {
@@ -1383,7 +1384,17 @@ input::placeholder {
 }
 
 
-#transfer-to-amount,
-#transfer-card-fund-amount {
-    font-size: 2.7rem;
+.transfer-ui-details {
+    font-size: 1.6rem;
+}
+
+#transfer__msg span {
+    font-size: 0.95rem;
+}
+
+#transfer-fund-amount {
+    background: ghostwhite;
+    padding-top: var(--size-xs);
+    margin-bottom: var(--size-sm);
+    border: 2px solid lavender;
 }

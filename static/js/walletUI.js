@@ -213,7 +213,7 @@ export function handleCardRemovalClick(e) {
 
         const cardNumberElement = parent.querySelector(cardNumberClass);
         const card              = wallet.getByCardNumber(cardNumberElement.textContent.trim());
-        const isClicked         = parent.classList.toggle("hightlight-removable-box");
+        const isClicked         = parent.classList.toggle("highlight-credit-card");
 
         if (isClicked && cardNumberElement) {
             removeCardTable.appendRow(card);

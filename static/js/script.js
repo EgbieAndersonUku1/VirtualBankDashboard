@@ -36,7 +36,8 @@ import { handleFundForm, handleFundCloseDivIconClick, handleFundAmountLength } f
 import { handleTransferButtonClick, 
          handleDisableMatchingTransferOption,
          handleCardOptionSelect,
-         handleTransferFundCardsClick,
+         handleTransferCardClick,
+         handleTransferAmount,
        
 } from "./transfer-funds.js";
 
@@ -86,7 +87,8 @@ function handleEventDelegation(e) {
     handleTransferButtonClick(e);
     handleDisableMatchingTransferOption(e);
     handleCardOptionSelect(e);
-    handleTransferFundCardsClick(e)
+    handleTransferCardClick(e);
+    handleTransferAmount(e);
   
         
 }

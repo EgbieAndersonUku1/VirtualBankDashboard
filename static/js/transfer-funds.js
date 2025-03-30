@@ -3,7 +3,8 @@ import { Wallet } from "./wallet.js";
 import { config } from "./config.js";
 import { cards } from "./cardsComponent.js";
 import { toTitle } from "./utils.js";
-import { warnError } from "./logger.js";
+import { warnError, logError } from "./logger.js";
+import { handleInputFieldValueLength } from "./utils.js";
 
 
 const transferFormElement                  = document.getElementById("wallet-transfer-form");
@@ -16,12 +17,33 @@ const transferToSelectElement              = document.getElementById("transfer-t
 const cardsAreaElement                     = document.getElementById("wallet-cards");
 const accountTypeLabelElement              = document.getElementById("account-balance-type");
 const accountTypeAmountLabelElement        = document.getElementById("transfer-card-fund-amount");
-
+const transferCardsCountElement            = document.getElementById("transfer-cards-count");
+const transferAmountValueElement           = document.getElementById("transfer-amount-value");
+const transferTotalAmountLabelElement      = document.getElementById("transfer-total-amount");
+const amountPerCardAmount                  = document.getElementById("amount-per-card");
 
 
 validatePageElements();
 
+transferAmountValueElement.addEventListener("input", handleTransferAmount);
+transferAmountValueElement.addEventListener("blur", handleTransferAmount);
+transferFromSelectElement.addEventListener("change", handleDisableMatchingTransferOption);
+transferToSelectElement.addEventListener("change",   handleCardOptionSelect);
 
+
+
+
+/**
+ * Disables the corresponding `transfer to` option based on the selected `transfer from` option.
+ * 
+ * When the user selects either "Bank" or "Wallet" from the `transfer-from` dropdown, this function:
+ * - Disables the matching option in the `transfer-to` dropdown to prevent self-transfers.
+ * - Updates the displayed transfer details to reflect the selected source account.
+ * 
+ * If no wallet is found, a warning is logged.
+ * 
+ * @param {Event} e - The event object from the `transfer-from` select field.
+ */
 export function handleDisableMatchingTransferOption(e) {
    
     const selectValue = e.target.value;
@@ -56,10 +78,17 @@ export function handleDisableMatchingTransferOption(e) {
 }
 
 
-transferFromSelectElement.addEventListener("change", handleDisableMatchingTransferOption);
-transferToSelectElement.addEventListener("change",   handleCardOptionSelect);
 
-
+/**
+ * Handles the selection of the `cards` option from the `to` dropdown.
+ * 
+ * When the user selects `cards`, this function displays the number of 
+ * available cards within the wallet in the UI. If no cards are available, 
+ * an empty placeholder is shown instead.
+ * 
+ * @param {*} e The event object.
+ * @returns {void}
+ */
 export function handleCardOptionSelect(e) {
 
     const select = e.target;
@@ -77,17 +106,25 @@ export function handleCardOptionSelect(e) {
         const cardsToTransferElement = cards.createCardsToShow(wallet);
         cards.placeCardDivIn(cardsAreaElement, cardsToTransferElement, true);
     }
-  
-
 }
 
+
+
+/**
+ * Handles the transfer button click event.
+ * 
+ * This function ensures that the clicked element is the transfer button.
+ * If the form is valid, the transfer process can proceed; otherwise, 
+ * the form validity is reported to the user.
+ *
+ * @param {Event} e - The event object triggered by clicking the button.
+ */
 export function handleTransferButtonClick(e) {
     const BUTTON_ID = "wallet-transfer-btn";
     if (e.target.id != BUTTON_ID) {
         return;
     }
 
-   
     if (transferFormElement.checkValidity()) {
 
     } else {
@@ -97,7 +134,16 @@ export function handleTransferButtonClick(e) {
 }
 
 
-export function handleTransferFundCardsClick(e) {
+
+
+/**
+ * Handles the selection of a user's card when clicked in the front end.
+ * It ensures the selected card belongs to the correct parent container
+ * before updating the selection count.
+ *
+ * @param {*} e - The event object containing the clicked card element.
+ */
+export function handleTransferCardClick(e) {
     
 
     const GRAND_PARENT_CLASS_ID = "wallet-cards";
@@ -105,38 +151,205 @@ export function handleTransferFundCardsClick(e) {
   
     const card = e.target.closest(CARD_CLASS);
     
-    if (card && card.parentElement.id != GRAND_PARENT_CLASS_ID) {
+    if (!card || (card && card.parentElement.id != GRAND_PARENT_CLASS_ID)) {
         return;
     }
 
-    console.log(card)
-    // console.log(card)
-    // console.log(card)
-    // if (card) {
-    //     const parentDiv = card.parentElement;
-    //     console.log(parentDiv)
-    // }
-    // if (targetDiv.id != GRAND_PARENT_CLASS_ID) {
-    //     return;
-    // }
-
-  
-
+    updateCardSelectionCount(card);
+    
 }   
 
 
+/**
+ * Handles updates to the transfer amount input field.
+ * When the user enters a value, it is automatically updated
+ * across various fields and headers that rely on transfer amount field input.
+ * 
+ * @param {Event} e - The input event triggered by the user.
+ * @returns {void}
+ */
+export function handleTransferAmount(e) {
+    const INPUT_FIELD_ID = "transfer-amount-value";
+
+    if (e.target.id != INPUT_FIELD_ID) {
+        return;
+    }
+
+    if (!e.target.value) {
+        e.target.value = 0.00
+    }
+
+    const value = handleInputFieldValueLength({e:e, convertToFloat:true, returnInputValue:true})
+    updateTransferAmount(value);
+
+    const count = getTransferCardCount();
+
+    if (count) {
+        updatePerCountValue(getTransferAmountValue())
+    }
+}
+
+
+/**
+ * Displays the selected account details at the top of the page.
+ * 
+ * The user can select from two account types: a bank account or a wallet. 
+ * Based on the selected option, the corresponding account name and balance 
+ * are rendered in the UI.
+ * 
+ * @param {string} name - The name of the selected account (e.g., "Bank" or "Wallet").
+ * @param {string} amount - The account balance to display.
+ */
 function displayTransferDetails(name, amount) {
+    if (!name && !amount) {
+        return;
+    }
+
+    if (typeof name != "string" || amount != "string") {
+        logError("displayTransferDetails", `The name or amount must be a string, but got type name ${typeof name} and type amount ${typeof amount}`);
+    }
     accountTypeLabelElement.textContent       = `${toTitle(name)}`;
     accountTypeAmountLabelElement.textContent = `£${amount}`
   
 }
 
 
+/**
+ * Retrieves the number of cards the user wants to transfer funds to.
+ * 
+ * This function extracts the card count from the UI and returns it as a number.
+ * 
+ * @returns {number} The number of cards selected for the transfer.
+ */
+function getTransferCardCount() {
+    return parseInt(transferCardsCountElement.textContent);
+}
+
+
+/**
+ * Retrieves the current transfer amount directly from the input field.
+ * The value is returned as a float (the raw value from the input element).
+ * 
+ * @returns {string} - The current transfer amount value from the input field.
+ */
+function getTransferAmountValue() {
+    return transferAmountValueElement.value;
+}
+
+
+/**
+ * Updates the number of selected transfer cards in the UI.
+ *
+ * If the user selects a card, the count increases; if they deselect it, the count decreases.
+ * This function ensures that the total transfer amount updates accordingly.
+ *
+ * @param {HTMLElement} card - The div element representing a transfer card.
+ * @throws {Error} Throws an error if the provided card is not a valid HTML element.
+ */
+function updateCardSelectionCount(card) {
+    if (!checkIfHTMLElement(card, "The card to transfer funds to")) {
+        throw new Error("The card is not a valid HTML element");
+    }
+
+    const currentCardCount = parseInt(transferCardsCountElement.textContent);
+    const isSelected = card.classList.contains("highlight-credit-card");
+
+    // Update card count
+    const newCount = isSelected ? currentCardCount + 1 : currentCardCount - 1;
+    transferCardsCountElement.textContent = newCount;
+
+    // Manage transfer amount logic
+    const currentTransferAmount = getTransferAmountValue();
+    if (currentTransferAmount > 0) {
+        updatePerCountValue(currentTransferAmount);
+    }
+
+    // Calculate the new transfer amount
+    const newTransferAmount = currentTransferAmount * newCount;
+    updateTransferAmount(newCount === 0 ? getTransferAmountValue() : newTransferAmount);
+
+    // Reset per-card value when no cards are selected
+    if (newCount === 0) {
+        updatePerCountValue(0);
+    }
+}
+
+
+/**
+ * Updates the total transfer amount displayed on the UI.
+ * The amount is formatted as a string with two decimal places for proper display.
+ *
+ * @param {string} amount - The amount to be transferred (in string format). Must be a valid numeric string.
+ * @throws {Error} If the amount is not a valid string or is empty, an error message is logged and the displayed amount is set to £0.00.
+ */
+function updateTransferAmount(amount) {
+
+    if (!amount) {
+        formatCurrency(0);
+        return;
+    }
+
+    if (!(typeof amount === "number" || typeof amount === "string")) {
+        warnError("updateTransferAmount", `The amount passed must be an integer/float or string but got unexpected type: ${typeof amount}`);
+        transferTotalAmountLabelElement.textContent = "£0.00";
+        return;
+    }
+    
+    const numberOfCardsSelected = getTransferCardCount()
+
+    amount = parseFloat(amount).toFixed(2);
+   
+    if (numberOfCardsSelected > 0) {
+        const total = numberOfCardsSelected * getTransferAmountValue();
+        transferTotalAmountLabelElement.textContent = formatCurrency(total);
+        return;
+    }
+    transferTotalAmountLabelElement.textContent =  formatCurrency(amount);
+        
+}
+
+
+/**
+ * Updates the amount per card displayed on the UI.
+ * The amount is formatted as a string with two decimal places for proper display.
+ * 
+ * @param {number|string} amount - The amount to be displayed per card. Can be a number or a string that can be parsed to a number.
+ */
+function updatePerCountValue(amount) {
+    if (!(typeof amount != "number" || typeof amount != "string")) {
+        warnError("updatePerCountValue", `The amount cannot be empty and must be a integer or a string integer. Expected a string integer but got ${typeof amount}`);
+        amountPerCardAmount.textContent = `£${parseFloat(getTransferAmountValue()).toFixed(2)}`;
+        return 
+    }
+    amountPerCardAmount.textContent = formatCurrency(amount);
+}
+
+
+/**
+ * Formats a given amount into a currency string (GBP).
+ * Ensures two decimal places and includes the pound (£) symbol.
+ * 
+ * @param {number|string} amount - The amount to format.
+ * @returns {string} - The formatted currency string.
+ */
+function formatCurrency(amount) {
+    return `£${parseFloat(amount).toFixed(2)}`;
+}
+
 
 function validatePageElements() {
     checkIfHTMLElement(transferFormElement, "The transfer form");
     checkIfHTMLElement(transferButtonElement, "The transfer button form element");
     checkIfHTMLElement(transferFromBankSelectElement, "The transfer from bank option element");
-    checkIfHTMLElement(transferToBankSelectOptionElement, "The transfer from bank option element");
-    checkIfHTMLElement(cardsAreaElement, "The card area element in the transfer area div")
+    checkIfHTMLElement(transferToBankSelectOptionElement, "The transfer to bank option element");
+    checkIfHTMLElement(transferToWalletSelectOptionElement, "The transfer to wallet option element");
+    checkIfHTMLElement(transferFromSelectElement, "The transfer from select element");
+    checkIfHTMLElement(transferToSelectElement, "The transfer to select element");
+    checkIfHTMLElement(cardsAreaElement, "The card area element in the transfer area div");
+    checkIfHTMLElement(accountTypeLabelElement, "The account balance type label");
+    checkIfHTMLElement(accountTypeAmountLabelElement, "The transfer card fund amount label");
+    checkIfHTMLElement(transferCardsCountElement, "The transfer card count");
+    checkIfHTMLElement(transferAmountValueElement, "The transfer amount element");
+    checkIfHTMLElement(transferTotalAmountLabelElement, "The label for the transfer amount");
+    checkIfHTMLElement(amountPerCardAmount, "The amount per card element");
 }
