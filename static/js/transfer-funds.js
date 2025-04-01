@@ -37,8 +37,6 @@ transferToSelectElement.addEventListener("change",   handleCardOptionSelect);
 const transferRecord = {}
 
 
-const pluralCards   = getTransferCardsCount() > 1 ? "s": ""
-const eachLabel     = getTransferCardsCount() > 1 ? "each" : "";
 
 
 
@@ -117,8 +115,7 @@ export function handleCardOptionSelect(e) {
         }
         
          cardsAreaElement.classList.add("show")
-         const wallet = Wallet.loadWallet(config.SORT_CODE, config.ACCOUNT_NUMBER);
-
+    
         const cardsToTransferElement = cards.createCardsToShow(transferRecord.wallet);
         cards.placeCardDivIn(cardsAreaElement, cardsToTransferElement, true);
 
@@ -324,7 +321,8 @@ function updateCardSelectionCount(card) {
 function updateTransferAmount(amount) {
 
     if (!amount) {
-        formatCurrency(0);
+        const NO_CURRENCY = 0;
+        formatCurrency(NO_CURRENCY);
         return;
     }
 
@@ -374,7 +372,11 @@ function updateCardMessageStatus(msg) {
  */
 function updatePerCountCardValue(amount) {
     if (!(typeof amount != "number" || typeof amount != "string")) {
-        warnError("updatePerCountCardValue", `The amount cannot be empty and must be a integer or a string integer. Expected a string integer but got ${typeof amount}`);
+        warnError("updatePerCountCardValue", `The amount cannot be empty and must be a integer or a 
+                                              string integer. Expected a string integer but got ${typeof amount}
+                                              `
+                                            );
+
         amountPerCardAmount.textContent = `£${parseFloat(getTransferAmountValue()).toFixed(2)}`;
         return 
     }
@@ -395,6 +397,15 @@ function getAccountOptionChosen() {
     if (accountType) {
         return accountType.split(" ")[0].toLowerCase().trim();
     }
+}
+
+
+function getCardLabelDetails() {
+    const count = getTransferCardsCount();
+    return {
+        pluralCards: count > 1 ? "s" : "",
+        eachLabel: count > 1 ? "each" : ""
+    };
 }
 
 
@@ -542,38 +553,53 @@ export function handleDisableMatchingTransferOption(e) {
 }
 
 
-function handleUnSuccessfulTransfer() {
-    if (transferRecord.canFund) {
-        transferRecord.canFund = false;
-    }
-   
-    const formattedCurrency = formatCurrency(transferRecord.loadedBalance)
-    const cards             = getTransferCardsCount();
-
-    const errorMsg = `You have a balance of ${formattedCurrency} but you are trying to fund ${cards} card${pluralCards} ${eachLabel} with a balance of ${formatCurrency(getTransferAmountValue())}`;
-
-    updateCardMessageStatus(errorMsg)
-    toggleCardMessage(true);
-    toggleErrorMessage(true);
-}
 
 
 function handleSuccesfulTransfer(amount) {
     toggleCardMessage(false);
     toggleErrorMessage(false);
+
     const numOfCardsCanFund  = getTransferCardsCount();
+
     if (numOfCardsCanFund > 0) {
 
         transferRecord.canFund = true;
 
         if (transferRecord.canFund && amount >= 0.01) {
+            
+            const labels         = getCardLabelDetails();
+            const balance        = formatCurrency(transferRecord.loadedBalance);
+            const transferAmount = formatCurrency(getTransferAmountValue())
+            const succesMsg      = `You have a balance of ${balance} and can successfully 
+                                    fund ${getTransferCardsCount()} card${labels.pluralCards} ${labels.eachLabel} 
+                                    with an amount of ${transferAmount}.`;
            
-            const succesMsg = `You have a balance of ${formatCurrency(transferRecord.loadedBalance)} and can successfully fund ${getTransferCardsCount()} card${pluralCards} ${eachLabel} with an amount of ${formatCurrency(getTransferAmountValue())}`;
             updateCardMessageStatus(toTitle(succesMsg));
             toggleCardMessage(true, true);
         }
 
     }
+}
+
+
+function handleUnSuccessfulTransfer() {
+    if (transferRecord.canFund) {
+        transferRecord.canFund = false;
+    }
+    
+    const labels = getCardLabelDetails();
+
+    const formattedCurrency = formatCurrency(transferRecord.loadedBalance)
+    const cards             = getTransferCardsCount();
+    const errorMsg          = `You have a balance of ${formattedCurrency} but you are trying to fund ${cards} 
+                               card${labels.pluralCards} ${labels.eachLabel} with a balance of ${formatCurrency(getTransferAmountValue())}
+                              `
+    
+
+
+    updateCardMessageStatus(errorMsg)
+    toggleCardMessage(true);
+    toggleErrorMessage(true);
 }
 
 
