@@ -504,3 +504,15 @@ export function handleInputFieldValueLength({e, maximumLength=10, convertToFloat
     
 }
 
+
+
+/**
+ * Formats a given amount into a currency string (GBP).
+ * Ensures two decimal places and includes the pound (£) symbol.
+ * 
+ * @param {number|string} amount - The amount to format.
+ * @returns {string} - The formatted currency string.
+ */
+export function formatCurrency(amount) {
+    return `£${parseFloat(amount).toFixed(2)}`;
+}

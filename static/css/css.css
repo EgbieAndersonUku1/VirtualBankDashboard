@@ -473,6 +473,12 @@ button {
     z-index: 100000;
 }
 
+#preview-mode {
+    border: 2px solid rgb(94, 5, 5);
+    background: ghostwhite;
+    margin-bottom: var(--size-xs);
+}
+
 
 .dropdown.show,
 .notification-dropdown.show,
@@ -1244,7 +1250,7 @@ input::placeholder {
 
 }
 #wallet-cards {
-    transform: scale(0.8);
+    transform: scale(0.7);
 }
 
 

@@ -37,7 +37,7 @@ import { handleTransferButtonClick,
          handleDisableMatchingTransferOption,
          handleCardOptionSelect,
          handleTransferCardClick,
-         handleTransferAmount,
+         handleTransferAmountInputField,
        
 } from "./transfer-funds.js";
 
@@ -88,7 +88,7 @@ function handleEventDelegation(e) {
     handleDisableMatchingTransferOption(e);
     handleCardOptionSelect(e);
     handleTransferCardClick(e);
-    handleTransferAmount(e);
+    handleTransferAmountInputField(e);
         
 }
 
