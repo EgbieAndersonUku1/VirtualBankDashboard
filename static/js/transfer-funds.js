@@ -2,9 +2,9 @@ import { checkIfHTMLElement } from "./utils.js";
 import { Wallet } from "./wallet.js";
 import { config } from "./config.js";
 import { cards } from "./cardsComponent.js";
-import { toTitle } from "./utils.js";
 import { warnError, logError } from "./logger.js";
-import { handleInputFieldValueLength } from "./utils.js";
+import { handleInputFieldValueLength, toTitle } from "./utils.js";
+import { excludeKey } from "./utils.js";
 
 
 const transferFormElement                  = document.getElementById("wallet-transfer-form");
@@ -21,6 +21,9 @@ const transferCardsCountElement            = document.getElementById("transfer-c
 const transferAmountValueElement           = document.getElementById("transfer-amount-value");
 const transferTotalAmountLabelElement      = document.getElementById("transfer-total-amount");
 const amountPerCardAmount                  = document.getElementById("amount-per-card");
+const previewModeElement                   = document.getElementById("preview-mode");
+const errorMessageElement                  = document.getElementById("transfer-messages-id");
+const cardMessageElement                   = document.getElementById("transfer-error-card-msg-id");
 
 
 validatePageElements();
@@ -30,6 +33,8 @@ transferAmountValueElement.addEventListener("blur", handleTransferAmount);
 transferFromSelectElement.addEventListener("change", handleDisableMatchingTransferOption);
 transferToSelectElement.addEventListener("change",   handleCardOptionSelect);
 
+
+const transferRecord = {}
 
 
 
@@ -50,7 +55,17 @@ export function handleDisableMatchingTransferOption(e) {
     const BANK_ID     = "bank";
     const WALLET_ID   = "wallet";
 
-    const wallet = Wallet.loadWallet(config.SORT_CODE, config.ACCOUNT_NUMBER);
+    let wallet;
+    if (!transferRecord.wallet) {
+        console.log("Not found, loading the from localStorage")
+        wallet = Wallet.loadWallet(config.SORT_CODE, config.ACCOUNT_NUMBER);
+        transferRecord.wallet = wallet // cache
+    }  else {
+        wallet = transferRecord.wallet;
+        console.log("Getting the wallet from the cache")
+    }
+ 
+    let isInPreviewMode   = false;
 
     if (!wallet) {
         warnError("handleDisableMatchingTransferOption", "The wallet wasn't found")
@@ -68,14 +83,29 @@ export function handleDisableMatchingTransferOption(e) {
     if (e.target.matches("#transfer-from")) {
         if (selectValue === BANK_ID){
             displayTransferDetails("Bank Account", wallet.bankAmountBalance);
+            isInPreviewMode = true;
+            transferRecord.loadedBalance = wallet.bankAmountBalance;
                  
         } else if (selectValue === WALLET_ID){
             displayTransferDetails("Wallet Account", wallet.walletAmount);
+            isInPreviewMode = true;
+            transferRecord.loadedBalance = wallet.walletAmount;
+           
           
         }  
+
+        if (isInPreviewMode) {
+            togglePreviewMode();
+        }
+
+        transferRecord.numOfCardsCanFund = 0;
+        
+        // toggleAllCardsFundStatus()
     }
     
 }
+
+
 
 
 
@@ -103,8 +133,10 @@ export function handleCardOptionSelect(e) {
          cardsAreaElement.classList.add("show")
          const wallet = Wallet.loadWallet(config.SORT_CODE, config.ACCOUNT_NUMBER);
 
-        const cardsToTransferElement = cards.createCardsToShow(wallet);
+        const cardsToTransferElement = cards.createCardsToShow(transferRecord.wallet);
         cards.placeCardDivIn(cardsAreaElement, cardsToTransferElement, true);
+
+        togglePreviewMode();
     }
 }
 
@@ -155,7 +187,18 @@ export function handleTransferCardClick(e) {
         return;
     }
 
+
+    if (getTransferCardCount() >= 0 && isNaN(getTransferAmountValue()))  {
+        updateCardMessageError("You haven't set an amount for the cards yet");
+        toggleCardMessage(true);
+    } else {
+        toggleCardMessage(false);
+    }
+
     updateCardSelectionCount(card);
+
+
+  
     
 }   
 
@@ -179,13 +222,18 @@ export function handleTransferAmount(e) {
         e.target.value = 0.00
     }
 
+    togglePreviewMode();
+
     const value = handleInputFieldValueLength({e:e, convertToFloat:true, returnInputValue:true})
     updateTransferAmount(value);
 
     const count = getTransferCardCount();
 
-    if (count) {
-        updatePerCountValue(getTransferAmountValue())
+    if (count > 0) {
+        const amount = getTransferCardCount() * getTransferAmountValue()
+        toggleCardFundsStatus(amount, getAccountOptionChosen())
+    
+        return
     }
 }
 
@@ -205,12 +253,23 @@ function displayTransferDetails(name, amount) {
         return;
     }
 
-    if (typeof name != "string" || amount != "string") {
+    if (typeof name != "string" && (typeof amount != "string" || typeof amount != "number")) {
         logError("displayTransferDetails", `The name or amount must be a string, but got type name ${typeof name} and type amount ${typeof amount}`);
     }
     accountTypeLabelElement.textContent       = `${toTitle(name)}`;
     accountTypeAmountLabelElement.textContent = `£${amount}`
   
+}
+
+
+function togglePreviewMode(show=true) {
+    if (show) {
+        previewModeElement.classList.add("show");
+        return;
+    }
+    previewModeElement.classList.remove("show");
+    
+   
 }
 
 
@@ -233,7 +292,7 @@ function getTransferCardCount() {
  * @returns {string} - The current transfer amount value from the input field.
  */
 function getTransferAmountValue() {
-    return transferAmountValueElement.value;
+    return parseFloat(transferAmountValueElement.value).toFixed(2);
 }
 
 
@@ -251,13 +310,23 @@ function updateCardSelectionCount(card) {
         throw new Error("The card is not a valid HTML element");
     }
 
-    const currentCardCount = parseInt(transferCardsCountElement.textContent);
-    const isSelected = card.classList.contains("highlight-credit-card");
+    const currentCardCount = getTransferCardCount();
+    const isSelected       = card.classList.contains("highlight-credit-card");
+      
+    let newCount;
+    
 
-    // Update card count
-    const newCount = isSelected ? currentCardCount + 1 : currentCardCount - 1;
-    transferCardsCountElement.textContent = newCount;
+    if (isSelected) {
+        newCount = currentCardCount + 1;
+    } else {
+        newCount  = currentCardCount - 1;
+        transferRecord.canFund = true;
+      
+      
+    }
 
+    updateTransferCardCount(newCount);
+  
     // Manage transfer amount logic
     const currentTransferAmount = getTransferAmountValue();
     if (currentTransferAmount > 0) {
@@ -268,10 +337,19 @@ function updateCardSelectionCount(card) {
     const newTransferAmount = currentTransferAmount * newCount;
     updateTransferAmount(newCount === 0 ? getTransferAmountValue() : newTransferAmount);
 
+
     // Reset per-card value when no cards are selected
     if (newCount === 0) {
         updatePerCountValue(0);
     }
+
+
+    const accountType = getAccountOptionChosen();
+    
+    if (!isNaN(newTransferAmount)) {
+        toggleCardFundsStatus(newTransferAmount, accountType);
+    }
+     
 }
 
 
@@ -304,6 +382,7 @@ function updateTransferAmount(amount) {
         transferTotalAmountLabelElement.textContent = formatCurrency(total);
         return;
     }
+    amount = 0;
     transferTotalAmountLabelElement.textContent =  formatCurrency(amount);
         
 }
@@ -325,6 +404,19 @@ function updatePerCountValue(amount) {
 }
 
 
+
+/**
+ * Updates the number of cards the user wants to transfer funds to.
+ * * 
+ * @returns {number} The number of cards selected for the transfer.
+ */
+function updateTransferCardCount(numOfCards) {
+    return transferCardsCountElement.textContent = numOfCards;
+   
+}
+
+
+
 /**
  * Formats a given amount into a currency string (GBP).
  * Ensures two decimal places and includes the pound (£) symbol.
@@ -337,7 +429,117 @@ function formatCurrency(amount) {
 }
 
 
+function getAccountOptionChosen() {
+    const accountType = accountTypeLabelElement.textContent;
+
+    if (accountType.toLowerCase() === "balance") {
+        return;
+    }
+
+    if (accountType) {
+        return accountType.split(" ")[0].toLowerCase().trim();
+    }
+}
+
+
+
+
+/**
+ * Toggles between several messages to indicate whether a card has sufficient funds for a transfer.
+ * 
+ * @param {Number | float} amount - The amount to funds status.
+ */
+function toggleCardFundsStatus(amount, accountType) {
+
+    if (amount === null) {
+        warnError("toggleCardFundsStatus", `The amount cannot be null. Expected a value but got ${amount}`);
+        return;
+    }
+
+    if (!accountType ) {
+        warnError("toggleCardFundStatus", `One or more of the values are empty: amount -${amount}, account type: ${accountType}`);
+        return;
+    }
+
+    const canTransfer        = transferRecord.wallet.canTransfer(accountType, amount);
+    const numOfCardsCanFund  = getTransferCardCount();
+    const pluralCards        = getTransferCardCount() > 1 ? "s": ""
+    const eachLabel          = getTransferCardCount() > 1 ? "each" : "";
+
+    if (canTransfer === null){
+        return;
+    }
+
+    if (!canTransfer) {
+      
+        if (transferRecord.canFund) {
+            transferRecord.canFund = false;
+        }
+       
+        const formattedCurrency = formatCurrency(transferRecord.loadedBalance)
+        const cards             = getTransferCardCount();
+
+        const errorMsg = `You have a balance of ${formattedCurrency} but you are trying to fund ${cards} card${pluralCards} ${eachLabel} with a balance of ${formatCurrency(getTransferAmountValue())}`;
+
+        updateCardMessageError(errorMsg)
+        toggleCardMessage(true);
+        toggleErrorMessage(true);
+       
+    } else {
+        
+        toggleCardMessage(false);
+        toggleErrorMessage(false);
+
+        if (numOfCardsCanFund > 0) {
+    
+            transferRecord.canFund = true;
+
+            if (transferRecord.canFund && amount >= 0.01) {
+               
+                const succesMsg = `You have a balance of ${formatCurrency(transferRecord.loadedBalance)} and can successfully fund ${getTransferCardCount()} card${pluralCards} ${eachLabel} with an amount of ${formatCurrency(getTransferAmountValue())}`;
+                updateCardMessageError(toTitle(succesMsg));
+                toggleCardMessage(true, true);
+            }
+
+        }
+        
+    }    
+}
+
+
+function updateCardMessageError(msg) {
+    cardMessageElement.textContent = msg;
+}
+
+
+
+function toggleErrorMessage(show=false) {
+   toggleErrorMessageHelper(show, errorMessageElement);
+}
+
+/**
+ * Toggles the card message visibility and applies success or error styling.
+ *
+ * @param {boolean} show - Whether to display the message.
+ * @param {boolean} isSuccess - If true, applies the "green" success style; otherwise, applies the "red" error style.
+ */
+function toggleCardMessage(show = false, isSuccess = false) {
+    cardMessageElement.classList.toggle("green", isSuccess);
+    cardMessageElement.classList.toggle("red", !isSuccess);
+    toggleErrorMessageHelper(show, cardMessageElement);
+}
+
+
+
+function toggleErrorMessageHelper(show, element){
+    element = element.classList;
+    show ? element.add("show") : element.remove("show");  
+} 
+
+
+
 function validatePageElements() {
+
     checkIfHTMLElement(transferFormElement, "The transfer form");
     checkIfHTMLElement(transferButtonElement, "The transfer button form element");
     checkIfHTMLElement(transferFromBankSelectElement, "The transfer from bank option element");
@@ -352,4 +554,8 @@ function validatePageElements() {
     checkIfHTMLElement(transferAmountValueElement, "The transfer amount element");
     checkIfHTMLElement(transferTotalAmountLabelElement, "The label for the transfer amount");
     checkIfHTMLElement(amountPerCardAmount, "The amount per card element");
+    checkIfHTMLElement(previewModeElement, "The elements for the preview");
+    checkIfHTMLElement(errorMessageElement, "The error message for the incorrect funds");
+    checkIfHTMLElement(cardMessageElement, "The error message for the cards funds");
+
 }

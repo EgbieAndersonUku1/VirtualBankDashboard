@@ -462,6 +462,11 @@ button {
     cursor: pointer;
     padding: var(--size-lg);
 
+}
+
+.dropdown,
+.notification-dropdown,
+#preview-mode {
     opacity: 0;
     visibility: hidden;
     transition: opacity 0.3s ease-in-out, visibility 0s 0.3s;
@@ -474,6 +479,7 @@ button {
 #new-card.show,
 .pin.show,
 #fund.show,
+#preview-mode.show,
 #remove-cards.show {
     border: 2px solid lavender;
     opacity: 1;
@@ -1272,6 +1278,8 @@ input::placeholder {
     background: rgb(160, 22, 22);
   }
 
+
+
 .removable-card-icon {
   
     width: 100%;
@@ -1397,4 +1405,23 @@ input::placeholder {
     padding-top: var(--size-xs);
     margin-bottom: var(--size-sm);
     border: 2px solid lavender;
+}
+
+#preview-mode span {
+    font-size: 0.9rem;
+}
+
+#transfer-error-card-msg-id,
+#transfer-messages-id {
+    display: none;
+}
+
+#transfer-error-card-msg-id.show,
+#transfer-messages-id.show{
+    display: block;
+}
+
+
+.transfer-error-msg p {
+    font-size: 0.85rem;
 }

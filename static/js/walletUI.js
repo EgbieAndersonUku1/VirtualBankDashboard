@@ -204,7 +204,7 @@ function updateAllWalletDashoardText(wallet) {
  * @param {Event} e - The click event object.
  */
 export function handleCardRemovalClick(e) {
-    const EXPECTED_CLASS = ".bank-card"
+    const EXPECTED_CLASS = ".bank-card";
 
     const parent          = e.target.closest(EXPECTED_CLASS);
     const cardNumberClass = ".card-account-number";
@@ -213,9 +213,9 @@ export function handleCardRemovalClick(e) {
 
         const cardNumberElement = parent.querySelector(cardNumberClass);
         const card              = wallet.getByCardNumber(cardNumberElement.textContent.trim());
-        const isClicked         = parent.classList.toggle("highlight-credit-card");
-
-        if (isClicked && cardNumberElement) {
+        const isSelected        = parent.classList.toggle("highlight-credit-card");
+     
+        if (isSelected && cardNumberElement) {
             removeCardTable.appendRow(card);
             wallet.markCardForRemoval(card.cardNumber);
         } else {
@@ -225,7 +225,6 @@ export function handleCardRemovalClick(e) {
     }
   
 }
-
 
 
 /**

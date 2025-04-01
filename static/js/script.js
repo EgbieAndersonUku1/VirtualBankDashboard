@@ -23,7 +23,7 @@ import { handleProfileIconClick,
 import { handleWalletPin, 
         handleAddNewCard, 
         handleCardRemovalClick,
-         handleRemoveCardButtonClick
+         handleRemoveCardButtonClick,
          } from "./walletUI.js";
 
 import { handleAddNewCardInputFields, 
@@ -89,7 +89,6 @@ function handleEventDelegation(e) {
     handleCardOptionSelect(e);
     handleTransferCardClick(e);
     handleTransferAmount(e);
-  
         
 }
 

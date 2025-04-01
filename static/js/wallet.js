@@ -734,6 +734,56 @@ export class Wallet extends DataStorage {
         return wallet;
     }
 
+   /**
+     * Checks if a transfer is possible based on the account type and the amount.
+     * The function ensures that the account type is valid (either "bank" or "wallet") and 
+     * verifies if the transfer amount is available in the selected account.
+     * 
+     * @param {string} accountType The type of account ("bank" or "wallet") to transfer from.
+     * @param {number} amount The amount to transfer.
+     * 
+     * @returns {boolean} Returns `true` if the transfer is possible (balance is sufficient), otherwise `false`.
+     *                    if an error is thrown returns null
+     * 
+     * @throws {Error} Throws an error if the `accountType` is invalid or the balance is insufficient.
+     */
+    canTransfer(accountType, amount) {
+
+        if (amount === null || amount === NaN) {
+            warnError("wallet.canTransfer", "Got a value of null");
+            throw new Error("The value received was null")
+
+        }
+
+        const amountToCheck = checkNumber(amount);
+    
+        if (!(amountToCheck.isInteger || amountToCheck.isFloat) ) {
+            logError("wallet.canTranser", `The amount value is not a number. Expected a digit but a text value : ${amount}`);
+            throw new Error(`The amount value is not a number. Expected a digit but a text value : ${amount}`)
+        }
+
+        accountType = accountType.toLowerCase().trim();
+        if (!accountType) {
+            logError("wallet.canTranser", `The account type value is empty. Got ${accountType}`);
+            return null;
+
+        }
+        
+        if (accountType != "bank" && accountType != "wallet") {
+            warnError("wallet.canTransfer", `The string value must either be a 'bank-account' or 'wallet' but got text ${accountType} `);
+            return false;
+        }
+
+        amount  = parseFloat(amount).toFixed(2);
+        const balance = accountType === "bank" ? this.bankAmountBalance : this.walletAmount;
+
+        if (!balance) {
+            logError("wallet.canTransfer", `The balance did not yield an expected result. Got ${balance} with type ${typeof balance}`);
+            throw new Error(`The balance did not return a correct balance. Expected a balance but got ${balance} with type ${typeof balance}`);
+        }
+        return parseFloat(balance - amount).toFixed(2) >= 0;
+    }
+
 }
 
 

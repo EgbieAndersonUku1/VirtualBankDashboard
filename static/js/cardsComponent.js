@@ -189,7 +189,8 @@ function createSingleCreateCard(cardDetails) {
     cardDiv.appendChild(cardFooterDiv);
 
     cardDiv.classList.add("card", "bank-card", cardDetails.cardBrand.toLowerCase());
-    cardDiv.ariaLabel = `${cardDetails.cardName} card`;
+    cardDiv.ariaLabel          = `${cardDetails.cardName} card`;
+    cardDiv.dataset.cardNumber = cardDetails.cardNumber;
     return cardDiv;
 }
 
