@@ -35,7 +35,7 @@ import { handleRemoveCloseIcon } from "./pin.js";
 import { handleFundForm, handleFundCloseDivIconClick, handleFundAmountLength } from "./fund-account.js";
 import { handleTransferButtonClick, 
          handleDisableMatchingTransferOption,
-         handleCardOptionSelect,
+         handleTransferToSelectOption,
          handleTransferCardClick,
          handleTransferAmountInputField,
        
@@ -86,7 +86,7 @@ function handleEventDelegation(e) {
     handleFundAmountLength(e);
     handleTransferButtonClick(e);
     handleDisableMatchingTransferOption(e);
-    handleCardOptionSelect(e);
+    handleTransferToSelectOption(e);
     handleTransferCardClick(e);
     handleTransferAmountInputField(e);
         
