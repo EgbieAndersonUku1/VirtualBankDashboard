@@ -2,10 +2,11 @@ import { Card } from "./card.js";
 import { BankAccount } from "./bankAccount.js";
 import { DataStorage } from "./baseDataStorage.js";
 import { AmountManager } from "./baseAmountManager.js";
-import { checkNumber, generateRandomID, excludeKey } from "./utils.js";
+import { checkNumber, generateRandomID, excludeKey, formatCurrency } from "./utils.js";
 import { logError, warnError } from "./logger.js";
 import { getLocalStorage } from "./db.js";
 import { config } from "./config.js";
+
 
 const WALLET_STORAGE_KEY = config.WALLET_STORAGE_KEY;
 
@@ -20,19 +21,19 @@ export class Wallet extends DataStorage {
    * @param {number|null} lastAmountReceived - The last amount received by the wallet (default: null).
    * @param {string|null} pin - The PIN associated with the wallet (default: null).
    */
-    constructor(bankAccount=null, lastTransfer = null, lastAmountReceived = null, pin = null) {
+    constructor(bankAccount = null, lastTransfer = null, lastAmountReceived = null, pin = null) {
         super();
-        this._id                    = null;
-        this._lastTransfer          = lastTransfer;
-        this._lastAmountReceived    = lastAmountReceived;
-        this._totalCards            = 0;
+        this._id = null;
+        this._lastTransfer = lastTransfer;
+        this._lastAmountReceived = lastAmountReceived;
+        this._totalCards = 0;
         this._MAXIMUM_CARDS_ALLOWED = 3;
-        this._cards                 = {}; // For cache
-        this._pin                   = pin
-        this._walletAmount          = 0;
-        this._amountManager         = new AmountManager(this._walletAmount);
-        this._bankAccount           = bankAccount;
-        this._cardNumbers           = {};
+        this._cards = {}; // For cache
+        this._pin = pin
+        this._walletAmount = 0;
+        this._amountManager = new AmountManager(this._walletAmount);
+        this._bankAccount = bankAccount;
+        this._cardNumbers = {};
 
         this._validateBankAccountLinkage();
     }
@@ -75,7 +76,7 @@ export class Wallet extends DataStorage {
         if (walletAmount != 0) {
             this._amountManager.validateAmount(walletAmount)
         }
-       
+
         this._walletAmount = walletAmount
     }
 
@@ -93,9 +94,9 @@ export class Wallet extends DataStorage {
     get bankAccount() {
         // ensure that the latest bank details is returned e.g balance.
         return BankAccount.getByAccount(this._bankAccount.sortCode,
-                                                     this._bankAccount.accountNumber,
-                                                      this._bankAccount.balance);
-        
+            this._bankAccount.accountNumber,
+            this._bankAccount.balance);
+
     }
 
     /**
@@ -123,7 +124,7 @@ export class Wallet extends DataStorage {
         }
         this._pin = pin;
     }
-  
+
     /**
      * Converts the Wallet class data to a JSON object.
      * 
@@ -172,7 +173,7 @@ export class Wallet extends DataStorage {
         return pin === this._pin.toString().trim();
     }
 
-   
+
     /**
      * Removes a card from the wallet by its card number.
      * 
@@ -187,7 +188,7 @@ export class Wallet extends DataStorage {
      * @param {boolean} [save=true] - Whether to save changes immediately.
      * @throws {Error} If the card number is not a valid string.
      */
-    removeCard(cardNumber, save=true) {
+    removeCard(cardNumber, save = true) {
         if (typeof cardNumber !== "string" || !cardNumber.trim()) {
             throw new Error(`Invalid card number. Expected a non-empty string but got ${typeof cardNumber}`);
         }
@@ -196,8 +197,8 @@ export class Wallet extends DataStorage {
             return;
         }
 
-        this._cards        = excludeKey(this._cards, cardNumber);
-        this._cardNumbers  = excludeKey(this._cardNumbers, cardNumber);
+        this._cards = excludeKey(this._cards, cardNumber);
+        this._cardNumbers = excludeKey(this._cardNumbers, cardNumber);
 
         this._deductTotalCardsByOne();
 
@@ -205,7 +206,7 @@ export class Wallet extends DataStorage {
             this.save();
         }
         return true;
-       
+
     }
 
     /**
@@ -261,6 +262,117 @@ export class Wallet extends DataStorage {
 
     }
 
+    transferAmountToMultipleCards(cardNumberArray, totalAmount, amountPerCard, sourceAccount) {
+
+        if (!Array.isArray(cardNumberArray)) {
+            logError("wallet.transferAmountToMultipleCards", `The cardNumber must be an array. Expected an array but got type ${typeof cardNumberArray}`);
+            throw new TypeError(`Expected an array but got an object with type ${typeof cardNumberArray}`)
+        }
+
+        const totalAmountToCheck = checkNumber(totalAmount);
+
+        if (!(totalAmountToCheck.isNumber || totalAmountToCheck.isFloat)) {
+            logError("wallet.transferAmountToMultipleCards", `The amount must be an integer/float. Expected a number but got ${typeof amount}`);
+            throw new TypeError(`Expected a number but got an object with a value of ${totalAmount}`);
+        }
+
+        const amountPerCardToCheck = checkNumber(amountPerCard);
+
+        if (!(amountPerCardToCheck.isNumber || amountPerCardToCheck.isInteger)) {
+            logError("wallet.transferAmountToMultipleCards", `The amount must be an integer/float. Expected a number but got ${typeof amountPerCard}`);
+            throw new TypeError(`Expected a number but got an object with type ${amountPerCardToCheck}`);
+        }
+
+        if (!sourceAccount || typeof sourceAccount != "string") {
+            logError("wallet.transferAmountToMultipleCards", `The sourceAccount must be a string. Expected a wallet/bank string but got ${sourceAccount}`);
+            throw new TypeError(`Expected a string but got an object with type ${typeof sourceAccount}`);
+        }
+
+        sourceAccount = sourceAccount.toLowerCase().trim();
+
+        if (!(sourceAccount != "bank" || sourceAccount != "wallet")) {
+            logError("wallet.transferAmountToMultipleCards", ` The sourceAccount must either a bank or a wallet. 
+                                                               Expected a string but got a value of ${sourceAccount} with
+                                                               type ${typeof sourceAccount}`
+            );
+
+            throw new TypeError(`Expected a value of either 'bank' or 'wallet' but got an object with the value ${sourceAccount}`);
+        }
+
+        const cardsToSave                 = this._prepareCardsForBulkSave(cardNumberArray, totalAmount);
+        const [numOfCardsSaved, isSaved]  = this._bulkSave(cardsToSave, sourceAccount, totalAmount);
+
+        if (!isSaved){
+            // log error to go here
+            return false;
+        }
+
+        return this._chooseAccountAndUpdateBalance(sourceAccount, numOfCardsSaved, cardsToSave.length, totalAmount, amountPerCard);
+
+    }
+
+    _prepareCardsForBulkSave(cardNumbers, transferAmount) {
+        const updatedCards = [];
+
+        cardNumbers.forEach(cardNumber => {
+            const card = Card.getByCardNumber(cardNumber);
+            if (card) {
+                card.balance += transferAmount;
+                updatedCards.push(card);
+            }
+            
+        });
+
+        return updatedCards;
+
+    }
+
+    _bulkSave(cardsToSave) {
+
+        let savedCards = 0;
+        cardsToSave.forEach((card) => {
+            const isSaved = card.save();
+
+            if (!isSaved) {
+                logError("wallet.transferAmountToMultipleCards", `The card with number #${card.cardNumber} was not saved 
+                                                                   with the given amount of ${formatCurrency(amount)}
+                                                                   `);
+            } else {
+                savedCards++
+            }
+        })
+
+        if (savedCards === 0) {
+            warnError("transderAmountToMultipleCards", "An error occurred an no cards were updated")
+            return [savedCards, false];
+        }
+
+        return [savedCards, true];
+        
+    }
+
+    _chooseAccountAndUpdateBalance(account, numOfSaveCards, expectedNumOfCards, totalAmount, amountPerCard) {
+        if (account === "wallet") {
+            return this._handleWalletBalanceUpdate(numOfSaveCards, expectedNumOfCards, totalAmount, amountPerCard);
+        }
+    }
+
+    _handleWalletBalanceUpdate(numOfSavedCards, expectedNumOfCards, totalAmount, amountPerCard) {
+
+        // If the number of saved cards matches the expected number, it means 
+        // all cards were successfully saved and the total amount should be deducted.
+        if (numOfSavedCards === expectedNumOfCards) {
+            this.deductFundToWallet(totalAmount);
+            return true;
+        }
+
+        // If not all cards were saved, deduct only the amount that was transferred.
+        const amountToSave = amountPerCard * numOfSavedCards;
+        this.deductFundToWallet(amountToSave);
+        return true;
+    }
+
+
     /**
      * Transfers funds from the linked bank account to a specified card in the wallet.
      * 
@@ -282,7 +394,6 @@ export class Wallet extends DataStorage {
             return true;
         }
         return false;
-
     }
 
     /**
@@ -341,7 +452,7 @@ export class Wallet extends DataStorage {
     }
 
     /**
-     * Updates the wallet with the given amount providing the amount is valid.
+     * Updates the wallet by adding a given amount to the wallet providing the amount is valid.
      * 
      * @throws {Error} - Throws several errors:
      *                 - If the amount not a valid integer or float
@@ -350,9 +461,34 @@ export class Wallet extends DataStorage {
      * @param {*} amount The funds to update the to the wallet.
      */
     addFundToWallet(amount) {
-        this._amountManager.validateAmount(amount)
-        this._walletAmount = (parseFloat(this._walletAmount) + parseFloat(amount)).toFixed(2);
-        this.save();
+        return this._manageFundsToWallet(amount);
+    }
+
+    /**
+     * Updates the wallet by deducting a given amount from it providing the amount is valid.
+     * 
+     * @throws {Error} - Throws several errors:
+     *                 - If the amount not a valid integer or float
+     *                 - If the amount is less or equal to zero
+     *            
+     * @param {*} amount The funds to deduct from the wallet.
+     */
+    deductFundToWallet(amount) {
+        return this._manageFundsToWallet(amount, false)
+    }
+
+
+    _manageFundsToWallet(amount, add = true) {
+        this._amountManager.validateAmount(amount);
+
+        if (add) {
+            this._walletAmount = (parseFloat(this._walletAmount) + parseFloat(amount)).toFixed(2);
+        } else {
+            this._walletAmount = (parseFloat(this._walletAmount) - parseFloat(amount)).toFixed(2);
+        }
+
+        this.save()
+        return true;
     }
 
 
@@ -411,12 +547,12 @@ export class Wallet extends DataStorage {
             return false;
         }
 
-        this._cards[cardNumber] = card;  
-        this._totalCards        += 1;
-        this._cardNumbers[card.cardNumber] = { added: true, flaggedForRemoval: false, id: card.id}; // reference to card added
+        this._cards[cardNumber] = card;
+        this._totalCards += 1;
+        this._cardNumbers[card.cardNumber] = { added: true, flaggedForRemoval: false, id: card.id }; // reference to card added
         this.save();
         return card;
-        
+
     }
 
     /**
@@ -494,18 +630,18 @@ export class Wallet extends DataStorage {
             throw new Error("The wallet is not instance of the wallet class")
         }
 
-        const cardFromStorage       = wallet.getByCardNumber(card.cardNumber);
-        card.id                     = cardFromStorage.id;
-        card.cardHolderName         = cardFromStorage.cardHolderName;
-        card.cardNumber             = cardFromStorage.cardNumber;
-        card.expiryMonth            = cardFromStorage.expiryMonth;
-        card.expiryYear             = cardFromStorage.expiryYear;
-        card.cvc                    = cardFromStorage.cvc;
-        card.cardType               = cardFromStorage.cardType;
-        card.cardOption             = cardFromStorage.cardOption;
+        const cardFromStorage = wallet.getByCardNumber(card.cardNumber);
+        card.id = cardFromStorage.id;
+        card.cardHolderName = cardFromStorage.cardHolderName;
+        card.cardNumber = cardFromStorage.cardNumber;
+        card.expiryMonth = cardFromStorage.expiryMonth;
+        card.expiryYear = cardFromStorage.expiryYear;
+        card.cvc = cardFromStorage.cvc;
+        card.cardType = cardFromStorage.cardType;
+        card.cardOption = cardFromStorage.cardOption;
         card._amountManager.balance = cardFromStorage._balance;
-        card._isCardBlocked         = cardFromStorage.isCardBlocked;
-        card._balance               = cardFromStorage._balance
+        card._isCardBlocked = cardFromStorage.isCardBlocked;
+        card._balance = cardFromStorage._balance
 
     }
 
@@ -537,11 +673,11 @@ export class Wallet extends DataStorage {
 
         const saveAs = this._bankAccount.accountNumber;
 
-        return this.constructor.saveData(WALLET_STORAGE_KEY, saveAs , this.toJson())
+        return this.constructor.saveData(WALLET_STORAGE_KEY, saveAs, this.toJson())
     }
 
     static loadWallet(sortCode, accountNumber) {
-     
+
         if (!accountNumber || typeof accountNumber != "string" || accountNumber.trim() == "") {
             logError("Wallet.loadWallet", `Got an invalid accountNumber. Expected a string but got ${typeof accountNumber}`);
             throw new Error("Invalid account string provided");
@@ -563,7 +699,7 @@ export class Wallet extends DataStorage {
             warnError("Wallet.loadWallet", error.message)
             return null;
         }
-       
+
         if (!userWalletData || userWalletData === undefined) {
             warnError("Wallet.loadWallet", `Failed to load wallet because your account information couldn't be found ${userWalletData}`);
             return null;
@@ -581,13 +717,13 @@ export class Wallet extends DataStorage {
         ];
 
 
-        const walletJson      = super.fromStorage(userWalletData, requiredKeys);
-        const wallet          = Object.assign(new Wallet, walletJson);
-        wallet._cardNumbers   = walletJson.cardNumbers;
-        wallet.bankAccount    = BankAccount.getByAccount(sortCode, accountNumber);
-        wallet._totalCards    = walletJson.totalCards;
+        const walletJson = super.fromStorage(userWalletData, requiredKeys);
+        const wallet = Object.assign(new Wallet, walletJson);
+        wallet._cardNumbers = walletJson.cardNumbers;
+        wallet.bankAccount = BankAccount.getByAccount(sortCode, accountNumber);
+        wallet._totalCards = walletJson.totalCards;
 
-        wallet.walletAmount   = parseFloat(walletJson.walletAmount).toFixed(2) || 0;
+        wallet.walletAmount = parseFloat(walletJson.walletAmount).toFixed(2) || 0;
 
         wallet._populateCardsIntoWallet();
 
@@ -624,8 +760,8 @@ export class Wallet extends DataStorage {
      * @param {string} cardNumber - The card number to mark for removal.
      * @returns {boolean} - `true` if the card exists and its removal status is toggled, otherwise `false`.
      */
-      markCardForRemoval(cardNumber) {
-        if (!cardNumber || typeof cardNumber != "string" ) {
+    markCardForRemoval(cardNumber) {
+        if (!cardNumber || typeof cardNumber != "string") {
             warnError("markCardForRemoval", `The card was not marked for removal because it is not a string. Expected string but type ${cardNumber}`);
             return false;
         }
@@ -634,24 +770,24 @@ export class Wallet extends DataStorage {
 
         if (!this.isCardInWallet(cardNumber)) {
             warnError("markCardForRemoval", `The card was not marked for removal because it was not found in the wallet`);
-            return false;   
+            return false;
         }
 
         if (!this._cardNumbers[cardNumber].hasOwnProperty("flaggedForRemoval")) {
 
             this._cardNumbers[cardNumber] = {
-                                    added: true,
-                                    flaggedForRemoval: true,
-                                    id: this._cards[cardNumber].id,
-                                }          
-           
+                added: true,
+                flaggedForRemoval: true,
+                id: this._cards[cardNumber].id,
+            }
+
         } else {
             this._cardNumbers[cardNumber].flaggedForRemoval = this._cardNumbers[cardNumber].flaggedForRemoval ? false : true;
         }
-     
+
         this.save();
         return true;
-        
+
     }
 
     /**
@@ -660,18 +796,18 @@ export class Wallet extends DataStorage {
      */
     removeAllCardsMarkedForRemoval() {
         const cardNumberKeysCopy = Object.keys(this._cardNumbers); // Copy only the keys not the type object
-        const removalCardIds =   [];
+        const removalCardIds = [];
         for (const cardNumber of cardNumberKeysCopy) {
             if (this._cardNumbers[cardNumber]?.flaggedForRemoval) {
                 removalCardIds.push(this._cardNumbers[cardNumber]?.id?.toString().trim());
                 this.removeCard(cardNumber, false);        // false = Disable the ability to save it on every removal.
             }
         }
-    
+
         this.save();
         return [true, removalCardIds];
     }
-    
+
     /**
      * Checks if a user wallet has already been created for a given account number.
      * 
@@ -692,12 +828,12 @@ export class Wallet extends DataStorage {
             throw new TypeError("Invalid string");
         }
         const walletStorage = Wallet._getDataFromLocalStorage();
-      
+
         if (!walletStorage) {
             warnError("Wallet.hasUserWallet", "The wallet storage in the local storage wasn't found");
             return null;
         }
-        
+
         return walletStorage.hasOwnProperty(accountNumber.trim());
     }
 
@@ -727,26 +863,26 @@ export class Wallet extends DataStorage {
         if (!(bankAccount instanceof BankAccount)) {
             throw new Error("The bank account is not an instance of the BankAccount class.")
         }
-        const wallet         = new Wallet(bankAccount);
-        wallet.pin           = pin;
+        const wallet = new Wallet(bankAccount);
+        wallet.pin = pin;
         wallet._walletAmount = initialAmount
         wallet.save();
         return wallet;
     }
 
-   /**
-     * Checks if a transfer is possible based on the account type and the amount.
-     * The function ensures that the account type is valid (either "bank" or "wallet") and 
-     * verifies if the transfer amount is available in the selected account.
-     * 
-     * @param {string} accountType The type of account ("bank" or "wallet") to transfer from.
-     * @param {number} amount The amount to transfer.
-     * 
-     * @returns {boolean} Returns `true` if the transfer is possible (balance is sufficient), otherwise `false`.
-     *                    if an error is thrown returns null
-     * 
-     * @throws {Error} Throws an error if the `accountType` is invalid or the balance is insufficient.
-     */
+    /**
+      * Checks if a transfer is possible based on the account type and the amount.
+      * The function ensures that the account type is valid (either "bank" or "wallet") and 
+      * verifies if the transfer amount is available in the selected account.
+      * 
+      * @param {string} accountType The type of account ("bank" or "wallet") to transfer from.
+      * @param {number} amount The amount to transfer.
+      * 
+      * @returns {boolean} Returns `true` if the transfer is possible (balance is sufficient), otherwise `false`.
+      *                    if an error is thrown returns null
+      * 
+      * @throws {Error} Throws an error if the `accountType` is invalid or the balance is insufficient.
+      */
     canTransfer(accountType, amount) {
 
         if (amount === null || amount === NaN) {
@@ -756,8 +892,8 @@ export class Wallet extends DataStorage {
         }
 
         const amountToCheck = checkNumber(amount);
-    
-        if (!(amountToCheck.isInteger || amountToCheck.isFloat) ) {
+
+        if (!(amountToCheck.isInteger || amountToCheck.isFloat)) {
             logError("wallet.canTranser", `The amount value is not a number. Expected a digit but a text value : ${amount}`);
             throw new Error(`The amount value is not a number. Expected a digit but a text value : ${amount}`)
         }
@@ -768,20 +904,29 @@ export class Wallet extends DataStorage {
             return null;
 
         }
-        
+
         if (accountType != "bank" && accountType != "wallet") {
             warnError("wallet.canTransfer", `The string value must either be a 'bank-account' or 'wallet' but got text ${accountType} `);
             return false;
         }
 
-        amount  = parseFloat(amount).toFixed(2);
-        const balance = accountType === "bank" ? this.bankAmountBalance : this.walletAmount;
+        amount = parseFloat(amount).toFixed(2);
+        const balance = this.getBalanceFromAccountType(accountType);
 
         if (!balance) {
             logError("wallet.canTransfer", `The balance did not yield an expected result. Got ${balance} with type ${typeof balance}`);
             throw new Error(`The balance did not return a correct balance. Expected a balance but got ${balance} with type ${typeof balance}`);
         }
         return parseFloat(balance - amount).toFixed(2) >= 0;
+    }
+
+    getBalanceFromAccountType(accountType) {
+        accountType = accountType.trim()
+        if (accountType && !(accountType != "bank" || accountType != "wallet")) {
+            logError("Wallet.getBalanceFromAccountType", `The expected value must be either "bank" or "wallet" but got ${accountType}`);
+            throw new Error(`The expected value must be either "bank" or "wallet" but got ${accountType}`)
+        }
+        return accountType === "bank" ? this.bankAmountBalance : this.walletAmount;
     }
 
 }

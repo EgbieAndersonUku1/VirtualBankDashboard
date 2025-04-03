@@ -118,8 +118,14 @@ select {
     color: var(--steel-blue);
 }
 
+.orange {
+    color: orange;
+}
 
 
+.lighten-text {
+    opacity: 0.8;
+}
 
 .flex-direction-column {
     display: flex;
@@ -486,7 +492,8 @@ button {
 .pin.show,
 #fund.show,
 #preview-mode.show,
-#remove-cards.show {
+#remove-cards.show,
+#transfer-progress-container.show {
     border: 2px solid lavender;
     opacity: 1;
     visibility: visible;
@@ -1430,4 +1437,38 @@ input::placeholder {
 
 .transfer-error-msg p {
     font-size: 0.85rem;
+}
+
+
+
+#progressBar {
+    width: 100%;
+    border: 1px solid #ccc;
+   
+}
+
+#progress {
+    height: 25px;
+    width: 0%;
+    background: #4caf50;
+    transition: width 0.3s ease-in-out
+}
+
+
+/* The container */
+#transfer-progress-container {
+    width: 50%;
+    position: fixed;
+    top: 10%;
+    left: 30%;
+
+    background: white;
+    box-shadow: var(--box-shadow);
+    box-shadow: 3px solid lavender;
+    padding: var(--size-lg);
+
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease-in-out, visibility 0s 0.3s;
+    z-index: 100000000000000;
 }

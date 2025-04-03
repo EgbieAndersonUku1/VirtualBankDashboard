@@ -31,13 +31,16 @@ export class BankAccount extends DataStorage {
     }
 
     set balance(balance) {
-
         this._amountManager.validateAmount(balance)
         this._amountManager.balance = balance;
     }
 
     addAmount(amount) {
         this._amountManager.addAmount(amount);
+    }
+
+    deductAmount(amount) {
+        this._amountManager.deductAmount(amount);
     }
     
     static getByAccount(sortCode, accountNumber) {
