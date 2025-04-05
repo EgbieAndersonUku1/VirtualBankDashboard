@@ -92,7 +92,7 @@ function updateProgressStatusMsg({ msg = "transferring progress", progress = 0 }
 
     if (progress === COMPLETE_PERCENTAGE ){
         progressStatusElement.classList.add("green");
-        transferCloseButtonElement.classList.add("show");
+        toggleTransferCloseButton();
     }
 }
 
@@ -117,10 +117,14 @@ export function handleTransferCloseButton(e) {
 
     transferProgressContainer.classList.remove("show");
     resetProgressBar();
+    toggleTransferCloseButton(false)
     
    
 }
 
+function toggleTransferCloseButton(show=true) {
+    show ? transferCloseButtonElement.classList.add("show") : transferCloseButtonElement.classList.remove("show")
+}
 
 
 function validatePageElements() {
