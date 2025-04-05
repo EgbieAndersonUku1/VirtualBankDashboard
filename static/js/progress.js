@@ -50,7 +50,7 @@ export function transferProgressBar(transferFrom, transferTo, progressStatusMsg,
      
         if (progress >= 100) {
             clearInterval(progressInterval);
-            showSuccessTransferMessage();
+            toggleSuccessTransferMessage();
         }
 
     }, TIME_IN_MS);
@@ -70,14 +70,16 @@ function setTransferToName(name) {
 }
 
 
-function showSuccessTransferMessage(msg="Transfer Successful ✅") {
+function toggleSuccessTransferMessage(show=true, msg="Transfer Successful ✅") {
     transferWaitingMsgElement.textContent = msg;
+    show ? transferWaitingMsgElement.classList.add("show") : transferWaitingMsgElement.classList.remove("show")
 }
 
 
 function updateProgressStatusMsg({ msg = "transferring progress", progress = 0 }) {
     progressStatusElement.textContent = `${msg} ${progress}%`;
     progressStatusElement.classList.add("red");
+    progressStatusElement.classList.toggle("green");
 
     const COMPLETE_PERCENTAGE = 100;
 
@@ -117,7 +119,8 @@ export function handleTransferCloseButton(e) {
 
     transferProgressContainer.classList.remove("show");
     resetProgressBar();
-    toggleTransferCloseButton(false)
+    toggleTransferCloseButton(false);
+    toggleSuccessTransferMessage(false);
     
    
 }

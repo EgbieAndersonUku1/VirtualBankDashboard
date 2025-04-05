@@ -5,6 +5,7 @@ import { Card } from "./card.js";
 import { prepareCardData } from "./walletUI.js";
 import { toTitle } from "./utils.js";
 
+
 const removableCardAreaElement   = document.getElementById("removable-card-area");
 let removalCardDisplayMsgElement = document.getElementById("no-cards-to-remove");
 
@@ -602,6 +603,16 @@ export const removeCardTable = {
 
 }
 
+
+
+export function resetRemoveCardArea() {
+    const pTag       = document.createElement("p");
+    pTag.textContent = "No cards marked for deletion";
+    pTag.classList.add("center");
+
+    removableCardAreaElement.textContent = "";
+    removableCardAreaElement.append(pTag);
+}
 
 
 function validatePageElements() {

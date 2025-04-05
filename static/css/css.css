@@ -1469,7 +1469,7 @@ input::placeholder {
 #transfer-progress-container {
     width: 50%;
     position: fixed;
-    top: 8%;
+    top: 12%;
     left: 30%;
 
     background: white;

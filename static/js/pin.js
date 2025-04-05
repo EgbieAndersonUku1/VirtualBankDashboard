@@ -7,6 +7,7 @@ import { showNewCardForm} from "./add-new-card.js";
 import { AlertUtils } from "./alerts.js";
 import { cards } from "./cardsComponent.js";
 import { handleFundDiv } from "./fund-account.js";
+import { resetRemoveCardArea } from "./cardsComponent.js";
 
 
 const ADD_FUNDS_ID     = "add-funds";
@@ -71,6 +72,8 @@ export function handlePinShowage(e, wallet) {
     
      removeCardsDivElement.classList.add("show");
      removableSelectableCardsDiv.classList.add("show");
+
+    resetRemoveCardArea();
 
      const cardsToRemoveElements = cards.createCardsToShow(wallet);
      cards.placeCardDivIn(removableSelectableCardsDiv, cardsToRemoveElements, true);

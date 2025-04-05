@@ -412,7 +412,7 @@ export class Wallet extends DataStorage {
             logError("Wallet.addFundsToCard", error.message || error);
         }
 
-        this._updateCardTransaction(cardInWallet);
+        this._updateCardInWallet(cardInWallet);
         this.save();
         return cardInWallet; // returned the funded card
 
@@ -500,7 +500,7 @@ export class Wallet extends DataStorage {
         const isTransferSuccess = this._bankAccount.transferFundsBetweenCards(transferringCard, receivingCard, amount);
 
         if (isTransferSuccess) {
-            [transferringCard, receivingCard].forEach(card => this._updateCardTransaction(card));
+            [transferringCard, receivingCard].forEach(card => this._updateCardInWallet(card));
             return this.save();
         }
 
@@ -652,6 +652,7 @@ export class Wallet extends DataStorage {
             if (card) {
                 card.addAmount(transferAmount);
                 updatedCards.push(card);
+                this._updateCardInWallet(card);
             } else {
                 logError(
                     "_prepareCardsForBulkSave",
@@ -758,7 +759,7 @@ export class Wallet extends DataStorage {
     _handleBankBalanceUpdate(numOfSavedCards, expectedNumOfCards, totalAmount, amountPerCard) {
         const deductFunc = this._bankAccount.deductAmount;
         this._processBalanceDeduction(numOfSavedCards, expectedNumOfCards, totalAmount, amountPerCard, deductFunc);
-        return this._bankAccount.save()
+        return true;
     }
 
    /**
@@ -1012,7 +1013,7 @@ export class Wallet extends DataStorage {
     _validateAccountType(methodCalledFrom, accountType) {
 
         if (!accountType || typeof accountType != "string") {
-            logError("wallet.transferAmountToMultipleCards", `The account type must be a string. Expected a wallet/bank string but got ${accountType}`);
+            logError(methodCalledFrom, `The account type must be a string. Expected a wallet/bank string but got ${accountType}`);
             throw new TypeError(`Expected a string but got an object with type ${typeof accountType}`);
         }
 
@@ -1090,7 +1091,7 @@ export class Wallet extends DataStorage {
     * 
     * @returns {void} - This method does not return a value.
     */
-    _updateCardTransaction(card) {
+    _updateCardInWallet(card) {
         if (!card || !(card instanceof Card)) {
             throw new Error("The card cannot be empty and it must be an instance of Card")
         }
