@@ -484,8 +484,8 @@ export function handleInputFieldValueLength({e, maximumLength=10, convertToFloat
 
     let trimmedValue = e.target.value.slice(0, maximumLength);
 
-    if (convertToFloat) {
-        const canBeConverted = checkNumber(trimmedValue).isInteger || checkNumber(trimmedValue).isNumber;
+    if (trimmedValue && convertToFloat) {
+        const canBeConverted = checkNumber(trimmedValue).isInteger || checkNumber(trimmedValue).isNumber || checkNumber(trimmedValue).isFloat;
         if (!canBeConverted) {
             logError("handleFundAmountLength", `The value cannot be converted to a float because it is not digit. Expected an integer/float but got text: ${trimmedValue}`);
             throw new Error(`Cannot convert to a float because the value is not an integer or a float. Value received ${trimmedValue}`)

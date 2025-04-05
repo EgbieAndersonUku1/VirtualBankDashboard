@@ -82,19 +82,29 @@ export function chooseAccountTypeAndFund(accountType, amount) {
         return false;
       }
 
-   if (accountType  === "wallet") {
-    
-        wallet.addFundToWallet(amount);
-        walletDashboard.updateWalletAccountBalanceText(wallet);
-        return true;
 
+   switch(accountType.toLowerCase().trim()) {
+       
+       case "wallet":
+           wallet.addFundsToWallet(amount);
+           walletDashboard.updateWalletAccountBalanceText(wallet);
+           break;
+        
+        case "bank-account":
+            const bankAccount = BankAccount.getByAccount(config.SORT_CODE, config.ACCOUNT_NUMBER);
+            bankAccount.addAmount(amount);
+            walletDashboard.updateBankAccountBalanceText(wallet);
+            break;
+
+   }
+   
+    // tells the app that an update has been made
+    // and that when the user selects either bank or a wallet
+    // it should load from the localStorage and not from the cache
+    if (!config.isFundsUpdated) {
+        config.isFundsUpdated = true;
     }
-
-    const bankAccount = BankAccount.getByAccount(config.SORT_CODE, config.ACCOUNT_NUMBER);
-    bankAccount.addAmount(amount);
-    bankAccount.save();
-
-    walletDashboard.updateBankAccountBalanceText(wallet);
+   
     return true
    
 }

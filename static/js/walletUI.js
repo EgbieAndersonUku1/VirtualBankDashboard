@@ -262,11 +262,20 @@ export async function handleRemoveCardButtonClick(e) {
 
     
           if (isRemoved) {
+
+                // Trigger a load from localStorage when the user clicks the "Transfer Funds" button.
+                // This ensures that the cards are available on the transfer page without requiring a page refresh.
+                // Without this, the cards will only appear after a manual refresh.
+                config.loadFromCache = false;
+
                 removeCardTable.upateCellPosition(cardNumbers);
                 const cardsToRemoveElements = cards.createCardsToShow(wallet);
+
                 cards.placeCardDivIn(removableSelectableCardsDiv, cardsToRemoveElements, true);
+
                 loadUserCardsInUI(wallet);
                 updateAllWalletDashoardText(wallet);
+                
                 const cardsRemoved = wallet.maximumCardsAllow - wallet.numOfCardsInWallet;
                 notificationManager.add(`You have removed a total of  ${cardsRemoved} from your wallet.`);
                         

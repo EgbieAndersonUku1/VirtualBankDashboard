@@ -26,7 +26,7 @@ const removeCardsDivElement          = document.getElementById("remove-cards");
 const removeCardsDivCloseIconElement = document.getElementById("remove-close-icon");
 const addFundsDivElement             = document.getElementById("fund");
 const addNewCardDivElement           = document.getElementById("new-card");
-// const transferFundsDivElement        = document.getElementById(TRANSFER_FUNDS);  // to be built
+const transferDivElement             = document.getElementById("transfer");
 
 
 validatePageElements();
@@ -56,14 +56,14 @@ export function handlePinShowage(e, wallet) {
      dimBackground(dimBackgroundElement, true);
      showNewCardForm(e);
 
-     closeDivs([removeCardsDivElement, addFundsDivElement])
+     closeDivs([removeCardsDivElement, addFundsDivElement, transferDivElement])
      return;
      
    }
 
    if (id === ADD_FUNDS_ID) {
         handleFundDiv(e);
-        closeDivs([addNewCardDivElement, removeCardsDivElement])
+        closeDivs([addNewCardDivElement, removeCardsDivElement, transferDivElement])
         return
    }
 
@@ -74,18 +74,16 @@ export function handlePinShowage(e, wallet) {
 
      const cardsToRemoveElements = cards.createCardsToShow(wallet);
      cards.placeCardDivIn(removableSelectableCardsDiv, cardsToRemoveElements, true);
-     closeDivs([addNewCardDivElement, addFundsDivElement]);
+     closeDivs([addNewCardDivElement, addFundsDivElement, transferDivElement]);
 
    }
 
    if (id === TRANSFER_FUNDS ) {
-    AlertUtils.showAlert({
-        title: "Feature Not Implemented",
-        text: "You are seeing this because the functionality is not yet available.",
-        icon: "warning",
-        confirmButtonText: "OK",
-    });
-     return;
+        dimBackground(dimBackgroundElement, true);
+        transferDivElement.classList.add("show");
+        closeDivs([addNewCardDivElement, addFundsDivElement, removeCardsDivElement ]);
+        
+    
    }
  
 }
@@ -233,5 +231,6 @@ function validatePageElements() {
     checkIfHTMLElement(removeCardsDivElement, "The remove div element");
     checkIfHTMLElement(removeCardsDivCloseIconElement, "The remove div close element");
     checkIfHTMLElement(addFundsDivElement, "The adding of new funds div");
-    checkIfHTMLElement(addNewCardDivElement, "Adding new card div element")
+    checkIfHTMLElement(addNewCardDivElement, "Adding new card div element");
+    checkIfHTMLElement(transferDivElement, "The transfer div container element");
 }

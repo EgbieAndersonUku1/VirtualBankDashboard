@@ -38,9 +38,11 @@ import { handleTransferButtonClick,
          handleTransferToSelectOption,
          handleTransferCardClick,
          handleTransferAmountInputField,
+         handleTransferCloseIcon,
        
 } from "./transfer-funds.js";
 
+import { handleTransferCloseButton } from "./progress.js";
 
 
 // elements
@@ -57,6 +59,7 @@ dashboardElement.addEventListener("input", handleEventDelegation);
 
 
 function handleEventDelegation(e) {
+        
     handleProfileIconClick(e);
     handleNotificationIconClick(e);
     handleMarkAsReadClick(e);
@@ -89,6 +92,8 @@ function handleEventDelegation(e) {
     handleTransferToSelectOption(e);
     handleTransferCardClick(e);
     handleTransferAmountInputField(e);
+    handleTransferCloseButton(e);
+    handleTransferCloseIcon(e);
         
 }
 

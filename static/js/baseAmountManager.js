@@ -40,6 +40,7 @@ export class AmountManager {
      */
     deductAmount(amount) {
         this.validateAmount(amount);
+        
         if (amount > this._balance) {
             throw new Error(`Insufficient funds for this operation. Amount to transfer: ${amount}, balance: ${this._balance}`);
         }

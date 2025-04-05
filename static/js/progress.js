@@ -1,58 +1,56 @@
 import { checkIfHTMLElement } from "./utils.js";
 
 
-const transferProgressContainer = document.getElementById("transfer-progress-container");
-const transferProgressHeader    = document.getElementById("transfer-progress-header");
-// const transferProgressImage     = document.getElementById("transfer-progress-img");
-const transferFromElement       = document.getElementById("transfer-progress-transfer-from");
-const transferToElement         = document.getElementById("transfer-progress-transfer-to");
-const progressElement           = document.getElementById("progress");
-const progressStatus            = document.getElementById("transfer-progression-status");
-const transferMsgStatus         = document.getElementById("transfer-msg-status");
-const transferWaitingMsg        = document.getElementById("transfer-waiting-msg"); 
+const transferFromElement        = document.getElementById("transfer-progress-transfer-from");
+const transferToElement          = document.getElementById("transfer-progress-transfer-to");
+const progressElement            = document.getElementById("progress");
+const progressStatusElement      = document.getElementById("transfer-progression-status");
+const transferWaitingMsgElement  = document.getElementById("transfer-waiting-msg"); 
+const transferCloseButtonElement = document.getElementById("transfer-close-btn");
+const transferProgressContainer  = document.getElementById("transfer-progress-container");
 
 
 
 validatePageElements();
 
 
-export function transferProgressBar(transferFrom, transferTo, progressStatusMsg) {
+export function transferProgressBar(transferFrom, transferTo, progressStatusMsg, progressBarBy=10) {
 
     
     if (!transferFrom || !transferTo || !progressStatusMsg) {
         throw new Error(`One or more required values are missing. Missing values: 
             ${!transferFrom ? "transferFrom" : ""} 
-            ${!transferTo ? "transferTo" : ""} 
+            ${!transferTo ? "transferTo" : ""}
+            ${!progressBarBy ? "progressBy" : ""}  
             ${!progressStatusMsg ? "progressStatusMsg" : ""}`.trim());
     }
 
-    if (typeof transferFrom !== "string" || typeof transferTo !== "string" || typeof progressStatusMsg !== "string") {
+    if (typeof transferFrom !== "string" || typeof transferTo !== "string" || typeof progressStatusMsg !== "string", typeof progressBarBy !== "number") {
         throw new Error(`One or more of the values is not a string element. 
             TransferFrom: ${typeof transferFrom}, 
             TransferTo: ${typeof transferTo}, 
+
             ProgressStatusMsg: ${typeof progressStatusMsg}`);
     }
     
     
-    const TIME_IN_MS = 400;
+    const TIME_IN_MS = 40;
 
-    let progress = 10;
+    let progress = progressBarBy;
     
     setTransferFromName(transferFrom);
     setTransferToName(transferTo);
 
+
     const progressInterval = setInterval(() => {
-        progress += 10
+
+        progress += progressBarBy;
         updateProgressBar(progress);
         updateProgressStatusMsg({progress: progress, msg: progressStatusMsg});
      
-        console.log(progress);
-
         if (progress >= 100) {
             clearInterval(progressInterval);
             showSuccessTransferMessage();
-    
-            // show message to go here
         }
 
     }, TIME_IN_MS);
@@ -73,39 +71,64 @@ function setTransferToName(name) {
 
 
 function showSuccessTransferMessage(msg="Transfer Successful ✅") {
-    transferWaitingMsg.textContent = msg;
+    transferWaitingMsgElement.textContent = msg;
 }
 
 
 function updateProgressStatusMsg({ msg = "transferring progress", progress = 0 }) {
-    progressStatus.textContent = `${msg} ${progress}%`;
-    
+    progressStatusElement.textContent = `${msg} ${progress}%`;
+    progressStatusElement.classList.add("red");
+
+    const COMPLETE_PERCENTAGE = 100;
+
     if (progress < 40) {
         progressElement.style.background = "red";
     } else if (progress < 70) {
         progressElement.style.background = "orange";
     } else if (progress >= 70) {
-        progressElement.style.background = "#4caf50"; 
+        progressElement.style.background = "#4caf50"; // green
+    }
+
+
+    if (progress === COMPLETE_PERCENTAGE ){
+        progressStatusElement.classList.add("green");
+        transferCloseButtonElement.classList.add("show");
     }
 }
 
 
 function updateProgressBar(progress) {
     progressElement.style.width = `${progress}%`;
+}
+
+function resetProgressBar() {
+    const RESET_VALUE = 0;
+    updateProgressBar(RESET_VALUE);
+}
+
+
+export function handleTransferCloseButton(e) {
+   
+    const CLOSE_BTN_ID = "transfer-close-btn";
+
+    if (e.target.id != CLOSE_BTN_ID) {
+        return;
+    }  
+
+    transferProgressContainer.classList.remove("show");
+    resetProgressBar();
     
+   
 }
 
 
 
-
 function validatePageElements() {
-    checkIfHTMLElement(transferProgressContainer, "Transfer progress container");
-    checkIfHTMLElement(transferProgressHeader, "Transfer progress header");
-    // checkIfHTMLElement(transferProgressImage, "Transfer progress image");
     checkIfHTMLElement(transferFromElement, "Transfer from element");
     checkIfHTMLElement(transferToElement, "Transfer to element");
     checkIfHTMLElement(progressElement, "Progress element");
-    checkIfHTMLElement(progressStatus, "Completion status");
-    // checkIfHTMLElement(transferMsgStatus, "Transfer message status");
-    checkIfHTMLElement(transferWaitingMsg, "The waiting message");
+    checkIfHTMLElement(progressStatusElement, "Completion status");
+    checkIfHTMLElement(transferWaitingMsgElement, "The waiting message");
+    checkIfHTMLElement(transferProgressContainer, "Transfer progress container");
+    checkIfHTMLElement(transferCloseButtonElement, "The button element to close the transaction");
 }

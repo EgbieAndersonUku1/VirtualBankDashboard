@@ -274,7 +274,7 @@
 
                                     <div class="account-information">
                                         <p class="bold">Joined:</p>
-                                        <p>Date here</p>
+                                        <p>01/04/2024</p>
                                     </div>
                                 </div>
 
@@ -821,8 +821,9 @@
                  <div id="transfer" role="region" aria-labelledby="transfer__header">
 
                     <div class="window-close flex-end">
-                        <button id="transfer-close-icon" aria-label="Close transfer window" class="button-close-icon">
-                            <img src="static/images/icons/window-close.svg" alt="Close transfer window" class="window-close-icon">
+                        <button  aria-label="Close transfer window" class="button-close-icon">
+                            <img src="static/images/icons/window-close.svg" alt="Close transfer window"
+                                 class="window-close-icon" id="transfer-close-icon">
                         </button>
                     </div>
                 
@@ -904,7 +905,7 @@
                                 </select>
                             </div>
                 
-                            <div class="flex-direction-column" id="transfer-to">
+                            <div class="flex-direction-column" id="transfer-to-select">
                                 <label for="transfer-to">Transfer to</label>
                                 <select name="transfer-to" id="transfer-to" required>
                                     <option value="" disabled selected>Choose account to transfer to</option>
@@ -934,7 +935,7 @@
                 </div>
                 
                 <div id="transfer-progress-container">
-
+                    <h2 class="center capitalize">EUSBC</h2>
                     <h3 class="center capitalize" id="transfer-progress-header">Transferring funds</h3>
                     
                     <div class="transfer-fund-img center">
@@ -963,7 +964,7 @@
                     </div>
 
                     <div class="transfer-complete-btn center">
-                        <button type="button" class="btn-small">Close</button>
+                        <button type="button" class="btn-small" id="transfer-close-btn">Close</button>
                     </div>
                 </div>
 

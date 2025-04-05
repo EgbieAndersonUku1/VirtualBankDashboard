@@ -11,4 +11,9 @@ export const config  = {
     WALLET_STORAGE_KEY: "wallet",
     PROFILE_KEY:"profile",
     NOTIFICATION_KEY: "notifications",
+    isFundsUpdated: false,  
+    loadFromCache: true,
 }
+
+
+

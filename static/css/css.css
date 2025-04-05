@@ -285,6 +285,10 @@ button {
     opacity: 0.8;
 }
 
+button:hover {
+    cursor: pointer;
+    transform: scale(1.02);
+}
 /* icons */
 /* nav icons */
 .nav-icon {
@@ -493,6 +497,8 @@ button {
 #fund.show,
 #preview-mode.show,
 #remove-cards.show,
+#transfer.show,
+#transfer-close-icon.show,
 #transfer-progress-container.show {
     border: 2px solid lavender;
     opacity: 1;
@@ -1389,6 +1395,10 @@ input::placeholder {
     padding-bottom: var(--size-lg);
     cursor: pointer;
     border: 3px solid lavender;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease-in-out, visibility 0s 0.3s;
+    
 }
 
 .button-close-icon {
@@ -1459,7 +1469,7 @@ input::placeholder {
 #transfer-progress-container {
     width: 50%;
     position: fixed;
-    top: 10%;
+    top: 8%;
     left: 30%;
 
     background: white;
@@ -1472,3 +1482,19 @@ input::placeholder {
     transition: opacity 0.3s ease-in-out, visibility 0s 0.3s;
     z-index: 100000000000000;
 }
+
+
+#transfer-close-btn,
+#wallet-transfer-btn {
+    background: var(--background-primary);    
+    color: white;
+}
+
+#transfer-close-btn {
+    display: none;
+}
+
+#transfer-close-btn.show {
+    display: block;
+}
+
