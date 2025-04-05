@@ -204,7 +204,7 @@ function updateAllWalletDashoardText(wallet) {
  * @param {Event} e - The click event object.
  */
 export function handleCardRemovalClick(e) {
-    const EXPECTED_CLASS = ".bank-card"
+    const EXPECTED_CLASS = ".bank-card";
 
     const parent          = e.target.closest(EXPECTED_CLASS);
     const cardNumberClass = ".card-account-number";
@@ -213,9 +213,9 @@ export function handleCardRemovalClick(e) {
 
         const cardNumberElement = parent.querySelector(cardNumberClass);
         const card              = wallet.getByCardNumber(cardNumberElement.textContent.trim());
-        const isClicked         = parent.classList.toggle("hightlight-removable-box");
-
-        if (isClicked && cardNumberElement) {
+        const isSelected        = parent.classList.toggle("highlight-credit-card");
+     
+        if (isSelected && cardNumberElement) {
             removeCardTable.appendRow(card);
             wallet.markCardForRemoval(card.cardNumber);
         } else {
@@ -225,7 +225,6 @@ export function handleCardRemovalClick(e) {
     }
   
 }
-
 
 
 /**
@@ -263,11 +262,20 @@ export async function handleRemoveCardButtonClick(e) {
 
     
           if (isRemoved) {
+
+                // Trigger a load from localStorage when the user clicks the "Transfer Funds" button.
+                // This ensures that the cards are available on the transfer page without requiring a page refresh.
+                // Without this, the cards will only appear after a manual refresh.
+                config.loadFromCache = false;
+
                 removeCardTable.upateCellPosition(cardNumbers);
-                const cardsToRemoveElements = cards.createCardsToRemove(wallet);
+                const cardsToRemoveElements = cards.createCardsToShow(wallet);
+
                 cards.placeCardDivIn(removableSelectableCardsDiv, cardsToRemoveElements, true);
+
                 loadUserCardsInUI(wallet);
                 updateAllWalletDashoardText(wallet);
+                
                 const cardsRemoved = wallet.maximumCardsAllow - wallet.numOfCardsInWallet;
                 notificationManager.add(`You have removed a total of  ${cardsRemoved} from your wallet.`);
                         

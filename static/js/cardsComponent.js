@@ -127,11 +127,11 @@ export const cards = {
      * @returns {DocumentFragment} A document fragment containing the card elements.
      * @throws {Error} Throws an error if `wallet` is not provided or is not an instance of `Wallet`.
      */
-    createCardsToRemove: (wallet) => {
+    createCardsToShow: (wallet) => {
 
         if (!wallet || !(wallet instanceof Wallet)) {
             const error = "The wallet is either empty or not an instance of wallet"
-            logError("createCardsToRemove", error);
+            logError("createCardsToShow", error);
             throw new Error(error);
         }
 
@@ -189,7 +189,8 @@ function createSingleCreateCard(cardDetails) {
     cardDiv.appendChild(cardFooterDiv);
 
     cardDiv.classList.add("card", "bank-card", cardDetails.cardBrand.toLowerCase());
-    cardDiv.ariaLabel = `${cardDetails.cardName} card`;
+    cardDiv.ariaLabel          = `${cardDetails.cardName} card`;
+    cardDiv.dataset.cardNumber = cardDetails.cardNumber;
     return cardDiv;
 }
 

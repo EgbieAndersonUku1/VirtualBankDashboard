@@ -274,7 +274,7 @@
 
                                     <div class="account-information">
                                         <p class="bold">Joined:</p>
-                                        <p>Date here</p>
+                                        <p>01/04/2024</p>
                                     </div>
                                 </div>
 
@@ -807,7 +807,7 @@
                         
                             <div class="form-group flex-direction-column">
                                 <label for="amount">Amount</label>
-                                <input type="number" name="amount" id="fund-amount" required step="0.01" min="1" max="100000000">
+                                <input type="number" name="amount" id="fund-amount" required step="0.01" min="0.01" max="100000000">
                             </div>
                         
                             <button type="submit" id="fund-account-btn" class="margin-top-md btn-small">Fund</button>
@@ -817,6 +817,156 @@
                  </div>
 
 
+                 <!-- transfer funds -->
+                 <div id="transfer" role="region" aria-labelledby="transfer__header">
+
+                    <div class="window-close flex-end">
+                        <button  aria-label="Close transfer window" class="button-close-icon">
+                            <img src="static/images/icons/window-close.svg" alt="Close transfer window"
+                                 class="window-close-icon" id="transfer-close-icon">
+                        </button>
+                    </div>
+                
+                    <div id="preview-mode">
+                        <span class="green center">Preview Mode</span>
+                        <span class="center steel-blue">You are operating in preview mode. Changes will not be saved until the <span class="bold padding-xsm"> Transfer </span> button is clicked.</span>
+                    </div>
+                    
+                    <div class="transfer-error-msg">
+                        <p class="red center capitalize" id="transfer-messages-id">Insufficient funds</p>
+                        <p class="red center" id="transfer-error-card-msg-id"></p>
+                    </div>
+
+                    <h3 class="logo padding-bottom-md center">EUSBC</h3>
+                    <h4 class="margin-bottom-lg center">Transfer funds</h4>
+
+                    <div class="four-column-grid" id="transfer-fund-amount">
+                       
+
+                        <div class="account-details">
+                            <span id="account-balance-type" class="center padding-bottom-sm capitalize">Balance</span>
+                            <span id="transfer-card-fund-amount" class="center padding-bottom-md red transfer-ui-details" >£0.00</span>
+                        </div>
+
+                        <div class="transfer-details">
+                            <span id="transfer-amount-title" class="center padding-bottom-sm capitalize">
+                                Transfer Amount
+                            </span>
+                            <span id="transfer-total-amount" class="center padding-bottom-md red transfer-ui-details">
+                                £0.00
+                            </span>
+                        </div>
+                        
+
+                        <div class="transfer-details">
+                            <span id="transfer-cards-title" class="center padding-bottom-sm capitalize">
+                                Transfer Cards
+                            </span>
+                            <span id="transfer-cards-count" class="center padding-bottom-md red transfer-ui-details">
+                                0
+                            </span>
+                        </div>
+                        
+
+                        <div class="transfer-details">
+                            <span id="amount-per-card-title" class="center padding-bottom-sm capitalize">
+                                Amount Per Card
+                            </span>
+                            <span id="amount-per-card" class="center padding-bottom-md red transfer-ui-details">
+                                0
+                            </span>
+                        </div>
+                        
+                       
+                    </div>
+
+                    <div id="transfer__msg" class="center flex-direction-column">
+                       
+                       
+                        <span class="transfer__info-msg padding-bottom-sm">
+                            Transfer funds between your <span class="bold">wallet</span> and <span class="bold">bank</span>,
+                             or send funds to any <span class="bold">card</span> in your wallet.
+                        </span>
+                        <span class="transfer__info-msg padding-bottom-sm">
+                            To transfer to a <span class="bold">card</span> or <span class="bold"> cards </span>,
+                            click on the <span class="bold">desired card</span> 
+                        </span>
+                        
+                    </div>
+                
+                    <form action="" method="post" aria-labelledby="transfer__header" id="wallet-transfer-form" class="margin-top-md">
+                        <div id="transfer-details" class="two-column-grid">
+                            <div class="transfer-from flex-direction-column">
+                                <label for="transfer-from">Transfer from</label>
+                                <select name="transfer-from" id="transfer-from" required>
+                                    <option value="" disabled selected>Choose account to transfer from</option>
+                                    <option value="bank" id="transfer-from-bank">Bank</option>
+                                    <option value="wallet" id="transfer-from-wallet">Wallet</option>
+                                </select>
+                            </div>
+                
+                            <div class="flex-direction-column" id="transfer-to-select">
+                                <label for="transfer-to">Transfer to</label>
+                                <select name="transfer-to" id="transfer-to" required>
+                                    <option value="" disabled selected>Choose account to transfer to</option>
+                                    <option value="bank" id="transfer-to-bank">Bank</option>
+                                    <option value="wallet" id="transfer-to-wallet">Wallet</option>
+                                    <option value="cards">Cards</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div id="transfer-input-field" class="flex-direction-column">
+                            <label for="transfer-amount">Amount</label>
+                            <input type="number" step="0.01" max="10000000" required min="0.01" id="transfer-amount-value">
+                        </div>
+
+                      
+
+                        <div class="btn flex-end padding-top-sm">
+                            <button type="submit" class="capitalize btn-small" id="wallet-transfer-btn">Transfer</button>
+                        </div>
+                    </form>
+                
+                      <!-- The cards will be shown when the user toggles to card. It will be generated by JS -->
+                      <div id="wallet-cards" class="margin-top-md">
+                        cards to go here
+                     </div>
+                </div>
+                
+                <div id="transfer-progress-container">
+                    <h2 class="center capitalize">EUSBC</h2>
+                    <h3 class="center capitalize" id="transfer-progress-header">Transferring funds</h3>
+                    
+                    <div class="transfer-fund-img center">
+                        <img src="static/images/icons/credit-card.svg" alt="" id="add-fund-icon" id="transfer-progress-img">
+                    </div>
+                
+
+                    <div class="flex-space-between margin-top-md">
+                        <span id="transfer-progress-transfer-from" class="capitalize bold"></span>
+                        <span id="transfer-progress-transfer-to" class="capitalize bold"></span>
+                    </div>
+
+                    <div id="progressBar">
+                        <div id="progress">
+                            
+                        </div>
+                    </div>
+
+                    <div class="percentage-done center capitalize">
+                            <p class="capitalize lighten-text" id="transfer-progression-status">transferring progress 0%</p>
+                           
+                    </div>
+
+                    <div class="transfer-msg center margin-top-sm">
+                        <p id="transfer-waiting-msg">Transferring funds please wait....</p>
+                    </div>
+
+                    <div class="transfer-complete-btn center">
+                        <button type="button" class="btn-small" id="transfer-close-btn">Close</button>
+                    </div>
+                </div>
 
 
     </main>

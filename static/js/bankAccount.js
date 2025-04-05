@@ -5,6 +5,7 @@ import { Card } from "./card.js";
 import { DataStorage } from "./baseDataStorage.js";
 import { AmountManager } from "./baseAmountManager.js";
 import { config } from "./config.js";
+import { Wallet } from "./wallet.js";
 
 
 const BANK_ACCOUNT_STORAGE_KEY = config.BANK_ACCOUNT_STORAGE_KEY;
@@ -24,6 +25,9 @@ export class BankAccount extends DataStorage {
         this._createdOn     = null;
         this._amountManager = new AmountManager(initialBalance);
         this._balance       = initialBalance;
+
+        this.deductAmount   = this.deductAmount.bind(this);
+        this.addAmount      = this.addAmount.bind(this);
     }
 
     get balance() {
@@ -31,13 +35,18 @@ export class BankAccount extends DataStorage {
     }
 
     set balance(balance) {
-
         this._amountManager.validateAmount(balance)
         this._amountManager.balance = balance;
     }
 
     addAmount(amount) {
         this._amountManager.addAmount(amount);
+        return this.save();
+    }
+
+    deductAmount(amount) {
+        this._amountManager.deductAmount(amount);
+        return this.save();
     }
     
     static getByAccount(sortCode, accountNumber) {
@@ -63,6 +72,18 @@ export class BankAccount extends DataStorage {
 
     }
 
+    transferFromBankToWallet(amount, wallet) {
+
+        this._amountManager.validateAmount(amount);
+        if (!(wallet instanceof Wallet)) {
+            throw new Error("The wallet is not an instance of wallet class")
+        }
+
+        this.deductAmount(amount);
+        wallet.addFundsToWallet(amount);
+        return true;
+    }
+
     /**
      * Transfers a specified amount from a card to a given bank account.
      * 
@@ -79,7 +100,7 @@ export class BankAccount extends DataStorage {
      * @param {*} amount - The amount to be transferred from card to given account.
      * @returns {boolean} - Returns `true` if the transfer is successful, `false` if it fails.
      */
-    transferToAccount(card, amount) {
+    transferFromCardToAccount(card, amount) {
 
         this._validateCard(card);
         this._amountManager.validateAmount(amount);
@@ -87,7 +108,7 @@ export class BankAccount extends DataStorage {
         const hasFunds = this._checkIfCardHasAvailableFunds(card, amount);
 
         if (!hasFunds) {
-            logError("BankAccount.transferToAccount", "Transfer couldn't be made because there are insufficient funds in the account");
+            logError("BankAccount.transferFromCardToAccount", "Transfer couldn't be made because there are insufficient funds in the account");
             throw new Error(`Insufficient funds in Card. Available: ${card.balance}, Requested: ${amount}`);
         }
 
@@ -102,7 +123,7 @@ export class BankAccount extends DataStorage {
 
         } catch (error) {
             const errorMsg = `Error transferring funds: ${error.message}`;
-            logError("transferToAccount", errorMsg);
+            logError("transferFromCardToAccount", errorMsg);
             return false;
         }
     }
@@ -213,6 +234,7 @@ export class BankAccount extends DataStorage {
             id: this.id,
             createdOn: this._createdOn,
         };
+
     }
 
     /**

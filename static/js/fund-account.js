@@ -77,25 +77,34 @@ export function handleFundCloseDivIconClick(e) {
 export function chooseAccountTypeAndFund(accountType, amount) {
    const wallet = Wallet.loadWallet(config.SORT_CODE, config.ACCOUNT_NUMBER);
 
-   if (accountType  === "wallet") {
-     
-      if (!wallet) {
+   if (!wallet) {
         warnError("chooseAccountTypeAndFund", "The wallet was not found");
         return false;
       }
 
-        wallet.addFundToWallet(amount);
-        wallet.save();
-        walletDashboard.updateWalletAccountBalanceText(wallet);
-        return true;
 
+   switch(accountType.toLowerCase().trim()) {
+       
+       case "wallet":
+           wallet.addFundsToWallet(amount);
+           walletDashboard.updateWalletAccountBalanceText(wallet);
+           break;
+        
+        case "bank-account":
+            const bankAccount = BankAccount.getByAccount(config.SORT_CODE, config.ACCOUNT_NUMBER);
+            bankAccount.addAmount(amount);
+            walletDashboard.updateBankAccountBalanceText(wallet);
+            break;
+
+   }
+   
+    // tells the app that an update has been made
+    // and that when the user selects either bank or a wallet
+    // it should load from the localStorage and not from the cache
+    if (!config.isFundsUpdated) {
+        config.isFundsUpdated = true;
     }
-
-    const bankAccount = BankAccount.getByAccount(config.SORT_CODE, config.ACCOUNT_NUMBER);
-    bankAccount.addAmount(amount);
-    bankAccount.save();
-
-    walletDashboard.updateBankAccountBalanceText(wallet);
+   
     return true
    
 }
@@ -140,7 +149,6 @@ export function handleFundAmountLength(e) {
      
     }
 
-    console.log(e.target.id)
     handleInputFieldValueLength({e:e, convertToFloat:true})
 
 }

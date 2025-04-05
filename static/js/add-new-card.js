@@ -11,6 +11,7 @@ import { warnError } from "./logger.js";
 import { walletDashboard } from "./walletUI.js";
 
 
+
 const cardFormElement         = document.getElementById("card-form");
 const formMsgErrorElement     = document.getElementById("new-card-error-msg");
 const cardNumberInputElement  = document.getElementById("card-number");
@@ -173,6 +174,11 @@ function addCardToUIWallet(wallet, card) {
             showFormErrorMsg(true, error.message);
             return false;
         }
+
+        // Trigger a load from localStorage when the user clicks the "Transfer Funds" button.
+        // This ensures that the cards are available on the transfer page without requiring a page refresh.
+        // Without this, the cards will only appear after a manual refresh.
+        config.loadFromCache = false;
 
         showFormErrorMsg(true, `Card with ${card.cardNumber} has been added`);
         return true;

@@ -20,11 +20,29 @@ import { handleProfileIconClick,
 
         } from "./notifications.js";
 
-import { handleWalletPin, handleAddNewCard, handleCardRemovalClick, handleRemoveCardButtonClick } from "./walletUI.js";
-import { handleAddNewCardInputFields, handleNewCardCloseIcon, handleCVCInputField } from "./add-new-card.js";
+import { handleWalletPin, 
+        handleAddNewCard, 
+        handleCardRemovalClick,
+         handleRemoveCardButtonClick,
+         } from "./walletUI.js";
+
+import { handleAddNewCardInputFields, 
+        handleNewCardCloseIcon, 
+        handleCVCInputField 
+       } from "./add-new-card.js";
+
 import { handleRemoveCloseIcon } from "./pin.js";
 import { handleFundForm, handleFundCloseDivIconClick, handleFundAmountLength } from "./fund-account.js";
+import { handleTransferButtonClick, 
+         handleDisableMatchingTransferOption,
+         handleTransferToSelectOption,
+         handleTransferCardClick,
+         handleTransferAmountInputField,
+         handleTransferCloseIcon,
+       
+} from "./transfer-funds.js";
 
+import { handleTransferCloseButton } from "./progress.js";
 
 
 // elements
@@ -41,7 +59,7 @@ dashboardElement.addEventListener("input", handleEventDelegation);
 
 
 function handleEventDelegation(e) {
-    console.log(e.target.id)
+        
     handleProfileIconClick(e);
     handleNotificationIconClick(e);
     handleMarkAsReadClick(e);
@@ -69,6 +87,13 @@ function handleEventDelegation(e) {
     handleFundForm(e);
     handleFundCloseDivIconClick(e);
     handleFundAmountLength(e);
+    handleTransferButtonClick(e);
+    handleDisableMatchingTransferOption(e);
+    handleTransferToSelectOption(e);
+    handleTransferCardClick(e);
+    handleTransferAmountInputField(e);
+    handleTransferCloseButton(e);
+    handleTransferCloseIcon(e);
         
 }
 

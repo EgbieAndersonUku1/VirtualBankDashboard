@@ -467,8 +467,9 @@ export function concatenateWithDelimiter(first, second, delimiter = "") {
  *                            If true converts to a float else leaves the value as it is. 
  *                            Note - To convert to a float the digit must be an integer or a float otherwise
  *                            an error is raised
+ * @param {number} - Returns the input value
  */
-export function handleInputFieldValueLength({e, maximumLength=10, convertToFloat=false}) {
+export function handleInputFieldValueLength({e, maximumLength=10, convertToFloat=false, returnInputValue=false}) {
  
     if (!e.target || typeof e.target.value !== "string") {
         return;
@@ -481,20 +482,37 @@ export function handleInputFieldValueLength({e, maximumLength=10, convertToFloat
         throw new Error("The number is not a valid number");
     }
 
-    const trimmedValue = e.target.value.slice(0, maximumLength);
+    let trimmedValue = e.target.value.slice(0, maximumLength);
 
-    if (convertToFloat) {
-        const canBeConverted = checkNumber(trimmedValue).isInteger || checkNumber(trimmedValue).isNumber;
+    if (trimmedValue && convertToFloat) {
+        const canBeConverted = checkNumber(trimmedValue).isInteger || checkNumber(trimmedValue).isNumber || checkNumber(trimmedValue).isFloat;
         if (!canBeConverted) {
             logError("handleFundAmountLength", `The value cannot be converted to a float because it is not digit. Expected an integer/float but got text: ${trimmedValue}`);
             throw new Error(`Cannot convert to a float because the value is not an integer or a float. Value received ${trimmedValue}`)
         }
+        trimmedValue = parseFloat(trimmedValue);
     }
+
 
     if (trimmedValue !== e.target.value) {
-        e.target.value = convertToFloat ? parseFloat(trimmedValue) : trimmedValue; 
+        e.target.value = convertToFloat ? trimmedValue : trimmedValue;  // middle is number converted to float and else is not
     }
 
+    if (returnInputValue) {
+        return trimmedValue;
+    }
     
 }
 
+
+
+/**
+ * Formats a given amount into a currency string (GBP).
+ * Ensures two decimal places and includes the pound (£) symbol.
+ * 
+ * @param {number|string} amount - The amount to format.
+ * @returns {string} - The formatted currency string.
+ */
+export function formatCurrency(amount) {
+    return `£${parseFloat(amount).toFixed(2)}`;
+}

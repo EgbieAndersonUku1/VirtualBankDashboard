@@ -118,8 +118,14 @@ select {
     color: var(--steel-blue);
 }
 
+.orange {
+    color: orange;
+}
 
 
+.lighten-text {
+    opacity: 0.8;
+}
 
 .flex-direction-column {
     display: flex;
@@ -279,6 +285,10 @@ button {
     opacity: 0.8;
 }
 
+button:hover {
+    cursor: pointer;
+    transform: scale(1.02);
+}
 /* icons */
 /* nav icons */
 .nav-icon {
@@ -462,10 +472,21 @@ button {
     cursor: pointer;
     padding: var(--size-lg);
 
+}
+
+.dropdown,
+.notification-dropdown,
+#preview-mode {
     opacity: 0;
     visibility: hidden;
     transition: opacity 0.3s ease-in-out, visibility 0s 0.3s;
     z-index: 100000;
+}
+
+#preview-mode {
+    border: 2px solid rgb(94, 5, 5);
+    background: ghostwhite;
+    margin-bottom: var(--size-xs);
 }
 
 
@@ -474,7 +495,11 @@ button {
 #new-card.show,
 .pin.show,
 #fund.show,
-#remove-cards.show {
+#preview-mode.show,
+#remove-cards.show,
+#transfer.show,
+#transfer-close-icon.show,
+#transfer-progress-container.show {
     border: 2px solid lavender;
     opacity: 1;
     visibility: visible;
@@ -1228,7 +1253,7 @@ input::placeholder {
     display: block;
 }
 
-
+#wallet-cards,
 #selectable-cards  {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -1237,15 +1262,19 @@ input::placeholder {
     column-gap: var(--size-xs);
 
 }
+#wallet-cards {
+    transform: scale(0.7);
+}
 
 
+
+#wallet-cards .card,
 #selectable-cards .card {
   border: 2px solid lavender;
   cursor: pointer;
   position: relative;
   margin: 0;
   cursor: pointer;
-  /* border-radius: 3%; */
 }
 
 
@@ -1262,11 +1291,13 @@ input::placeholder {
     width: 25px;
 }
 
-.hightlight-removable-box {
+.highlight-credit-card {
     opacity: 0.5;
     transform: scale(0.8);
     background: rgb(160, 22, 22);
   }
+
+
 
 .removable-card-icon {
   
@@ -1276,11 +1307,11 @@ input::placeholder {
 }
 
 
-
 #selectable-cards .card:hover {
     transform: scale(1.04);
     opacity: 0.8;
 }
+
 
 #removable-card-area {
     display: grid;
@@ -1347,3 +1378,123 @@ input::placeholder {
     font-family: var(--font-poppins);
     color: var(--deep-navy-blue);
 }
+
+
+
+/* transfer funds */
+#transfer {
+    position: fixed;
+    top: 0;
+    left: 25%;
+    background: var(--white);
+    width: 60%;
+    box-shadow: var(--box-shadow);
+    padding-top: var(--size-xs);
+    padding-left: var(--size-md);
+    padding-right: var(--size-md);
+    padding-bottom: var(--size-lg);
+    cursor: pointer;
+    border: 3px solid lavender;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease-in-out, visibility 0s 0.3s;
+    
+}
+
+.button-close-icon {
+    background: none;
+    border: none;
+}
+
+#wallet-cards {
+    display: none;
+}
+
+#wallet-cards.show {
+    display: grid;
+}
+
+
+.transfer-ui-details {
+    font-size: 1.6rem;
+}
+
+#transfer__msg span {
+    font-size: 0.95rem;
+}
+
+#transfer-fund-amount {
+    background: ghostwhite;
+    padding-top: var(--size-xs);
+    margin-bottom: var(--size-sm);
+    border: 2px solid lavender;
+}
+
+#preview-mode span {
+    font-size: 0.9rem;
+}
+
+#transfer-error-card-msg-id,
+#transfer-messages-id {
+    display: none;
+}
+
+#transfer-error-card-msg-id.show,
+#transfer-messages-id.show{
+    display: block;
+}
+
+
+.transfer-error-msg p {
+    font-size: 0.85rem;
+}
+
+
+
+#progressBar {
+    width: 100%;
+    border: 1px solid #ccc;
+   
+}
+
+#progress {
+    height: 25px;
+    width: 0%;
+    background: #4caf50;
+    transition: width 0.3s ease-in-out
+}
+
+
+/* The container */
+#transfer-progress-container {
+    width: 50%;
+    position: fixed;
+    top: 8%;
+    left: 30%;
+
+    background: white;
+    box-shadow: var(--box-shadow);
+    box-shadow: 3px solid lavender;
+    padding: var(--size-lg);
+
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease-in-out, visibility 0s 0.3s;
+    z-index: 100000000000000;
+}
+
+
+#transfer-close-btn,
+#wallet-transfer-btn {
+    background: var(--background-primary);    
+    color: white;
+}
+
+#transfer-close-btn {
+    display: none;
+}
+
+#transfer-close-btn.show {
+    display: block;
+}
+
