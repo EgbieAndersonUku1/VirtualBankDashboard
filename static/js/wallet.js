@@ -533,7 +533,6 @@ export class Wallet extends DataStorage {
             return true;
        } catch (error) {
             logError("transferFromWalletToBank", error);
-            // console.log(error.message)
             return false;
        } 
       

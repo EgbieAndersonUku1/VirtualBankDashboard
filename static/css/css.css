@@ -1516,6 +1516,7 @@ input::placeholder {
     padding-bottom: var(--size-md);
     left: 30%;
     box-shadow: var(--box-shadow);
+    font-family: var(--font-poppins);
     
 }
 
@@ -1536,8 +1537,8 @@ input::placeholder {
 
 #card-info span {
 
-    font-size: 0.95rem;
-    line-height: 1.6;
+    font-size: 0.9rem;
+    line-height: 1.8;
 }
 
 #sidebar-buttons {
@@ -1545,6 +1546,10 @@ input::placeholder {
     padding-bottom: var(--size-md);
   
 
+}
+
+#sidebar-cards h3 {
+    margin-bottom: var(--size-lg);
 }
 
 #sidebar-buttons button {
