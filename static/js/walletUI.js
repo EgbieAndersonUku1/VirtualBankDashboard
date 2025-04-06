@@ -14,6 +14,7 @@ import { notificationManager } from "./notificationManager.js";
 
 
 
+
 const cardDisplayArea  = document.getElementById("cards");
 
 const walletNameElement             = document.querySelector(".wallet__holder-name");
@@ -211,10 +212,15 @@ export function handleCardRemovalClick(e) {
 
     if (parent) {
 
-        const cardNumberElement = parent.querySelector(cardNumberClass);
-        const card              = wallet.getByCardNumber(cardNumberElement.textContent.trim());
-        const isSelected        = parent.classList.toggle("highlight-credit-card");
+        const cardNumberElement   = parent.querySelector(cardNumberClass);
+        const card                = wallet.getByCardNumber(cardNumberElement.textContent.trim());
+        const isSelected          = parent.classList.toggle("highlight-credit-card");
+        const PARENT_CONTAINER_ID = "selectable-cards";
      
+       
+        if (parent.parentNode.id !== PARENT_CONTAINER_ID) {
+            return;
+        }
         if (isSelected && cardNumberElement) {
             removeCardTable.appendRow(card);
             wallet.markCardForRemoval(card.cardNumber);

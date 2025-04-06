@@ -40,7 +40,7 @@ export function transferProgressBar(transferFrom, transferTo, progressStatusMsg,
     
     setTransferFromName(transferFrom);
     setTransferToName(transferTo);
-
+    toggleSuccessTransferMessage(false);
 
     const progressInterval = setInterval(() => {
 

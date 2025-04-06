@@ -1,7 +1,7 @@
 import { checkIfHTMLElement } from "./utils.js";
 import { Wallet } from "./wallet.js";
 import { config } from "./config.js";
-import { cards } from "./cardsComponent.js";
+import { cards} from "./cardsComponent.js";
 import { warnError, logError } from "./logger.js";
 import { handleInputFieldValueLength, toTitle } from "./utils.js";
 import { formatCurrency } from "./utils.js";
@@ -37,6 +37,8 @@ notificationManager.setKey(config.NOTIFICATION_KEY);
 
 validatePageElements();
 resetSelectFields();
+
+const RESET_VALUE = 0
 
 
 transferAmountValueElement.addEventListener("input", handleTransferAmountInputField);
@@ -114,19 +116,17 @@ function handleCardSelectChange(e) {
  */
 function handleTransferToWalletOrBankSelectChange(e) {
     const selectValue = e.target.value;
-    const RESET_VALUE = 0;
-
+    
     if (selectValue === "bank" || selectValue === "wallet") {
 
         transferRecord.isCardMode = false;
-
+        config.isCardMode         = false;
         toggleCardAreaDisplay(false)
         updatePerCountCardValue(RESET_VALUE);
         updateTransferCardCount(RESET_VALUE)
 
         resetSelectedCardsInRecord(true);
         validateAndDisplayAccountTransferStatus(getTransferAmountValue());
-
     }
 }
 
@@ -472,16 +472,14 @@ function updateUIAfterSuccessfulTransfer(msg = "Transaction was successfully") {
  */
 function resetCardMode() {
 
-    const RESET_VALUE            = 0;
     transferRecord.isCardMode    = false;
-    transferRecord.selectedCards = [];
-    transferRecord[RECORD_KEY]   = {}
     transferRecord.canTransfer   = false;
     transferRecord.canFundCards  = false;
 
     updatePerCountCardValue(RESET_VALUE);
     updateTransferCardCount(RESET_VALUE);
     resetTransferToSelect();
+    resetSelectedCardsInRecord(true);
 
     console.log("All card states has been reset")
 }

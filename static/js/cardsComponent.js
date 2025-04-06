@@ -349,6 +349,7 @@ export const removeCardTable = {
     createTable() {
        
         if (!removeCardTable._isTableCreated && removeCardTable._table == null) {
+    
             const table       = document.createElement("table");
             const tHeader     = removeCardTable._createTableTHead();
             const thBody      = removeCardTable._createTableBody();
@@ -486,7 +487,7 @@ export const removeCardTable = {
     
             if (row) row.remove();       
 
-            removeCardTable._toggleTable(!removeCardTable._isTableEmpty());
+            removeCardTable.toggleTable(!removeCardTable._isTableEmpty());
 
         }
     },
@@ -605,14 +606,6 @@ export const removeCardTable = {
 
 
 
-export function resetRemoveCardArea() {
-    const pTag       = document.createElement("p");
-    pTag.textContent = "No cards marked for deletion";
-    pTag.classList.add("center");
-
-    removableCardAreaElement.textContent = "";
-    removableCardAreaElement.append(pTag);
-}
 
 
 function validatePageElements() {

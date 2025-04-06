@@ -1490,10 +1490,12 @@ input::placeholder {
     color: white;
 }
 
+#transfer-waiting-msg,
 #transfer-close-btn {
     display: none;
 }
 
+#transfer-waiting-msg.show,
 #transfer-close-btn.show {
     display: block;
 }
