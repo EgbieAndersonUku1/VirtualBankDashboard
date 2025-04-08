@@ -12,9 +12,6 @@ const cardInfoDivElement          = document.getElementById("card-info");
 
 
 
-
-
-
 validatePageElements();
 
 
@@ -122,6 +119,8 @@ function renderCardInfo(cardFields) {
 
     cardInfoDivElement.textContent = "";
 
+    const fragment = document.createDocumentFragment();
+
     for (const field of cardFields) {
         const spanElement = createCardSpan(field);
         if (!spanElement) {
@@ -132,9 +131,11 @@ function renderCardInfo(cardFields) {
         if (spanElement.id === CARD_ID) {
             handleIsCardBlockedSpanText(spanElement, field);
         }
-        cardInfoDivElement.appendChild(spanElement);
+        fragment.appendChild(spanElement);
        
     }
+
+    cardInfoDivElement.appendChild(fragment);
   
 }
 

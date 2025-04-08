@@ -617,11 +617,11 @@ export class Wallet extends DataStorage {
         }
 
         this._validateAmountType("wallet.transferAmountToMultipleCards", totalAmount);
-        this._validateAmountType("wallet.transferAmountToMultipleCards", amountPerCard)
+        this._validateAmountType("wallet.transferAmountToMultipleCards", amountPerCard);
         this._validateAccountType("wallet.transferAmountToMultipleCards", sourceAccount);
 
-        const cardsToSave = this._prepareCardsForBulkSave(cardNumberArray, totalAmount);
-        const [numOfCardsSaved, isSaved] = this._bulkSave(cardsToSave, sourceAccount, totalAmount);
+        const cardsToSave = this._prepareCardsForBulkSave(cardNumberArray, amountPerCard);
+        const [numOfCardsSaved, isSaved] = this._bulkSave(cardsToSave);
 
         if (!isSaved) {
             logError("transferAmountToMultipleCards", "Something went wrong, and the cards weren't saved");
