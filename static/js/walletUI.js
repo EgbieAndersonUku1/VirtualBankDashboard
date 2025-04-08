@@ -30,9 +30,6 @@ const removableSelectableCardsDiv   = document.getElementById("selectable-cards"
 const spinnerElement                = document.getElementById("spinner");
 
 
-
-
-
 validatePageElements();
 
 
@@ -125,10 +122,10 @@ export function prepareCardData(card)  {
         logError("prepareCardData", "Card data is not an object");
         return
     }
-    const cardData      = card.toJson();
-    cardData.bankName   = "EUSBC";
-    cardData.cardAmount = formatCardBalance(card);
-    cardData.cardName   = card.cardHolderName;
+    const cardData       = card.toJson();
+    cardData.bankName    = "EUSBC";
+    cardData.cardAmount  = formatCardBalance(card);
+    cardData.cardName    = card.cardHolderName;
     return cardData;
 }
 
@@ -205,7 +202,8 @@ function updateAllWalletDashoardText(wallet) {
  * @param {Event} e - The click event object.
  */
 export function handleCardRemovalClick(e) {
-    const EXPECTED_CLASS = ".bank-card";
+    const EXPECTED_CLASS     = ".bank-card";
+    const CARD_SIDEBAR_CLASS = "sides"
 
     const parent          = e.target.closest(EXPECTED_CLASS);
     const cardNumberClass = ".card-account-number";
@@ -217,9 +215,12 @@ export function handleCardRemovalClick(e) {
         const isSelected          = parent.classList.toggle("highlight-credit-card");
         const PARENT_CONTAINER_ID = "selectable-cards";
      
-       
+        // const sideCardsElement            = document.querySelectorAll("#sides cards .cards")
+
+        // if ()
         if (parent.parentNode.id !== PARENT_CONTAINER_ID) {
             return;
+
         }
         if (isSelected && cardNumberElement) {
             removeCardTable.appendRow(card);

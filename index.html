@@ -599,7 +599,7 @@
                                 </div>
                             </div>
 
-                            <div class="sides cards" role="region" aria-labelledby="linked-cards-heading">
+                            <div class="sides cards" role="region" aria-labelledby="linked-cards-heading" id="side-cards">
                                 <h3 class="center capitalize subtitle" id="linked-cards-heading">Linked Account Cards
                                 </h3>
 
@@ -971,41 +971,28 @@
                 <div id="sidebar-cards">
                     <div class="spinner4"></div>
                     <h2 class="center logo">EUSBC</h2>
-                    <h3 class="center margin-bottom-md">Payment card</h3>
+                    <h3 class="center margin-bottom-lg capitalize lighten-text" >Payment card</h3>
 
                     <div id="sidebar-card" class="margin-top-lg">
-                        <!-- placeholder to see how it looks this will be removed and it will be dynamically generated when the user clicks the sidebar card -->
-                        <div class="card bank-card visa" aria-label="peter card" data-card-number="9877-7777-7777-7777">
-                            <div class="head flex-space-between"><div class="card-amount flex-direction-column">
-                                <span>EUSBC</span><span class="card-amount">£1325.01</span></div>
-                                <img src="static/images/icons/visa.svg" alt="Visa card logo" class="card-icon">
-                            </div>
-                            <div class="body"><input hidden="" name="card">
-                                <img src="static/images/icons/sim-card-chip.svg" class="card-icon" alt="Sim card chip">
-                                <span class="card-type capitalize">credit</span>
-                                <span class="card-account-number highlight-number">9877-7777-7777-7777</span>
-                            </div>
-                            <div class="footer flex-space-between padding-top-md">
-                                <span class="card-expiry capitalize">peter</span>
-                                <span class="card-expiry capitalize">Expiry date<span class="date"> jan 2025</span>
-                            </span>
-                        </div>
-                    </div>
+                       <!-- Dynamically generated -->
                     </div>
 
                     <div id="card-info" class="left-align flex-direction-column margin-top-lg margin-bottom-lg">
-                        <span class="card-info__card-num"><span class="bold capitalize">Card number: </span>2222-2222-2222-2222</span>
-                        <span class="card-info__card-amount"><span class="bold capitalize">Card Amount: </span>£0.00</span>
-                        <span class="card-info__card-brand"><span class="bold capitalize">Card Brand: </span>Visa</span>
-                        <span class="card-info__card-type"><span class="bold capitalize">Card Type: </span>Debit</span>
-                        <span class="card-info__card-status green"><span class="bold capitalize">Card Status: </span>Unblocked</span>
-                        <span class="card-info__card-creation-date"><span class="bold capitalize">Card Creation date: </span>25/12/2024</span>
+                        <span id="card-info__card-num"><span class="bold capitalize">Card number: </span></span>
+                        <span id="card-info__card-amount"><span class="bold capitalize">Card Amount: </span></span>
+                        <span id="card-info__card-brand"><span class="bold capitalize">Card Brand: </span></span>
+                        <span id="card-info__card-type"><span class="bold capitalize">Card Type: </span></span>
+                        <span id="card-info__card-cvc"><span class="bold capitalize">CVC: </span></span>
+                        <span id="card-info__card-status" class="green"><span class="bold capitalize">Card Status: </span></span>
+                        <span id="card-info__card-creation-date"><span class="bold capitalize">Card Creation date: </span></span>
+                        
+                        
                     </div>
 
                     <div id="sidebar-buttons" class="center">
                         <button id="block-card" class="btn block-btn capitalize">block</button>
                         <button id="transfer-card-amount" class="btn transfer-btn capitalize">Transfer</button>
-                        <button id="add" class="btn add-btn capitalize">Add</button>
+                        <button id="add" class="btn add-btn capitalize">Fund</button>
                         <button id="delete" class="btn delete-btn capitalize">delete</button>
                         <button id="close-card" class="btn close-btn capitalize">Close</button>
                     </div>

@@ -43,11 +43,13 @@ import { handleTransferButtonClick,
 } from "./transfer-funds.js";
 
 import { handleTransferCloseButton } from "./progress.js";
+import { handleSidBarCardClick,
+         handleCloseCardManagerButton,
+         handleNotYetImplementedFunctionality } from "./sidebarCard.js";
 
 
 // elements
 const dashboardElement       = document.getElementById("virtualbank-dashboard");
-const cardNumberInputElement = document.getElementById("card-number");
 
 
 // event listeners
@@ -94,6 +96,9 @@ function handleEventDelegation(e) {
     handleTransferAmountInputField(e);
     handleTransferCloseButton(e);
     handleTransferCloseIcon(e);
+    handleSidBarCardClick(e);
+    handleCloseCardManagerButton(e);
+    handleNotYetImplementedFunctionality(e);
         
 }
 

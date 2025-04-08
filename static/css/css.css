@@ -503,7 +503,8 @@ button:hover {
 #remove-cards.show,
 #transfer.show,
 #transfer-close-icon.show,
-#transfer-progress-container.show {
+#transfer-progress-container.show,
+#sidebar-cards.show {
     border: 2px solid lavender;
     opacity: 1;
     visibility: visible;
@@ -1516,7 +1517,10 @@ input::placeholder {
     padding-bottom: var(--size-md);
     left: 30%;
     box-shadow: var(--box-shadow);
-    
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease-in-out, visibility 0s 0.3s;
+    z-index: 1000;
 }
 
 
@@ -1537,7 +1541,7 @@ input::placeholder {
 #card-info span {
 
     font-size: 0.95rem;
-    line-height: 1.6;
+    line-height: 1.8;
 }
 
 #sidebar-buttons {
@@ -1594,4 +1598,13 @@ input::placeholder {
 }
 .close-btn:hover {
     background-color: #4b5563;
+}
+
+.card-not-blocked {
+    border:5px solid green;
+    
+}
+
+.card-is-blocked {
+    background: red;
 }
