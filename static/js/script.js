@@ -47,6 +47,8 @@ import { handleSidBarCardClick,
          handleCloseCardManagerButton,
          handleNotYetImplementedFunctionality } from "./sidebarCard.js";
 
+import { handleTransferBlock } from "./sidebarCardBlocking.js";
+
 
 // elements
 const dashboardElement       = document.getElementById("virtualbank-dashboard");
@@ -99,6 +101,7 @@ function handleEventDelegation(e) {
     handleSidBarCardClick(e);
     handleCloseCardManagerButton(e);
     handleNotYetImplementedFunctionality(e);
+    handleTransferBlock(e);
         
 }
 

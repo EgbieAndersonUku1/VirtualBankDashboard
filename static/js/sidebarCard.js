@@ -11,6 +11,13 @@ const sideBarCardContainerElement = document.getElementById("sidebar-card");
 const cardInfoDivElement          = document.getElementById("card-info");
 
 
+export const selectedSidebarCard = {
+    clicked: false,
+    cardNumber: '',
+    cardType: '',
+    cardStatus: null
+  };
+  
 
 validatePageElements();
 
@@ -30,7 +37,8 @@ export function handleSidBarCardClick(e) {
         return;
     }
   
- 
+    
+
    
     const cardNumber = cardElement.dataset.cardNumber;
     const card       = Card.getByCardNumber(cardNumber);
@@ -42,7 +50,12 @@ export function handleSidBarCardClick(e) {
     }
 
     toggleOfAllCardsExceptForClicked(cardElement);
-    
+    renderCardToUI(card);
+
+}
+
+
+export function renderCardToUI(card) {
     const cardData  = prepareCardData(card);
 
     if (!cardData || typeof cardData !== "object") {
@@ -52,13 +65,52 @@ export function handleSidBarCardClick(e) {
 
     }
 
-    cardData.cardNumber = maskCreditCardNo(cardData.cardNumber)
+    updateSelectedSidebarCardState(cardData);
+    cardData.cardNumber  = maskCreditCardNo(cardData.cardNumber)
     const userCardElement = cards.createCardDiv(cardData);
     cards.placeCardDivIn(sideBarCardContainerElement, userCardElement, true);
 
     handleIsCardBlockedImg(userCardElement, cardData);
-    renderCardDetails(cardData)
+    renderCardDetails(cardData);
+}
 
+
+/**
+ * Updates the shared `selectedSidebarCard` state object.
+ *
+ * This function acts as a persistence layer for sidebar card interactions,
+ * allowing different parts of the UI to access the currently selected card.
+ * It simplifies the management of related actions such as `transfer`, `delete`,
+ * `fund`, and `block`, since the selected card's state is centralised and ensures
+ * when any of these buttons are clicked, the app knows the exact card details.
+ *
+ * @param {Object} cardData - The card data for the clicked sidebar card.
+ * Must contain `cardNumber`, `cardType`, and `isCardBlocked`.
+ */
+function updateSelectedSidebarCardState(cardData) {
+    if (!cardData || typeof cardData !== "object" ) {
+        warnError("updateSelectedSidebarCardState", "The card data is empty");
+        return;
+    }
+
+    selectedSidebarCard.cardNumber = cardData.cardNumber;
+    selectedSidebarCard.clicked    = true;
+    selectedSidebarCard.cardStatus = cardData.isCardBlocked;
+    selectedSidebarCard.cardType   = cardData.cardType;
+
+}
+
+
+/**
+ * Returns the current state of the selected sidebar card.
+ *
+ * Useful for checking which card is currently selected and accessing its metadata
+ * such as card number, status, or type.
+ *
+ * @returns {Object} The current `selectedSidebarCard` state object.
+ */
+export function getSelectedSidebarCardState() {
+    return selectedSidebarCard;
 }
 
 
@@ -201,9 +253,9 @@ function toggleCardManagerDiv(show=true) {
 
 export function handleCloseCardManagerButton(e) {
     const CLOSE_BTN_ID = "close-card";
-    console.log(e.target)
     if (e.target.id === CLOSE_BTN_ID) {
         toggleCardManagerDiv(false);
+        return;
     }
 }
 
@@ -237,12 +289,12 @@ function showInvalidCardAlertMsg() {
 
 // Not yet implemented
 export function handleNotYetImplementedFunctionality(e) {
-    const BLOCK_BUTTON_ID    = "block-card";
+
     const TRANSFER_BUTTON_ID = "transfer-card-amount";
     const ADD_BUTTON_ID      = "add";
     const DELETE_BUTTON_ID   = "delete";
 
-    if (e.target.id === BLOCK_BUTTON_ID || e.target.id === TRANSFER_BUTTON_ID ||
+    if ( e.target.id === TRANSFER_BUTTON_ID ||
         e.target.id === ADD_BUTTON_ID || e.target.id === DELETE_BUTTON_ID) {
         AlertUtils.showAlert({title: "Not yet implemented",
             text: "You seeing this because the functionality is not yet implemented",
