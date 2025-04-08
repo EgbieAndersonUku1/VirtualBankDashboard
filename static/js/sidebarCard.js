@@ -52,6 +52,7 @@ export function handleSidBarCardClick(e) {
 
     }
 
+    cardData.cardNumber = maskCreditCardNo(cardData.cardNumber)
     const userCardElement = cards.createCardDiv(cardData);
     cards.placeCardDivIn(sideBarCardContainerElement, userCardElement, true);
 
@@ -62,43 +63,49 @@ export function handleSidBarCardClick(e) {
 
 
 function renderCardDetails(card) {
-  
+   
     const cardSpanInfo = [
         {
-        id: "card-info__card-num",
-        label: "Card Number: ",
-        value: maskCreditCardNo(card.cardNumber),
-        isCardBlocked: card.isCardBlocked,
+            id: "card-info__card-holder-name",
+            label: "Card Holder name: ",
+            value: card.cardHolderName,
+            isCardBlocked: card.isCardBlocked,
         },
         {
-          id: "card-info__card-amount",
-          label: "Card Amount: ",
-          value: card.cardAmount,
-          isCardBlocked: card.isCardBlocked,
+            id: "card-info__card-num",
+            label: "Card Number: ",
+            value: card.cardNumber,
+            isCardBlocked: card.isCardBlocked,
         },
         {
-          id: "card-info__card-brand",
-          label: "Card Brand: ",
-          value: card.cardBrand,
-          isCardBlocked: card.isCardBlocked,
+            id: "card-info__card-amount",
+            label: "Card Amount: ",
+            value: card.cardAmount,
+            isCardBlocked: card.isCardBlocked,
         },
         {
-          id: "card-info__card-type",
-          label: "Card Type: ",
-          value: card.cardType,
-          isCardBlocked: card.isCardBlocked,
+            id: "card-info__card-brand",
+            label: "Card Brand: ",
+            value: card.cardBrand,
+            isCardBlocked: card.isCardBlocked,
         },
         {
-          id: "card-info__card-cvc",
-          label: "CVC: ",
-          value: card.cvc,
-          isCardBlocked: card.isCardBlocked,
+            id: "card-info__card-type",
+            label: "Card Type: ",
+            value: card.cardType,
+            isCardBlocked: card.isCardBlocked,
         },
         {
-          id: "card-info__card-status",
-          label: "Card Status: ",
-          value: card.isCardBlocked ? "Card is blocked" : "Card is active",
-          isCardBlocked: card.isCardBlocked,
+            id: "card-info__card-cvc",
+            label: "CVC: ",
+            value: card.cvc,
+            isCardBlocked: card.isCardBlocked,
+        },
+        {
+            id: "card-info__card-status",
+            label: "Card Status: ",
+            value: card.isCardBlocked ? "Card is blocked" : "Card is active",
+            isCardBlocked: card.isCardBlocked,
         },
         {
           id: "card-info__card-creation-date",
