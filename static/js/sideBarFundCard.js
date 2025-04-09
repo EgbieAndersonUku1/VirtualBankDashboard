@@ -1,10 +1,15 @@
-import { checkIfHTMLElement } from "./utils.js";
+import { checkIfHTMLElement, formatCurrency } from "./utils.js";
 import { parseFormData } from "./formUtils.js";
 import { Card } from "./card.js";
 import { getSelectedSidebarCardState } from "./sidebarCard.js";
 import { logError } from "./logger.js";
 import { AlertUtils } from "./alerts.js";
 import { renderCardToUI } from "./sidebarCard.js";
+import { config } from "./config.js";
+import { notificationManager } from "./notificationManager.js";
+
+
+notificationManager.setKey(config.NOTIFICATION_KEY);
 
 const fundMyCardFormElement  = document.getElementById("add-fund-form");
 const fundMyCardErrorElement = document.getElementById("fund-my-card-error");
@@ -73,9 +78,10 @@ function handleAddFundingToCard(parsedData) {
        card.addAmount(parsedData.amount);
        toggleErrorMsg(false);
        renderCardToUI(card);
+       notificationManager.add(`Your card has been funded with ${formatCurrency(parsedData.amount)}.`);
        return true;
     } catch (error) {
-        updateFundingErrorMsg(error.msg);
+        updateFundingErrorMsg(error.message);
         toggleErrorMsg(true);
     }
 }
