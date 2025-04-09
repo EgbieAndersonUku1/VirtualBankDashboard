@@ -45,9 +45,13 @@ import { handleTransferButtonClick,
 import { handleTransferCloseButton } from "./progress.js";
 import { handleSidBarCardClick,
          handleCloseCardManagerButton,
-         handleNotYetImplementedFunctionality } from "./sidebarCard.js";
+         handleNotYetImplementedFunctionality,
+        handleAddFundCardButtonClick,
+        handleAddCloseButtonIconClick,
+        } from "./sidebarCard.js";
 
 import { handleTransferBlock } from "./sidebarCardBlocking.js";
+import { handleAddFundToCardFormButtonClick } from "./sideBarFundCard.js";
 
 
 // elements
@@ -104,6 +108,10 @@ function handleEventDelegation(e) {
     handleCloseCardManagerButton(e);
     handleNotYetImplementedFunctionality(e);
     handleTransferBlock(e);
-        
+    handleAddFundCardButtonClick(e);
+    handleAddCloseButtonIconClick(e);
+    handleAddFundCardButtonClick(e);
+    handleAddFundToCardFormButtonClick(e);
+    
 }
 

@@ -146,6 +146,10 @@ select {
     overflow-wrap: anywhere;
 }
 
+.small-text {
+    font-size: 0.85rem;
+}
+
 /* padding */
 
 .padding-xsm {
@@ -504,6 +508,7 @@ button:hover {
 #transfer.show,
 #transfer-close-icon.show,
 #transfer-progress-container.show,
+#fund-my-card.show,
 #sidebar-cards.show {
     border: 2px solid lavender;
     opacity: 1;
@@ -1164,6 +1169,7 @@ tr:hover {
     display: none;
 }
 
+#fund-my-card-error,
 .form-error-msg {
     display: none;
 }
@@ -1171,9 +1177,11 @@ tr:hover {
 
 
 .spinner3.show,
+#fund-my-card-error.show,
 .form-error-msg.show {
     display: block;
 }
+
 
 .d-none {
     display: none;
@@ -1344,7 +1352,7 @@ input::placeholder {
 
 
 /* fund account */
-
+#fund-my-card,
 #fund {
     width: 30%;
     position: fixed;
@@ -1361,6 +1369,7 @@ input::placeholder {
     
 }
 
+.add-fund-icon,
 #add-fund-icon {
     height: 200px;
     width: 200px;

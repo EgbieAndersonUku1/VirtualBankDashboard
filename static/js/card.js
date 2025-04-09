@@ -42,15 +42,26 @@ export class Card extends DataStorage {
     }
 
     addAmount(amount) {
+        
+        if (this.isBlocked) {
+            throw new Error("The card has been blocked an no funds can be added");
+        }
+
         this._amountManager.validateAmount(amount);
-        this._amountManager.addAmount(amount)
+        this._amountManager.addAmount(amount);
+        this.save();
 
     }
 
     deductAmount(amount) {
 
+        if (!this.isBlocked) {
+            throw new Error("The card has been blocked an no funds can be deducted");
+        }
+
         this._amountManager.validateAmount(amount)
         this._amountManager.deductAmount(amount);
+        this.save();
 
     }
 
