@@ -62,6 +62,8 @@ dashboardElement.addEventListener("input", handleEventDelegation);
 
 
 
+
+
 function handleEventDelegation(e) {
         
     handleProfileIconClick(e);
@@ -104,10 +106,4 @@ function handleEventDelegation(e) {
     handleTransferBlock(e);
         
 }
-
-
-
-
-
-
 

@@ -10,9 +10,7 @@ import { Card } from "./card.js";
 import { removeCardTable, cards } from "./cardsComponent.js";
 import { AlertUtils } from "./alerts.js";
 import { notificationManager } from "./notificationManager.js";
-
-
-
+import { updateSideBarCardState } from "./sidebarCardBlocking.js";
 
 
 const cardDisplayArea  = document.getElementById("cards");
@@ -81,11 +79,23 @@ function handleInitialSetup() {
 
     loadUserCardsInUI(wallet);
     updateAllWalletDashoardText(wallet)
+    updateCardStateObjectWithBlockCards();
 }
 
 
 
-
+function updateCardStateObjectWithBlockCards() {
+    const cards = Card.getAllBlockCards();
+    if (cards) {
+        const numOfBlockedCards = cards.length;
+        console.log(`Loading ${numOfBlockedCards} blocked ${numOfBlockedCards > 1 ? 'cards' : 'card'}`);
+        
+        for (const card of cards) {
+            updateSideBarCardState(card);
+        }
+        console.log("Done, blocked cards loaded to the system")
+    }
+}
 
 export function handleWalletPin(e) {
     handlePinShowage(e, wallet);

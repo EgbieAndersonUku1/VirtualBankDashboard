@@ -6,7 +6,10 @@ import { notificationManager } from "./notificationManager.js";
 import { config } from "./config.js";
 import { AlertUtils } from "./alerts.js";
 
+
 notificationManager.setKey(config.NOTIFICATION_KEY);
+
+const selectedSidebarCard = getSelectedSidebarCardState();
 
 
 export async function handleTransferBlock(e) {
@@ -18,7 +21,7 @@ export async function handleTransferBlock(e) {
     }
 
     
-    const card = Card.getByCardNumber(getSelectedSidebarCardState().cardNumber);
+    const card = Card.getByCardNumber(selectedSidebarCard.lastCardClickeCardNumber);
    
     if (!card) {
         logError("handleTransferblock", "The card wasn't found");
@@ -43,6 +46,8 @@ export async function handleTransferBlock(e) {
                         You won’t be able to send or receive money until it’s unblocked.`;
             card.freezeCard();
             renderCardToUI(card);
+           
+            updateSideBarCardState(card)
             notificationManager.add(msg);
         }
        
@@ -57,9 +62,24 @@ export async function handleTransferBlock(e) {
             confirmButtonText: "OK",
             icon: "success"
         });
+        updateSideBarCardState(card);
         renderCardToUI(card);
         notificationManager.add(msg);
     }
   
     
+}
+
+
+export function updateSideBarCardState(card) {
+
+    selectedSidebarCard[card.cardNumber] = {
+
+        cardNumber: card.cardNumber,
+        cardStatus: card.isBlocked ? "blocked" : "active",
+        cardType: card.cardType,
+        id: card.id,
+    }
+
+  
 }

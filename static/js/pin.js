@@ -4,9 +4,9 @@ import { sanitizeText } from "./utils.js";
 import { Wallet } from "./wallet.js";
 import { logError } from "./logger.js";
 import { showNewCardForm} from "./add-new-card.js";
-import { AlertUtils } from "./alerts.js";
 import { cards } from "./cardsComponent.js";
 import { handleFundDiv } from "./fund-account.js";
+import { getSelectedSidebarCardState } from "./sidebarCard.js";
 
 
 const ADD_FUNDS_ID     = "add-funds";
@@ -80,6 +80,7 @@ export function handlePinShowage(e, wallet) {
    }
 
    if (id === TRANSFER_FUNDS ) {
+        getSelectedSidebarCardState().isTransferWindowOpen = true;
         dimBackground(dimBackgroundElement, true);
         transferDivElement.classList.add("show");
         closeDivs([addNewCardDivElement, addFundsDivElement, removeCardsDivElement ]);

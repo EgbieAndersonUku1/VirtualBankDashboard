@@ -4,8 +4,9 @@ import { generateRandomID, checkNumber } from "./utils.js";
 import { DataStorage } from "./baseDataStorage.js";
 import { getLocalStorage } from "./db.js";
 import { AmountManager } from "./baseAmountManager.js";
-import { logError } from "./logger.js";
+import { logError, warnError } from "./logger.js";
 import { config } from "./config.js";
+import { setLocalStorage } from "./db.js";
 
 const CARD_STORAGE_KEY = config.CARD_STORAGE_KEY;
 
@@ -101,9 +102,18 @@ export class Card extends DataStorage {
     static deleteCard(cardNumber) {
         const cardDetails = getLocalStorage(CARD_STORAGE_KEY);
         if (Array.isArray(cardDetails) || typeof cardDetails !== "object") {
-            logError("deleteCard", `Expected an object but got type ${typeof cardDetails}`);
+            logError("wallet.deleteCard", `Expected an object but got type ${typeof cardDetails}`);
             return null;
         }
+
+        const card = Card.getByCardNumber(cardNumber);
+        if (!card) {
+            warnError("wallet.deleteCard", "The card was not found!");
+            return;
+        }
+        if (card.isBlocked) {
+            throw new Error(`The card with number #${card.cardNumber} couldn't be deleted because it has been blocked. Unblock and try again`);
+        } 
 
         const userCard = cardDetails[CARD_STORAGE_KEY][cardNumber];
         const updatedCardDetails = excludeKey(userCard, cardNumber);
@@ -311,5 +321,23 @@ export class Card extends DataStorage {
         this._amountManager._balance = cardDetails.balance;
     }
 
+    static getAllBlockCards() {
+        const blocked = [];
+        const cardDetails = Card._fetchCardFromStorage();
+        if (!cardDetails) {
+           return;
+        }
+        for (const [_, value] of Object.entries(cardDetails)) {
+            if (value) {
+                const card = Card.getByCardNumber(value.cardNumber);
+                if (card.isBlocked) {
+                    blocked.push(card);
+                }
+            }
+        
+        }
+        return blocked;
+        
+    }
 
 }
