@@ -10,6 +10,8 @@ import { maskCreditCardNo } from "./utils.js";
 const sideBarCardsManagerElement  = document.getElementById("sidebar-cards");
 const sideBarCardContainerElement = document.getElementById("sidebar-card");
 const cardInfoDivElement          = document.getElementById("card-info");
+const fundMyCardElement           = document.getElementById("fund-my-card");
+const fundMyCardCloseElement      = document.getElementById("fund-card-close-icon");
 
 
 export const selectedSidebarCard = {
@@ -165,6 +167,7 @@ function renderCardDetails(card) {
     
 }
 
+
 function renderCardInfo(cardFields) {
     
     const CARD_ID = "card-info__card-status";
@@ -239,6 +242,7 @@ function handleIsCardBlockedSpanText(cardSpanElement, card) {
     card.isCardBlocked ? cardSpanElement.classList.add("red") : cardSpanElement.classList.add("green");
 }
 
+
 function toggleCardManagerDiv(show=true) {
 
     if (show && getSelectedSidebarCardState().isTransferWindowOpen) {
@@ -295,25 +299,51 @@ function showInvalidCardAlertMsg() {
 export function handleNotYetImplementedFunctionality(e) {
 
     const TRANSFER_BUTTON_ID = "transfer-card-amount";
-    const ADD_BUTTON_ID      = "add";
     const DELETE_BUTTON_ID   = "delete";
 
-    if ( e.target.id === TRANSFER_BUTTON_ID ||
-        e.target.id === ADD_BUTTON_ID || e.target.id === DELETE_BUTTON_ID) {
+    if ( e.target.id === TRANSFER_BUTTON_ID || e.target.id === DELETE_BUTTON_ID) {
         AlertUtils.showAlert({title: "Not yet implemented",
             text: "You seeing this because the functionality is not yet implemented",
             icon: "info",
             confirmButtonText: "Ok"
         })
     }
+
 }
 
+
+export function handleAddFundCardButtonClick(e) {
+    const BUTTON_ID = "add";
+
+    if (e.target.id !== BUTTON_ID) {
+        return;
+    }
+ 
+    toggleAddMyCardForm(true);
+}
+
+
+export function handleAddCloseButtonIconClick(e) {
+    const ADD_FUND_ID = "fund-card-close-icon";
+
+    if (e.target.id === ADD_FUND_ID ) {
+        toggleAddMyCardForm(false);
+    }
+    
+}
+
+
+function toggleAddMyCardForm(show) {
+    show ? fundMyCardElement.classList.add("show") : fundMyCardElement.classList.remove("show");
+}
 
 
 function validatePageElements() {
     checkIfHTMLElement(sideBarCardsManagerElement, "The sidebar card manager");
     checkIfHTMLElement(sideBarCardContainerElement, "The sidebar container");
     checkIfHTMLElement(cardInfoDivElement, "The card info element container");
+    checkIfHTMLElement(fundMyCardElement, "The funding my card form");
+    checkIfHTMLElement(fundMyCardCloseElement, "The add fund close icon")
   
 
 }

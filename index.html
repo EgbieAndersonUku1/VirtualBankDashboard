@@ -807,7 +807,7 @@
                         
                             <div class="form-group flex-direction-column">
                                 <label for="amount">Amount</label>
-                                <input type="number" name="amount" id="fund-amount" required step="0.01" min="0.01" max="100000000">
+                                <input type="number" name="amount" id="fund-card-amount" required step="0.01" min="0.01" max="100000000">
                             </div>
                         
                             <button type="submit" id="fund-account-btn" class="margin-top-md btn-small">Fund</button>
@@ -990,6 +990,32 @@
                     </div>
                     
                 </div>
+
+                  <!-- fund my card -->
+                  <div id="fund-my-card">
+                    <div class="window-close flex-end">
+                        <img src="static/images/icons/window-close.svg" alt="Window" class="icon window-close-icon" id="fund-card-close-icon">
+                    </div>
+                    <p class="error-msg red small-text center" id="fund-my-card-error">You cannot add funds because your card has been blocked</p>
+                    <h2 class="center logo">EUSBC</h2>
+                    <h3 class="center capitalize green">Fund my card</h3>
+                        <div class="header center">
+                           
+                            <img src="static/images/icons/credit-card.svg" alt="" class="add-fund-icon">
+                        </div>
+                       
+
+                        <form action="" method="post" id="add-fund-form">
+                         
+                            <div class="form-group flex-direction-column">
+                                <label for="amount">Amount</label>
+                                <input type="number" name="amount" id="fund-amount" required step="0.01" min="0.01" max="100000000">
+                            </div>
+                        
+                            <button type="submit" id="fund-account-btn" class="margin-top-md btn-small">Fund</button>
+                        </form>
+                        
+                 </div>
 
 
     </main>
