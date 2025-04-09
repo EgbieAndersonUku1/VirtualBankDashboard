@@ -6,16 +6,14 @@ import { AlertUtils } from "./alerts.js";
 import { prepareCardData } from "./walletUI.js";
 import { maskCreditCardNo } from "./utils.js";
 
+
 const sideBarCardsManagerElement  = document.getElementById("sidebar-cards");
 const sideBarCardContainerElement = document.getElementById("sidebar-card");
 const cardInfoDivElement          = document.getElementById("card-info");
 
 
 export const selectedSidebarCard = {
-    clicked: false,
-    cardNumber: '',
-    cardType: '',
-    cardStatus: null
+    isTransferWindowOpen: false,
   };
   
 
@@ -38,8 +36,6 @@ export function handleSidBarCardClick(e) {
     }
   
     
-
-   
     const cardNumber = cardElement.dataset.cardNumber;
     const card       = Card.getByCardNumber(cardNumber);
 
@@ -88,16 +84,13 @@ export function renderCardToUI(card) {
  * Must contain `cardNumber`, `cardType`, and `isCardBlocked`.
  */
 function updateSelectedSidebarCardState(cardData) {
+
     if (!cardData || typeof cardData !== "object" ) {
         warnError("updateSelectedSidebarCardState", "The card data is empty");
         return;
     }
 
-    selectedSidebarCard.cardNumber = cardData.cardNumber;
-    selectedSidebarCard.clicked    = true;
-    selectedSidebarCard.cardStatus = cardData.isCardBlocked;
-    selectedSidebarCard.cardType   = cardData.cardType;
-
+    selectedSidebarCard.lastCardClickeCardNumber = cardData.cardNumber;
 }
 
 
@@ -247,6 +240,17 @@ function handleIsCardBlockedSpanText(cardSpanElement, card) {
 }
 
 function toggleCardManagerDiv(show=true) {
+
+    if (show && getSelectedSidebarCardState().isTransferWindowOpen) {
+        AlertUtils.showAlert({
+            title: "Transfer Window Is Open",
+            text: "You cannot open the Card Manager while the transfer window is active. Please close the transfer window and try again.",
+            icon: "warning",
+            confirmButtonText: "OK",
+        });
+        
+       return;
+    }
     show ? sideBarCardsManagerElement.classList.add("show") : sideBarCardsManagerElement.classList.remove("show")
 }
 

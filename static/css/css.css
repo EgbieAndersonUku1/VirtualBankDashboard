@@ -1449,9 +1449,9 @@ input::placeholder {
     display: block;
 }
 
-
+.transfer-error-msg span,
 .transfer-error-msg p {
-    font-size: 0.85rem;
+    font-size: 0.82rem;
 }
 
 
@@ -1495,10 +1495,12 @@ input::placeholder {
     color: white;
 }
 
+
 #transfer-waiting-msg,
 #transfer-close-btn {
     display: none;
 }
+
 
 #transfer-waiting-msg.show,
 #transfer-close-btn.show {

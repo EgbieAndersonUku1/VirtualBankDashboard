@@ -650,6 +650,10 @@ export class Wallet extends DataStorage {
             const card = Card.getByCardNumber(cardNumber);
 
             if (card) {
+                if (card.isBlocked) {
+                    console.log(`No funds were added to the card with number #${card.cardNumber} because it was blocked`);
+                    return;
+                }
                 card.addAmount(transferAmount);
                 updatedCards.push(card);
                 this._updateCardInWallet(card);

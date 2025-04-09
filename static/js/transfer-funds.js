@@ -9,6 +9,7 @@ import { transferProgressBar } from "./progress.js";
 import { AlertUtils } from "./alerts.js";
 import { walletDashboard } from "./walletUI.js";
 import { notificationManager } from "./notificationManager.js";
+import { getSelectedSidebarCardState } from "./sidebarCard.js";
 
 
 const transferFormElement                 = document.getElementById("wallet-transfer-form");
@@ -31,6 +32,7 @@ const cardMessageElement                  = document.getElementById("transfer-er
 const transferProgressContainer           = document.getElementById("transfer-progress-container");
 const transferCloseIconElement            = document.getElementById("transfer-close-icon");
 const transferDivElement                  = document.getElementById("transfer");
+const transferErrorMessageContainer       = document.getElementById("transfer-error-msg");
 
 
 notificationManager.setKey(config.NOTIFICATION_KEY);
@@ -669,6 +671,7 @@ function cardEligibilityMessage(amount) {
             transferRecord.canTransfer = true;
         }
 
+
     }
 }
 
@@ -701,9 +704,10 @@ function cardIneligibilityMessage() {
     const labels = getCardLabelDetails();
 
     const formattedCurrency = formatCurrency(transferRecord.loadedBalance)
-    const cards = getTransferCardsCount();
-    const errorMsg = `You have a balance of ${formattedCurrency} but you are trying to fund ${cards} 
-                               card${labels.pluralCards} ${labels.eachLabel} with a balance of ${formatCurrency(getTransferAmountValue())}
+    const cards             = getTransferCardsCount();
+    const errorMsg          = `You have a balance of ${formattedCurrency} but you are trying to fund ${cards} 
+                               card${labels.pluralCards} ${labels.eachLabel} with a balance of
+                                ${formatCurrency(getTransferAmountValue())}
                               `
     updateTransferMessageStatus(errorMsg)
     toggleTransferMessage(true);
@@ -731,8 +735,13 @@ export function handleTransferCardClick(e) {
         return;
     }
 
+
     validateTransferInput();
     updateCardSelectionCount(card);
+   
+    
+
+    // console.log(card);
 }
 
 
@@ -933,11 +942,20 @@ function updateCardSelectionCount(card) {
     const currentCardCount = getTransferCardsCount();
     const isSelected       = card.classList.contains("highlight-credit-card");
 
+    const blockedCard      = getSelectedSidebarCardState()[card.dataset.cardNumber];
+
+    // console.log(blockedCard)
+    if (blockedCard && blockedCard.cardStatus === "blocked") {
+        showBlockedCardFundingError(blockedCard, isSelected);
+        return;
+    }
+    
     let newCount;
 
     if (isSelected) {
         newCount = currentCardCount + 1;
         updateRecord(card.dataset.cardNumber, isSelected);
+       
     } else {
         newCount = currentCardCount - 1;
         updateRecord(card.dataset.cardNumber, isSelected);
@@ -970,9 +988,36 @@ function updateCardSelectionCount(card) {
 
 }
 
+/**
+ * Checks if a selected sidebar card is blocked and, if so, displays an appropriate message.
+ *
+ * @param {Object} card - The card that will be checked to see if it is blocked.
+ * @param {Object} isSelected - Tells the function whether to display or hide the message. If the user
+ *                              selects a blocked card, a blocked message is shown. However, if the user
+ *                              unselects the blocked card, then the message is hidden.
+ * @returns {boolean} - Returns `true` if the card is blocked and a message was shown, otherwise `false`.
+ */
+function showBlockedCardFundingError(card, isSelected) {
+   
+    if (card.cardStatus === "blocked") {
 
+        if (!isSelected) {
+            toggleMessage(card.id)
+            return;
+        }
+        const isShown = toggleMessage(card.id, true);
 
+        if (!isShown) {
+            const msg = `Card number #${card.cardNumber} is blocked and can’t receive funds right now.`;
+            addMessage(msg, card.id, true);
+            return true;
+        }
 
+        return true; 
+    }
+
+    return false;
+}
 
 
 
@@ -1364,6 +1409,7 @@ function performTransfer(wallet, recipientAccount, amount) {
     }
 }
 
+
 /**
  * Logs the direction of the transfer.
  *
@@ -1389,6 +1435,15 @@ export function handleTransferCloseIcon(e) {
     if (e.target.id !== "transfer-close-icon") {
         return;
     }
+    getSelectedSidebarCardState().isTransferWindowOpen = false;
+    resetSelectFields();
+    toggleCardAreaDisplay(false);
+    toggleTransferMessage(false);
+    clearBlockedCardMessages();
+    updatePerCountCardValue(RESET_VALUE);
+    updateTransferCardCount(RESET_VALUE);
+    updateTransferAmountLabelValueUI(RESET_VALUE)
+   
     transferDivElement.classList.remove("show");
 
 }
@@ -1396,6 +1451,55 @@ export function handleTransferCloseIcon(e) {
 function resetSelectFields() {
     transferFromSelectElement.selectedIndex = 0;         
     transferToSelectElement.selectedIndex = 0;
+    console.log("I should have reset")
+}
+
+
+/**
+ * Removee the blocked messages
+ * @param {*} 
+ */
+function clearBlockedCardMessages() {
+    
+    transferErrorMessageContainer.querySelectorAll("span").forEach((spanElement) => {
+        if (spanElement) {
+            spanElement.remove();
+        }
+    })
+
+}
+
+function addMessage(message, id, isErrorMsg=false) {
+   
+    const spanTag = document.createElement("span");
+
+    if (isErrorMsg) {
+        spanTag.classList.add("red")
+    }
+
+    spanTag.classList.add("center");
+    spanTag.id = id;
+
+    spanTag.textContent = message;
+
+    transferErrorMessageContainer.appendChild(spanTag)
+}
+
+
+
+
+function toggleMessage(id, show=false) {
+    const pMessageElement = document.getElementById(id);
+    if (!pMessageElement) {
+        return null;
+    }
+
+    if (show) {
+        pMessageElement.style.display = "block";
+    } else {
+        pMessageElement.style.display = "none";   
+    }
+    return true;
 }
 
 
@@ -1421,6 +1525,7 @@ function validatePageElements() {
     checkIfHTMLElement(cardMessageElement, "The error message for the cards funds");
     checkIfHTMLElement(transferProgressContainer, "Transfer progress container");
     checkIfHTMLElement(transferDivElement, "The transfer div container element");
-    checkIfHTMLElement(transferCloseIconElement, "The icon element responsible for closing the transfer div")
+    checkIfHTMLElement(transferCloseIconElement, "The icon element responsible for closing the transfer div");
+    checkIfHTMLElement(transferErrorMessageContainer, "The container containing transfer form")
 
 }
