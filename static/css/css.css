@@ -509,6 +509,7 @@ button:hover {
 #transfer-close-icon.show,
 #transfer-progress-container.show,
 #fund-my-card.show,
+#transfer-amount-card.show,
 #sidebar-cards.show {
     border: 2px solid lavender;
     opacity: 1;
@@ -1460,6 +1461,7 @@ input::placeholder {
     display: none;
 }
 
+
 #transfer-error-card-msg-id.show,
 #transfer-messages-id.show{
     display: block;
@@ -1631,6 +1633,10 @@ input::placeholder {
     position: fixed;
     top: 0;
     background: white;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease-in-out, visibility 0s 0.3s;
+    z-index: 1001;
 }
 
 #transfer-amount-card {
@@ -1644,6 +1650,10 @@ input::placeholder {
 #transferring-card,
 #transferring-to {
     transform: scale(0.75);
+}
+
+#transference h1 {
+    transform: scale(0.7);
 }
 
 #transferring-card h1,
@@ -1686,4 +1696,11 @@ input::placeholder {
     width: 250px;
     opacity: 0.7;
     margin-top: var(--size-xlg);
+}
+
+#select-card-div.show {
+    display: grid;
+}
+#select-card-div {
+    display: none;
 }

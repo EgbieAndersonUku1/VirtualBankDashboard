@@ -46,13 +46,14 @@ import { handleTransferCloseButton } from "./progress.js";
 import { handleSidBarCardClick,
          handleCloseCardManagerButton,
          handleNotYetImplementedFunctionality,
-        handleAddFundCardButtonClick,
-        handleAddCloseButtonIconClick,
+         handleAddFundCardButtonClick,
+         handleAddCloseButtonIconClick,
+         handleTransferAmountButtonClick,
         } from "./sidebarCard.js";
 
 import { handleTransferBlock } from "./sidebarCardBlocking.js";
 import { handleAddFundToCardFormButtonClick } from "./sideBarFundCard.js";
-
+import { handleSelectAccountTransferElement, handleSelectCardElement } from "./sideBarTransfer-funds.js";
 
 // elements
 const dashboardElement       = document.getElementById("virtualbank-dashboard");
@@ -112,6 +113,8 @@ function handleEventDelegation(e) {
     handleAddCloseButtonIconClick(e);
     handleAddFundCardButtonClick(e);
     handleAddFundToCardFormButtonClick(e);
-    
+    handleSelectAccountTransferElement(e);
+    handleTransferAmountButtonClick(e);
+    handleSelectCardElement(e);
 }
 

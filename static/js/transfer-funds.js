@@ -1450,8 +1450,7 @@ export function handleTransferCloseIcon(e) {
 
 function resetSelectFields() {
     transferFromSelectElement.selectedIndex = 0;         
-    transferToSelectElement.selectedIndex = 0;
-    console.log("I should have reset")
+    transferToSelectElement.selectedIndex   = 0;
 }
 
 

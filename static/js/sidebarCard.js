@@ -7,11 +7,14 @@ import { prepareCardData } from "./walletUI.js";
 import { maskCreditCardNo } from "./utils.js";
 
 
-const sideBarCardsManagerElement  = document.getElementById("sidebar-cards");
-const sideBarCardContainerElement = document.getElementById("sidebar-card");
-const cardInfoDivElement          = document.getElementById("card-info");
-const fundMyCardElement           = document.getElementById("fund-my-card");
-const fundMyCardCloseElement      = document.getElementById("fund-card-close-icon");
+const sideBarCardsManagerElement         = document.getElementById("sidebar-cards");
+const sideBarCardContainerElement        = document.getElementById("sidebar-card");
+const cardInfoDivElement                 = document.getElementById("card-info");
+const fundMyCardElement                  = document.getElementById("fund-my-card");
+const fundMyCardCloseElement             = document.getElementById("fund-card-close-icon");
+const transferCardAmountContainerElement = document.getElementById("transfer-amount-card");
+const transferringCardAreaElement        = document.getElementById("transferring-card")
+
 
 
 export const selectedSidebarCard = {
@@ -298,10 +301,9 @@ function showInvalidCardAlertMsg() {
 // Not yet implemented
 export function handleNotYetImplementedFunctionality(e) {
 
-    const TRANSFER_BUTTON_ID = "transfer-card-amount";
     const DELETE_BUTTON_ID   = "delete";
 
-    if ( e.target.id === TRANSFER_BUTTON_ID || e.target.id === DELETE_BUTTON_ID) {
+    if (  e.target.id === DELETE_BUTTON_ID) {
         AlertUtils.showAlert({title: "Not yet implemented",
             text: "You seeing this because the functionality is not yet implemented",
             icon: "info",
@@ -309,6 +311,29 @@ export function handleNotYetImplementedFunctionality(e) {
         })
     }
 
+}
+
+export function handleTransferAmountButtonClick(e) {
+    const TRANSFER_BUTTON_ID = "transfer-card-amount";
+  
+   
+    if (e.target.id === TRANSFER_BUTTON_ID) {
+        // console.log("clicked");
+        transferCardAmountContainerElement.classList.add("show");
+        
+        const card = Card.getByCardNumber(getSelectedSidebarCardState().lastCardClickeCardNumber);
+        if (!card) {
+            logError(" handleTransferAmountButtonClick", "The source card wasn't found");
+            return;
+        }
+
+        // load the source card that is card do the transferring
+        const cardData    = prepareCardData(card)
+        const cardElement = cards.createCardDiv(cardData);
+        cards.placeCardDivIn(transferringCardAreaElement, cardElement, true);
+
+       
+    }
 }
 
 
@@ -343,7 +368,9 @@ function validatePageElements() {
     checkIfHTMLElement(sideBarCardContainerElement, "The sidebar container");
     checkIfHTMLElement(cardInfoDivElement, "The card info element container");
     checkIfHTMLElement(fundMyCardElement, "The funding my card form");
-    checkIfHTMLElement(fundMyCardCloseElement, "The add fund close icon")
+    checkIfHTMLElement(fundMyCardCloseElement, "The add fund close icon");
+    checkIfHTMLElement(transferCardAmountContainerElement, "The card container for the transferring card");
+    checkIfHTMLElement(transferringCardAreaElement, "The card area for the transferring card");
   
 
 }
