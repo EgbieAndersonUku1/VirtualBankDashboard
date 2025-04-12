@@ -13,6 +13,7 @@ export const config  = {
     NOTIFICATION_KEY: "notifications",
     isFundsUpdated: false,  
     loadFromCache: true,
+ 
 }
 
 

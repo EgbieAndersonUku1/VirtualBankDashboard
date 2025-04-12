@@ -41,6 +41,7 @@ export function handleSelectAccountTransferElement(e) {
     if (selectValue  === CARD_SELECTOR) {
         selectCardDivElement.classList.add("show");
 
+     
         const numbersToExclude =  getSelectedSidebarCardState().lastCardClickeCardNumber;
         const cardNumbers = getAvailableCardNumbers([numbersToExclude]);
         loadCardNumbersIntoSelect(cardNumbers);
@@ -98,7 +99,7 @@ function loadCardNumbersIntoSelect(cardNumbers) {
         return;
     }
 
-    
+
     attachSelectEventListenerIfNotAttached(selectCardDivElement);
 
     const fragment = document.createDocumentFragment();
@@ -199,6 +200,7 @@ function renderTransferIcon(imgSrc, accountName) {
     transferToElement.innerHTML = "";
     transferToElement.appendChild(divContainer);
 }
+
 
 
 

@@ -1692,10 +1692,10 @@ input::placeholder {
 
 
 #transfer-amount-card-img {
-    height: 250px;
-    width: 250px;
+    height: 180px;
+    width: 180px;
     opacity: 0.7;
-    margin-top: var(--size-xlg);
+    /* margin-top: var(--size-xlg); */
 }
 
 #select-card-div.show {

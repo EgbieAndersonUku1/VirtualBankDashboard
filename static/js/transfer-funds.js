@@ -123,6 +123,7 @@ function handleTransferToWalletOrBankSelectChange(e) {
 
         transferRecord.isCardMode = false;
         config.isCardMode         = false;
+        
         toggleCardAreaDisplay(false)
         updatePerCountCardValue(RESET_VALUE);
         updateTransferCardCount(RESET_VALUE)

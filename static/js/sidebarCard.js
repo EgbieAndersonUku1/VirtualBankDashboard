@@ -19,6 +19,7 @@ const transferringCardAreaElement        = document.getElementById("transferring
 
 export const selectedSidebarCard = {
     isTransferWindowOpen: false,
+    isCardAmountTransferWindowOpen: false,
   };
   
 
@@ -40,6 +41,18 @@ export function handleSidBarCardClick(e) {
         return;
     }
   
+    // Check if the card transfer window is already open
+    if (getSelectedSidebarCardState().isCardAmountTransferWindowOpen) {
+        AlertUtils.showAlert({
+            title: "Card Window Already Open",
+            text: "You already have a card transfer window open. Please close it before opening a new one.",
+            icon: "info",
+            confirmButtonText: "Ok!"
+        });
+        return;
+    }
+
+    getSelectedSidebarCardState().isCardAmountTransferWindowOpen = true;
     
     const cardNumber = cardElement.dataset.cardNumber;
     const card       = Card.getByCardNumber(cardNumber);
@@ -263,8 +276,11 @@ function toggleCardManagerDiv(show=true) {
 
 
 export function handleCloseCardManagerButton(e) {
-    const CLOSE_BTN_ID = "close-card";
-    if (e.target.id === CLOSE_BTN_ID) {
+    
+    const CLOSE_CARD_MANAGE_BTN_ID = "close-card";
+
+    if (e.target.id === CLOSE_CARD_MANAGE_BTN_ID) {
+        getSelectedSidebarCardState().isCardAmountTransferWindowOpen = false;
         toggleCardManagerDiv(false);
         return;
     }
@@ -316,11 +332,12 @@ export function handleNotYetImplementedFunctionality(e) {
 export function handleTransferAmountButtonClick(e) {
     const TRANSFER_BUTTON_ID = "transfer-card-amount";
   
-   
     if (e.target.id === TRANSFER_BUTTON_ID) {
         // console.log("clicked");
         transferCardAmountContainerElement.classList.add("show");
         
+        toggleCardManagerDiv(false);
+
         const card = Card.getByCardNumber(getSelectedSidebarCardState().lastCardClickeCardNumber);
         if (!card) {
             logError(" handleTransferAmountButtonClick", "The source card wasn't found");
@@ -335,6 +352,8 @@ export function handleTransferAmountButtonClick(e) {
        
     }
 }
+
+
 
 
 export function handleAddFundCardButtonClick(e) {
@@ -356,6 +375,9 @@ export function handleAddCloseButtonIconClick(e) {
     }
     
 }
+
+
+
 
 
 function toggleAddMyCardForm(show) {
