@@ -244,6 +244,8 @@ function handleIsCardBlockedImg(cardElement, cardData) {
         logError("handleIsCardBlockedImg", `isCardBlock is not attribrute of card data`);
         return false;
     }
+
+    
     cardData.isCardBlocked ? cardElement.classList.add("card-is-blocked") : cardElement.classList.add("card-not-blocked");
 }
 

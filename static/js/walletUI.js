@@ -225,13 +225,21 @@ export function handleCardRemovalClick(e) {
         const isSelected          = parent.classList.toggle("highlight-credit-card");
         const PARENT_CONTAINER_ID = "selectable-cards";
      
-        // const sideCardsElement            = document.querySelectorAll("#sides cards .cards")
-
-        // if ()
+       
         if (parent.parentNode.id !== PARENT_CONTAINER_ID) {
             return;
-
         }
+       
+        if (card.isBlocked) {
+            AlertUtils.showAlert({
+                title: "Card is Blocked",
+                text: "This card is currently blocked and cannot be removed. Please check the card status or contact support.",
+                icon: "warning",
+                confirmButtonText: "OK"
+            });
+            return;
+        }
+
         if (isSelected && cardNumberElement) {
             removeCardTable.appendRow(card);
             wallet.markCardForRemoval(card.cardNumber);

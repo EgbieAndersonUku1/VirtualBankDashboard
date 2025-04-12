@@ -192,11 +192,36 @@ function createSingleCreateCard(cardDetails) {
     cardDiv.classList.add("card", "bank-card", cardDetails.cardBrand.toLowerCase());
     cardDiv.ariaLabel          = `${cardDetails.cardName} card`;
     cardDiv.dataset.cardNumber = cardDetails.cardNumber;
+
+    if (cardDetails.isCardBlocked) {
+        handleBlockedCard(cardDiv, cardDetails);
+    }
+   
     return cardDiv;
 }
 
 
+function handleBlockedCard(cardDiv, cardDetails) {
+    if (!cardDiv) {
+        logError("handleBlockedCard", "Expected a card div element but got null");
+        return;
+    }
 
+    if (!cardDetails || typeof cardDetails !== "object") {
+        logError("handleBlockedCard", `Expected the card details to be an object but got ${cardDetails}`);
+        return;
+    }
+
+    const cardOverlay = document.createElement("div");
+    cardOverlay.className = "card-overlay";
+    cardOverlay.textContent = "Blocked"
+
+    cardDiv.appendChild(cardOverlay);
+
+    cardDiv.classList.remove("card-is-blocked", "card-not-blocked")
+    cardDetails.isCardBlocked ? cardDiv.classList.add("card-is-blocked") : cardDiv.classList.add("card-not-blocked");
+    
+}
 
 
 function createCardHeadDiv(cardDetails) {
