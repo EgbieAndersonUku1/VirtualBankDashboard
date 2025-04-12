@@ -193,36 +193,75 @@ function createSingleCreateCard(cardDetails) {
     cardDiv.ariaLabel          = `${cardDetails.cardName} card`;
     cardDiv.dataset.cardNumber = cardDetails.cardNumber;
 
+    const cardOverlay = document.createElement("div");
+    cardOverlay.id    = `card_${cardDetails.id}`;
+
+    cardDiv.appendChild(cardOverlay);
+
     if (cardDetails.isCardBlocked) {
-        handleBlockedCard(cardDiv, cardDetails);
+        applyCardBlockStatus(cardDiv, cardDetails);
     }
    
     return cardDiv;
 }
 
 
-function handleBlockedCard(cardDiv, cardDetails) {
+export function applyCardBlockStatus(cardDiv, cardDetails) {
     if (!cardDiv) {
-        logError("handleBlockedCard", "Expected a card div element but got null");
+        logError("applyCardBlockStatus", "Expected a card div element but got null");
         return;
     }
 
-    if (!cardDetails || typeof cardDetails !== "object") {
-        logError("handleBlockedCard", `Expected the card details to be an object but got ${cardDetails}`);
+    if (!checkIfHTMLElement(cardDiv, "Card div element")) {
         return;
     }
 
-    const cardOverlay = document.createElement("div");
-    cardOverlay.className = "card-overlay";
-    cardOverlay.textContent = "Blocked"
+    // console.log(cardDiv)
 
-    cardDiv.appendChild(cardOverlay);
+    const ID        = `card_${cardDetails.id}`;
+    let cardOverlay = cardDiv.querySelector(`#${ID}`);
+    
 
-    cardDiv.classList.remove("card-is-blocked", "card-not-blocked")
-    cardDetails.isCardBlocked ? cardDiv.classList.add("card-is-blocked") : cardDiv.classList.add("card-not-blocked");
+    if (!cardOverlay) {
+        warnError("applyCardBlockStatus", "Card overlay div not found creating the overlay div")
+        cardOverlay           = document.createElement("div");
+        cardOverlay.id        = ID;
+
+        cardDiv.appendChild(cardOverlay);
+    }
+
+    cardOverlay.classList.add("card-overlay");
+    cardOverlay.textContent = "Blocked";
+
+    cardDiv.classList.remove("card-is-blocked", "card-not-blocked");
+    cardDiv.classList.add("card-is-blocked");
     
 }
 
+
+
+
+export function removeCardBlockStatus(cardDiv, cardDetails) {
+    if (!checkIfHTMLElement(cardDiv, "Card div")) {
+        return;
+    }
+
+    const ID = `card_${cardDetails.id}`
+    // console.log(cardDiv);
+
+    const cardOverlay = cardDiv.querySelector(`#${ID}`);
+
+    if (cardOverlay) {
+
+        const CLASS_NAME  = "card-overlay";
+        cardOverlay.classList.remove(CLASS_NAME);
+        cardOverlay.textContent = "";
+        cardDiv.classList.remove("card-is-blocked");
+
+    }
+
+   
+}
 
 function createCardHeadDiv(cardDetails) {
 
@@ -512,7 +551,7 @@ export const removeCardTable = {
     
             if (row) row.remove();       
 
-            removeCardTable._toggleTable(!removeCardTable._isTableEmpty());
+            removeCardTable.toggleTable(!removeCardTable._isTableEmpty());
 
         }
     },

@@ -563,3 +563,42 @@ export function maskCreditCardNo(creditCardNo) {
 export function formatCurrency(amount) {
     return `£${parseFloat(amount).toFixed(2)}`;
 }
+
+
+/**
+ * Strips currency symbols and converts to number
+ * 
+ * @param {string} amount - The amount with the currency symbol.
+ * @param {Array} currencySymbols - List of supported currency symbols.
+ * @returns {number|null} - Returns numeric value or null if invalid.
+ */
+export function stripAmountFromCurrency(amount, currencySymbols = ["£", "$", "€"]) {
+    if (typeof amount !== "string") {
+        logError("stripAmountFromCurrency", `Expected a string for amount but got ${typeof amount}`);
+        return null;
+    }
+
+    if (!Array.isArray(currencySymbols)) {
+        logError("stripAmountFromCurrency", `Expected an array for currencySymbols but got ${typeof currencySymbols}`);
+        return null;
+    }
+
+    // Remove all known currency symbols and commas, then trim
+    let cleaned = amount;
+    for (const symbol of currencySymbols) {
+        cleaned = cleaned.replaceAll(symbol, "");
+    }
+
+    cleaned = cleaned.replace(/,/g, "").trim();
+
+    // Optional: allow negative and decimal numbers
+    const match = cleaned.match(/-?\d+(\.\d+)?/);
+    const numericValue = match ? parseFloat(match[0]) : null;
+
+    if (numericValue !== null && !isNaN(numericValue)) {
+        return numericValue;
+    }
+
+    logError("stripAmountFromCurrency", `Could not extract valid number from "${amount}"`);
+    return null;
+}

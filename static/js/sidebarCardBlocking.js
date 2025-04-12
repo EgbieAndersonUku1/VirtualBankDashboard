@@ -3,6 +3,7 @@ import { getSelectedSidebarCardState, renderCardToUI } from "./sidebarCard.js";
 import { Card } from "./card.js";
 import { logError } from "./logger.js";
 import { notificationManager } from "./notificationManager.js";
+import { updateCardSideBar } from "./sidebarCardUpdate.js";
 import { config } from "./config.js";
 import { AlertUtils } from "./alerts.js";
 
@@ -46,7 +47,7 @@ export async function handleTransferBlock(e) {
                         You won’t be able to send or receive money until it’s unblocked.`;
             card.freezeCard();
             renderCardToUI(card);
-           
+            updateCardSideBar([card]);
             updateSideBarCardState(card)
             notificationManager.add(msg);
         }
@@ -64,6 +65,7 @@ export async function handleTransferBlock(e) {
         });
         updateSideBarCardState(card);
         renderCardToUI(card);
+        updateCardSideBar([card]);
         notificationManager.add(msg);
     }
   
