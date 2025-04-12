@@ -8,6 +8,7 @@ import { formatCurrency, stripAmountFromCurrency } from "./utils.js";
 import { removeCardBlockStatus, applyCardBlockStatus } from "./cardsComponent.js";
 
 
+
 notificationManager.setKey(config.NOTIFICATION_KEY);
 
 
@@ -19,7 +20,7 @@ function updateCardInPlace(card) {
     }
 
     // Update balance
-    const balanceElement = cardElement.querySelector(".card-amount");
+    const balanceElement = cardElement.querySelector(".card-amount .card-amount");
  
     if (balanceElement) {
         balanceElement.textContent = formatCurrency(stripAmountFromCurrency(card.cardAmount));
