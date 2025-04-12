@@ -7,6 +7,7 @@ import { showNewCardForm} from "./add-new-card.js";
 import { cards } from "./cardsComponent.js";
 import { handleFundDiv } from "./fund-account.js";
 import { getSelectedSidebarCardState } from "./sidebarCard.js";
+import { config } from "./config.js";
 
 
 const ADD_FUNDS_ID     = "add-funds";
@@ -72,7 +73,8 @@ export function handlePinShowage(e, wallet) {
      removeCardsDivElement.classList.add("show");
      removableSelectableCardsDiv.classList.add("show");
 
-   
+     wallet = Wallet.loadWallet(config.SORT_CODE, config.ACCOUNT_NUMBER);
+
      const cardsToRemoveElements = cards.createCardsToShow(wallet);
      cards.placeCardDivIn(removableSelectableCardsDiv, cardsToRemoveElements, true);
      closeDivs([addNewCardDivElement, addFundsDivElement, transferDivElement]);
