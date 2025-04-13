@@ -213,14 +213,15 @@ function updateAllWalletDashoardText(wallet) {
  */
 export function handleCardRemovalClick(e) {
     const EXPECTED_CLASS     = ".bank-card";
-    const CARD_SIDEBAR_CLASS = "sides"
-
+   
     const parent          = e.target.closest(EXPECTED_CLASS);
     const cardNumberClass = ".card-account-number";
 
     if (parent) {
 
         const cardNumberElement   = parent.querySelector(cardNumberClass);
+
+        wallet                    = Wallet.loadWallet(config.SORT_CODE, config.ACCOUNT_NUMBER);
         const card                = wallet.getByCardNumber(cardNumberElement.textContent.trim());
         const isSelected          = parent.classList.toggle("highlight-credit-card");
         const PARENT_CONTAINER_ID = "selectable-cards";

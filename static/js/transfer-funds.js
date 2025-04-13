@@ -10,6 +10,7 @@ import { AlertUtils } from "./alerts.js";
 import { walletDashboard } from "./walletUI.js";
 import { notificationManager } from "./notificationManager.js";
 import { getSelectedSidebarCardState } from "./sidebarCard.js";
+import { updateCardSideBar } from "./sidebarCardUpdate.js";
 
 
 const transferFormElement                 = document.getElementById("wallet-transfer-form");
@@ -100,9 +101,10 @@ function handleCardSelectChange(e) {
 
     toggleCardAreaDisplay(true);
 
-   
     transferRecord.wallet         = getWalletFromCacheOrLoadFromLocalStorage(); // get the cards from that localStorage to ensure lates cards
     transferRecord.isCardMode     = true;
+
+    // shows the avaialble card that can be transferred to 
     const cardsToTransferElement  = cards.createCardsToShow(transferRecord.wallet);
     cards.placeCardDivIn(cardsAreaElement, cardsToTransferElement, true);
 }
@@ -149,7 +151,6 @@ export async function handleTransferButtonClick(e) {
 
     if (e.target.id !== BUTTON_ID) {
         return;
-      
     }
 
     if (transferFormElement.checkValidity()) {
@@ -210,6 +211,14 @@ function handleCardModeAlert() {
 
 
 
+/**
+ * This function is responsible for handling the succesful
+ * transfer of funds to cards. It displays an alert,
+ * sends the neccessary notification, and performs any
+ * clean up neccessary
+ 
+ * @returns 
+ */
 async function handleCardModeSuccessTransfer() {
 
     const resp = await showConfirmationTransferAlert();
@@ -221,7 +230,7 @@ async function handleCardModeSuccessTransfer() {
         const totalCards    = getTransferCardsCount();
         const totalAmount   = amountPerCard * totalCards;
         const sourceAccount = getSourceAccount();
-        const isSaved       = transferRecord.wallet.transferAmountToMultipleCards(selectedCards, totalAmount, amountPerCard, sourceAccount);
+        const {isSaved, cardsSaved } = transferRecord.wallet.transferAmountToMultipleCards(selectedCards, totalAmount, amountPerCard, sourceAccount);
 
         if (isSaved) {
             notificationManager.add(`You have successfully transferred ${formatCurrency(totalAmount)} 
@@ -241,6 +250,7 @@ async function handleCardModeSuccessTransfer() {
 
             resetCardMode();
             config.isFundsUpdated = true;
+            updateCardSideBar(cardsSaved);
             return updateUIAfterSuccessfulTransfer();
         }
 
@@ -1468,6 +1478,7 @@ function clearBlockedCardMessages() {
     })
 
 }
+
 
 function addMessage(message, id, isErrorMsg=false) {
    

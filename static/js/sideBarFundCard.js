@@ -7,6 +7,7 @@ import { AlertUtils } from "./alerts.js";
 import { renderCardToUI } from "./sidebarCard.js";
 import { config } from "./config.js";
 import { notificationManager } from "./notificationManager.js";
+import { updateCardSideBar } from "./sidebarCardUpdate.js";
 
 
 notificationManager.setKey(config.NOTIFICATION_KEY);
@@ -78,6 +79,7 @@ function handleAddFundingToCard(parsedData) {
        card.addAmount(parsedData.amount);
        toggleErrorMsg(false);
        renderCardToUI(card);
+       updateCardSideBar([card])
        notificationManager.add(`Your card has been funded with ${formatCurrency(parsedData.amount)}.`);
        return true;
     } catch (error) {

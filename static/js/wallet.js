@@ -607,7 +607,9 @@ export class Wallet extends DataStorage {
      *      - If `cardNumberArray` is not a valid array.
      *      - If `totalAmount` or `amountPerCard` are not valid numbers.
      * 
-     * @returns {boolean} `true` if the transfer was successful, `false` otherwise.
+     * @returns {object} `object` Returns an object containing two flags
+     *                      1. isSaved: A flag that determines if the cards saved
+     *                      2. CardsSave: An array containing the cards saved. This can be used to updated the frontend.
     */
     transferAmountToMultipleCards(cardNumberArray, totalAmount, amountPerCard, sourceAccount) {
 
@@ -628,7 +630,12 @@ export class Wallet extends DataStorage {
             return false;
         }
 
-        return this._chooseAccountAndUpdateBalance(sourceAccount, numOfCardsSaved, cardsToSave.length, totalAmount, amountPerCard);
+        const resp = this._chooseAccountAndUpdateBalance(sourceAccount, numOfCardsSaved, cardsToSave.length, totalAmount, amountPerCard);
+
+        return {
+            isSaved: resp,
+            cardsSaved: cardsToSave
+        };
 
     }
 
