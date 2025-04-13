@@ -198,6 +198,25 @@ export class Wallet extends DataStorage {
     }
 
     /**
+     * Returns the total card amount for all the cards contained
+     * in the wallet. For example if there are three cards
+     *   - card 1: 100
+     *   - card 2: 150
+     *   - card 3: 50
+     * 
+     * Then toal return will be 300
+     */
+    getCardsTotal() {
+        return parseFloat(
+            Object.values(this.getAllCards())
+                  .reduce((sum, card) => sum + parseFloat(card.balance), 0)
+                  .toFixed(2)
+          );
+          
+    }
+
+
+    /**
      * Returns an array containing all the card objects found in the wallet.
      * If no cards are found, an empty array is returned.
      *
