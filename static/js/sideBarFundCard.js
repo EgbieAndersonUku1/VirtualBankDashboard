@@ -8,12 +8,15 @@ import { renderCardToUI } from "./sidebarCard.js";
 import { config } from "./config.js";
 import { notificationManager } from "./notificationManager.js";
 import { updateCardSideBar } from "./sidebarCardUpdate.js";
+import { Wallet } from "./wallet.js";
+import { walletDashboard } from "./walletUI.js";
 
 
 notificationManager.setKey(config.NOTIFICATION_KEY);
 
 const fundMyCardFormElement  = document.getElementById("add-fund-form");
 const fundMyCardErrorElement = document.getElementById("fund-my-card-error");
+
 
 
 validatePageElements();
@@ -40,7 +43,9 @@ export function handleAddFundToCardFormButtonClick(e) {
                 })
             }
 
-           
+            const wallet = Wallet.loadWallet(config.SORT_CODE, config.ACCOUNT_NUMBER);
+            walletDashboard.updateTotalCardAmountText(wallet);
+
         } else {
             fundMyCardFormElement.reportValidity();
         }

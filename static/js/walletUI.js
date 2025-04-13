@@ -5,7 +5,10 @@ import { handlePinShowage, handlePinFormSubmission, handlePinFormClosure } from 
 import { handleCardFormSubmission, showCardInUIWallet } from "./add-new-card.js";
 import { logError } from "./logger.js";
 import { config } from "./config.js";
-import { getCombinedCode as combineFirstAndLastName, checkIfHTMLElement, toTitle } from "./utils.js";
+import { getCombinedCode as combineFirstAndLastName, 
+        checkIfHTMLElement, 
+        toTitle,
+         formatCurrency} from "./utils.js";
 import { Card } from "./card.js";
 import { removeCardTable, cards } from "./cardsComponent.js";
 import { AlertUtils } from "./alerts.js";
@@ -147,8 +150,8 @@ export function prepareCardData(card)  {
  * @param {Object} card - The card object containing a balance property.
  * @returns {string} The formatted balance as a string (e.g., "£10.00", "£0.00").
  */
-function formatCardBalance(card, currency="£") {
-    return `${currency}${parseFloat(card.balance).toFixed(2)}`;
+function formatCardBalance(card) {
+    return formatCurrency(card.balance);
 }
 
 
@@ -165,17 +168,17 @@ export const walletDashboard = {
 
     updateLastReceivedText(wallet) {},
     
-    updateTotalCardAmountText(wallet) {
-       
 
+    updateTotalCardAmountText(wallet) {
+       walletTotalsCardAmountElement.textContent = formatCurrency(wallet.getCardsTotal());
     },
 
     updateBankAccountBalanceText(wallet) {
-        walletBankBalanceElement.textContent = `£${wallet.bankAmountBalance}`;
+        walletBankBalanceElement.textContent = formatCurrency(wallet.bankAmountBalance);
     },
 
     updateWalletAccountBalanceText(wallet) {
-        walletAmountElement.textContent = `£${wallet.walletAmount}`;
+        walletAmountElement.textContent = formatCurrency(wallet.walletAmount);
     },
 
     updateWalletDashboardNameText(profile) {}
@@ -195,6 +198,7 @@ function updateAllWalletDashoardText(wallet) {
 
     walletDashboard.updateWalletAccountBalanceText(wallet);
     walletDashboard.updateBankAccountBalanceText(wallet);
+    walletDashboard.updateTotalCardAmountText(wallet);
    
 }
 

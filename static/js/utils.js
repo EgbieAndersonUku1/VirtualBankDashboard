@@ -551,16 +551,36 @@ export function maskCreditCardNo(creditCardNo) {
 };
 
 
-
-
 /**
- * Formats a given amount into a currency string (GBP).
- * Ensures two decimal places and includes the pound (£) symbol.
+ * Formats a given amount into a currency string with the specified currency symbol and locale.
  * 
- * @param {number|string} amount - The amount to format.
- * @returns {string} - The formatted currency string.
+ * @param {number|string} amount - The amount to format. This can be a number or a string representation of a number.
+ * @param {string} [locale='en-GB'] - The locale string (e.g., 'en-GB' for UK, 'en-US' for the US). Defaults to 'en-GB'.
+ * @param {string} [currency='GBP'] - The ISO 4217 currency code (default is 'GBP' for British Pounds).
+ * 
+ * @returns {string} - A string formatted as a currency value with two decimal places and a currency symbol (e.g., '£12,345.60' or '$12,345.60').
+ * 
+ * @throws {Error} - Throws an error if the amount is not a valid number or string that can be parsed into a number.
+ * 
+ * @example
+ * formatCurrency("12345.6"); // returns '£12,345.60' (default locale 'en-GB')
+ * formatCurrency(50); // returns '£50.00' (default locale 'en-GB')
+ * formatCurrency(5000, 'en-US', 'USD'); // returns '$5,000.00'
+ * formatCurrency(5000, 'de-DE', 'EUR'); // returns '5.000,00 €' (German locale)
+ * 
+ * @see https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number/toLocaleString
  */
-export function formatCurrency(amount) {
-    return `£${parseFloat(amount).toFixed(2)}`;
-}
+export function formatCurrency(amount, locale='en-GB', currency='GBP') {
+    const parsedAmount = typeof amount === "string" ? parseFloat(amount) : amount;
 
+    if (isNaN(parsedAmount)) {
+      throw new Error(`Invalid amount: ${amount}`);
+    }
+
+    return parsedAmount.toLocaleString(locale, {
+      style: 'currency',
+      currency,
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2,
+    });
+}
