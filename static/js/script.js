@@ -67,7 +67,7 @@ dashboardElement.addEventListener("blur",  handleEventDelegation);
 dashboardElement.addEventListener("input", handleEventDelegation);
 
 
-
+handlePageRefresh();
 
 
 function handleEventDelegation(e) {

@@ -8,6 +8,7 @@ import { cards } from "./cardsComponent.js";
 import { handleFundDiv } from "./fund-account.js";
 import { getSelectedSidebarCardState } from "./sidebarCard.js";
 import { config } from "./config.js";
+import { AlertUtils } from "./alerts.js";
 
 
 const ADD_FUNDS_ID     = "add-funds";
@@ -70,24 +71,34 @@ export function handlePinShowage(e, wallet) {
 
    if (id === REMOVE_CARD) {
     
+     if (getSelectedSidebarCardState().isCardManagerWindow) {
+        AlertUtils.warnWindowConflict()
+        return;
+     }
+
      removeCardsDivElement.classList.add("show");
      removableSelectableCardsDiv.classList.add("show");
 
+     getSelectedSidebarCardState().isRemovalWindowOpen = true;
      wallet = Wallet.loadWallet(config.SORT_CODE, config.ACCOUNT_NUMBER);
 
      const cardsToRemoveElements = cards.createCardsToShow(wallet);
      cards.placeCardDivIn(removableSelectableCardsDiv, cardsToRemoveElements, true);
      closeDivs([addNewCardDivElement, addFundsDivElement, transferDivElement]);
-
+   
    }
 
    if (id === TRANSFER_FUNDS ) {
+
+        if (getSelectedSidebarCardState().isCardManagerWindow) {
+            AlertUtils.warnWindowConflict()
+            return;
+        }
         getSelectedSidebarCardState().isTransferWindowOpen = true;
         dimBackground(dimBackgroundElement, true);
         transferDivElement.classList.add("show");
         closeDivs([addNewCardDivElement, addFundsDivElement, removeCardsDivElement ]);
         
-    
    }
  
 }
@@ -202,7 +213,9 @@ export function handleRemoveCloseIcon(e) {
     const WINDOW_CLOSE_ICON = "remove-close-icon";
 
     if (e.target.id === WINDOW_CLOSE_ICON) {
-        removeCardsDivElement.classList.remove("show")
+        removeCardsDivElement.classList.remove("show");
+        getSelectedSidebarCardState().isRemovalWindowOpen = false;
+        console.log(e.target.id)
     }
 }
 

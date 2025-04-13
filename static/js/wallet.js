@@ -204,7 +204,7 @@ export class Wallet extends DataStorage {
      *   - card 2: 150
      *   - card 3: 50
      * 
-     * Then toal return will be 300
+     * Then total return will be 300
      */
     getCardsTotal() {
         return parseFloat(

@@ -7,6 +7,7 @@ import { prepareCardData } from "./walletUI.js";
 import { maskCreditCardNo } from "./utils.js";
 
 
+
 const sideBarCardsManagerElement         = document.getElementById("sidebar-cards");
 const sideBarCardContainerElement        = document.getElementById("sidebar-card");
 const cardInfoDivElement                 = document.getElementById("card-info");
@@ -19,7 +20,8 @@ const transferringCardAreaElement        = document.getElementById("transferring
 
 export const selectedSidebarCard = {
     isTransferWindowOpen: false,
-    isCardAmountTransferWindowOpen: false,
+    isCardManagerWindow: false,
+    isRemovalWindowOpen: false,
   };
   
 
@@ -41,18 +43,6 @@ export function handleSidBarCardClick(e) {
         return;
     }
   
-    // Check if the card transfer window is already open
-    if (getSelectedSidebarCardState().isCardAmountTransferWindowOpen) {
-        AlertUtils.showAlert({
-            title: "Card Window Already Open",
-            text: "You already have a card transfer window open. Please close it before opening a new one.",
-            icon: "info",
-            confirmButtonText: "Ok!"
-        });
-        return;
-    }
-
-    getSelectedSidebarCardState().isCardAmountTransferWindowOpen = true;
     
     const cardNumber = cardElement.dataset.cardNumber;
     const card       = Card.getByCardNumber(cardNumber);
@@ -62,6 +52,8 @@ export function handleSidBarCardClick(e) {
         showInvalidCardAlertMsg();
         return;
     }
+
+    selectedSidebarCard.isCardManagerWindow = true;
 
     toggleOfAllCardsExceptForClicked(cardElement);
     renderCardToUI(card);
@@ -263,13 +255,11 @@ function handleIsCardBlockedSpanText(cardSpanElement, card) {
 
 function toggleCardManagerDiv(show=true) {
 
-    if (show && getSelectedSidebarCardState().isTransferWindowOpen) {
-        AlertUtils.showAlert({
-            title: "Transfer Window Is Open",
-            text: "You cannot open the Card Manager while the transfer window is active. Please close the transfer window and try again.",
-            icon: "warning",
-            confirmButtonText: "OK",
-        });
+    const isWindowOpen = getSelectedSidebarCardState().isTransferWindowOpen || getSelectedSidebarCardState().isRemovalWindowOpen;
+    
+    if (show && isWindowOpen) {
+       
+        AlertUtils.warnWindowConflict({title: "Transfer Window Is Open"})
         
        return;
     }
@@ -282,7 +272,7 @@ export function handleCloseCardManagerButton(e) {
     const CLOSE_CARD_MANAGE_BTN_ID = "close-card";
 
     if (e.target.id === CLOSE_CARD_MANAGE_BTN_ID) {
-        getSelectedSidebarCardState().isCardAmountTransferWindowOpen = false;
+        getSelectedSidebarCardState().isCardManagerWindow = false;
         toggleCardManagerDiv(false);
         return;
     }

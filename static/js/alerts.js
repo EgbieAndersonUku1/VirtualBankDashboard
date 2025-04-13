@@ -1,4 +1,33 @@
 export const AlertUtils = {
+
+
+  /**
+   * Shows a warning alert when a conflicting window (like card manager) is already open.
+   *
+   * @param {Object} options - Optional overrides for the default alert content.
+   * @param {string} [options.title] - Custom title for the alert.
+   * @param {string} [options.text] - Custom message text.
+   * @param {string} [options.icon='warning'] - Alert icon type (e.g., 'warning', 'error', 'info').
+   * @param {string} [options.confirmButtonText='Ok'] - Text for the confirmation button.
+   *
+   * @example
+   * AlertUtils.warnWindowConflict();
+   *
+   * @example
+   * AlertUtils.warnWindowConflict({
+   *   title: "Oops!",
+   *   text: "Another modal is already active.",
+   * });
+   */
+    warnWindowConflict({title = "Card manager window is open",
+                        text = "The card manager window is open. Close it before opening this one",
+                        icon = "warning",
+                        confirmButtonText = "Ok"} = {}) {
+
+                        AlertUtils.showAlert({title, text, icon, confirmButtonText
+            });
+        },
+
     /**
      * Show a SweetAlert2 alert.
      *
