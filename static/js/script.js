@@ -52,7 +52,7 @@ import { handleSidBarCardClick,
 
 import { handleTransferBlock } from "./sidebarCardBlocking.js";
 import { handleAddFundToCardFormButtonClick } from "./sideBarFundCard.js";
-
+import { handlePageRefresh } from "./showOnRefresh.js";
 
 // elements
 const dashboardElement       = document.getElementById("virtualbank-dashboard");
@@ -65,7 +65,7 @@ dashboardElement.addEventListener("blur",  handleEventDelegation);
 dashboardElement.addEventListener("input", handleEventDelegation);
 
 
-
+handlePageRefresh()
 
 
 function handleEventDelegation(e) {
@@ -112,6 +112,7 @@ function handleEventDelegation(e) {
     handleAddCloseButtonIconClick(e);
     handleAddFundCardButtonClick(e);
     handleAddFundToCardFormButtonClick(e);
+    
     
 }
 
