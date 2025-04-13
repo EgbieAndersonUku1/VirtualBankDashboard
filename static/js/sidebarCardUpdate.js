@@ -1,10 +1,9 @@
 import { cards } from "./cardsComponent.js";
 import { logError } from "./logger.js";
 import { prepareCardData } from "./walletUI.js";
-import { showCardInUIWallet } from "./add-new-card.js";
 import { notificationManager } from "./notificationManager.js";
 import { config } from "./config.js";
-import { formatCurrency, stripAmountFromCurrency } from "./utils.js";
+import { formatCurrency } from "./utils.js";
 import { removeCardBlockStatus, applyCardBlockStatus } from "./cardsComponent.js";
 
 
@@ -23,7 +22,7 @@ function updateCardInPlace(card) {
     const balanceElement = cardElement.querySelector(".card-amount .card-amount");
  
     if (balanceElement) {
-        balanceElement.textContent = formatCurrency(stripAmountFromCurrency(card.cardAmount));
+        balanceElement.textContent = card.cardAmount;
     }
 
     // update block status
