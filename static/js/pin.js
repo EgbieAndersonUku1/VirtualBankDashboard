@@ -9,6 +9,7 @@ import { handleFundDiv } from "./fund-account.js";
 import { getSelectedSidebarCardState } from "./sidebarCard.js";
 import { config } from "./config.js";
 import { AlertUtils } from "./alerts.js";
+import { openWindowsState } from "./config.js";
 
 
 const ADD_FUNDS_ID     = "add-funds";
@@ -55,15 +56,31 @@ export function handlePinShowage(e, wallet) {
    }
 
    if (id === ADD_NEW_CARD) {
-     dimBackground(dimBackgroundElement, true);
-     showNewCardForm(e);
+        if (openWindowsState.isCardManagerWindowOpen) {
+            AlertUtils.warnWindowConflict()
+            return;
+        }
 
-     closeDivs([removeCardsDivElement, addFundsDivElement, transferDivElement])
-     return;
+        dimBackground(dimBackgroundElement, true);
+        showNewCardForm(e);
+        openWindowsState.isAddNewCardWindowOpen = true;
+        closeDivs([removeCardsDivElement, addFundsDivElement, transferDivElement])
+        return;
      
    }
 
    if (id === ADD_FUNDS_ID) {
+        if (openWindowsState.isCardManagerWindowOpen) {
+            AlertUtils.warnWindowConflict()
+            return;
+        }
+
+        // set the window to close
+        openWindowsState.isAddFundsWindowOpen     = true;
+        openWindowsState.isAddFundsWindowOpen     = false;
+        openWindowsState.isRemoveCardWindowOpen   = false;
+        openWindowsState.isTransferCardWindowOpen = false;
+
         handleFundDiv(e);
         closeDivs([addNewCardDivElement, removeCardsDivElement, transferDivElement])
         return
@@ -71,7 +88,7 @@ export function handlePinShowage(e, wallet) {
 
    if (id === REMOVE_CARD) {
     
-     if (getSelectedSidebarCardState().isCardManagerWindow) {
+     if (openWindowsState.isCardManagerWindowOpen) {
         AlertUtils.warnWindowConflict()
         return;
      }
@@ -79,7 +96,11 @@ export function handlePinShowage(e, wallet) {
      removeCardsDivElement.classList.add("show");
      removableSelectableCardsDiv.classList.add("show");
 
-     getSelectedSidebarCardState().isRemovalWindowOpen = true;
+     openWindowsState.isRemoveCardWindowOpen   = true;
+     openWindowsState.isAddNewCardWindowOpen   = false;
+     openWindowsState.isAddFundsWindowOpen     = false;
+     openWindowsState.isTransferCardWindowOpen = false;
+
      wallet = Wallet.loadWallet(config.SORT_CODE, config.ACCOUNT_NUMBER);
 
      const cardsToRemoveElements = cards.createCardsToShow(wallet);
@@ -90,11 +111,16 @@ export function handlePinShowage(e, wallet) {
 
    if (id === TRANSFER_FUNDS ) {
 
-        if (getSelectedSidebarCardState().isCardManagerWindow) {
+        if (openWindowsState.isCardManagerWindowOpen) {
             AlertUtils.warnWindowConflict()
             return;
         }
-        getSelectedSidebarCardState().isTransferWindowOpen = true;
+
+        openWindowsState.isTransferCardWindowOpen = true;
+        openWindowsState.isAddNewCardWindowOpen   = false;
+        openWindowsState.isAddFundsWindowOpen     = false;
+        openWindowsState.isRemoveCardWindowOpen   = false;
+        
         dimBackground(dimBackgroundElement, true);
         transferDivElement.classList.add("show");
         closeDivs([addNewCardDivElement, addFundsDivElement, removeCardsDivElement ]);
@@ -209,13 +235,12 @@ function showInputErrorColor(show=true, color="red") {
 }
 
 
-export function handleRemoveCloseIcon(e) {
+export function handleRemoveCardWindowCloseIcon(e) {
     const WINDOW_CLOSE_ICON = "remove-close-icon";
 
     if (e.target.id === WINDOW_CLOSE_ICON) {
         removeCardsDivElement.classList.remove("show");
-        getSelectedSidebarCardState().isRemovalWindowOpen = false;
-        console.log(e.target.id)
+        openWindowsState.isRemoveCardWindowOpen = false;
     }
 }
 

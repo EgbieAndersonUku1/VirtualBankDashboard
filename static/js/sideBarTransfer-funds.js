@@ -1,28 +1,41 @@
-import { checkIfHTMLElement } from "./utils.js";
-import { Wallet } from "./wallet.js";
-import { config } from "./config.js";
+import { checkIfHTMLElement, formatCurrency } from "./utils.js";
+import { openWindowsState } from "./config.js";
 import { logError, warnError } from "./logger.js";
 import { getSelectedSidebarCardState } from "./sidebarCard.js";
 import { cards } from "./cardsComponent.js";
 import { Card } from "./card.js";
 import { prepareCardData } from "./walletUI.js";
+import { getWalletFromCacheOrLoadFromLocalStorage } from "./transfer-funds.js";
 
 
+const selectAccountTransferToElement     = document.getElementById("select-transfer-type");
+const selectCardDivElement               = document.getElementById("select-card-div");
+const transferFormElement                = document.getElementById("transfer-amount-form");
+const transferringCardElement            = document.querySelector("#transferring-card .bank-card");
+const selectCardElement                  = document.getElementById("select-card");
+const transferToElement                  = document.getElementById("transferring-to");
+const cardBalanceElement                 = document.getElementById("transfer-card__balance-amount");
+const cardTransferAmountElement          = document.getElementById("transfer-card__card-amount");
+const bankBalanceElement                 = document.getElementById("transfer-card__bank-balance-amount");
+const walletBalanceElement               = document.getElementById("transfer-card__wallet-balance-amount");
+const transferCardAmountCloseIcon        = document.getElementById("transfer-amount-card__window-close-icon");
+const transferCardAmountContainerElement = document.getElementById("transfer-amount-card");
 
-const selectAccountTransferToElement = document.getElementById("select-transfer-type");
-const selectCardDivElement           = document.getElementById("select-card-div");
-const transferFormElement            = document.getElementById("transfer-amount-form");
-const transferringCardElement        = document.querySelector("#transferring-card .bank-card");
-const selectCardElement              = document.getElementById("select-card");
-const transferToElement              = document.getElementById("transferring-to");
 
 validatePageElements()
 
 document.addEventListener(selectAccountTransferToElement, handleSelectAccountTransferElement);
 
 
-const wallet = Wallet.loadWallet(config.SORT_CODE, config.ACCOUNT_NUMBER);
 
+
+
+export function handleTransferCardFieldsDisplay() {
+    setCardTransferBalance();
+    setBankBalance();
+    setWalletBalance();
+
+}
 
 
 export function handleSelectAccountTransferElement(e) {
@@ -62,6 +75,7 @@ export function handleSelectAccountTransferElement(e) {
 }
 
 
+
 function getAvailableCardNumbers(exclude = []) {
     if (!Array.isArray(exclude)) {
         logError("getAvailableCardNumbers", `Expected an array. Got ${typeof exclude}`);
@@ -78,8 +92,6 @@ function getAvailableCardNumbers(exclude = []) {
 
 
 function loadCardNumbersIntoSelect(cardNumbers) {
-
-   
     
     const SELECT_ID       = "select-card"
     let selectCardElement = selectCardDivElement.querySelector(`#${SELECT_ID}`);
@@ -205,11 +217,133 @@ function renderTransferIcon(imgSrc, accountName) {
 
 
 
+/**
+ * Sets the card transfer balance in the UI using the last clicked card.
+ * 
+ * Retrieves the last clicked card number from sidebar state,
+ * finds the corresponding card, and updates the UI with the card's balance.
+ * 
+ * If no matching card is found, logs an error and exits gracefully.
+ * 
+ * @function
+ * @returns {void}
+ * 
+ * @example
+ * setCardTransferBalance();
+ * // → UI shows the balance of the last clicked card
+ */
+function setCardTransferBalance() {
+    const amount = getSelectedSidebarCardState().lastCardClickeCardNumber;
+
+    const card = Card.getByCardNumber(amount);
+
+    if (!card) {
+        logError("setCardTransferBalance", "The card object");
+        return;
+    }
+    updateCardFields("updateCardTransferAmount", cardBalanceElement, "Card balance element", card.balance)
+}
+
+
+
+/**
+ * Updates the transfer amount field in the UI.
+ * 
+ * Usesthe helper function `updateCardFields` to format and display the amount.
+ * 
+ * @function
+ * @param {number|string} amount - The amount to show in the transfer field.
+ * @returns {void}
+ * 
+ * @example
+ * updateCardTransferAmount(1500);
+ * // → UI shows "£1,500.00"
+ */
+function updateCardTransferAmount(amount) {
+    updateCardFields("updateCardTransferAmount", cardTransferAmountElement, "card Transfer amount element", amount);
+}
+
+
+
+function setBankBalance() {
+    const wallet = getWalletFromCacheOrLoadFromLocalStorage();
+    updateCardFields("setBankBalance", bankBalanceElement, "Bank Balance Element", wallet.bankAmountBalance);
+}
+
+
+function setWalletBalance() {
+    const wallet = getWalletFromCacheOrLoadFromLocalStorage();
+    updateCardFields("setWalletBalance", walletBalanceElement, "Wallet Balance Element", wallet.walletAmount)
+}
+
+
+
+/**
+ * Updates the text content of a given HTML element with a formatted currency amount.
+ * 
+ * This helper function ensures:
+ * - `callingFunctionName` is a string (for logging/debugging purposes)
+ * - `element` is a valid HTMLElement (validated using `checkIfHTMLElement`)
+ * - `amount` is present and valid
+ * 
+ * Throws an error if the function name is invalid.
+ * Logs an error and returns early if the element is not valid or if the amount is missing.
+ * Uses `formatCurrency` to apply commas and currency formatting before updating the element.
+ * 
+ * @param {string} callingFunctionName - Name of the calling function, useful for error context
+ * @param {HTMLElement} element - The DOM element to update
+ * @param {string} elementName - A readable name for the element (used in validation error messages)
+ * @param {number|string} amount - The amount to display in the element
+ * 
+ * @returns {void}
+ * 
+ * @throws {Error} If `callingFunctionName` is not a string
+ * 
+ * @example
+ * updateCardFields("setWalletBalance", walletBalanceEl, "Wallet Balance", 1200);
+ * // → walletBalanceEl.textContent = "£1,200.00"
+ */
+function updateCardFields(callingFunctionName, element, elementName, amount) {
+
+    if (typeof callingFunctionName !== "string") {
+        throw new Error(`The calling function must be name. Expected a name but got ${callingFunctionName} with type ${typeof callingFunctionName}`);
+    }
+
+    if (!checkIfHTMLElement(element, elementName)) {
+        return;
+    }
+    if (!amount) {
+        logError(callingFunctionName, "Expected an amount but got null");
+        return;
+    }
+
+    // formatCurrency throws an error if the number is not a number
+    element.textContent = formatCurrency(amount);
+}
+
+
+export function handleTransferCardWindowCloseIcon(e) {
+    const CLOSE_WINDOW_ICON = "transfer-amount-card__window-close-icon";
+
+    if (e.target.id !== CLOSE_WINDOW_ICON) {
+        return;
+    }
+
+    transferCardAmountContainerElement.classList.remove("show");
+    openWindowsState.isCardManagerWindowOpen = false;
+
+
+}
+
+
 function validatePageElements() {
     checkIfHTMLElement(selectAccountTransferToElement, "The select card element for selecting elements");
     checkIfHTMLElement(selectCardDivElement, "The select element for picking a card");
     checkIfHTMLElement(transferFormElement, "The transform element");
     checkIfHTMLElement(transferringCardElement, "The card that will be transferring the money");
     checkIfHTMLElement(transferToElement, "The transfer to element");
+    checkIfHTMLElement(transferCardAmountCloseIcon, "The transfer window close icon");
+    checkIfHTMLElement(transferCardAmountContainerElement, "The transfer container window");
+   
 
 }

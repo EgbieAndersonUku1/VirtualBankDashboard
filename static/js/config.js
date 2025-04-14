@@ -17,4 +17,23 @@ export const config  = {
 }
 
 
+export const openWindowsState = {
+
+    isTransferCardWindowOpen: false,
+    isRemoveCardWindowOpen: false,
+    isCardManagerWindowOpen: false,
+    isAddFundsWindowOpen: false,
+    isAddNewCardWindowOpen: false,
+
+    isAnyOpen: () => {
+            return openWindowsState.isTransferCardWindowOpen || 
+                        openWindowsState.isRemoveCardWindowOpen || 
+                        openWindowsState.isAddFundsWindowOpen || 
+                        openWindowsState.isAddFundsWindowOpen || 
+                        openWindowsState.isAddNewCardWindowOpen;
+        }
+        
+    
+}
+
 

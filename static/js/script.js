@@ -31,7 +31,7 @@ import { handleAddNewCardInputFields,
        handleCVCInputField 
       } from "./add-new-card.js";
 
-import { handleRemoveCloseIcon } from "./pin.js";
+import { handleRemoveCardWindowCloseIcon } from "./pin.js";
 import { handleFundForm, handleFundCloseDivIconClick, handleFundAmountLength } from "./fund-account.js";
 import { handleTransferButtonClick, 
         handleDisableMatchingTransferOption,
@@ -53,11 +53,14 @@ import { handleSidBarCardClick,
 
 import { handleTransferBlock } from "./sidebarCardBlocking.js";
 import { handleAddFundToCardFormButtonClick } from "./sideBarFundCard.js";
-import { handleSelectAccountTransferElement, handleSelectCardElement } from "./sideBarTransfer-funds.js";
+import { handleSelectAccountTransferElement, 
+        handleSelectCardElement, 
+        handleTransferCardFieldsDisplay, 
+        handleTransferCardWindowCloseIcon } from "./sideBarTransfer-funds.js";
 import { handlePageRefresh } from "./showOnRefresh.js";
 
 // elements
-const dashboardElement       = document.getElementById("virtualbank-dashboard");
+const dashboardElement = document.getElementById("virtualbank-dashboard");
 
 
 // event listeners
@@ -95,7 +98,7 @@ function handleEventDelegation(e) {
    handleCVCInputField(e);
    handleCardRemovalClick(e);
    handleRemoveCardButtonClick(e);
-   handleRemoveCloseIcon(e);
+   handleRemoveCardWindowCloseIcon(e);
    handleFundForm(e);
    handleFundCloseDivIconClick(e);
    handleFundAmountLength(e);
@@ -117,4 +120,6 @@ function handleEventDelegation(e) {
    handleSelectAccountTransferElement(e);
    handleTransferAmountButtonClick(e);
    handleSelectCardElement(e);
+   handleTransferCardFieldsDisplay(e);
+   handleTransferCardWindowCloseIcon(e);
 }

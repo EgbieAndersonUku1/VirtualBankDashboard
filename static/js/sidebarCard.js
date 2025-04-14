@@ -5,7 +5,7 @@ import { logError, warnError } from "./logger.js";
 import { AlertUtils } from "./alerts.js";
 import { prepareCardData } from "./walletUI.js";
 import { maskCreditCardNo } from "./utils.js";
-
+import { openWindowsState } from "./config.js";
 
 
 const sideBarCardsManagerElement         = document.getElementById("sidebar-cards");
@@ -18,11 +18,7 @@ const transferringCardAreaElement        = document.getElementById("transferring
 
 
 
-export const selectedSidebarCard = {
-    isTransferWindowOpen: false,
-    isCardManagerWindow: false,
-    isRemovalWindowOpen: false,
-  };
+export const selectedSidebarCard = {};
   
 
 validatePageElements();
@@ -53,7 +49,7 @@ export function handleSidBarCardClick(e) {
         return;
     }
 
-    selectedSidebarCard.isCardManagerWindow = true;
+    openWindowsState.isCardManagerWindowOpen = true;
 
     toggleOfAllCardsExceptForClicked(cardElement);
     renderCardToUI(card);
@@ -254,15 +250,37 @@ function handleIsCardBlockedSpanText(cardSpanElement, card) {
 
 
 function toggleCardManagerDiv(show=true) {
-
-    const isWindowOpen = getSelectedSidebarCardState().isTransferWindowOpen || getSelectedSidebarCardState().isRemovalWindowOpen;
     
-    if (show && isWindowOpen) {
+
+    if (show && openWindowsState.isAnyOpen()) {
        
-        AlertUtils.warnWindowConflict({title: "Transfer Window Is Open"})
+        // Reset `isCardManagerWindow` to false.
+        // Clicking a card in the sidebar automatically sets this to true,
+        // even if the Card Manager window wasn't actually opened due to a conflict (e.g., another window already open).
+        // This ensures the internal state reflects the *actual* UI.
+        openWindowsState.isCardManagerWindowOpen = false;
         
-       return;
+        if (openWindowsState.isRemoveCardWindowOpen) {
+            AlertUtils.warnWindowConflict({title: "Removal Card Window Is Open",
+                                          text: "The card transfer window is open, close it before opening the card manager window"})
+            return;
+        }
+    
+      
+        if (openWindowsState.isTransferCardWindowOpen) {
+            AlertUtils.warnWindowConflict({title: "Transfer Card Window Is Open", 
+                                            text: "The card removal window is open, close it before opening the card manager window"})
+            return;
+        }
+
+        if (openWindowsState.isAddFundsWindowOpen) {
+            AlertUtils.warnWindowConflict({title: "Transfer Card Window Is Open", 
+                text: "The add fund window is open, close it before opening the card manager window"})
+            return;
+        }
+    
     }
+
     show ? sideBarCardsManagerElement.classList.add("show") : sideBarCardsManagerElement.classList.remove("show")
 }
 
@@ -272,7 +290,7 @@ export function handleCloseCardManagerButton(e) {
     const CLOSE_CARD_MANAGE_BTN_ID = "close-card";
 
     if (e.target.id === CLOSE_CARD_MANAGE_BTN_ID) {
-        getSelectedSidebarCardState().isCardManagerWindow = false;
+        openWindowsState.isCardManagerWindowOpen = false;
         toggleCardManagerDiv(false);
         return;
     }
@@ -367,7 +385,6 @@ export function handleAddCloseButtonIconClick(e) {
     }
     
 }
-
 
 
 
