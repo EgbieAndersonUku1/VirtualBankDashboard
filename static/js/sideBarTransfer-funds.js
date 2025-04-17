@@ -152,6 +152,13 @@ function attachSelectEventListenerIfNotAttached(selectCardElement) {
 }
 
 
+
+/**
+ * When the user selects the card from side bar.
+ * The function loads the card into the area.
+ * 
+ * @param {*} e 
+ */
 export function handleSelectCardElement(e) {
     const TRANSFER_TO_ID = "select-card";
 
@@ -331,7 +338,6 @@ export function handleTransferCardWindowCloseIcon(e) {
 
     transferCardAmountContainerElement.classList.remove("show");
     openWindowsState.isCardManagerWindowOpen = false;
-
 
 }
 
