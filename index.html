@@ -1054,6 +1054,8 @@
                     <!-- Transfer amount to card -->
                     <div id="transfer-amount-card" class="transfer-card-wrapper">
 
+                        <span id="transfer-amount-card-error" class="small-text red center">The amount can't be transferred</span>
+                        <span id="transfer-amount-card-msg"></span>
                         <!-- Close Button -->
                         <div class="window-close flex-end">
                             <img src="static/images/icons/window-close.svg" alt="Window" class="icon window-close-icon"
@@ -1117,7 +1119,6 @@
                                         <label for="select-card" class="capitalize">Select card</label>
                                         <select name="transfer-card" id="select-card">
                                             <option value="" disabled selected></option>
-                                            
                                         </select>
                                     </div>
 

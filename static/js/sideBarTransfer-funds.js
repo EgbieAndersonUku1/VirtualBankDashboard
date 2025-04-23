@@ -1,4 +1,5 @@
 import { checkIfHTMLElement, formatCurrency } from "./utils.js";
+import { parseFormData } from "./formUtils.js";
 import { openWindowsState } from "./config.js";
 import { logError, warnError } from "./logger.js";
 import { getSelectedSidebarCardState } from "./sidebarCard.js";
@@ -6,6 +7,7 @@ import { cards } from "./cardsComponent.js";
 import { Card } from "./card.js";
 import { prepareCardData } from "./walletUI.js";
 import { getWalletFromCacheOrLoadFromLocalStorage } from "./transfer-funds.js";
+
 
 
 const selectAccountTransferToElement     = document.getElementById("select-transfer-type");
@@ -20,13 +22,16 @@ const bankBalanceElement                 = document.getElementById("transfer-car
 const walletBalanceElement               = document.getElementById("transfer-card__wallet-balance-amount");
 const transferCardAmountCloseIcon        = document.getElementById("transfer-amount-card__window-close-icon");
 const transferCardAmountContainerElement = document.getElementById("transfer-amount-card");
-
+const cardTransferFieldElement           = document.getElementById("card-transfer-amount");
+const cardTransferAmountLabelElement     = document.getElementById("transfer-card__card-amount");
+const transferAmountButton               = document.getElementById("transfer-from-card-btn");
+const transferAmountFormElement          = document.getElementById("transfer-amount-form");
 
 validatePageElements()
 
-document.addEventListener(selectAccountTransferToElement, handleSelectAccountTransferElement);
-
-
+document.addEventListener("input", handleCardTransferInputField);
+document.addEventListener("blur", handleCardTransferInputField);
+document.addEventListener("blur", handleCardTransferInputField);
 
 
 
@@ -49,14 +54,15 @@ export function handleSelectAccountTransferElement(e) {
     const WALLET_SELECTOR = "wallet";
 
     selectCardDivElement.classList.remove("show");
+    selectCardElement.setAttribute("required", false);
 
-  
     if (selectValue  === CARD_SELECTOR) {
-        selectCardDivElement.classList.add("show");
 
-     
+        selectCardDivElement.classList.add("show");
+        selectCardElement.setAttribute("required", true);
+
         const numbersToExclude =  getSelectedSidebarCardState().lastCardClickeCardNumber;
-        const cardNumbers = getAvailableCardNumbers([numbersToExclude]);
+        const cardNumbers      = getAvailableCardNumbers([numbersToExclude]);
         loadCardNumbersIntoSelect(cardNumbers);
         return;
     
@@ -81,6 +87,8 @@ function getAvailableCardNumbers(exclude = []) {
         logError("getAvailableCardNumbers", `Expected an array. Got ${typeof exclude}`);
         return [];
     }
+    
+    const wallet = getWalletFromCacheOrLoadFromLocalStorage();
 
     if (wallet.numOfCardsInWallet > 0) {
         return Object.keys(wallet.cardNumbers).filter(
@@ -138,8 +146,9 @@ function createSelectElement(id, parentContainerToAppendTo) {
 function createDefaultOption(text) {
     const defaultOption = document.createElement("option");
     defaultOption.disabled = true;
-    defaultOption.selected = true;
+    defaultOption.selected = true
     defaultOption.textContent = text;
+    defaultOption.value       = '';
     return defaultOption
 }
 
@@ -157,7 +166,7 @@ export function handleSelectCardElement(e) {
 
     if (e.target.id === TRANSFER_TO_ID) {
         const selectValue = e.target.value;
-        if (selectValue) {
+        if (selectValue && selectValue !== undefined) {
 
             const card        = Card.getByCardNumber(selectValue);
             const cardData    = prepareCardData(card);
@@ -215,8 +224,6 @@ function renderTransferIcon(imgSrc, accountName) {
 
 
 
-
-
 /**
  * Sets the card transfer balance in the UI using the last clicked card.
  * 
@@ -233,9 +240,14 @@ function renderTransferIcon(imgSrc, accountName) {
  * // → UI shows the balance of the last clicked card
  */
 function setCardTransferBalance() {
-    const amount = getSelectedSidebarCardState().lastCardClickeCardNumber;
 
-    const card = Card.getByCardNumber(amount);
+    const cardNumber = getSelectedSidebarCardState().lastCardClickeCardNumber;
+
+    if (!cardNumber) {
+        logError("setCardTransferBalance", `The card number was not found, there should be a card number since the card was clicked`);
+        return;
+    }
+    const card = Card.getByCardNumber(cardNumber);
 
     if (!card) {
         logError("setCardTransferBalance", "The card object");
@@ -246,22 +258,23 @@ function setCardTransferBalance() {
 
 
 
-/**
- * Updates the transfer amount field in the UI.
- * 
- * Usesthe helper function `updateCardFields` to format and display the amount.
- * 
- * @function
- * @param {number|string} amount - The amount to show in the transfer field.
- * @returns {void}
- * 
- * @example
- * updateCardTransferAmount(1500);
- * // → UI shows "£1,500.00"
- */
-function updateCardTransferAmount(amount) {
-    updateCardFields("updateCardTransferAmount", cardTransferAmountElement, "card Transfer amount element", amount);
-}
+// /**
+//  * Updates the transfer amount field in the UI.
+//  * 
+//  * Usesthe helper function `updateCardFields` to format and display the amount.
+//  * 
+//  * @function
+//  * @param {number|string} amount - The amount to show in the transfer field.
+//  * @returns {void}
+//  * 
+//  * @example
+//  * updateCardTransferAmount(1500);
+//  * // → UI shows "£1,500.00"
+//  */
+// function updateCardTransferAmount(amount) {
+//     updateCardFields("updateCardTransferAmount", cardTransferAmountElement, "card Transfer amount element", amount);
+// }
+
 
 
 
@@ -336,6 +349,55 @@ export function handleTransferCardWindowCloseIcon(e) {
 }
 
 
+export function handleCardTransferInputField(e) {
+    const INPUT_FIELD_ID  = "card-transfer-amount";
+
+    if (e.target.id !== INPUT_FIELD_ID) {
+        return;
+    }
+
+    const amount = e.target.value;
+    updateInputFieldElement(amount);
+
+}
+
+
+function updateInputFieldElement(amount) {
+    cardTransferAmountLabelElement.textContent = formatCurrency(amount);   
+}
+
+
+export function handleCardTransferAmountFormButtonClick(e) {
+    const TRANSFER_BTN_ID = "transfer-from-card-btn";
+
+    if (e.target.id !== TRANSFER_BTN_ID ) {
+        return;
+    }
+
+    const form = transferFormElement;
+    
+    if (transferFormElement.checkValidity()) {
+      
+        
+        const formData = new FormData(transferFormElement);
+        if (!formData) {
+            logError("handleCardTransferAmountFormButtonClick", "Expected a card transfer form since the form was succeesfully submit");
+            return;
+        }
+        
+        const requiredFields = ["transfer-card-amount"];
+        const parsedFormData = parseFormData(form, requiredFields);
+        
+        console.log(parsedFormData);
+
+      
+    } else {
+        transferFormElement.reportValidity()
+    }
+
+}
+
+
 function validatePageElements() {
     checkIfHTMLElement(selectAccountTransferToElement, "The select card element for selecting elements");
     checkIfHTMLElement(selectCardDivElement, "The select element for picking a card");
@@ -344,6 +406,9 @@ function validatePageElements() {
     checkIfHTMLElement(transferToElement, "The transfer to element");
     checkIfHTMLElement(transferCardAmountCloseIcon, "The transfer window close icon");
     checkIfHTMLElement(transferCardAmountContainerElement, "The transfer container window");
-   
+    checkIfHTMLElement(cardTransferFieldElement, "[cardTransferAmountElement]");
+    checkIfHTMLElement(cardTransferAmountLabelElement, "[cardTransferAmountLabelElement]");
+    checkIfHTMLElement(transferAmountButton, "[transferAmountButton]");
+    checkIfHTMLElement(transferAmountFormElement, "[transferAmountFormElement]");
 
 }

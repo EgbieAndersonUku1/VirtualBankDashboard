@@ -56,7 +56,10 @@ import { handleAddFundToCardFormButtonClick } from "./sideBarFundCard.js";
 import { handleSelectAccountTransferElement, 
         handleSelectCardElement, 
         handleTransferCardFieldsDisplay, 
-        handleTransferCardWindowCloseIcon } from "./sideBarTransfer-funds.js";
+        handleTransferCardWindowCloseIcon, 
+        handleCardTransferInputField, 
+        handleCardTransferAmountFormButtonClick 
+        } from "./sideBarTransfer-funds.js";
 import { handlePageRefresh } from "./showOnRefresh.js";
 
 // elements
@@ -122,4 +125,6 @@ function handleEventDelegation(e) {
    handleSelectCardElement(e);
    handleTransferCardFieldsDisplay(e);
    handleTransferCardWindowCloseIcon(e);
+   handleCardTransferInputField(e);
+   handleCardTransferAmountFormButtonClick(e);
 }
