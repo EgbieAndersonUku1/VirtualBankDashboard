@@ -106,7 +106,7 @@ export class BankAccount extends DataStorage {
         this._amountManager.validateAmount(amount);
 
         const hasFunds = this._checkIfCardHasAvailableFunds(card, amount);
-
+    
         if (!hasFunds) {
             logError("BankAccount.transferFromCardToAccount", "Transfer couldn't be made because there are insufficient funds in the account");
             throw new Error(`Insufficient funds in Card. Available: ${card.balance}, Requested: ${amount}`);

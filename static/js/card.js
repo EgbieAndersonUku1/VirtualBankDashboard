@@ -55,7 +55,7 @@ export class Card extends DataStorage {
 
     deductAmount(amount) {
 
-        if (!this.isBlocked) {
+        if (this.isBlocked) {
             throw new Error("The card has been blocked an no funds can be deducted");
         }
 

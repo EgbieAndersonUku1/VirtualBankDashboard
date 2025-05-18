@@ -23,6 +23,7 @@ const newCardDivElement       = document.getElementById("new-card");
 const dimBackgroundElement    = document.querySelector(".dim-background");
 
 
+
 validatePageElements();
 
 let isSubmitButtonClick = true;
