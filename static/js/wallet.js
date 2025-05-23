@@ -592,11 +592,10 @@ export class Wallet extends DataStorage {
     transferToWallet(cardNumber, amount) {
 
         const card         = this.getByCardNumber(cardNumber);
-        const isTransfered = this._bankAccount.transferFromCardToAccount(card, amount);
+        const isTransfered = this._bankAccount.transferFromCardToWallet(card, amount, this);
 
         if (isTransfered) {
             this.lastTransfer = amount;
-            this.addFundsToWallet(this._bankAccount.balance);
             return true;
         }
         return false;

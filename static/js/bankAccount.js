@@ -98,6 +98,7 @@ export class BankAccount extends DataStorage {
      * 
      * @param {*} card - The card from which the amount will be transferred.
      * @param {*} amount - The amount to be transferred from card to given account.
+     * @param {}
      * @returns {boolean} - Returns `true` if the transfer is successful, `false` if it fails.
      */
     transferFromCardToAccount(card, amount) {
@@ -128,6 +129,37 @@ export class BankAccount extends DataStorage {
         }
     }
 
+
+    /**
+     * Transfers a specified amount from a card to a wallet.
+     * 
+     * This method ensures the card is valid, verifies that the amount
+     * to be transferred is a valid number (either integer or float), and checks that
+     * the sender card has sufficient funds. If all conditions are met, it transfers
+     * the amount to the users wallet and deducts from the bank.
+     * 
+     * @throws {Error} if card is null or not an instance of the Card class.
+     * @throws {TypeError} if the amount is not a valid number (int or float).
+     * @throws {Error} if the card does not have enough funds to complete the transfer.
+     * 
+     * @param {*} card - The card from which the amount will be transferred.
+     * @param {*} amount - The amount to be transferred from card to given account.
+     * @param {*} wallet - The Wallet to transfer the funds to.
+     * @returns {boolean} - Returns `true` if the transfer is successful, `false` if it fails.
+     */
+    transferFromCardToWallet(card, amount, wallet) {
+        try {
+            this.transferFromCardToAccount(card, amount)
+            wallet.addFundsToWallet(amount);
+            wallet.save();
+            return true;
+        } catch (error) {
+            const errorMsg = `Error transferring funds: ${error.message}`;
+            logError("transferFromCardToWallet", errorMsg);
+            return false;
+        }
+
+    }
 
     /**
      * Transfers money between two card instances.

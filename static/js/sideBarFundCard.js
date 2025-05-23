@@ -18,7 +18,6 @@ const fundMyCardFormElement  = document.getElementById("add-fund-form");
 const fundMyCardErrorElement = document.getElementById("fund-my-card-error");
 
 
-
 validatePageElements();
 
 

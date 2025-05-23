@@ -44,6 +44,7 @@ document.addEventListener("blur", handleCardTransferInputField);
 const wallet       = Wallet.loadWallet(config.SORT_CODE, config.ACCOUNT_NUMBER);
 const bankAccount  =  BankAccount.getByAccount(config.SORT_CODE, config.ACCOUNT_NUMBER);
 
+
 const CardTransfer = {
     transferringTo: null,
 }
@@ -381,7 +382,7 @@ export function handleCardTransferAmountFormButtonClick(e) {
         return;
     }
 
-    toggleErrorMessage(false);
+
     if (transferFormElement.checkValidity()) {
       
         
@@ -394,14 +395,20 @@ export function handleCardTransferAmountFormButtonClick(e) {
         const requiredFields = ["transfer-card-amount"];
         const parsedFormData = parseFormData(formData, requiredFields);
     
-        // console.log(parsedFormData)
         const amount = parseFloat(parsedFormData.transferCardAmount);
 
         try {
             transferToRightInstitution(amount);  
 
         } catch (error) {
-            updateMessage(error.message, "error");
+          
+            const msg = error.message.split(".")[0].trim()
+
+            if (error.message.split(".")[0].trim() === msg) {
+                handleInsufficientFundsCardAlert();
+                return;
+            }
+
             handleBlockCardAlert();
             return;
         }
@@ -472,14 +479,9 @@ function updateCardUISideBar(isSuccess, card) {
         updateCardSideBar([card], true);
         handleTransferCardFieldsDisplay();
         updateSourceTransferCardAmount();
-
-      
-       
+  
     }
 }
-
-
-
 
 
 /**
@@ -505,25 +507,8 @@ function updateSourceTransferCardAmount() {
 
 
 
-function updateMessage(message, messageType="error") {
-    
-    if (!message) {
-        cardErrorMessage.display.style = "none";
-        return;
-    }
-
-
-    if (messageType === "error") {
-        toggleErrorMessage();
-        cardErrorMessage.textContent = message
-    }
-
-  
-}
-
-
-
 function toggleErrorMessage(show=true) {
+    cardErrorMessage.innerHTML     = "";
     cardErrorMessage.style.display =  show ? "block" : "none"
     
 }
@@ -538,6 +523,17 @@ function handleBlockCardAlert() {
         confirmButtonText: "Ok"
     });
 }
+
+
+function handleInsufficientFundsCardAlert() {
+    AlertUtils.showAlert({
+        title: "Insufficient funds",
+        text: "You can't transfer money from this card because it is insufficient funds.",
+        icon: "warning",
+        confirmButtonText: "Ok"
+    });
+}
+
 
 
 
