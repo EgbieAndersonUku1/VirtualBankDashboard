@@ -1,6 +1,6 @@
 import { checkIfHTMLElement } from "./utils.js";
 import { Wallet } from "./wallet.js";
-import { config } from "./config.js";
+import { config, openWindowsState } from "./config.js";
 import { cards} from "./cardsComponent.js";
 import { warnError, logError } from "./logger.js";
 import { handleInputFieldValueLength, toTitle } from "./utils.js";
@@ -125,6 +125,7 @@ function handleTransferToWalletOrBankSelectChange(e) {
 
         transferRecord.isCardMode = false;
         config.isCardMode         = false;
+        
         toggleCardAreaDisplay(false)
         updatePerCountCardValue(RESET_VALUE);
         updateTransferCardCount(RESET_VALUE)
@@ -1220,7 +1221,7 @@ function getTransferAmountValue() {
 }
 
 
-function getWalletFromCacheOrLoadFromLocalStorage() {
+export function getWalletFromCacheOrLoadFromLocalStorage() {
 
     if (!config.loadFromCache) {
         console.log("A request was made to reload the data from the localStorage");
@@ -1445,7 +1446,7 @@ export function handleTransferCloseIcon(e) {
     if (e.target.id !== "transfer-close-icon") {
         return;
     }
-    getSelectedSidebarCardState().isTransferWindowOpen = false;
+    openWindowsState.isTransferCardWindowOpen = false;
     resetSelectFields();
     toggleCardAreaDisplay(false);
     toggleTransferMessage(false);
@@ -1460,8 +1461,7 @@ export function handleTransferCloseIcon(e) {
 
 function resetSelectFields() {
     transferFromSelectElement.selectedIndex = 0;         
-    transferToSelectElement.selectedIndex = 0;
-    console.log("I should have reset")
+    transferToSelectElement.selectedIndex   = 0;
 }
 
 

@@ -113,7 +113,7 @@ export function handleAddNewCard(e) {
 }
 
 
-function loadUserCardsInUI(wallet) {
+export function loadUserCardsInUI(wallet) {
     const cards = wallet.getAllCards(); 
 
     cardDisplayArea.innerHTML = "";

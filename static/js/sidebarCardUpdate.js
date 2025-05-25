@@ -51,7 +51,7 @@ export function updateCardSideBar(updatedCards, sendNotification=false) {
         if (sendNotification) {
             notificationManager.add(`Card number #${card.cardNumber} has been updated with ${formatCurrency(card.balance)}`)
         }
-        updateCardInPlace(cardData)
+        updateCardInPlace(cardData);
     }
 
     if (updated) {

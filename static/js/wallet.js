@@ -204,7 +204,7 @@ export class Wallet extends DataStorage {
      *   - card 2: 150
      *   - card 3: 50
      * 
-     * Then toal return will be 300
+     * Then total return will be 300
      */
     getCardsTotal() {
         return parseFloat(
@@ -496,15 +496,11 @@ export class Wallet extends DataStorage {
         const MAXIMUM_CARDS_FOR_TRANSFER = 2;
 
         if (this.numOfCardsInWallet < MAXIMUM_CARDS_FOR_TRANSFER) {
-            const error = `Cannot transfer funds between cards: You have less than ${MAXIMUM_CARDS_FOR_TRANSFER} cards in your wallet.`;
+            const error = `Transfer Unavailable: To transfer funds between cards, you must have at least ${MAXIMUM_CARDS_FOR_TRANSFER} cards in your wallet.`;
             logError("Wallet.transferFundsFromCardToCard", error);
             throw new Error(error);
-        }
-
-        if (sourceCardNumber === targetCardNumber) {
-            const error = "Source and target card numbers cannot be the same.";
-            logError("Wallet.transferFundsFromCardToCard", error);
-            throw new Error(error);
+          
+          
         }
 
         const transferringCard = this.getByCardNumber(sourceCardNumber);
@@ -544,18 +540,9 @@ export class Wallet extends DataStorage {
      */
     transferFromWalletToBank(amount) {
        
-       try {
-            this._validateAmountType("transferFromWalletToBank", amount);
-            this._bankAccount.addAmount(amount);   
-            this.deductFundsFromWallet(amount);
-            // debugger;
-            return true;
-       } catch (error) {
-            logError("transferFromWalletToBank", error);
-            // console.log(error.message)
-            return false;
-       } 
-      
+        this._validateAmountType("transferFromWalletToBank", amount);
+        return this._bankAccount.transferFromWalletToBank(amount, this);
+       
     }
 
     /**
@@ -592,11 +579,10 @@ export class Wallet extends DataStorage {
     transferToWallet(cardNumber, amount) {
 
         const card         = this.getByCardNumber(cardNumber);
-        const isTransfered = this._bankAccount.transferFromCardToAccount(card, amount);
+        const isTransfered = this._bankAccount.transferFromCardToWallet(card, amount, this);
 
         if (isTransfered) {
             this.lastTransfer = amount;
-            this.addFundsToWallet(this._bankAccount.balance);
             return true;
         }
         return false;
@@ -881,8 +867,7 @@ export class Wallet extends DataStorage {
 
     _manageFundsToWallet(amount, add = true) {
         this._amountManager.validateAmount(amount);
-        console.log(this._amountManager.validateAmount(amount))
-
+     
         if (add) {
             this._walletAmount = (parseFloat(this._walletAmount) + parseFloat(amount)).toFixed(2);
         } else {

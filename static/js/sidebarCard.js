@@ -5,18 +5,20 @@ import { logError, warnError } from "./logger.js";
 import { AlertUtils } from "./alerts.js";
 import { prepareCardData } from "./walletUI.js";
 import { maskCreditCardNo } from "./utils.js";
+import { openWindowsState } from "./config.js";
 
 
-const sideBarCardsManagerElement  = document.getElementById("sidebar-cards");
-const sideBarCardContainerElement = document.getElementById("sidebar-card");
-const cardInfoDivElement          = document.getElementById("card-info");
-const fundMyCardElement           = document.getElementById("fund-my-card");
-const fundMyCardCloseElement      = document.getElementById("fund-card-close-icon");
+const sideBarCardsManagerElement         = document.getElementById("sidebar-cards");
+const sideBarCardContainerElement        = document.getElementById("sidebar-card");
+const cardInfoDivElement                 = document.getElementById("card-info");
+const fundMyCardElement                  = document.getElementById("fund-my-card");
+const fundMyCardCloseElement             = document.getElementById("fund-card-close-icon");
+const transferCardAmountContainerElement = document.getElementById("transfer-amount-card");
+const transferringCardAreaElement        = document.getElementById("transferring-card")
 
 
-export const selectedSidebarCard = {
-    isTransferWindowOpen: false,
-  };
+
+export const selectedSidebarCard = {};
   
 
 validatePageElements();
@@ -46,6 +48,8 @@ export function handleSidBarCardClick(e) {
         showInvalidCardAlertMsg();
         return;
     }
+
+    openWindowsState.isCardManagerWindowOpen = true;
 
     toggleOfAllCardsExceptForClicked(cardElement);
     renderCardToUI(card);
@@ -228,6 +232,8 @@ function handleIsCardBlockedImg(cardElement, cardData) {
         logError("handleIsCardBlockedImg", `isCardBlock is not attribrute of card data`);
         return false;
     }
+
+    
     cardData.isCardBlocked ? cardElement.classList.add("card-is-blocked") : cardElement.classList.add("card-not-blocked");
 }
 
@@ -244,24 +250,47 @@ function handleIsCardBlockedSpanText(cardSpanElement, card) {
 
 
 function toggleCardManagerDiv(show=true) {
+    
 
-    if (show && getSelectedSidebarCardState().isTransferWindowOpen) {
-        AlertUtils.showAlert({
-            title: "Transfer Window Is Open",
-            text: "You cannot open the Card Manager while the transfer window is active. Please close the transfer window and try again.",
-            icon: "warning",
-            confirmButtonText: "OK",
-        });
+    if (show && openWindowsState.isAnyOpen()) {
+       
+        // Reset `isCardManagerWindow` to false.
+        // Clicking a card in the sidebar automatically sets this to true,
+        // even if the Card Manager window wasn't actually opened due to a conflict (e.g., another window already open).
+        // This ensures the internal state reflects the *actual* UI.
+        openWindowsState.isCardManagerWindowOpen = false;
         
-       return;
+        if (openWindowsState.isRemoveCardWindowOpen) {
+            AlertUtils.warnWindowConflict({title: "Removal Card Window Is Open",
+                                          text: "The card transfer window is open, close it before opening the card manager window"})
+            return;
+        }
+    
+      
+        if (openWindowsState.isTransferCardWindowOpen) {
+            AlertUtils.warnWindowConflict({title: "Transfer Card Window Is Open", 
+                                            text: "The card removal window is open, close it before opening the card manager window"})
+            return;
+        }
+
+        if (openWindowsState.isAddFundsWindowOpen) {
+            AlertUtils.warnWindowConflict({title: "Transfer Card Window Is Open", 
+                text: "The add fund window is open, close it before opening the card manager window"})
+            return;
+        }
+    
     }
+
     show ? sideBarCardsManagerElement.classList.add("show") : sideBarCardsManagerElement.classList.remove("show")
 }
 
 
 export function handleCloseCardManagerButton(e) {
-    const CLOSE_BTN_ID = "close-card";
-    if (e.target.id === CLOSE_BTN_ID) {
+    
+    const CLOSE_CARD_MANAGE_BTN_ID = "close-card";
+
+    if (e.target.id === CLOSE_CARD_MANAGE_BTN_ID) {
+        openWindowsState.isCardManagerWindowOpen = false;
         toggleCardManagerDiv(false);
         return;
     }
@@ -298,10 +327,9 @@ function showInvalidCardAlertMsg() {
 // Not yet implemented
 export function handleNotYetImplementedFunctionality(e) {
 
-    const TRANSFER_BUTTON_ID = "transfer-card-amount";
     const DELETE_BUTTON_ID   = "delete";
 
-    if ( e.target.id === TRANSFER_BUTTON_ID || e.target.id === DELETE_BUTTON_ID) {
+    if (  e.target.id === DELETE_BUTTON_ID) {
         AlertUtils.showAlert({title: "Not yet implemented",
             text: "You seeing this because the functionality is not yet implemented",
             icon: "info",
@@ -310,6 +338,32 @@ export function handleNotYetImplementedFunctionality(e) {
     }
 
 }
+
+export function handleTransferAmountButtonClick(e) {
+    const TRANSFER_BUTTON_ID = "transfer-card-amount";
+  
+    if (e.target.id === TRANSFER_BUTTON_ID) {
+        // console.log("clicked");
+        transferCardAmountContainerElement.classList.add("show");
+        
+        toggleCardManagerDiv(false);
+
+        const card = Card.getByCardNumber(getSelectedSidebarCardState().lastCardClickeCardNumber);
+        if (!card) {
+            logError(" handleTransferAmountButtonClick", "The source card wasn't found");
+            return;
+        }
+
+        // load the source card that is card do the transferring
+        const cardData    = prepareCardData(card)
+        const cardElement = cards.createCardDiv(cardData);
+        cards.placeCardDivIn(transferringCardAreaElement, cardElement, true);
+
+       
+    }
+}
+
+
 
 
 export function handleAddFundCardButtonClick(e) {
@@ -333,6 +387,8 @@ export function handleAddCloseButtonIconClick(e) {
 }
 
 
+
+
 function toggleAddMyCardForm(show) {
     show ? fundMyCardElement.classList.add("show") : fundMyCardElement.classList.remove("show");
 }
@@ -343,7 +399,9 @@ function validatePageElements() {
     checkIfHTMLElement(sideBarCardContainerElement, "The sidebar container");
     checkIfHTMLElement(cardInfoDivElement, "The card info element container");
     checkIfHTMLElement(fundMyCardElement, "The funding my card form");
-    checkIfHTMLElement(fundMyCardCloseElement, "The add fund close icon")
+    checkIfHTMLElement(fundMyCardCloseElement, "The add fund close icon");
+    checkIfHTMLElement(transferCardAmountContainerElement, "The card container for the transferring card");
+    checkIfHTMLElement(transferringCardAreaElement, "The card area for the transferring card");
   
 
 }

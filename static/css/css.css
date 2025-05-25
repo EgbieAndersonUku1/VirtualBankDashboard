@@ -1758,3 +1758,9 @@ input::placeholder {
     visibility: visible;
     transition: opacity 0.3s ease-in-out, visibility 0s 0s;
   }
+
+
+  .block-btn {
+    cursor: no-drop;
+    opacity: 0.4;
+  }

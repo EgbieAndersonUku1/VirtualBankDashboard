@@ -18,7 +18,6 @@ const fundMyCardFormElement  = document.getElementById("add-fund-form");
 const fundMyCardErrorElement = document.getElementById("fund-my-card-error");
 
 
-
 validatePageElements();
 
 
@@ -56,19 +55,19 @@ export function handleAddFundToCardFormButtonClick(e) {
 function handleAddFundingToCard(parsedData) {
 
     if (!parsedData || typeof parsedData !== "object") {
-        logError("addFundingToCard", `Expected an object containing the amount but got object with type ${typeof parsedData} `);
+        logError("handleAddFundingToCard", `Expected an object containing the amount but got object with type ${typeof parsedData} `);
         return;
     }
 
     if (!parsedData.hasOwnProperty("amount")) {
-        logError("addFundingToCard", `Expected a property called "amount" inside the parseData object but it couldn't be found: Object ${parsedData} `);
+        logError("handleAddFundingToCard", `Expected a property called "amount" inside the parseData object but it couldn't be found: Object ${parsedData} `);
         return;
     }
 
     const cardNumber = getSelectedSidebarCardState().lastCardClickeCardNumber;
 
     if (!cardNumber) {
-        logError("addFundingToCard", "Expected a card number, since a card from the sidebar was clicked");
+        logError("handleAddFundingToCard", "Expected a card number, since a card from the sidebar was clicked");
         return;
     }
 

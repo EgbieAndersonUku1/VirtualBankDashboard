@@ -9,6 +9,7 @@
 </head>
 
 <body>
+    <div class="dim-background" id="dim"></div>
    <div class="dim-background" id="dim"></div>
    <div id="refresh-overlay" class="center">
     <img src="static/images/EUSBC.gif" alt="" srcset="">
@@ -451,10 +452,12 @@
 
                                 <div class="wallet-card" role="region" aria-labelledby="wallet-heading">
                                     <div class="head flex-space-between">
-                                        <p>Hi, <span aria-label="User's name" id="wallet__holder-name" class="wallet__holder-name"></span>
+                                        <p>Hi, <span aria-label="User's name" id="wallet__holder-name"
+                                                class="wallet__holder-name"></span>
                                         </p>
 
-                                        <p>Bank account amount: <span aria-label="bank-balance" id="wallet__bank-amount" class="wallet__bank-balance capitalize">£0.00</span>
+                                        <p>Bank account amount: <span aria-label="bank-balance" id="wallet__bank-amount"
+                                                class="wallet__bank-balance capitalize">£0.00</span>
                                         </p>
                                         <p>Maximum cards: <span class="wallet wallet__total-cards">0/3</span></p>
                                     </div>
@@ -463,24 +466,28 @@
                                     <div class="body padding-bottom-md padding-top-md">
                                         <div class="account-balance">
                                             <p>Account Balance</p>
-                                            <span id="bank-account-amount" aria-live="polite" class="wallet__wallet-amount">£0.00</span>
+                                            <span id="bank-account-amount" aria-live="polite"
+                                                class="wallet__wallet-amount">£0.00</span>
                                         </div>
 
                                         <div id="transactions">
 
                                             <div class="transfer">
                                                 <p>Last transfer</p>
-                                                <span id="last-transfer" class="amount wallet__last-transfer" aria-live="polite">£0.00</span>
+                                                <span id="last-transfer" class="amount wallet__last-transfer"
+                                                    aria-live="polite">£0.00</span>
                                             </div>
 
                                             <div class="received">
                                                 <p>Last received</p>
-                                                <span id="last-received" class="amount wallet__last-received" aria-live="polite">£0.00</span>
+                                                <span id="last-received" class="amount wallet__last-received"
+                                                    aria-live="polite">£0.00</span>
                                             </div>
 
                                             <div class="received">
                                                 <p>Number of cards</p>
-                                                <span id="wallet__number-of-cards" class="amount wallet__num-of-cards" aria-live="polite">0</span>
+                                                <span id="wallet__number-of-cards" class="amount wallet__num-of-cards"
+                                                    aria-live="polite">0</span>
                                             </div>
 
                                             <div class="received">
@@ -493,12 +500,16 @@
 
                                     <hr>
                                     <div class="footer center">
-                                        <button class="btn-medium account-btn" aria-label="Add Funds" id="add-funds">Add Funds</button>
-                                        <button class="btn-medium account-btn" aria-label="Add New Card" id="add-new-card">Add New
-                                            Card</button>
-                                        <button class="btn-medium account-btn" aria-label="Transfer Funds" id="transfer-funds">Transfer
+                                        <button class="btn-medium account-btn" aria-label="Add Funds" id="add-funds">Add
                                             Funds</button>
-                                        <button class="btn-medium account-btn" aria-label="Remove Card" id="remove-card">Remove
+                                        <button class="btn-medium account-btn" aria-label="Add New Card"
+                                            id="add-new-card">Add New
+                                            Card</button>
+                                        <button class="btn-medium account-btn" aria-label="Transfer Funds"
+                                            id="transfer-funds">Transfer
+                                            Funds</button>
+                                        <button class="btn-medium account-btn" aria-label="Remove Card"
+                                            id="remove-card">Remove
                                             card</button>
                                     </div>
                                 </div>
@@ -602,12 +613,13 @@
                                 </div>
                             </div>
 
-                            <div class="sides cards" role="region" aria-labelledby="linked-cards-heading" id="side-cards">
+                            <div class="sides cards" role="region" aria-labelledby="linked-cards-heading"
+                                id="side-cards">
                                 <h3 class="center capitalize subtitle" id="linked-cards-heading">Linked Account Cards
                                 </h3>
 
                                 <div class="cards" id="cards">
-                                    
+
                                     <!-- cards will be dynamically added -->
 
                                 </div>
@@ -621,62 +633,61 @@
                         <form id="pin-form" class="center">
 
                             <div class="head center margin-bottom-sm">
-                                <img src="static/images/icons/lock.svg" alt="lock" class="pin-image-icon center" id="pin-form-icon">
+                                <img src="static/images/icons/lock.svg" alt="lock" class="pin-image-icon center"
+                                    id="pin-form-icon">
 
                             </div>
                             <p class="form-error-msg red" id="pin-error-msg"></p>
-                            <label for="pinInputField" class="padding-bottom-md bold capitalize center">Enter your 4-digit PIN:</label>
-                            <input type="tel" id="pinInputField" name="pin" minlength="4" maxlength="4" aria-label="Enter your 4-digit PIN" required class="center">
+                            <label for="pinInputField" class="padding-bottom-md bold capitalize center">Enter your
+                                4-digit PIN:</label>
+                            <input type="tel" id="pinInputField" name="pin" minlength="4" maxlength="4"
+                                aria-label="Enter your 4-digit PIN" required class="center">
 
                             <div class="buttons">
                                 <button type="button" id="cancel-pin">Cancel Pin</button>
                                 <button type="submit" id="enter-pin">Enter Pin</button>
                             </div>
-                          </form>
-                          
+                        </form>
+
                     </div>
 
                     <!-- add new card -->
                     <div class="card" id="new-card" role="region" aria-labelledby="new-card-heading">
                         <div class="window-close flex-end">
-                            <img src="static/images/icons/window-close.svg" alt="Window" class="icon window-close-icon" id="window-close-icon">
+                            <img src="static/images/icons/window-close.svg" alt="Window" class="icon window-close-icon"
+                                id="window-close-icon">
                         </div>
                         <div class="logo center" aria-label="EUSBC Logo">EUSBC</div>
-                    
+
                         <h3 class="capitalize center margin-bottom-sm" id="new-card-heading">Create New Card</h3>
-                        <p class="new-card-error-msg red center d-none" id="new-card-error-msg">One or more of the fields is not filled</p>
-                    
+                        <p class="new-card-error-msg red center d-none" id="new-card-error-msg">One or more of the
+                            fields is not filled</p>
+
                         <div class="cards-options-img center" aria-label="Supported Card Types">
                             <img src="static/images/icons/discover.svg" alt="Discover Card" class="pin-image-icon">
                             <img src="static/images/icons/visa.svg" alt="Visa Card" class="pin-image-icon">
                             <img src="static/images/icons/mastercard.svg" alt="MasterCard" class="pin-image-icon">
                         </div>
-                    
+
                         <form action="/" method="post" id="card-form" aria-describedby="form-description">
                             <div class="card-number form-group two-column-grid">
 
                                 <div class="cardholder-name card-details" id="cardholder-name">
                                     <label for="cardholder-name">Card holder name</label>
                                     <input type="text" name="card-name" id="cardholder-name" aria-required="true"
-                                                    autocomplete="cc-number" placeholder="John Smith..."
-                                                    minlength="3"
-                                                    maxlength="50"
-                                                    required
-                                                    >
+                                        autocomplete="cc-number" placeholder="John Smith..." minlength="3"
+                                        maxlength="50" required>
                                 </div>
 
                                 <div class="card-number card-details">
                                     <label for="card-number">Card number</label>
                                     <input type="text" name="card-number" id="card-number" aria-required="true"
-                                                    autocomplete="cc-number" placeholder="1234 5678 9012 3456"
-                                                    minlength="19"
-                                                    maxlength="19"
-                                                    required
-                                                    >
+                                        autocomplete="cc-number" placeholder="1234 5678 9012 3456" minlength="19"
+                                        maxlength="19" required>
                                 </div>
-                               
+
                             </div>
-                    
+
                             <div class="two-column-grid">
                                 <div class="expiry-month card-details">
                                     <label for="expiry-month">Expiry month</label>
@@ -695,9 +706,9 @@
                                         <option value="nov">Nov</option>
                                         <option value="dec">Dec</option>
                                     </select>
-                                    
+
                                 </div>
-                    
+
                                 <div class="expiry-year card-details">
                                     <label for="expiry-year">Expiry Year</label>
                                     <select name="expiry-year" id="expiry-year" required>
@@ -717,14 +728,14 @@
                                         <option value="2036">2036</option>
                                         <option value="2037">2037</option>
                                         <option value="2038">2038</option>
-                                   
+
                                     </select>
                                 </div>
-                                
+
                             </div>
-                    
+
                             <div class="triple-column-grid">
-                                
+
                                 <div class="card-type card-details">
                                     <label for="card-brand">Card options</label>
                                     <select name="card-brand" id="card-brand" aria-required="true" required>
@@ -734,7 +745,7 @@
                                         <option value="discover">Discover</option>
                                     </select>
                                 </div>
-                    
+
                                 <div class="card-type card-details">
                                     <label for="card-type">Card Type</label>
                                     <select name="card-type" id="card-type" aria-required="true" required>
@@ -743,40 +754,42 @@
                                         <option value="debit">Debit</option>
                                     </select>
                                 </div>
-                    
+
                                 <div class="cvc card-details">
                                     <label for="cvc">CVC</label>
-                                    <input type="tel" name="cvc" id="cvc" aria-required="true" 
-                                    inputmode="numeric" autocomplete="cc-csc" 
-                                    placeholder="123" minlength="3" maxlength="3" required>
+                                    <input type="tel" name="cvc" id="cvc" aria-required="true" inputmode="numeric"
+                                        autocomplete="cc-csc" placeholder="123" minlength="3" maxlength="3" required>
                                 </div>
                             </div>
-                    
+
                             <button type="submit" id="create-card-btn" class="btn-small" aria-label="Create Card">
                                 Create Card
                                 <div class="spinner3"></div>
                             </button>
-                            <small class="red margin-top-sm center" id="form-description">This is a demo, please do not enter your real details.</small>
+                            <small class="red margin-top-sm center" id="form-description">This is a demo, please do not
+                                enter your real details.</small>
                         </form>
                     </div>
-                    
-                 <!-- Remove card div-->
-                 <div id="remove-cards">
-                    <div class="window-close flex-end">
-                        <img src="static/images/icons/window-close.svg" alt="Window" class="icon window-close-icon" id="remove-close-icon">
-                    </div>
+
+                    <!-- Remove card div-->
+                    <div id="remove-cards">
+                        <div class="window-close flex-end">
+                            <img src="static/images/icons/window-close.svg" alt="Window" class="icon window-close-icon"
+                                id="remove-close-icon">
+                        </div>
                         <h2 class="center capitalize">Remove payment cards</h2>
 
-                        <p class="center capitalize red remove-cards__info-text">Click on a card that you want to remove</p>
+                        <p class="center capitalize red remove-cards__info-text">Click on a card that you want to remove
+                        </p>
                         <small class="center green">When a card is marked only then will can it be deleted</small>
                         <div id="selectable-cards" class="margin-top-lg">
-                           
+
                         </div>
 
                         <div id="removable-card-area">
-                           <p class="center" id="no-cards-to-remove">No cards marked for deletion</p>
+                            <p class="center" id="no-cards-to-remove">No cards marked for deletion</p>
                             <!-- To be generated by js -->
-                           
+
                         </div>
 
                         <div class="remove-button flex-end margin-top-md">
@@ -785,240 +798,364 @@
 
 
 
-                 </div>
-
-                <!-- fund wallet -->
-                 <div id="fund">
-                    <div class="window-close flex-end">
-                        <img src="static/images/icons/window-close.svg" alt="Window" class="icon window-close-icon" id="fund-close-icon">
                     </div>
-                    <h2 class="center logo">EUSBC</h2>
-                    <h3 class="center capitalize green">Fund my account</h3>
+
+                    <!-- fund wallet -->
+                    <div id="fund">
+                        <div class="window-close flex-end">
+                            <img src="static/images/icons/window-close.svg" alt="Window" class="icon window-close-icon"
+                                id="fund-close-icon">
+                        </div>
+                        <h2 class="center logo">EUSBC</h2>
+                        <h3 class="center capitalize green">Fund my account</h3>
                         <div class="header center">
-                           
+
                             <img src="static/images/icons/credit-card.svg" alt="" id="add-fund-icon">
                         </div>
-                       
+
 
                         <form action="" method="post" id="fund-form">
                             <label for="fund-account">Choose n account to fund</label>
-                            <select name="fund_account_type" id="fund-account-select-field" class="flex-direction-column" required>
+                            <select name="fund_account_type" id="fund-account-select-field"
+                                class="flex-direction-column" required>
                                 <option value="" disabled selected>Account type</option>
                                 <option value="bank-account">Bank account</option>
                                 <option value="wallet">Wallet</option>
                             </select>
-                        
+
                             <div class="form-group flex-direction-column">
-                                <label for="amount">Amount</label>
-                                <input type="number" name="amount" id="fund-card-amount" required step="0.01" min="0.01" max="100000000">
+                                <label for="fund-card-amount">Amount</label>
+                                <input type="number" name="amount" id="fund-card-amount" required step="0.01" min="0.01"
+                                    max="100000000">
                             </div>
-                        
+
                             <button type="submit" id="fund-account-btn" class="margin-top-md btn-small">Fund</button>
                         </form>
-                        
-
-                 </div>
 
 
-                 <!-- transfer funds -->
-                 <div id="transfer" role="region" aria-labelledby="transfer__header">
-
-                    <div class="window-close flex-end">
-                        <button  aria-label="Close transfer window" class="button-close-icon">
-                            <img src="static/images/icons/window-close.svg" alt="Close transfer window"
-                                 class="window-close-icon" id="transfer-close-icon">
-                        </button>
-                    </div>
-                
-                    <div id="preview-mode">
-                        <span class="green center">Preview Mode</span>
-                        <span class="center steel-blue">You are operating in preview mode. Changes will not be saved until the <span class="bold padding-xsm"> Transfer </span> button is clicked.</span>
-                    </div>
-                    
-                    <div class="transfer-error-msg" id="transfer-error-msg">
-                        <p class="red center capitalize" id="transfer-messages-id">Insufficient funds</p>
-                        <p class="red center" id="transfer-error-card-msg-id"></p>
                     </div>
 
-                    <h3 class="logo padding-bottom-md center margin-top-sm">EUSBC</h3>
-                    <h4 class="margin-bottom-lg center">Transfer funds</h4>
 
-                    <div class="four-column-grid" id="transfer-fund-amount">
-                       
+                    <!-- transfer funds -->
+                    <div id="transfer" role="region" aria-labelledby="transfer__header">
 
-                        <div class="account-details">
-                            <span id="account-balance-type" class="center padding-bottom-sm capitalize">Balance</span>
-                            <span id="transfer-card-fund-amount" class="center padding-bottom-md red transfer-ui-details" >£0.00</span>
+                        <div class="window-close flex-end">
+                            <button aria-label="Close transfer window" class="button-close-icon">
+                                <img src="static/images/icons/window-close.svg" alt="Close transfer window"
+                                    class="window-close-icon" id="transfer-close-icon">
+                            </button>
                         </div>
 
-                        <div class="transfer-details">
-                            <span id="transfer-amount-title" class="center padding-bottom-sm capitalize">
-                                Transfer Amount
-                            </span>
-                            <span id="transfer-total-amount" class="center padding-bottom-md red transfer-ui-details">
-                                £0.00
-                            </span>
+                        <div id="preview-mode">
+                            <span class="green center">Preview Mode</span>
+                            <span class="center steel-blue">You are operating in preview mode. Changes will not be saved
+                                until the <span class="bold padding-xsm"> Transfer </span> button is clicked.</span>
                         </div>
-                        
 
-                        <div class="transfer-details">
-                            <span id="transfer-cards-title" class="center padding-bottom-sm capitalize">
-                                Transfer Cards
-                            </span>
-                            <span id="transfer-cards-count" class="center padding-bottom-md red transfer-ui-details">
-                                0
-                            </span>
+                        <div class="transfer-error-msg" id="transfer-error-msg">
+                            <p class="red center capitalize" id="transfer-messages-id">Insufficient funds</p>
+                            <p class="red center" id="transfer-error-card-msg-id"></p>
                         </div>
-                        
 
-                        <div class="transfer-details">
-                            <span id="amount-per-card-title" class="center padding-bottom-sm capitalize">
-                                Amount Per Card
-                            </span>
-                            <span id="amount-per-card" class="center padding-bottom-md red transfer-ui-details">
-                                0
-                            </span>
-                        </div>
-                        
-                       
-                    </div>
+                        <h3 class="logo padding-bottom-md center margin-top-sm">EUSBC</h3>
+                        <h4 class="margin-bottom-lg center">Transfer funds</h4>
 
-                    <div id="transfer__msg" class="center flex-direction-column">
-                       
-                       
-                        <span class="transfer__info-msg padding-bottom-sm">
-                            Transfer funds between your <span class="bold">wallet</span> and <span class="bold">bank</span>,
-                             or send funds to any <span class="bold">card</span> in your wallet.
-                        </span>
-                        <span class="transfer__info-msg padding-bottom-sm">
-                            To transfer to a <span class="bold">card</span> or <span class="bold"> cards </span>,
-                            click on the <span class="bold">desired card</span> 
-                        </span>
-                        
-                    </div>
-                
-                    <form action="" method="post" aria-labelledby="transfer__header" id="wallet-transfer-form" class="margin-top-md">
-                        <div id="transfer-details" class="two-column-grid">
-                            <div class="transfer-from flex-direction-column">
-                                <label for="transfer-from">Transfer from</label>
-                                <select name="transfer-from" id="transfer-from" required>
-                                    <option value="" disabled selected>Choose account to transfer from</option>
-                                    <option value="bank" id="transfer-from-bank">Bank</option>
-                                    <option value="wallet" id="transfer-from-wallet">Wallet</option>
-                                </select>
+                        <div class="four-column-grid" id="transfer-fund-amount">
+
+
+                            <div class="account-details">
+                                <span id="account-balance-type"
+                                    class="center padding-bottom-sm capitalize">Balance</span>
+                                <span id="transfer-card-fund-amount"
+                                    class="center padding-bottom-md red transfer-ui-details">£0.00</span>
                             </div>
-                
-                            <div class="flex-direction-column" id="transfer-to-select">
-                                <label for="transfer-to">Transfer to</label>
-                                <select name="transfer-to" id="transfer-to" required>
-                                    <option value="" disabled selected>Choose account to transfer to</option>
-                                    <option value="bank" id="transfer-to-bank">Bank</option>
-                                    <option value="wallet" id="transfer-to-wallet">Wallet</option>
-                                    <option value="cards">Cards</option>
-                                </select>
+
+                            <div class="transfer-details">
+                                <span id="transfer-amount-title" class="center padding-bottom-sm capitalize">
+                                    Transfer Amount
+                                </span>
+                                <span id="transfer-total-amount"
+                                    class="center padding-bottom-md red transfer-ui-details">
+                                    £0.00
+                                </span>
+                            </div>
+
+
+                            <div class="transfer-details">
+                                <span id="transfer-cards-title" class="center padding-bottom-sm capitalize">
+                                    Transfer Cards
+                                </span>
+                                <span id="transfer-cards-count"
+                                    class="center padding-bottom-md red transfer-ui-details">
+                                    0
+                                </span>
+                            </div>
+
+
+                            <div class="transfer-details">
+                                <span id="amount-per-card-title" class="center padding-bottom-sm capitalize">
+                                    Amount Per Card
+                                </span>
+                                <span id="amount-per-card" class="center padding-bottom-md red transfer-ui-details">
+                                    0
+                                </span>
+                            </div>
+
+
+                        </div>
+
+                        <div id="transfer__msg" class="center flex-direction-column">
+
+
+                            <span class="transfer__info-msg padding-bottom-sm">
+                                Transfer funds between your <span class="bold">wallet</span> and <span
+                                    class="bold">bank</span>,
+                                or send funds to any <span class="bold">card</span> in your wallet.
+                            </span>
+                            <span class="transfer__info-msg padding-bottom-sm">
+                                To transfer to a <span class="bold">card</span> or <span class="bold"> cards </span>,
+                                click on the <span class="bold">desired card</span>
+                            </span>
+
+                        </div>
+
+                        <form action="" method="post" aria-labelledby="transfer__header" id="wallet-transfer-form"
+                            class="margin-top-md">
+                            <div id="transfer-details" class="two-column-grid">
+                                <div class="transfer-from flex-direction-column">
+                                    <label for="transfer-from">Transfer from</label>
+                                    <select name="transfer-from" id="transfer-from" required>
+                                        <option value="" disabled selected>Choose account to transfer from</option>
+                                        <option value="bank" id="transfer-from-bank">Bank</option>
+                                        <option value="wallet" id="transfer-from-wallet">Wallet</option>
+                                    </select>
+                                </div>
+
+                                <div class="flex-direction-column" id="transfer-to-select">
+                                    <label for="transfer-to">Transfer to</label>
+                                    <select name="transfer-to" id="transfer-to" required>
+                                        <option value="" disabled selected>Choose account to transfer to</option>
+                                        <option value="bank" id="transfer-to-bank">Bank</option>
+                                        <option value="wallet" id="transfer-to-wallet">Wallet</option>
+                                        <option value="cards">Cards</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div id="transfer-input-field" class="flex-direction-column">
+                                <label for="transfer-amount-value">Amount</label>
+                                <input type="number" step="0.01" max="10000000" required min="0.01"
+                                    id="transfer-amount-value">
+                            </div>
+
+
+
+                            <div class="btn flex-end padding-top-sm">
+                                <button type="submit" class="capitalize btn-small"
+                                    id="wallet-transfer-btn">Transfer</button>
+                            </div>
+                        </form>
+
+                        <!-- The cards will be shown when the user toggles to card. It will be generated by JS -->
+                        <div id="wallet-cards" class="margin-top-md">
+                            cards to go here
+                        </div>
+                    </div>
+
+                    <div id="transfer-progress-container">
+                        <h2 class="center capitalize">EUSBC</h2>
+                        <h3 class="center capitalize" id="transfer-progress-header">Transferring funds</h3>
+
+                        <div class="transfer-fund-img center">
+                            <img src="static/images/icons/credit-card.svg" alt="" id="add-fund-icon"
+                                id="transfer-progress-img">
+                        </div>
+
+
+                        <div class="flex-space-between margin-top-md">
+                            <span id="transfer-progress-transfer-from" class="capitalize bold"></span>
+                            <span id="transfer-progress-transfer-to" class="capitalize bold"></span>
+                        </div>
+
+                        <div id="progressBar">
+                            <div id="progress">
+
                             </div>
                         </div>
 
-                        <div id="transfer-input-field" class="flex-direction-column">
-                            <label for="transfer-amount">Amount</label>
-                            <input type="number" step="0.01" max="10000000" required min="0.01" id="transfer-amount-value">
+                        <div class="percentage-done center capitalize">
+                            <p class="capitalize lighten-text" id="transfer-progression-status">transferring progress 0%
+                            </p>
+
                         </div>
 
-                      
-
-                        <div class="btn flex-end padding-top-sm">
-                            <button type="submit" class="capitalize btn-small" id="wallet-transfer-btn">Transfer</button>
+                        <div class="transfer-msg center margin-top-sm">
+                            <p id="transfer-waiting-msg">Transferring funds please wait....</p>
                         </div>
-                    </form>
-                
-                      <!-- The cards will be shown when the user toggles to card. It will be generated by JS -->
-                      <div id="wallet-cards" class="margin-top-md">
-                        cards to go here
-                     </div>
-                </div>
-                
-                <div id="transfer-progress-container">
-                    <h2 class="center capitalize">EUSBC</h2>
-                    <h3 class="center capitalize" id="transfer-progress-header">Transferring funds</h3>
-                    
-                    <div class="transfer-fund-img center">
-                        <img src="static/images/icons/credit-card.svg" alt="" id="add-fund-icon" id="transfer-progress-img">
-                    </div>
-                
 
-                    <div class="flex-space-between margin-top-md">
-                        <span id="transfer-progress-transfer-from" class="capitalize bold"></span>
-                        <span id="transfer-progress-transfer-to" class="capitalize bold"></span>
-                    </div>
-
-                    <div id="progressBar">
-                        <div id="progress">
-                            
+                        <div class="transfer-complete-btn center">
+                            <button type="button" class="btn-small" id="transfer-close-btn">Close</button>
                         </div>
                     </div>
 
-                    <div class="percentage-done center capitalize">
-                            <p class="capitalize lighten-text" id="transfer-progression-status">transferring progress 0%</p>
-                           
+                    <div id="sidebar-cards">
+                        <div class="spinner4"></div>
+                        <h2 class="center logo">EUSBC</h2>
+                        <h3 class="center margin-bottom-lg capitalize lighten-text">Payment card</h3>
+
+                        <div id="sidebar-card" class="margin-top-lg">
+                            <!-- Dynamically generated -->
+                        </div>
+
+                        <div id="card-info" class="left-align flex-direction-column margin-top-lg margin-bottom-lg">
+                            <!-- card info will be dynamically generated -->
+                        </div>
+
+                        <div id="sidebar-buttons" class="center">
+                            <button id="block-card" class="btn block-btn capitalize">block</button>
+                            <button id="transfer-card-amount" class="btn transfer-btn capitalize">Transfer</button>
+                            <button id="add" class="btn add-btn capitalize">Fund</button>
+                            <button id="delete" class="btn delete-btn capitalize">delete</button>
+                            <button id="close-card" class="btn close-btn capitalize">Close</button>
+                        </div>
+
                     </div>
 
-                    <div class="transfer-msg center margin-top-sm">
-                        <p id="transfer-waiting-msg">Transferring funds please wait....</p>
-                    </div>
-
-                    <div class="transfer-complete-btn center">
-                        <button type="button" class="btn-small" id="transfer-close-btn">Close</button>
-                    </div>
-                </div>
-
-                <div id="sidebar-cards">
-                    <div class="spinner4"></div>
-                    <h2 class="center logo">EUSBC</h2>
-                    <h3 class="center margin-bottom-lg capitalize lighten-text" >Payment card</h3>
-
-                    <div id="sidebar-card" class="margin-top-lg">
-                       <!-- Dynamically generated -->
-                    </div>
-
-                    <div id="card-info" class="left-align flex-direction-column margin-top-lg margin-bottom-lg">
-                       <!-- card info will be dynamically generated -->
-                    </div>
-
-                    <div id="sidebar-buttons" class="center">
-                        <button id="block-card" class="btn block-btn capitalize">block</button>
-                        <button id="transfer-card-amount" class="btn transfer-btn capitalize">Transfer</button>
-                        <button id="add" class="btn add-btn capitalize">Fund</button>
-                        <button id="delete" class="btn delete-btn capitalize">delete</button>
-                        <button id="close-card" class="btn close-btn capitalize">Close</button>
-                    </div>
-                    
-                </div>
-
-                  <!-- fund my card -->
-                  <div id="fund-my-card">
-                    <div class="window-close flex-end">
-                        <img src="static/images/icons/window-close.svg" alt="Window" class="icon window-close-icon" id="fund-card-close-icon">
-                    </div>
-                    <p class="error-msg red small-text center" id="fund-my-card-error">You cannot add funds because your card has been blocked</p>
-                    <h2 class="center logo">EUSBC</h2>
-                    <h3 class="center capitalize green">Fund my card</h3>
+                    <!-- fund my card -->
+                    <div id="fund-my-card">
+                        <div class="window-close flex-end">
+                            <img src="static/images/icons/window-close.svg" alt="Window" class="icon window-close-icon"
+                                id="fund-card-close-icon">
+                        </div>
+                        <p class="error-msg red small-text center" id="fund-my-card-error">You cannot add funds because
+                            your card has been blocked</p>
+                        <h2 class="center logo">EUSBC</h2>
+                        <h3 class="center capitalize green">Fund my card</h3>
                         <div class="header center">
-                           
+
                             <img src="static/images/icons/credit-card.svg" alt="" class="add-fund-icon">
                         </div>
-                       
+
 
                         <form action="" method="post" id="add-fund-form">
-                         
+
                             <div class="form-group flex-direction-column">
-                                <label for="amount">Amount</label>
-                                <input type="number" name="amount" id="fund-amount" required step="0.01" min="0.01" max="100000000">
+                                <label for="fund-amount">Amount</label>
+                                <input type="number" name="amount" id="fund-amount" required step="0.01" min="0.01"
+                                    max="100000000">
                             </div>
-                        
+
                             <button type="submit" id="fund-account-btn" class="margin-top-md btn-small">Fund</button>
                         </form>
-                        
-                 </div>
+
+                    </div>
+
+
+                    <!-- This section allows the transferring from a card to eiter another card, bank or wallet-->
+                    <div id="transfer-amount-card" class="transfer-card-wrapper">
+                        <span id="transfer-amount-card-error" class="small-text red center"></span>
+                        <span id="transfer-amount-card-msg"></span>
+                        <!-- Close Button -->
+                        <div class="window-close flex-end">
+                            <img src="static/images/icons/window-close.svg" alt="Window" class="icon window-close-icon"
+                                id="transfer-amount-card__window-close-icon"">
+                        </div>
+
+                        <h3 class="center capitalize">Transfer from card</h3>
+
+                        <!--  Summary Grid -->
+                        <div class="four-column-grid margin-top-lg margin-bottom-lg account-summary">
+                            <div id="transfer-card">
+                                <span class="center padding-bottom-sm capitalize" id="transfer-card__balance_label-text">Transfer card Balance</span>
+                                <span class="center padding-bottom-md red transfer-ui-details"
+                                    id="transfer-card__balance-amount">0</span>
+                            </div>
+
+                            <div class="transfer-details">
+                                <span class="center padding-bottom-sm capitalize" id="transfer-card__transfer-card-amount-label-text">Transfer card amount</span>
+                                <span class="center padding-bottom-md red transfer-ui-details"
+                                    id="transfer-card__card-amount">0</span>
+                            </div>
+
+                            <div class="account-details">
+                                <span class="center padding-bottom-sm capitalize" id="transfer-card__bank-balance-label-text">Bank Balance</span>
+                                <span class="center padding-bottom-md red transfer-ui-details"
+                                    id="transfer-card__bank-balance-amount">£0.00</span>
+                            </div>
+
+                            <div class="transfer-details">
+                                <span class="center padding-bottom-sm capitalize" id="transfer-card__wallet-balance-label-text">Wallet Balance</span>
+                                <span class="center padding-bottom-md red transfer-ui-details"
+                                    id="transfer-card__wallet-balance-amount">£0.00</span>
+                            </div>
+                        </div>
+
+                        <!-- Transfer Form + Section -->
+                        <div class="wrapper two-column-grid responsive-stack">
+
+                            <!-- Left Column – Transfer Form -->
+                            <div class="left-handside">
+                                <form id="transfer-amount-form">
+                                    <div class="form-group flex-direction-column">
+                                        <label for="card-transfer-amount" class="capitalize">Amount to transfer</label>
+                                        <input type="number" name="transfer-card-amount" id="card-transfer-amount"
+                                            required step="0.01" max="10000000" min="0.01">
+                                    </div>
+
+                                    <div class="form-group flex-direction-column">
+                                        <label for="select-transfer-type" class="capitalize">Select account to transfer
+                                            to</label>
+                                        <select name="transfer-amount" id="select-transfer-type">
+                                            <option value="" disabled selected></option>
+                                            <option value="bank">Bank</option>
+                                            <option value="wallet">Wallet</option>
+                                            <option value="cards">Cards</option>
+                                        </select>
+                                    </div>
+
+                                    <!-- to be generated by js. If the user has cards it will be generated when they select cards option -->
+                                    <div class="form-group flex-direction-column" id="select-card-div">
+                                        <label for="select-card" class="capitalize">Select card</label>
+                                        <select name="transfer-card" id="select-card">
+                                            <option value="" disabled selected></option>
+                                        </select>
+                                    </div>
+
+                                    <div class="flex-end margin-top-sm">
+                                        <button type="button" id="transfer-from-card-btn">Transfer</button>
+                                    </div>
+                                </form>
+
+                                <div class="img center">
+                                    <img src="static/images/icons/credit-card.svg" alt="credit-card" id="transfer-amount-card-img">
+                                </div>
+                            </div>
+
+                            <!--  Right Column – Transference Preview -->
+                            <div id="transference">
+                                <!-- <h1 class="capitalize highlight-text center red">Transferring from
+                                </h1> -->
+                                <div id="transferring-card">
+                                 
+                                </div>
+
+                                <div class="transference-arrow center">
+                                    <img src="static/images/icons/arrow-down.svg" class="arrow-down-icon"
+                                        alt="Arrow down">
+                                </div>
+
+                                <!-- <h1 class="capitalize margin-bottom-sm highlight-text center green">Transferring to
+                                </h1> -->
+                                <div id="transferring-to">
+                                  <p class="capitalize center">Nothing selected</p>  
+                                   
+                                </div>
+                            </div>
+
+                        </div> <!-- End Wrapper -->
+
+                    </div>
+
 
 
     </main>

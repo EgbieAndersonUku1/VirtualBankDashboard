@@ -13,7 +13,27 @@ export const config  = {
     NOTIFICATION_KEY: "notifications",
     isFundsUpdated: false,  
     loadFromCache: true,
+ 
 }
 
+
+export const openWindowsState = {
+
+    isTransferCardWindowOpen: false,
+    isRemoveCardWindowOpen: false,
+    isCardManagerWindowOpen: false,
+    isAddFundsWindowOpen: false,
+    isAddNewCardWindowOpen: false,
+
+    isAnyOpen: () => {
+            return openWindowsState.isTransferCardWindowOpen || 
+                        openWindowsState.isRemoveCardWindowOpen || 
+                        openWindowsState.isAddFundsWindowOpen || 
+                        openWindowsState.isAddFundsWindowOpen || 
+                        openWindowsState.isAddNewCardWindowOpen;
+        }
+        
+    
+}
 
 
