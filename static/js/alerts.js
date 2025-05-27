@@ -52,12 +52,14 @@ export const AlertUtils = {
         confirmButtonText = "Remove", 
         denyButtonText = "Don't remove", 
         title = "Do you want to remove these cards from your wallet?",
+        text  = "This action is irreversable and cannot be undone",
         icon = "info",
         cancelMessage = "Cards were not removed",
         messageToDisplayOnSuccess="removed!",
       } = {}) {
           return Swal.fire({
               title: title,
+              text: text,
               showDenyButton: showDenyButton,
               showCancelButton: showCancelButton,
               confirmButtonText: confirmButtonText,

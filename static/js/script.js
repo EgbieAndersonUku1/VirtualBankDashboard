@@ -45,7 +45,7 @@ import { handleTransferButtonClick,
 import { handleTransferCloseButton } from "./progress.js";
 import { handleSidBarCardClick,
         handleCloseCardManagerButton,
-        handleNotYetImplementedFunctionality,
+        handleSideBarDeleteCard,
         handleAddFundCardButtonClick,
         handleAddCloseButtonIconClick,
         handleTransferAmountButtonClick,
@@ -114,7 +114,7 @@ function handleEventDelegation(e) {
    handleTransferCloseIcon(e);
    handleSidBarCardClick(e);
    handleCloseCardManagerButton(e);
-   handleNotYetImplementedFunctionality(e);
+   handleSideBarDeleteCard(e);
    handleTransferBlock(e);
    handleAddFundCardButtonClick(e);
    handleAddCloseButtonIconClick(e);

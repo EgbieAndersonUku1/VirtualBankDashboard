@@ -185,17 +185,20 @@ export const walletDashboard = {
 };
 
 
-function updateAllWalletDashoardText(wallet) {
-    const profile = profileCache.getProfileData();
+export function updateAllWalletDashoardText(wallet, updateProfile=true) {
+   
     walletDashboard.updateNumOfCardsText(wallet);
     
-    try {
-        const fullName                = combineFirstAndLastName(toTitle(profile.firstName), toTitle(profile.surname));
-        walletNameElement.textContent = fullName;
-    } catch (error) {
-        walletNameElement.textContent = "User";
+    if (updateProfile) {
+        const profile = profileCache.getProfileData();
+        try {
+            const fullName                = combineFirstAndLastName(toTitle(profile.firstName), toTitle(profile.surname));
+            walletNameElement.textContent = fullName;
+        } catch (error) {
+            walletNameElement.textContent = "User";
+        }
     }
-
+  
     walletDashboard.updateWalletAccountBalanceText(wallet);
     walletDashboard.updateBankAccountBalanceText(wallet);
     walletDashboard.updateTotalCardAmountText(wallet);

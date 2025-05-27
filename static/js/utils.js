@@ -584,3 +584,21 @@ export function formatCurrency(amount, locale='en-GB', currency='GBP') {
       maximumFractionDigits: 2,
     });
 }
+
+
+export function parseErrorMessage(errorMsg) {
+    if (typeof errorMsg !== "string") return null;
+
+    const [titleRaw, textRaw] =  errorMsg.split(":");
+
+    if (titleRaw === undefined || textRaw === undefined) {
+        return {title: "Oops, something went wrong", text: ""};
+    }
+
+    const title  = titleRaw.trim();
+    const text   = textRaw.trim();
+
+    return {title, text}
+    
+} 
+

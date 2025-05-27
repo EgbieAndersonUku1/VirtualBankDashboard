@@ -112,6 +112,7 @@ export class Card extends DataStorage {
 
     static deleteCard(cardNumber) {
         const cardDetails = getLocalStorage(CARD_STORAGE_KEY);
+
         if (Array.isArray(cardDetails) || typeof cardDetails !== "object") {
             logError("wallet.deleteCard", `Expected an object but got type ${typeof cardDetails}`);
             return null;
@@ -123,11 +124,14 @@ export class Card extends DataStorage {
             return;
         }
         if (card.isBlocked) {
-            throw new Error(`The card with number #${card.cardNumber} couldn't be deleted because it has been blocked. Unblock and try again`);
+            throw new Error(`Card Blocked: Card #${card.cardNumber} cannot be deleted because it is currently blocked. Please unblock the card and try again.`);
         } 
 
-        const userCard = cardDetails[CARD_STORAGE_KEY][cardNumber];
-        const updatedCardDetails = excludeKey(userCard, cardNumber);
+        if (card.balance > 0) {
+            throw new Error(`Card Not Empty: Card #${card.cardNumber} cannot be deleted because it still has a balance. Please transfer the remaining funds before trying again.`);
+        }
+        
+        const updatedCardDetails  = excludeKey(cardDetails, cardNumber);
         setLocalStorage(CARD_STORAGE_KEY, updatedCardDetails);
         return true;
 
@@ -351,4 +355,5 @@ export class Card extends DataStorage {
         
     }
 
+   
 }

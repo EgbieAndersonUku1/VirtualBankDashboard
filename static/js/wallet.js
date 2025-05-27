@@ -932,11 +932,15 @@ export class Wallet extends DataStorage {
      * saving by setting `save` to `false`, which is useful when performing 
      * multiple deletions.
      * 
+     * Note, this only removes the card from the wallet not from the localStorage.
+     * To remove the card from the localStorage as well as the wallet call the
+     * method `removeCardCompletely`
+     * 
      * @param {string} cardNumber - The card number to be removed.
      * @param {boolean} [save=true] - Whether to save changes immediately.
      * @throws {Error} If the card number is not a valid string.
      */
-    removeCard(cardNumber, save = true) {
+    removeCardInWallet(cardNumber, save = true) {
         if (typeof cardNumber !== "string" || !cardNumber.trim()) {
             throw new Error(`Invalid card number. Expected a non-empty string but got ${typeof cardNumber}`);
         }
@@ -945,7 +949,7 @@ export class Wallet extends DataStorage {
             return;
         }
 
-        this._cards = excludeKey(this._cards, cardNumber);
+        this._cards      = excludeKey(this._cards, cardNumber);
         this._cardNumbers = excludeKey(this._cardNumbers, cardNumber);
 
         this._deductTotalCardsByOne();
@@ -962,11 +966,38 @@ export class Wallet extends DataStorage {
      * 
      * This method clears all cards stored in the wallet, resets the total card count to zero,
      * and saves the changes to persistent storage.
+     * 
+     * Note, this only removes the cards from the wallet not from the localStorage.
+     * To remove the card from the localStorage as well as the wallet call the
+     * method `removeCardCompletely`
      */
-    removeAllCards() {
+    removeAllCardsInWallet() {
         this._cards      = {};
         this._totalCards = 0;
         this.save()
+    }
+
+    /**
+     * Removes a card completely from both the wallet and persistent storage.
+     *
+     * This method ensures the card is removed from the in-memory wallet (e.g. UI state)
+     * and from the persistent store (e.g. localStorage or database).
+     * 
+     * Developers should use this method instead of calling `removeCard` and `Card.deleteCard` separately,
+     * to ensure consistency and prevent orphaned data.
+     *
+     * @param {string} cardNumber - The unique identifier of the card to remove.
+     */
+    removeCardCompletely(cardNumber) {
+         
+        try {
+            Card.deleteCard(cardNumber);   
+        } catch (error) {
+            throw new Error(error.message);
+        }
+        
+        // only delete the virtual wallet copy if the actually card was successfully deleted by the Card class
+        this.removeCardInWallet(cardNumber);         
     }
 
     /**
@@ -1017,7 +1048,7 @@ export class Wallet extends DataStorage {
         for (const cardNumber of cardNumberKeysCopy) {
             if (this._cardNumbers[cardNumber]?.flaggedForRemoval) {
                 removalCardIds.push(this._cardNumbers[cardNumber]?.id?.toString().trim());
-                this.removeCard(cardNumber, false);        // false = Disable the ability to save it on every removal.
+                this.removeCardInWallet(cardNumber, false);        // false = Disable the ability to save it on every removal.
             }
         }
 

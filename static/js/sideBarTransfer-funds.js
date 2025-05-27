@@ -505,7 +505,6 @@ export function handleCardTransferAmountFormButtonClick(e) {
             transferToRightInstitution(amount);  
 
         } catch (error) {
-            console.log(amount)
             handleAlertMessage(error.message);
             return;
         }
@@ -557,7 +556,7 @@ function transferToRightInstitution(amountToTransfer) {
     }
 
  
-    ({ wallet, bankAccount } = getWalletAndBankAccount()); // Ensure we using the latest data;
+    ({ wallet, bankAccount } = getWalletAndBankAccount()); // Ensure we using the latest data
     
 
     switch(CardTransfer.transferringTo) {

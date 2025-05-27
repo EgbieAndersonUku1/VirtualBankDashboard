@@ -3,9 +3,11 @@ import { Card } from "./card.js";
 import { cards } from "./cardsComponent.js";
 import { logError, warnError } from "./logger.js";
 import { AlertUtils } from "./alerts.js";
-import { prepareCardData } from "./walletUI.js";
-import { maskCreditCardNo } from "./utils.js";
-import { openWindowsState } from "./config.js";
+import { prepareCardData, loadUserCardsInUI, walletDashboard, updateAllWalletDashoardText } from "./walletUI.js";
+import { maskCreditCardNo, parseErrorMessage } from "./utils.js";
+import { openWindowsState, config } from "./config.js";
+import { Wallet } from "./wallet.js";
+import { notificationManager } from "./notificationManager.js";
 
 
 const sideBarCardsManagerElement         = document.getElementById("sidebar-cards");
@@ -14,12 +16,13 @@ const cardInfoDivElement                 = document.getElementById("card-info");
 const fundMyCardElement                  = document.getElementById("fund-my-card");
 const fundMyCardCloseElement             = document.getElementById("fund-card-close-icon");
 const transferCardAmountContainerElement = document.getElementById("transfer-amount-card");
-const transferringCardAreaElement        = document.getElementById("transferring-card")
+const transferringCardAreaElement        = document.getElementById("transferring-card");
 
 
 
 export const selectedSidebarCard = {};
-  
+
+notificationManager.setKey(config.NOTIFICATION_KEY);
 
 validatePageElements();
 
@@ -206,7 +209,6 @@ function createCardSpan(field) {
     spanInner.textContent = ` ${field.label}`;
     const textNode        = document.createTextNode(field.value);   
    
-
     spanInner.classList.add("bold", "capitalize");
     elementSpan.appendChild(spanInner);
     elementSpan.appendChild(textNode);
@@ -281,6 +283,11 @@ function toggleCardManagerDiv(show=true) {
     
     }
 
+    // when the card window is closed the card manager window is set to false.
+    if (!show) {
+        openWindowsState.isCardManagerWindowOpen = false;
+    }
+
     show ? sideBarCardsManagerElement.classList.add("show") : sideBarCardsManagerElement.classList.remove("show")
 }
 
@@ -325,16 +332,28 @@ function showInvalidCardAlertMsg() {
 
 
 // Not yet implemented
-export function handleNotYetImplementedFunctionality(e) {
+export async function handleSideBarDeleteCard(e) {
 
     const DELETE_BUTTON_ID   = "delete";
 
     if (  e.target.id === DELETE_BUTTON_ID) {
-        AlertUtils.showAlert({title: "Not yet implemented",
-            text: "You seeing this because the functionality is not yet implemented",
-            icon: "info",
-            confirmButtonText: "Ok"
-        })
+      
+        try {
+
+            const resp = await AlertUtils.showConfirmationAlert({
+                                title: "Delete card confirmation",
+                                text: "Are you sure want to delete card?. This action is irreversable and cannot be undone.",
+                                icon: "warning",
+                                cancelMessage: "The card was not deleted",
+                                messageToDisplayOnSuccess: "The card was successfully deleted"
+                            })
+           
+            handleCardDeletion(resp)
+
+        } catch (error) {
+            handleDeleteCardError(error.message);
+            return;
+        }
     }
 
 }
@@ -343,7 +362,7 @@ export function handleTransferAmountButtonClick(e) {
     const TRANSFER_BUTTON_ID = "transfer-card-amount";
   
     if (e.target.id === TRANSFER_BUTTON_ID) {
-        // console.log("clicked");
+      
         transferCardAmountContainerElement.classList.add("show");
         
         toggleCardManagerDiv(false);
@@ -377,6 +396,8 @@ export function handleAddFundCardButtonClick(e) {
 }
 
 
+
+
 export function handleAddCloseButtonIconClick(e) {
     const ADD_FUND_ID = "fund-card-close-icon";
 
@@ -387,11 +408,70 @@ export function handleAddCloseButtonIconClick(e) {
 }
 
 
-
-
 function toggleAddMyCardForm(show) {
     show ? fundMyCardElement.classList.add("show") : fundMyCardElement.classList.remove("show");
 }
+
+
+
+async function handleCardDeletion(resp) {
+
+    if (!resp) {
+        return;
+    }
+
+
+    const cardNumber = getSelectedSidebarCardState().lastCardClickeCardNumber;
+
+    if (!cardNumber) {
+        logError("handleCardDeletion", "The card number was not found. Card not should be display since it was clicked on")
+        return;
+    }
+   
+
+    // remove the card from the wallet
+    const wallet = Wallet.loadWallet(config.SORT_CODE, config.ACCOUNT_NUMBER);
+    if (!wallet) {
+        logError("handleSideBarDeleteCard", "The wallet instance wasn't found");
+        return;
+    }
+   
+    try {
+        wallet.removeCardCompletely(cardNumber);
+    } catch (error) {
+        handleDeleteCardError(error.message);
+        return;
+    }
+   
+    loadUserCardsInUI(wallet);
+    
+    updateAllWalletDashoardText(wallet, false);
+    toggleCardManagerDiv(false);
+
+    notificationManager.add(`Card #${cardNumber} was successfully removed from localStorage and the wallet`);
+}
+
+
+
+function handleDeleteCardError(msg) {
+
+    if (!msg) {
+        return;
+    }
+
+    const errorMsg = parseErrorMessage(msg);
+
+    AlertUtils.showAlert({
+        title: errorMsg.title,
+        text: errorMsg.text,
+        icon: errorMsg.text !== "" ? "warning": "error",
+        confirmButtonText: "Ok!"
+    })
+
+}
+
+
+
 
 
 function validatePageElements() {
