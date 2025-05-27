@@ -954,7 +954,7 @@ class Wallet extends DataStorage {
      * @param {string} cardNumber - The card number to be removed.
      * @throws {Error} If the card number is not a valid string.
      */
-    removeCard(cardNumber) {
+    removeCardInWallet(cardNumber) {
         if (typeof cardNumber !== "string" || !cardNumber.trim()) {
             throw new Error(`Invalid card number. Expected a non-empty string but got ${typeof cardNumber}`);
         }
@@ -1746,7 +1746,7 @@ function removeSingleCardFromWalletTest(card, wallet) {
     console.log(`💳 Attempting to remove card belonging to: ${card.cardHolderName} (Card Number: ${card.cardNumber})`);
 
     console.log("🔄 Removing card from the wallet...");
-    wallet.removeCard(card.cardNumber);
+    wallet.removeCardInWallet(card.cardNumber);
 
     if (wallet.numOfCardsInWallet < initialNumOfCards) {
         console.log(`✅ Test Successful: Card removed successfully. Total cards remaining: ${wallet.numOfCardsInWallet}`);

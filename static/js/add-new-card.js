@@ -167,10 +167,13 @@ export function handleCVCInputField(e) {
 function addCardToUIWallet(wallet, card) {
 
     try {
+
+          
         const isCardAdded = wallet.addCardToWallet(card.cardNumber);
+      
         if (!isCardAdded) {
             
-            const error = "Something went wrong and the card wasn't added to the wallet";
+            const error = `Something went wrong and the card wasn't added to the wallet. Tried to add card number ${card} `;
             logError("handleCardFormSubmission", error);
             showFormErrorMsg(true, error.message);
             return false;
