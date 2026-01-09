@@ -1,0 +1,368 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
+
+* {
+    border: 0;
+    padding: 0;
+    margin: 0;
+}
+
+
+
+:root {
+ --main-page-width: 90%;
+ --green-600: #16A34A;
+ --blue-600: #2563EB;
+  --space-0: 0;
+  --space-4: 4px;
+  --space-8: 8px;
+  --space-12: 12px;
+  --space-16: 16px;
+  --space-20: 20px;
+  --space-24: 24px;
+  --space-32: 32px;
+  --space-40: 40px;
+  --space-48: 48px;
+  --box-shadow-primary: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;
+  --box-shadow-secondary:box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+}
+
+
+
+h1,
+h2,
+h3,
+h4,
+h5,
+a,
+p {
+    padding: 0;
+    margin: 0;
+}
+
+a {
+    text-decoration: none;
+    cursor: pointer;
+}
+
+html,
+body {
+    height: 100%;
+    overflow-x: hidden;
+
+    font-family: "Poppins", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+
+    background-image: url("../images/background.png");
+    background-size: cover;
+    background-repeat: no-repeat;
+    min-height: 100vh;
+
+
+}
+
+
+/* All sides */
+.m-0  { margin: var(--space-0); }
+.m-4  { margin: var(--space-4); }
+.m-8  { margin: var(--space-8); }
+.m-12 { margin: var(--space-12); }
+.m-16 { margin: var(--space-16); }
+.m-20 { margin: var(--space-20); }
+.m-24 { margin: var(--space-24); }
+.m-32 { margin: var(--space-32); }
+.m-40 { margin: var(--space-40); }
+.m-48 { margin: var(--space-48); }
+
+/* Top */
+.mt-4  { margin-top: var(--space-4); }
+.mt-8  { margin-top: var(--space-8); }
+.mt-16 { margin-top: var(--space-16); }
+.mt-24 { margin-top: var(--space-24); }
+.mt-48 {margin-top: var(--space-48);}
+
+/* Right */
+.mr-4  { margin-right: var(--space-4); }
+.mr-8  { margin-right: var(--space-8); }
+.mr-16 { margin-right: var(--space-16); }
+
+/* Bottom */
+.mb-4  { margin-bottom: var(--space-4); }
+.mb-8  { margin-bottom: var(--space-8); }
+.mb-16 { margin-bottom: var(--space-16); }
+
+/* Left */
+.ml-4  { margin-left: var(--space-4); }
+.ml-8  { margin-left: var(--space-8); }
+.ml-16 { margin-left: var(--space-16); }
+
+/* Horizontal & Vertical */
+.mx-8  { margin-left: var(--space-8); margin-right: var(--space-8); }
+.my-8  { margin-top: var(--space-8); margin-bottom: var(--space-8); }
+
+
+/* All sides */
+.p-4  { padding: var(--space-4); }
+.p-8  { padding: var(--space-8); }
+.p-16 { padding: var(--space-16); }
+.p-24 { padding: var(--space-24); }
+.p-48 { padding: var(--space-48); }
+
+/* Top */
+.pt-8  { padding-top: var(--space-8); }
+.pt-16 { padding-top: var(--space-16); }
+
+/* Right */
+.pr-8  { padding-right: var(--space-8); }
+
+/* Bottom */
+.pb-8  { padding-bottom: var(--space-8); }
+
+/* Left */
+.pl-8  { padding-left: var(--space-8); }
+
+/* Horizontal & Vertical */
+.px-16 { padding-left: var(--space-16); padding-right: var(--space-16); }
+.py-16 { padding-top: var(--space-16); padding-bottom: var(--space-16); }
+
+img {
+    cursor: pointer;
+}
+
+img:hover {
+    opacity: 0.8;
+}
+
+.bold {
+    font-weight: bold;
+}
+
+.light-bold {
+    font-weight: 500;
+}
+
+.capitalise {
+    text-transform: capitalize;
+}
+
+.text-uppercase {
+    text-transform: uppercase;
+}
+
+#virtual-bank-logo {
+    font-size: 1.2rem;
+}
+
+/* Flex variables */
+
+.flex {
+    display: flex;
+}
+
+.flex-space-between {
+    justify-content: space-between;
+}
+
+
+.flex-grid {
+    display: grid;
+}
+
+.two-column-grid {
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: auto;
+}
+
+.three-column-grid {
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: auto;   
+}
+
+.four-column-grid {
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: auto;
+}
+
+.five-column-grid {
+    grid-template-columns: repeat(5, 1fr);
+    grid-template-rows: auto;
+}
+
+
+.two-column-40_60_grid {
+    grid-template-columns: 40% 60%;
+    grid-template-rows: auto;
+}
+
+
+
+nav {
+    width: var(--main-page-width);
+    border-bottom: 2px solid lavender;
+    padding-bottom: var(--space-4);
+    margin-bottom: var(--space-8);
+}
+
+
+header {
+position: relative;
+  top: var(--space-12);
+  left: 4%;
+  right: 0;
+  margin-bottom: 150px;
+}
+
+
+
+
+
+#call-to-action {
+    padding-top: 5px;
+}
+
+.call-to-action__container {
+    width: var(--main-page-width);
+    margin: auto;
+}
+
+#call-to-action-img {
+    width: 100%;
+    height: 1000px;
+    position: relative;
+    bottom: 290px;
+  
+}
+
+
+.call-to-action__container__info p {
+    font-size: 1.1rem;
+    line-height: 2;
+}
+
+.call-to-action__container__h1 {
+    font-size: 2.2rem;
+    text-transform: capitalize;
+    font-weight: 800;
+}
+
+.call-to-action__button {
+    padding: 10px;
+    width: 45%;
+
+}
+
+.buttom-md {
+    width: 40%;
+    border: 1px solid black;
+}
+
+
+.center {
+    text-align: center;
+    justify-content: center;
+    display: flex;
+    align-items: center;
+}
+
+.call-to-action__button {
+    text-align: center;
+}
+
+#get-started-btn {
+    background: var(--green-600);
+    color: white;
+}
+
+#watch-demo-btn {
+    background: var(--blue-600);
+    color: white;
+}
+
+.nav-link {
+    color: black;
+    cursor: pointer;
+}
+
+.nav-link:hover {
+    transform: scale(1.1);
+    color: #2563EB;
+}
+
+.authenticate-btns {
+    width: 100%;
+    padding-left: 10px;
+    padding-right: 10px;
+  
+}
+
+#login-btn {
+   
+    background: var(--blue-600);
+    border-radius: 4%;
+}
+
+#sign-btn {
+    background: var(--green-600);
+}
+
+#learn-more-btn,
+#login-btn {
+   
+    background: var(--blue-600);
+    color: white;
+   
+}
+
+#signup-btn {
+    background: var(--green-600);
+    color: white;
+    border-radius: 4%;
+}
+
+#signup-btn,
+#login-btn {
+    padding: var(--space-4);
+}
+
+.call-to-action__button {
+    border-radius: 4%;
+}
+
+
+
+
+#main-image {
+    position: absolute;
+    top: 0;
+    width: 100%;
+   
+   
+}
+
+#main-image:hover {
+    transform: scale(1.01);
+    opacity: 0.9;
+}
+
+.text-muted {
+  color: #6c757d;
+}
+
+
+.white-text {
+    color: white;
+}
+
+
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap; /* Prevent line breaks */
+  border: 0;
+}
