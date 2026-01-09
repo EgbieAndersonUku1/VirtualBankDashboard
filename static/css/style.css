@@ -4,6 +4,7 @@
     border: 0;
     padding: 0;
     margin: 0;
+    scroll-behavior: smooth;
 }
 
 
@@ -147,6 +148,12 @@ img:hover {
 
 .text-uppercase {
     text-transform: uppercase;
+}
+
+.center {
+    text-align: center;
+    justify-content: center;
+    align-items: center;
 }
 
 #virtual-bank-logo {
@@ -365,4 +372,68 @@ position: relative;
   clip: rect(0, 0, 0, 0);
   white-space: nowrap; /* Prevent line breaks */
   border: 0;
+}
+
+
+.logo {
+    width: 300px;
+    position: absolute;
+    top: 0;
+    transform: translate(-64px, -82px);
+    left: 0;
+    height: 212px;
+}
+
+
+
+/* Features */
+#features {
+    position: relative;
+    bottom: 420px;
+    
+}
+
+
+.features__container {
+    width: var(--main-page-width);
+    margin: auto;
+}
+
+.features__container h1 {
+   font-family: "Montserrat", sans-serif;
+}
+
+.feature-card-img {
+    height: 180px;
+    width: 180px;
+    
+}
+
+
+.features__cards .card {
+    border: 1px solid lavender;
+    background: white;
+    padding: var(--space-24);
+    column-gap: 48px;
+    font-family: "Montserrat", sans-serif;
+    box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 3px, rgba(0, 0, 0, 0.24) 0px 1px 2px;
+}
+
+.features__cards .card .card-title h1 {
+    transform: translate(16px, 50%);
+    font-size: 1.4rem;
+     
+}
+
+.features__cards .card .body p {
+    line-height: 1.7;
+    font-size: 1.1rem;
+    font-weight: 500;
+    transform: translateY(-30px);
+}
+
+#features__h1 {
+    font-size: 3rem;
+    font-weight: 500;
+    text-transform: capitalize;
 }
