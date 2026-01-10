@@ -1,15 +1,16 @@
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
 
 * {
     border: 0;
     padding: 0;
     margin: 0;
+    scroll-behavior: smooth;
 }
 
 
 
 :root {
- --main-page-width: 90%;
+ --main-page-width: 85%;
  --green-600: #16A34A;
  --blue-600: #2563EB;
   --space-0: 0;
@@ -24,6 +25,9 @@
   --space-48: 48px;
   --box-shadow-primary: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;
   --box-shadow-secondary:box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+  --box-shadow-tietary: rgba(0, 0, 0, 0.12) 0px 1px 3px, rgba(0, 0, 0, 0.24) 0px 1px 2px;
+  --gradient-blue: linear-gradient(135deg, #0F4C81 0%, #1CB5E0 100%);
+
 }
 
 
@@ -53,7 +57,7 @@ body {
     font-weight: 400;
     font-style: normal;
 
-    background-image: url("../images/background.png");
+    background-image: url("../images/background-3.png");
     background-size: cover;
     background-repeat: no-repeat;
     min-height: 100vh;
@@ -117,6 +121,8 @@ body {
 
 /* Bottom */
 .pb-8  { padding-bottom: var(--space-8); }
+.pb-16  { padding-bottom: var(--space-16); }
+.pb-24  { padding-bottom: var(--space-24); }
 
 /* Left */
 .pl-8  { padding-left: var(--space-8); }
@@ -149,9 +155,38 @@ img:hover {
     text-transform: uppercase;
 }
 
+.center {
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+}
+
+.header-1 {
+    font-size: 2.2rem;
+    font-weight: 300;
+}
+
+.header-2 {
+    font-size: 2rem;
+    font-weight: 300;
+}
+
+
+.header-3 {
+    font-size: 1.7rem;
+    font-weight: 300;
+}
+
 #virtual-bank-logo {
     font-size: 1.2rem;
 }
+
+.font-lg {
+    font-size: 2rem;
+    font-weight: 400;
+   
+}
+
 
 /* Flex variables */
 
@@ -194,6 +229,11 @@ img:hover {
     grid-template-rows: auto;
 }
 
+.two-column-30_70_grid {
+    grid-template-columns: 30% 70%;
+    grid-template-rows: auto;
+}
+
 
 
 nav {
@@ -209,7 +249,7 @@ position: relative;
   top: var(--space-12);
   left: 4%;
   right: 0;
-  margin-bottom: 150px;
+  margin-bottom: 70px;
 }
 
 
@@ -217,7 +257,10 @@ position: relative;
 
 
 #call-to-action {
-    padding-top: 5px;
+    padding-top: var(--space-48);
+     background-size: cover;
+    background-repeat: no-repeat;
+    min-height: 100vh;
 }
 
 .call-to-action__container {
@@ -229,10 +272,14 @@ position: relative;
     width: 100%;
     height: 1000px;
     position: relative;
-    bottom: 290px;
+    bottom: 313px;
   
 }
 
+.call-to-action__container__info {
+    position: relative;
+    top: 40px;
+}
 
 .call-to-action__container__info p {
     font-size: 1.1rem;
@@ -365,4 +412,253 @@ position: relative;
   clip: rect(0, 0, 0, 0);
   white-space: nowrap; /* Prevent line breaks */
   border: 0;
+}
+
+
+.footer-logo {
+  width: 300px;   
+    position: relative;
+    right: 73px;
+    top: 50px;
+}
+
+
+.logo {
+    width: 300px;
+    position: absolute;
+    top: 0;
+    transform: translate(-64px, -82px);
+    left: 0;
+    height: 212px;
+}
+
+
+
+/* Features */
+#features {
+    position: relative;
+    bottom: 530px;
+    
+    
+}
+
+#features-card-3 {
+      background-image: url("../images/background-2.png");
+}
+
+.features__container {
+    width: var(--main-page-width);
+    margin: auto;
+}
+
+.features__container h1 {
+   font-family: "Montserrat", sans-serif;
+}
+
+.features__h1 {
+    text-transform: capitalize;
+    margin-top: 100px;
+}
+
+.feature-card-img {
+    height: 180px;
+    width: 180px;
+    
+}
+
+#feature-cards-2 {
+    
+    background-image: url("../images/background-2.png");
+}
+.features__cards {
+    column-gap: var(--space-48);
+}
+
+.features__cards .card {
+    border: 1px solid lavender;
+    background: white;
+    padding: var(--space-16);
+    column-gap: 48px;
+    font-family: "Montserrat", sans-serif;
+    box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 3px, rgba(0, 0, 0, 0.24) 0px 1px 2px;
+    border-radius: 2%;
+    
+   
+}
+
+.features__cards .card .card-title h1 {
+    transform: translate(5px, 50%);
+    font-size: 1.2rem;
+     
+}
+
+.features__cards .card .body p {
+    line-height: 1.7;
+    font-size: 1.1rem;
+    font-weight: 500;
+    transform: translateY(-3px);
+}
+
+.features__h1 {
+    font-size: 2rem;
+    font-weight: 600;
+    text-transform: capitalize;
+    margin-top: 100px;
+}
+
+
+
+#feature-cards-3,
+#feature-cards-2 {
+    background: white;
+    column-gap: var(--space-32);
+    box-shadow: var(--box-shadow-tietary);
+    border-radius: 1%;
+}
+
+#feature-cards-2 .card .card-footer,
+#feature-cards-3 .card .card-footer {
+    transform: translate(-5px, 20%);
+}
+
+.border-right {
+    border-right: 3px solid lavender;
+    padding-right: 20px;
+}
+
+.card-footer h1 {
+    font-size: 1.9rem;
+    font-weight: 500;
+    
+}
+
+.security__subtext, 
+.features__subtext {
+    font-size: 1.3rem;
+}
+
+#virtual-bank-banner {
+     
+    position: relative;
+    bottom: 430px;
+
+}
+
+
+
+.virtual-bank-banner__container{
+
+    padding-top: 24px;
+    padding-bottom: 24px;
+    background: white;
+    width: var(--main-page-width);
+    margin: auto;
+}
+
+
+footer {
+   background:
+  linear-gradient(
+    180deg,
+    rgba(79,163,255,0.25) 0%,
+    rgba(15,31,58,0.9) 0%,
+    #0B1220 60%,
+    #080E1A 100%
+  );
+  font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+
+
+}
+
+.footer__container {
+    width: var(--main-page-width);
+    margin: auto;
+    color: white;
+    position: relative;
+    top: -63px;
+    
+}
+
+.footer-head {
+    font-size: 1rem;
+    text-transform: uppercase;
+    font-weight: 400;
+
+}
+
+#footer-sections {
+
+    border-top: 1px solid #6c757d;
+    border-bottom: 1px solid #6c757d;
+    padding-top: 40px;
+    padding-bottom: 40px;
+    padding-right: 10px;
+    padding-left: 10px;
+}
+
+
+#footer-sections div {
+    border-right: 0.7px solid #6c757d;;
+    padding-left: 20px;
+}
+
+#footer-sections div:nth-child(1) {
+    border-right: 1px solid #b3b4b4;
+    padding-left: 0;
+
+}
+
+#footer-sections div:last-child {
+    border-right: none;
+}
+
+
+.footer-link {
+    color: white;
+    padding-top: var(--space-8);
+    padding-bottom: var(--space-8);
+    font-size: 0.85rem;
+    text-transform: capitalize;
+}
+
+.footer-link:nth-child(1) {
+    padding-top: var(--space-32);
+}
+
+#apps {
+    column-gap: var(--space-8);
+   
+    transform: translate(-28px, 12px);
+}
+
+
+.social-icon {
+    height: 24px;
+    width: 24px;
+    opacity: 0.8;
+}
+
+
+.socials {
+    column-gap: 16px;
+}
+
+.copyright,
+.socials {
+     margin-top: var(--space-8);
+}
+
+
+
+.copyright-link {
+    border-right: 2px solid white;
+    padding-right: var(--space-16);
+    padding-left: var(--space-16);
+    color: white;
+    font-size: 0.85rem;
+    text-transform: capitalize;
+}
+
+.copyright-link:last-child {
+    border-right: none;
 }

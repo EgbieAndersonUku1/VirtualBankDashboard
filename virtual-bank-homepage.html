@@ -6,42 +6,50 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="static/css/style.css">
     <link rel="stylesheet" href="static/vendor/fontawesome/css/all.min.css">
+    <link rel="shortcut icon" href="static/images/virtual-bank-logo.png" type="image/x-icon">
     <title>Virtual banking</title>
 </head>
 
 <body>
 
-  <header>
-  <nav aria-label="Main navigation">
-    <div class="nav-container flex-grid two-column-grid">
-      
-      <!-- Logo / Home Link -->
-      <div class="head">
-        <a href="#" class="nav-link pt-8 bold" id="virtual-bank-logo">
-          <span class="sr-only">EUSBC Virtual Banking Home</span>
-          EUSBC Virtual Banking
-        </a>
-      </div>
+    <header>
+        <nav aria-label="Main navigation">
+            <div class="nav-container flex-grid two-column-grid">
 
-      <!-- Navigation Links -->
-      <div class="body flex-grid two-column-grid">
-        <a href="#" class="nav-link light-bold capitalise" id="wallet-home-link">
-          Wallet Home
-        </a>
+                <!-- Logo / Home Link -->
+                <div class="head">
+                    <a href="#" class="nav-link pt-8 bold" id="virtual-bank-logo">
+                        <img src="static/images/virtual-bank-logo.png" alt="The virtual logo" class="logo">
 
-        <!-- Authentication Buttons -->
-        <div class="authentication-btns flex-grid two-column-grid" role="group" aria-label="Authentication options">
-          <a href="#" class="nav-link center authenticate-btns text-uppercase" id="login-btn">
-            Login
-          </a>
-          <a href="#" class="nav-link center authenticate-btns text-uppercase" id="signup-btn">
-            Sign Up
-          </a>
-        </div>
-      </div>
-    </div>
-  </nav>
-</header>
+                    </a>
+                </div>
+
+                <!-- Navigation Links -->
+                <div class="body flex-grid four-column-grid">
+                    <a href="#" class="nav-link light-bold capitalise" id="wallet-home-link">
+                        Home
+                    </a>
+                    <a href="#" class="nav-link light-bold capitalise" id="wallet-home-link">
+                        Features
+                    </a>
+                    <a href="#" class="nav-link light-bold capitalise" id="wallet-home-link">
+                        Wallet Home
+                    </a>
+
+                    <!-- Authentication Buttons -->
+                    <div class="authentication-btns flex-grid two-column-grid" role="group"
+                        aria-label="Authentication options">
+                        <a href="#" class="nav-link center authenticate-btns text-uppercase" id="login-btn">
+                            Login
+                        </a>
+                        <a href="#" class="nav-link center authenticate-btns text-uppercase" id="signup-btn">
+                            Sign Up
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </header>
 
 
 
@@ -49,60 +57,307 @@
     <main>
 
 
-    <section id="call-to-action" aria-labelledby="cta-heading">
-  <div class="call-to-action__container flex-grid two-column-40_60_grid">
+        <section id="call-to-action" aria-labelledby="cta-heading">
+            <div class="call-to-action__container flex-grid two-column-40_60_grid">
 
-    <!-- Text Content -->
-    <div class="call-to-action__container__info">
-      <h1 id="cta-heading" class="call-to-action__container__h1 capitalise">
-        The future of banking is here
-      </h1>
+                <!-- Text Content -->
+                <div class="call-to-action__container__info">
+                    <h1 id="cta-heading" class="call-to-action__container__h1 capitalise">
+                        The future of banking is here
+                    </h1>
 
-      <p class="mt-24">
-        Manage your finances with ease in our secure virtual bank.
-      </p>
-      <p>
-        Create wallets, transfer money, top up credit cards, and much more.
-      </p>
+                    <p class="mt-24">
+                        Manage your finances with ease in our secure virtual bank.
+                    </p>
+                    <p>
+                        Create wallets, transfer money, top up credit cards, and much more.
+                    </p>
 
-      <hr>
+                    <hr>
 
-      <!-- Call-to-action buttons -->
-      <div class="call-to-action__container__buttons flex mt-24" role="group" aria-label="Call to action buttons">
-        <a href="#" class="button-md call-to-action__button mr-4" id="get-started-btn">
-          <span aria-hidden="true">
-            <i class="fa-solid fa-hourglass-start"></i>
-          </span>
-          <span class="sr-only">Get Started with Virtual Banking</span>
-          Get Started
-        </a>
-        <a href="#" class="button-md call-to-action__button" id="learn-more-btn">
-          <span aria-hidden="true">
-            <i class="fa-solid fa-clapperboard"></i>
-          </span>
-          <span class="sr-only">Learn more about Virtual Banking features</span>
-          Learn More
-        </a>
-      </div>
-    </div>
+                    <!-- Call-to-action buttons -->
+                    <div class="call-to-action__container__buttons flex mt-24" role="group"
+                        aria-label="Call to action buttons">
+                        <a href="#" class="button-md call-to-action__button mr-4" id="get-started-btn">
+                            <span aria-hidden="true">
+                                <i class="fa-solid fa-hourglass-start"></i>
+                            </span>
+                            <span class="sr-only">Get Started with Virtual Banking</span>
+                            Get Started
+                        </a>
+                        <a href="#" class="button-md call-to-action__button" id="learn-more-btn">
+                            <span aria-hidden="true">
+                                <i class="fa-solid fa-clapperboard"></i>
+                            </span>
+                            <span class="sr-only">Learn more about Virtual Banking features</span>
+                            Learn More
+                        </a>
+                    </div>
+                </div>
 
-    <!-- Image / Infogram -->
-    <div class="call-to-action__container__infogram">
-      <img src="static/images/call-to-action-virtual-bank-img.png" 
-           alt="Illustration showing virtual banking features" 
-           id="call-to-action-img">
-    </div>
-    
-  </div>
-</section>
+                <!-- Image / Infogram -->
+                <div class="call-to-action__container__infogram">
+                    <img src="static/images/call-to-action-virtual-bank-img.png"
+                        alt="Illustration showing virtual banking features" id="call-to-action-img">
+                </div>
+
+            </div>
+        </section>
+
+
+        <section id="features">
+            <div class="features__container">
+
+                <h1 class="center features__h1 font-lg">Everything you need to simulate a real banking flow</h1>
+                <p class="center features__subtext pt-8">
+                    Everything you need to manage money, move funds, and stay in control.
+                </p>
+                <div class="features__cards flex-grid three-column-grid mt-24">
+
+                    <!-- feature card 1 -->
+                    <div class="card">
+                        <div class="card-head flex-grid two-column-40_60_grid">
+                            <div class="card-img">
+                                <img src="static/images/card-icons/wallet.png" alt="card wallet"
+                                    class="feature-card-img">
+                            </div>
+
+                            <div class="card-title">
+                                <h1 class="capitalise text-muted">Virtual Accounts & Wallet</h1>
+                            </div>
+                        </div>
+
+                        <div class="body">
+                            <p>Create and manage virtual bank accounts and secure digital wallets</p>
+                        </div>
+                    </div>
+
+                    <!-- feature card 2 -->
+                    <div class="card" id="feature-card-transfer">
+                        <div class="card-head flex-grid two-column-40_60_grid">
+                            <div class="card-img">
+                                <img src="static/images/card-icons/transfer.png" alt="card transfer fundst"
+                                    class="feature-card-img">
+                            </div>
+
+                            <div class="card-title">
+                                <h1 class="capitalise text-muted">Funds transfer</h1>
+                            </div>
+                        </div>
+
+                        <div class="body">
+                            <p>Instantly transfer funds between your virtual accounts and linked bank account</p>
+                        </div>
+                    </div>
+
+
+                    <!-- feature card 3 -->
+                    <div class="card">
+                        <div class="card-head flex-grid two-column-40_60_grid">
+                            <div class="card-img">
+                                <img src="static/images/card-icons/credit-card.png" alt="card credit"
+                                    class="feature-card-img">
+                            </div>
+
+                            <div class="card-title">
+                                <h1 class="capitalise text-muted">Payment cards management</h1>
+                            </div>
+                        </div>
+
+                        <div class="body">
+                            <p>Send and receive money between wallets and connected accounts in real time</p>
+                        </div>
+                    </div>
 
 
 
-  
-    
+                </div>
+
+
+                <h1 class="center features__h1 font-lg">Security & Funds</h1>
+                <p class="center security__subtext pt-8">
+                    Your money and data are protected with industry standard security at every step.
+                </p>
+                <div class="feature__cards flex-grid two-column-grid mt-24 p-24" id="feature-cards-2">
+
+                    <div class="card flex-grid two-column-30_70_grid border-right" id="bank-grade-security">
+
+                        <div class="card-head">
+                            <img src="static/images/card-icons/security-badge.png" alt="" class="feature-card-img">
+                        </div>
+
+                        <div class="card-footer">
+                            <h1 class="capitalise">Bank-Grade security</h1>
+                            <p class="pt-16">Your data is protected by advanced encryption</p>
+                        </div>
+                    </div>
+
+                    <div class="card flex-grid two-column-30_70_grid" id="simulated-funds">
+                        <div class="card-head">
+                            <img src="static/images/card-icons/simulated-funds.png" alt="" class="feature-card-img">
+                        </div>
+
+                        <div class="card-footer">
+                            <h1 class="capitalise">Simulated funds</h1>
+                            <p class="pt-16">No real money is used making it safe for learning</p>
+                        </div>
+                    </div>
+
+                </div>
+
+
+
+
+                <h1 class="center features__h1 font-lg">Virtual Banking Control Centre</h1>
+                <p class="center security__subtext pt-8">
+                    A central hub for virtual cards, funding, and spend management
+                </p>
+
+                <div class="feature__cards flex-grid two-column-grid mt-24 p-24" id="feature-cards-3">
+
+                    <div class="card flex-grid two-column-30_70_grid border-right" id="linked-funding-sources">
+
+                        <div class="card-head">
+                            <img src="static/images/card-icons/sources-funding.png" alt="" class="feature-card-img">
+                        </div>
+
+                        <div class="card-footer">
+                            <h1 class="capitalise">Linked funding sources</h1>
+                            <p class="pt-16">Link external accounts or payment to fund your wallet</p>
+                        </div>
+                    </div>
+
+                    <div class="card flex-grid two-column-30_70_grid" id="spending-control">
+                        <div class="card-head">
+                            <img src="static/images/card-icons/source-spending-control.png" alt="" class="feature-card-img">
+                        </div>
+
+                        <div class="card-footer">
+                            <h1 class="capitalise">Spending control</h1>
+                            <p class="pt-16">Set spending limits and, controls to stay on top of your money</p>
+                        </div>
+                    </div>
+
+                    <div class="card flex-grid two-column-30_70_grid border-right pt-48" id="virtual-card">
+                        <div class="card-head">
+                            <img src="static/images/card-icons/source-virtual-card.png" alt="" class="feature-card-img">
+                        </div>
+
+                        <div class="card-footer">
+                            <h1 class="capitalise">Virtual cards</h1>
+                            <p class="pt-16">Generate virtual debit cards for your bank and add them to your wallet</p>
+                        </div>
+                    </div>
+
+                        <div class="card flex-grid two-column-30_70_grid pt-48" id="admin-cards">
+                        <div class="card-head">
+                            <img src="static/images/card-icons/source-admin-cards.png" alt="" class="feature-card-img">
+                        </div>
+
+                        <div class="card-footer">
+                            <h1 class="capitalise">Admin cards</h1>
+                            <p class="pt-16">Manage spending, track activities, and customise wallet preference</p>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+            </div>
+        </section>
+
+
+        <section id="virtual-bank-banner">
+            <div class="virtual-bank-banner__container">
+
+                <h1 class="center capitalise header-3">Build test, and manage a secure virtual wallet with ease</h1>
+
+            </div>
+        </section>
+
 
 
     </main>
+
+    <footer>
+        
+        
+        
+
+        <div class="footer__container">
+
+            <div class="footer__header">
+                <img src="static/images/virtual-bank-logo.png" alt="The virtual logo" class="footer-logo">
+            </div>
+
+            <div class="flex-grid five-column-grid" id="footer-sections">
+
+                <div class="col flex-grid" id="about-us">
+                    <h1 class="footer-head pb-16">About us</h1>
+                    <a href="#" class="footer-link">Our company</a>
+                    <a href="#" class="footer-link">Careers</a>
+                    <a href="#" class="footer-link">Security</a>
+                    <a href="#" class="footer-link">Investor relations</a>
+
+                </div>
+
+                <div class="col flex-grid" id="services">
+                    <h1 class="footer-head pb-16">services</h1>
+                    <a href="#" class="footer-link">Online banking</a>
+                    <a href="#" class="footer-link">Mobile app</a>
+                    <a href="#" class="footer-link">Credit app</a>
+                    <a href="#" class="footer-link">Loans and mortgages</a>
+                </div>
+
+                <div class="col flex-grid" id="support">
+                    <h1 class="footer-head pb-16">support</h1>
+                    <a href="#" class="footer-link">FAQs</a>
+                    <a href="#" class="footer-link">Help Center</a>
+                    <a href="#" class="footer-link">Contact us</a>
+                    <a href="#" class="footer-link">Live chat</a>
+                </div>
+
+                <div class="col flex-grid" id="resources">
+                    <h1 class="footer-head pb-16">resources</h1>
+                    <a href="#" class="footer-link">Financial Education</a>
+                    <a href="#" class="footer-link">Blog</a>
+                    <a href="#" class="footer-link">News and Insight</a>
+                    <a href="#" class="footer-link">Calculators</a>
+                </div>
+
+                <div class="col" id="download-app">
+                    <h1 class="footer-head">Download our app</h1>
+
+                    <div id="apps" class="flex-grid two-column-grid">
+                        <img src="static/images/footer-icons/appStore.svg" alt="" class="footer-icon">
+                        <img src="static/images/footer-icons/googlePlay.svg" alt="" class="footer-icon">
+                    </div>
+                  
+                    
+                </div>
+            </div>
+
+            <div class="socials copyright flex-grid two-column-grid pb-24">
+             
+                <div class="socials four-column-grid">
+                    <a href="#"><img src="static/images/icons/facebook.svg" alt="facebook" class="social-icon"></a>
+                    <a href="#"><img src="static/images/icons/instagram.svg" alt="facebook" class="social-icon"></a>
+                    
+                </div>
+                
+                <div class="copyright four-column-grid">
+                   <a href="#" class="copyright-link"><span class="copyright-date">@2026 </span>Virtual bank. All rights reserved</a>
+                   <a href="#" class="copyright-link">Privacy policy</a>
+                   <a href="#" class="copyright-link">Terms of use</a>
+                    
+                </div>
+            </div>
+
+        </div>
+
+    </footer>
+
+
 </body>
 
 </html>
