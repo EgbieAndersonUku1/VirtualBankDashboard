@@ -10,7 +10,7 @@
 
 
 :root {
- --main-page-width: 85%;
+ --main-page-width: 75%;
  --green-600: #16A34A;
  --blue-600: #2563EB;
   --space-0: 0;
@@ -48,6 +48,10 @@ a {
     cursor: pointer;
 }
 
+li {
+    list-style: none;
+}
+
 html,
 body {
     height: 100%;
@@ -56,11 +60,11 @@ body {
     font-family: "Poppins", sans-serif;
     font-weight: 400;
     font-style: normal;
-
-    background-image: url("../images/background-3.png");
     background-size: cover;
     background-repeat: no-repeat;
     min-height: 100vh;
+    background: #f6f9fc;
+   
 
 
 }
@@ -136,6 +140,8 @@ body {
 .px-16 { padding-left: var(--space-16); padding-right: var(--space-16); }
 .py-16 { padding-top: var(--space-16); padding-bottom: var(--space-16); }
 
+
+/* image section */
 img {
     cursor: pointer;
 }
@@ -144,6 +150,8 @@ img:hover {
     opacity: 0.8;
 }
 
+
+/* fonts control section */
 .bold {
     font-weight: bold;
 }
@@ -152,6 +160,19 @@ img:hover {
     font-weight: 500;
 }
 
+
+/* fonts sizes */
+.font-lg {
+    font-size: 2rem;
+ 
+}
+
+.small-text {
+    font-size: 0.95rem;
+}
+
+
+/* font manipulations */
 .capitalise {
     text-transform: capitalize;
 }
@@ -160,12 +181,34 @@ img:hover {
     text-transform: uppercase;
 }
 
+.text-muted {
+  color: #6c757d;
+}
+
+
+/* font colours */
+.white-text {
+    color: white;
+}
+
+
+/* utilities */
+
 .center {
     text-align: center;
     justify-content: center;
     align-items: center;
 }
 
+.border-right {
+    border-right: 2px solid lavender;
+    padding-right: 10px;
+    padding-left: 10px;
+}
+
+
+
+/* headers section */
 .header-1 {
     font-size: 2.2rem;
     font-weight: 300;
@@ -182,29 +225,27 @@ img:hover {
     
 }
 
-
-.header-4 {
-    font-size: 1.4rem;
-    font-weight: 400;
-}
-
 .header-5 {
     font-size: 1.5rem;
 }
 
+.header-6 {
+    font-size: 1.4rem;
+}
 
-#virtual-bank-logo {
+
+.header-7 {
     font-size: 1.2rem;
 }
 
-.font-lg {
-    font-size: 2rem;
-    font-weight: 400;
-   
+
+.header-8 {
+    font-size: 1.1rem;
 }
 
 
-/* Flex variables */
+
+/* Flex and grid variables */
 
 .flex {
     display: flex;
@@ -245,97 +286,35 @@ img:hover {
     grid-template-rows: auto;
 }
 
+.two-column-45_65_grid {
+    grid-template-columns: 45% 65%;
+    grid-template-rows: auto;
+}
+
 .two-column-30_70_grid {
     grid-template-columns: 30% 70%;
     grid-template-rows: auto;
 }
 
+.two-column-25_75_grid {
+    grid-template-columns: 25% 75%;
+    grid-template-rows: auto;
+}
 
 
+/* Site logo */
+#virtual-bank-logo {
+    font-size: 1.2rem;
+}
+
+
+
+/* nav control */
 nav {
-    width: var(--main-page-width);
+    width: 90%;
     border-bottom: 2px solid lavender;
     padding-bottom: var(--space-4);
     margin-bottom: var(--space-8);
-}
-
-
-header {
-position: relative;
-  top: var(--space-12);
-  left: 4%;
-  right: 0;
-  margin-bottom: 70px;
-}
-
-
-
-
-
-#call-to-action {
-    padding-top: var(--space-48);
-     background-size: cover;
-    background-repeat: no-repeat;
-    min-height: 100vh;
-}
-
-.call-to-action__container {
-    width: var(--main-page-width);
-    margin: auto;
-}
-
-#call-to-action-img {
-    width: 100%;
-    height: 1000px;
-    position: relative;
-    bottom: 313px;
-  
-}
-
-
-
-.call-to-action__container__info p {
-    font-size: 1.1rem;
-    line-height: 2;
-}
-
-.call-to-action__container__h1 {
-    font-size: 2.2rem;
-    text-transform: capitalize;
-    font-weight: 800;
-}
-
-.call-to-action__button {
-    padding: 10px;
-    width: 45%;
-
-}
-
-.buttom-md {
-    width: 40%;
-    border: 1px solid black;
-}
-
-
-.center {
-    text-align: center;
-    justify-content: center;
-    display: flex;
-    align-items: center;
-}
-
-.call-to-action__button {
-    text-align: center;
-}
-
-#get-started-btn {
-    background: var(--green-600);
-    color: white;
-}
-
-#watch-demo-btn {
-    background: var(--blue-600);
-    color: white;
 }
 
 .nav-link {
@@ -348,30 +327,175 @@ position: relative;
     color: #2563EB;
 }
 
-.authenticate-btns {
+
+/* header */
+header {
+    position: relative;
+    top: var(--space-12);
+    left: 4%;
+    right: 0;
+    margin-bottom: var(--space-24);
+}
+
+
+/* call to action */
+#call-to-action {
+    padding-top: var(--space-48);
+    min-height: 100vh;
+}
+
+
+#call-to-action-img {
     width: 100%;
-    padding-left: 10px;
-    padding-right: 10px;
+    height: 1000px;
+    position: relative;
+    bottom: 313px;
   
 }
 
+.call-to-action__button:focus-visible {
+    outline: 3px solid #005fcc;
+    outline-offset: 4px;
+    border-radius: 6px;
+}
+
+.call-to-action__button {
+    min-height: 44px;
+    min-width: 44px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+
+.call-to-action__container {
+    width: var(--main-page-width);
+    margin: auto;
+}
+
+
+.call-to-action__button {
+    border-radius: 4%;
+}
+
+.call-to-action__container__info p {
+    font-size: 1.1rem;
+    line-height: 2;
+}
+
+.call-to-action__container__h1 {
+     font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    font-size: 2.75rem;
+    text-transform: capitalize;
+    font-weight: 800;
+}
+
+.call-to-action__button {
+    padding: 10px;
+    width: 45%;
+    text-align: center;
+}
+
+
+.call-to-action__button:hover {
+    transform: translateY(-4px);
+}
+
+.call-to-action__button {
+    box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
+}
+
+
+
+
+/* what is for section */
+.who-is-it-for__container {
+    width: var(--main-page-width);
+}
+
+
+/* who is for section  */
+#who-is-it-for {
+    position: relative;
+    bottom: 480px;
+    background: white;
+}
+
+
+.who-is-it-for__container {
+    max-width: var(--main-page-width);
+    margin: auto;
+}
+
+
+/* how it works section  */
+#how-it-works {
+    background: white;
+}
+
+.how-it-works-img {
+    width: 180px;
+    height: 180px;
+}
+
+
+/* account control section */
+#account-control {
+    position: relative;
+    bottom: 400px;
+    width: var(--main-page-width);
+    margin: auto;
+}
+
+
+/* virtual, security control section */
+#virtual-control,
+#security-and-funds {
+    position: relative;
+    bottom: 440px;
+}
+
+
+.virtual-control__container,
+.security-and-funds__container {
+    width: var(--main-page-width);
+    margin: auto;
+}
+
+
+/* account control section */
+#virtual-control .virtual-control__container  .feature__cards .card {
+    padding-top: var(--space-24);
+    padding-bottom: var(--space-24);
+}
+
+/* buttons */
+.authenticate-btns {
+    width: 100%;
+    padding-left: 10px;
+    padding-right: 10px;  
+}
+
+
 #login-btn {
-   
     background: var(--blue-600);
     border-radius: 4%;
 }
 
+
 #sign-btn {
     background: var(--green-600);
 }
+
 
 #learn-more-btn,
 #login-btn {
    
     background: var(--blue-600);
     color: white;
-   
 }
+
 
 #signup-btn {
     background: var(--green-600);
@@ -379,23 +503,24 @@ position: relative;
     border-radius: 4%;
 }
 
+
 #signup-btn,
 #login-btn {
     padding: var(--space-4);
 }
 
-.call-to-action__button {
-    border-radius: 4%;
+
+#get-started-btn {
+    background: var(--green-600);
+    color: white;
 }
 
 
-
-
+/* The main images */
 #main-image {
     position: absolute;
     top: 0;
     width: 100%;
-   
    
 }
 
@@ -404,14 +529,6 @@ position: relative;
     opacity: 0.9;
 }
 
-.text-muted {
-  color: #6c757d;
-}
-
-
-.white-text {
-    color: white;
-}
 
 
 
@@ -445,20 +562,33 @@ position: relative;
     height: 212px;
 }
 
+
+/* cards */
+
 .card {
     cursor: pointer;
 }
 
+.card-title h3,
+.card-footer h3,
+.card-body h3 {
+    font-size: 1.15rem;
+    font-weight: 600;
+}
+
+
+
 .card:hover {
     opacity: 0.8;
     transform: scale(1.05);
+    transform: translateY(-4px);
 }
+
 
 /* Features */
 #features {
     position: relative;
-    bottom: 590px;
-    
+    bottom: 440px;
     
 }
 
@@ -475,63 +605,51 @@ position: relative;
    font-family: "Montserrat", sans-serif;
 }
 
-.features__h1 {
-    text-transform: capitalize;
-    margin-top: 100px;
-}
 
 .feature-card-img {
-    height: 180px;
-    width: 180px;
-    
+    height: 120px;
+    width: 120px;    
 }
 
-#feature-cards-2 {
-    
+#feature-cards-2 {    
     background-image: url("../images/background-2.png");
 }
+
 .features__cards {
-    column-gap: var(--space-48);
+    column-gap: var(--space-8);
     row-gap: var(--space-12);
 }
 
 .features__cards .card {
+
     border: 1px solid lavender;
     background: white;
-    padding: var(--space-16);
+    padding: var(--space-48);
     column-gap: 48px;
     row-gap: var(--space-40);
     font-family: "Montserrat", sans-serif;
     box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 3px, rgba(0, 0, 0, 0.24) 0px 1px 2px;
-    border-radius: 2%;
+    border-radius: 14px;
     
    
 }
 
 .features__cards .card .card-title h1 {
-    transform: translate(5px, 50%);
-    font-size: 1.2rem;
+    transform: translate(10px, 50%);
+    font-size: 1.1rem;
      
 }
 
 .features__cards .card .body p {
     line-height: 1.7;
-    font-size: 1.1rem;
-    font-weight: 500;
+    font-size: 0.95rem;
     transform: translateY(-3px);
+    padding-top: var(--space-48);
+
 }
 
-.features__h1 {
-    font-size: 2rem;
-    font-weight: 600;
-    text-transform: capitalize;
-    margin-top: 100px;
-}
-
-
-
-#feature-cards-3,
-#feature-cards-2 {
+#feature-cards-2,
+#feature-cards-3 {
     background: white;
     column-gap: var(--space-32);
     box-shadow: var(--box-shadow-tietary);
@@ -543,39 +661,33 @@ position: relative;
     transform: translate(-5px, 20%);
 }
 
-.border-right {
-    border-right: 3px solid lavender;
-    padding-right: 20px;
-}
 
 .card-footer h1 {
-    font-size: 1.9rem;
+    font-size: 1.3rem;
     font-weight: 500;
     
 }
 
 .security__subtext, 
 .features__subtext {
-    font-size: 1.3rem;
+    font-size: 1.2rem;
 }
-
-
 
 
 
 .virtual-bank-banner__container{
 
-    padding-top: 24px;
-    padding-bottom: 24px;
+    padding-top: var(--space-24);
+    padding-bottom: var(--space-24);
     background: white;
     width: var(--main-page-width);
     margin: auto;
 }
 
 
+/* The footer section */
 footer {
-   background:
-  linear-gradient(
+   background: linear-gradient(
     180deg,
     rgba(79,163,255,0.25) 0%,
     rgba(15,31,58,0.9) 0%,
@@ -584,7 +696,6 @@ footer {
   );
   font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
 
-
 }
 
 .footer__container {
@@ -592,8 +703,7 @@ footer {
     margin: auto;
     color: white;
     position: relative;
-    top: -63px;
-    
+    top: -63px;    
 }
 
 .footer-head {
@@ -642,9 +752,9 @@ footer {
     padding-top: var(--space-32);
 }
 
+/* The apps belong the footer e.g Apple store Google play */
 #apps {
     column-gap: var(--space-8);
-   
     transform: translate(-28px, 12px);
 }
 
@@ -666,7 +776,6 @@ footer {
 }
 
 
-
 .copyright-link {
     border-right: 2px solid white;
     padding-right: var(--space-16);
@@ -681,36 +790,42 @@ footer {
 }
 
 
-.who-is-it-for__container {
 
-    width: var(--main-page-width);
-}
 
-#who-is-it-for {
-    position: relative;
-    bottom: 600px;
-    background: white;
-}
-
-.who-is-it-for__container {
-    max-width: var(--main-page-width);
-    margin: auto;
-}
-
+/* card img and img */
 .card-img {
-    width: 160px;
-    height: 160px;
+    width: 100px;
+    height: 100px;
 }
 
 .learning-img {
     transform: translateX(-28px)
 }
 
-#how-it-works {
-    background: white;
+
+
+#learning .card-body p {
+    font-size: 0.95rem;
 }
 
-.how-it-works-img {
-    width: 180px;
-    height: 180px;
+
+
+
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+}
+
+
+/* buttons */
+.buttom-md {
+    width: 40%;
+    border: 1px solid black;
 }

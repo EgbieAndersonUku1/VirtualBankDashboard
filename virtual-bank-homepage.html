@@ -12,441 +12,523 @@
 
 <body>
 
-    <header>
+    <header class="mb-24">
+
         <nav aria-label="Main navigation">
             <div class="nav-container flex-grid two-column-grid">
 
-                <!-- Logo / Home Link -->
+                <!-- Logo / Home -->
                 <div class="head">
-                    <a href="#" class="nav-link pt-8 bold" id="virtual-bank-logo">
-                        <img src="static/images/virtual-bank-logo.png" alt="The virtual logo" class="logo">
-
+                    <a href="/" class="nav-link pt-8 bold" id="virtual-bank-logo">
+                        <img src="static/images/virtual-bank-logo.png" alt="Virtual Bank home" class="logo" />
                     </a>
                 </div>
 
                 <!-- Navigation Links -->
-                <div class="body flex-grid four-column-grid">
-                    <a href="#" class="nav-link light-bold capitalise" id="wallet-home-link">
-                        Home
-                    </a>
-                    <a href="#" class="nav-link light-bold capitalise" id="wallet-home-link">
-                        Features
-                    </a>
-                    <a href="#" class="nav-link light-bold capitalise" id="wallet-home-link">
-                        Wallet Home
-                    </a>
+                <div class="body">
+                    <ul class="flex-grid four-column-grid" role="list">
 
-                    <!-- Authentication Buttons -->
-                    <div class="authentication-btns flex-grid two-column-grid" role="group"
-                        aria-label="Authentication options">
-                        <a href="#" class="nav-link center authenticate-btns text-uppercase" id="login-btn">
-                            Login
-                        </a>
-                        <a href="#" class="nav-link center authenticate-btns text-uppercase" id="signup-btn">
-                            Sign Up
-                        </a>
-                    </div>
+                        <li>
+                            <a href="/" class="nav-link light-bold capitalise" id="nav-home" aria-current="page">
+                                Home
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="/features" class="nav-link light-bold capitalise" id="nav-features">
+                                Features
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="/wallet" class="nav-link light-bold capitalise" id="nav-wallet">
+                                Wallet Home
+                            </a>
+                        </li>
+
+                        <!-- Authentication -->
+                        <li>
+                            <div class="authentication-btns flex-grid two-column-grid" aria-label="Authentication">
+                                <a href="/login" class="nav-link center authenticate-btns text-uppercase"
+                                    id="login-btn">
+                                    Log in
+                                </a>
+
+                                <a href="/signup" class="nav-link center authenticate-btns text-uppercase"
+                                    id="signup-btn">
+                                    Sign up
+                                </a>
+                            </div>
+                        </li>
+
+                    </ul>
                 </div>
             </div>
         </nav>
     </header>
 
 
-
-
     <main>
 
-
-        <section id="call-to-action" aria-labelledby="cta-heading">
-            <div class="call-to-action__container flex-grid two-column-40_60_grid">
+        <!-- call to action section -->
+        <section id="call-to-action" aria-labelledby="cta-heading" class="mt-48">
+            <div class="call-to-action__container flex-grid two-column-45_65_grid">
 
                 <!-- Text Content -->
                 <div class="call-to-action__container__info">
+
                     <h1 id="cta-heading" class="call-to-action__container__h1 capitalise">
-                        The future of banking is here
+                        Build, Test, and Explore
+                        Real Banking Workflows
                     </h1>
 
                     <p class="mt-24">
-                        Manage your finances with ease in our secure virtual bank.
-                    </p>
-                    <p>
-                        Create wallets, transfer money, top up credit cards, and much more.
+                        A fully simulated virtual banking system designed to model real-world
+                        accounts, payments, cards, and security without using real money.
                     </p>
 
-                    <hr>
+                    <hr aria-hidden="true">
 
                     <!-- Call-to-action buttons -->
                     <div class="call-to-action__container__buttons flex mt-24" role="group"
-                        aria-label="Call to action buttons">
-                        <a href="#" class="button-md call-to-action__button mr-4" id="get-started-btn">
+                        aria-label="Primary actions">
+                        <a href="/get-started" class="button-md call-to-action__button mr-4" id="get-started-btn">
                             <span aria-hidden="true">
                                 <i class="fa-solid fa-hourglass-start"></i>
                             </span>
-                            <span class="sr-only">Get Started with Virtual Banking</span>
+                            <span class="sr-only">
+                                Get started with the virtual banking simulator
+                            </span>
                             Get Started
                         </a>
-                        <a href="#" class="button-md call-to-action__button" id="learn-more-btn">
+
+                        <a href="/learn-more" class="button-md call-to-action__button" id="learn-more-btn">
                             <span aria-hidden="true">
                                 <i class="fa-solid fa-clapperboard"></i>
                             </span>
-                            <span class="sr-only">Learn more about Virtual Banking features</span>
+                            <span class="sr-only">
+                                Learn more about virtual banking features
+                            </span>
                             Learn More
                         </a>
                     </div>
                 </div>
 
-                <!-- Image / Infogram -->
+                <!-- Image / Illustration -->
                 <div class="call-to-action__container__infogram">
                     <img src="static/images/call-to-action-virtual-bank-img.png"
-                        alt="Illustration showing virtual banking features" id="call-to-action-img">
+                        alt="Illustration showing virtual banking features such as accounts, cards, and payments"
+                        id="call-to-action-img" loading="lazy">
                 </div>
 
             </div>
         </section>
 
-        
-        <section id="who-is-it-for">
+
+        <!-- who is for section -->
+        <section id="who-is-it-for" aria-labelledby="who-is-it-for-heading">
+            
             <div class="who-is-it-for__container">
 
-                <div class="header">
-                    <h1 class="capitalise pt-16 header-5 bold">who is virtual banking for?</h1>
-                </div>
+                <header class="header mb-24">
+                    <h2 id="who-is-it-for-heading" class="capitalise pt-8 bold header-8">
+                        Who is virtual banking for?
+                    </h2>
+                </header>
 
-                  <div class="who-is-it-for__cards flex-grid three-column-grid mt-24 p-24">
+                <div class="who-is-it-for__cards flex-grid three-column-grid p-24">
 
-                    <div class="card flex-grid two-column-40_60_grid border-right" id="learning">
+                    <div class="card flex-grid two-column-30_70_grid border-right" id="learning">
 
                         <div class="card-head">
-                            <img src="static/images/card-icons/learning.png" alt="" class="card-img learning-img">
+                            <img src="static/images/card-icons/learning.png" alt="learning image"
+                                class="card-img learning-img" aria-hidden="true" loading="lazy">
                         </div>
 
                         <div class="card-body">
-                            <h1 class="capitalise header-4">Learning fintech</h1>
+                            <h3 class="capitalise header-8">Learning fintech</h3>
                             <p class="pt-16">People learning fintech & banking system</p>
                         </div>
                     </div>
 
-                    <div class="card flex-grid two-column-40_60_grid border-right" id="testing">
+                    <div class="card flex-grid two-column-30_70_grid border-right" id="testing">
                         <div class="card-head">
-                            <img src="static/images/card-icons/testing.png" alt="" class="card-img testing-img">
+                            <img src="static/images/card-icons/testing.png" alt="testing image"
+                                class="card-img testing-img" loading="lazy">
                         </div>
 
                         <div class="card-body">
-                            <h1 class="capitalise header-4">Developer testing</h1>
-                            <p class="pt-16">Test, build, and validate banking features without touching live systems.</p>
+                            <h3 class="capitalise header-8">Fun exploring</h3>
+                            <p class="pt-16 small-text">Test, explore, and use banking features without touching live systems within a simulated Environment.
+                            </p>
                         </div>
                     </div>
 
-                     <div class="card flex-grid two-column-40_60_grid" id="simulated">
+                    <div class="card flex-grid two-column-30_70_grid" id="simulated">
                         <div class="card-head pr-16 pl-8">
-                            <img src="static/images/card-icons/simulated-funds.png" alt="" class="card-img simulated-img">
+                            <img src="static/images/card-icons/simulated-funds.png" alt="card simulation"
+                                class="card-img simulated-img pr-16" loading="lazy">
                         </div>
 
                         <div class="card-body">
-                            <h1 class="capitalise header-4">Simulation</h1> 
-                            <p class="pt-16">Simulate end-to-end banking journeys (accounts, payments, etc)</p>
+                            <h3 class="capitalise header-8">Simulation</h3>
+                            <p class="pt-16 small-text">Simulate end-to-end banking journeys (accounts, payments, etc)</p>
                         </div>
                     </div>
 
                 </div>
 
 
-                
-
             </div>
         </section>
 
-        <section id="features">
+        <section id="features" aria-labelledby="features-heading" class="mt-48">
             <div class="features__container">
 
-                <h1 class="center features__h1 font-lg">Everything you need to simulate a real banking flow</h1>
-                <p class="center features__subtext pt-8">
-                    Everything you need to manage money, move funds, and stay in control.
-                </p>
-                <div class="features__cards flex-grid three-column-grid mt-24">
+                <!-- Section Heading -->
+                <header>
+                    <h2 id="features-heading" class="center capitalise">
+                        Everything you need to simulate a real banking flow
+                    </h2>
+                    <p class="center features__subtext pt-8">
+                        Everything you need to manage money, move funds, and stay in control.
+                    </p>
+                </header>
 
-                    <!-- feature card 1 -->
+                <!-- Feature Cards List -->
+                <div class="features__cards flex-grid three-column-grid mt-24" role="list">
+
+                    <!-- Feature Card 1 -->
                     <div class="card">
                         <div class="card-head flex-grid two-column-40_60_grid">
                             <div class="card-img">
-                                <img src="static/images/card-icons/wallet.png" alt="card wallet"
+                                <img src="static/images/card-icons/wallet.png" alt="" aria-hidden="true"
                                     class="feature-card-img">
                             </div>
-
                             <div class="card-title">
-                                <h1 class="capitalise text-muted">Virtual Accounts & Wallet</h1>
+                                <h3 class="capitalise ">Virtual Accounts & Wallet</h3>
                             </div>
                         </div>
-
                         <div class="body">
-                            <p>Create and manage virtual bank accounts and secure digital wallets</p>
+                            <p>Create and manage virtual bank accounts and secure digital wallets.</p>
                         </div>
                     </div>
 
-                    <!-- feature card 2 -->
+                    <!-- Feature Card 2 -->
                     <div class="card" id="feature-card-transfer">
                         <div class="card-head flex-grid two-column-40_60_grid">
                             <div class="card-img">
-                                <img src="static/images/card-icons/transfer.png" alt="card transfer fundst"
+                                <img src="static/images/card-icons/transfer.png" alt="" aria-hidden="true"
                                     class="feature-card-img">
                             </div>
-
                             <div class="card-title">
-                                <h1 class="capitalise text-muted">Funds transfer</h1>
+                                <h3 class="capitalise ">Funds Transfer</h3>
                             </div>
                         </div>
-
                         <div class="body">
-                            <p>Instantly transfer funds between your virtual accounts and linked bank account</p>
+                            <p>Instantly transfer funds between your virtual accounts and linked bank account.</p>
                         </div>
                     </div>
 
-
-                    <!-- feature card 3 -->
+                    <!-- Feature Card 3 -->
                     <div class="card">
                         <div class="card-head flex-grid two-column-40_60_grid">
                             <div class="card-img">
-                                <img src="static/images/card-icons/credit-card.png" alt="card credit"
+                                <img src="static/images/card-icons/credit-card.png" alt="" aria-hidden="true"
                                     class="feature-card-img">
                             </div>
-
                             <div class="card-title">
-                                <h1 class="capitalise text-muted">Payment cards management</h1>
+                                <h3 class="capitalise ">Payment Cards Management</h3>
                             </div>
                         </div>
-
                         <div class="body">
-                            <p>Send and receive money between wallets and connected accounts in real time</p>
+                            <p>Send and receive money between wallets and connected accounts in real time.</p>
                         </div>
                     </div>
 
-                      <!-- feature card 3 -->
+                    <!-- Feature Card 4 -->
                     <div class="card">
                         <div class="card-head flex-grid two-column-40_60_grid">
                             <div class="card-img">
-                                <img src="static/images/card-icons/customer-service.png" alt="card credit"
+                                <img src="static/images/card-icons/customer-service.png" alt="" aria-hidden="true"
                                     class="feature-card-img">
                             </div>
-
                             <div class="card-title">
-                                <h1 class="capitalise text-muted">Customer Support & Help Centre</h1>
+                                <h3 class="capitalise ">Customer Support & Help Centre</h3>
                             </div>
                         </div>
-
                         <div class="body">
-                            <p>Get help quickly with in-app support, FAQs, and live assistance</p>
+                            <p>Get help quickly with in-app support, FAQs, and live assistance.</p>
                         </div>
                     </div>
 
-                     <div class="card">
+                    <!-- Feature Card 5 -->
+                    <div class="card">
                         <div class="card-head flex-grid two-column-40_60_grid">
                             <div class="card-img">
-                                <img src="static/images/card-icons/security-and-account.png" alt="card credit"
+                                <img src="static/images/card-icons/security-and-account.png" alt="" aria-hidden="true"
                                     class="feature-card-img">
                             </div>
-
                             <div class="card-title">
-                                <h1 class="capitalise text-muted">Security & account controls</h1>
+                                <h3 class="capitalise ">Security & Account Controls</h3>
                             </div>
                         </div>
-
                         <div class="body">
                             <p>Protect your account with advanced security features.</p>
                         </div>
                     </div>
 
-                     <div class="card">
+                    <!-- Feature Card 6 -->
+                    <div class="card">
                         <div class="card-head flex-grid two-column-40_60_grid">
                             <div class="card-img">
-                                <img src="static/images/card-icons/credit-card.png" alt="card credit"
+                                <img src="static/images/card-icons/transaction-history.png" alt="" aria-hidden="true"
                                     class="feature-card-img">
                             </div>
-
                             <div class="card-title">
-                                <h1 class="capitalise text-muted">Transaction history & statements</h1>
+                                <h3 class="capitalise ">Transaction History & Statements</h3>
                             </div>
                         </div>
-
                         <div class="body">
-                            <p>Access detailed records of all your transactions</p>
+                            <p>Access detailed records of all your transactions.</p>
                         </div>
                     </div>
 
                 </div>
 
-                <h1 class="center features__h1 font-lg">Security & Funds</h1>
-                <p class="center security__subtext pt-8">
-                    Your money and data are protected with industry standard security at every step.
-                </p>
-                <div class="feature__cards flex-grid two-column-grid mt-24 p-24" id="feature-cards-2">
-
-                    <div class="card flex-grid two-column-30_70_grid border-right" id="bank-grade-security">
-
-                        <div class="card-head">
-                            <img src="static/images/card-icons/security-badge.png" alt="" class="feature-card-img">
-                        </div>
-
-                        <div class="card-footer">
-                            <h1 class="capitalise">Bank-Grade security</h1>
-                            <p class="pt-16">Your data is protected by advanced encryption</p>
-                        </div>
-                    </div>
-
-                    <div class="card flex-grid two-column-30_70_grid" id="simulated-funds">
-                        <div class="card-head">
-                            <img src="static/images/card-icons/simulated-funds.png" alt="" class="feature-card-img">
-                        </div>
-
-                        <div class="card-footer">
-                            <h1 class="capitalise">Simulated funds</h1>
-                            <p class="pt-16">No real money is used making it safe for learning</p>
-                        </div>
-                    </div>
-
-                </div>
-
-
-
-
-                <h1 class="center features__h1 font-lg">Virtual Banking Control Centre</h1>
-                <p class="center security__subtext pt-8">
-                    A central hub for virtual cards, funding, and spend management
-                </p>
-
-                <div class="feature__cards flex-grid two-column-grid mt-24 p-24" id="feature-cards-3">
-
-                    <div class="card flex-grid two-column-30_70_grid border-right" id="linked-funding-sources">
-
-                        <div class="card-head">
-                            <img src="static/images/card-icons/sources-funding.png" alt="" class="feature-card-img">
-                        </div>
-
-                        <div class="card-footer">
-                            <h1 class="capitalise">Linked funding sources</h1>
-                            <p class="pt-16">Link external accounts or payment to fund your wallet</p>
-                        </div>
-                    </div>
-
-                    <div class="card flex-grid two-column-30_70_grid" id="spending-control">
-                        <div class="card-head">
-                            <img src="static/images/card-icons/source-spending-control.png" alt="" class="feature-card-img">
-                        </div>
-
-                        <div class="card-footer">
-                            <h1 class="capitalise">Spending control</h1>
-                            <p class="pt-16">Set spending limits and, controls to stay on top of your money</p>
-                        </div>
-                    </div>
-
-                    <div class="card flex-grid two-column-30_70_grid border-right pt-48" id="virtual-card">
-                        <div class="card-head">
-                            <img src="static/images/card-icons/source-virtual-card.png" alt="" class="feature-card-img">
-                        </div>
-
-                        <div class="card-footer">
-                            <h1 class="capitalise">Virtual cards</h1>
-                            <p class="pt-16">Generate virtual debit cards for your bank and add them to your wallet</p>
-                        </div>
-                    </div>
-
-                    <div class="card flex-grid two-column-30_70_grid pt-48" id="admin-cards">
-                        <div class="card-head">
-                            <img src="static/images/card-icons/source-admin-cards.png" alt="" class="feature-card-img">
-                        </div>
-
-                        <div class="card-footer">
-                            <h1 class="capitalise">Admin cards</h1>
-                            <p class="pt-16">Manage spending, track activities, and customise wallet preference</p>
-                        </div>
-                    </div>
-
-                      <div class="card flex-grid two-column-30_70_grid border-right pt-48" id="virtual-card">
-                        <div class="card-head">
-                            <img src="static/images/card-icons/source-virtual-card.png" alt="" class="feature-card-img">
-                        </div>
-
-                        <div class="card-footer">
-                            <h1 class="capitalise">Virtual cards</h1>
-                            <p class="pt-16">Generate virtual debit cards for your bank and add them to your wallet</p>
-                        </div>
-                    </div>
-
-                    <div class="card flex-grid two-column-30_70_grid pt-48" id="admin-cards">
-                        <div class="card-head">
-                            <img src="static/images/card-icons/source-admin-cards.png" alt="" class="feature-card-img">
-                        </div>
-
-                        <div class="card-footer">
-                            <h1 class="capitalise">Admin cards</h1>
-                            <p class="pt-16">Manage spending, track activities, and customise wallet preference</p>
-                        </div>
-                    </div>
-
-                </div>
-
-            </div>
             </div>
         </section>
 
 
-     <section id="how-it-works">
+        <section id="security-and-funds">
 
-        <div class="how-it-works__container">
-                  <div class="header">
+            <div class="security-and-funds__container container">
+
+                <!-- Security & Funds Section -->
+                <header class="mt-48">
+                    <h2 class="center capitalise">Security & Funds</h2>
+                    <p class="center security__subtext pt-8">
+                        Your money and data are protected with industry-standard security at every step.
+                    </p>
+                </header>
+
+                <div class="feature__cards flex-grid two-column-grid mt-24 p-24" role="list" id="feature-cards-2">
+
+                    <div class="card flex-grid two-column-30_70_grid border-right">
+                        <div class="card-head">
+                            <img src="static/images/card-icons/security-badge.png" alt="" aria-hidden="true"
+                                class="feature-card-img">
+                        </div>
+                        <div class="card-footer">
+                            <h3 class="capitalise">Bank-Grade Security</h3>
+                            <p class="pt-16">Your data is protected by advanced encryption.</p>
+                        </div>
+                    </div>
+
+                    <div class="card flex-grid two-column-30_70_grid">
+                        <div class="card-head">
+                            <img src="static/images/card-icons/simulated-funds.png" alt="" aria-hidden="true"
+                                class="feature-card-img">
+                        </div>
+                        <div class="card-footer">
+                            <h3 class="capitalise">Simulated Funds</h3>
+                            <p class="pt-16">No real money is used, making it safe for learning or exploring.</p>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+        <section id="virtual-control">
+
+            <div class="virtual-control__container container">
+
+                <!-- Virtual Banking Control Centre -->
+                <header class="mt-48">
+                    <h2 class="center features__h1">Virtual Banking Control Centre</h2>
+                    <p class="center security__subtext pt-8">
+                        A central hub for virtual cards, funding, and spend management.
+                    </p>
+                </header>
+
+                <div class="feature__cards flex-grid two-column-grid mt-24 p-24" role="list" id="feature-cards-3">
+
+                    <div class="card flex-grid two-column-30_70_grid border-right">
+                        <div class="card-head">
+                            <img src="static/images/card-icons/sources-funding.png" alt="" aria-hidden="true"
+                                class="feature-card-img">
+                        </div>
+                        <div class="card-footer">
+                            <h3 class="capitalise">Linked Funding Sources</h3>
+                            <p class="pt-16">Link external accounts or payment methods to fund your wallet.</p>
+                        </div>
+                    </div>
+
+                    <div class="card flex-grid two-column-30_70_grid">
+                        <div class="card-head">
+                            <img src="static/images/card-icons/source-spending-control.png" alt="" aria-hidden="true"
+                                class="feature-card-img">
+                        </div>
+                        <div class="card-footer">
+                            <h3 class="capitalise">Spending Control</h3>
+                            <p class="pt-16">Set spending limits and controls to stay on top of your money.</p>
+                        </div>
+                    </div>
+
+                    <div class="card flex-grid two-column-30_70_grid border-right pt-48">
+                        <div class="card-head">
+                            <img src="static/images/card-icons/source-virtual-card.png" alt="" aria-hidden="true"
+                                class="feature-card-img">
+                        </div>
+                        <div class="card-footer">
+                            <h3 class="capitalise">Virtual Cards</h3>
+                            <p class="pt-16">Generate virtual debit cards for your bank and add them to your wallet.</p>
+                        </div>
+                    </div>
+
+                    <div class="card flex-grid two-column-30_70_grid pt-48">
+                        <div class="card-head">
+                            <img src="static/images/card-icons/source-admin-cards.png" alt="" aria-hidden="true"
+                                class="feature-card-img">
+                        </div>
+                        <div class="card-footer">
+                            <h3 class="capitalise">Admin Cards</h3>
+                            <p class="pt-16">Manage spending, track activities, and customise wallet preferences.</p>
+                        </div>
+                    </div>
+
+                    <div class="card flex-grid two-column-30_70_grid border-right pt-48">
+                        <div class="card-head">
+                            <img src="static/images/card-icons/auth-2fa.png" alt="" aria-hidden="true"
+                                class="feature-card-img">
+                        </div>
+                        <div class="card-footer">
+                            <h3 class="capitalise">2FA Recovery Code Dashboard</h3>
+                            <p class="pt-16">Access tools to ensure you are never locked out of your account.</p>
+                        </div>
+                    </div>
+
+                    <div class="card flex-grid two-column-30_70_grid pt-48">
+                        <div class="card-head">
+                            <img src="static/images/card-icons/monitoring.png" alt="" aria-hidden="true"
+                                class="feature-card-img">
+                        </div>
+                        <div class="card-footer">
+                            <h3 class="capitalise">Activity Monitoring</h3>
+                            <p class="pt-16">Track spending, card usage, and account activity in real time.</p>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <section id="account-control" aria-labelledby="account-control-heading">
+            <div class="account-control__container">
+
+                <!-- Section Heading -->
+                <header>
+                    <h2 id="account-control-heading" class="center capitalise">
+                        Account and Access Control
+                    </h2>
+                    <p class="center security__subtext pt-8">
+                        Your money and data are protected with industry-standard security at every step.
+                    </p>
+                </header>
+
+                <!-- Cards List -->
+                <div class="feature__cards flex-grid two-column-grid mt-24 p-24" role="list" id="account-control-cards">
+
+                    <!-- Card 1 -->
+                    <div class="card flex-grid two-column-30_70_grid border-right" id="2fa-dashboard">
+                        <div class="card-head">
+                            <img src="static/images/card-icons/security-badge.png" alt="" aria-hidden="true"
+                                class="feature-card-img">
+                        </div>
+                        <div class="card-footer">
+                            <h3 class="capitalise">2FA Recovery Code Dashboard</h3>
+                            <p class="pt-16">
+                                Access tools to ensure you are never locked out of your account.
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Card 2 -->
+                    <div class="card flex-grid two-column-30_70_grid">
+                        <div class="card-head">
+                            <img src="static/images/card-icons/simulate-funds-2.png" alt="" aria-hidden="true"
+                                class="feature-card-img">
+                        </div>
+                        <div class="card-footer">
+                            <h3 class="capitalise">Simulated Funds</h3>
+                            <p class="pt-16">
+                                No real money is used, making it safe for learning.
+                            </p>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+        </section>
+
+
+        <section id="how-it-works">
+
+            <div class="how-it-works__container">
+                <div class="header">
                     <h1 class="capitalise pt-16 header-5 bold center">How it works?</h1>
                 </div>
-                 <div class="who-is-it-for__cards flex-grid three-column-grid mt-24 p-24">
+                <div class="who-is-it-for__cards flex-grid three-column-grid mt-24 p-24">
 
-                    <div class="card flex-grid two-column-40_60_grid border-right" id="learning">
+                    <div class="card flex-grid two-column-25_75_grid border-right" id="learning">
 
                         <div class="card-head">
-                            <img src="static/images/card-icons/email.png" alt="" class="how-it-works-img">
+                            <img src="static/images/card-icons/email.png" alt="" class="how-it-works-img card-img">
                         </div>
 
                         <div class="card-body">
-                            <h1 class="capitalise header-4">Create a virtual bank account</h1>
+                            <h3 class="capitalise header-6">Create a virtual bank account</h3>
                             <p class="pt-16">People learning fintech & banking system</p>
                         </div>
                     </div>
 
-                    <div class="card flex-grid two-column-40_60_grid border-right" id="testing">
+                    <div class="card flex-grid two-column-25_75_grid border-right" id="testing">
                         <div class="card-head">
-                            <img src="static/images/card-icons/simulated-funds.png" alt="" class="how-it-works-img">
+                            <img src="static/images/card-icons/simulated-funds.png" alt="" class="how-it-works-img card-img">
                         </div>
 
                         <div class="card-body">
-                            <h1 class="capitalise header-4">Fund it with simulated money</h1>
-                            <p class="pt-16">Test, build, and validate banking features without touching live systems.</p>
+                            <h3 class="capitalise header-6">Fund it with simulated money</h3>
+                            <p class="pt-16">Test or use banking features without touching live systems.
+                            </p>
                         </div>
                     </div>
 
-                     <div class="card flex-grid two-column-40_60_grid" id="simulated">
+                    <div class="card flex-grid two-column-25_75_grid" id="simulated">
                         <div class="card-head pr-16 pl-8">
-                            <img src="static/images/card-icons/simulate-transaction.png" alt="" class="how-it-works-img">
+                            <img src="static/images/card-icons/simulate-transaction.png" alt=""
+                                class="how-it-works-img card-img">
                         </div>
 
                         <div class="card-body">
-                            <h1 class="capitalise header-4">Transfer, spend and analyse money</h1> 
+                            <h3 class="capitalise header-6">Transfer, spend and analyse money</h3>
                             <p class="pt-16">Simulate end-to-end banking journeys (accounts, payments, etc)</p>
                         </div>
                     </div>
 
 
-        </div>
+                </div>
 
 
-     </section>
-     
-
-   
-
+        </section>
 
     </main>
 
     <footer>
-        
-        
-        
 
         <div class="footer__container">
 
@@ -496,24 +578,25 @@
                         <img src="static/images/footer-icons/appStore.svg" alt="" class="footer-icon">
                         <img src="static/images/footer-icons/googlePlay.svg" alt="" class="footer-icon">
                     </div>
-                  
-                    
+
+
                 </div>
             </div>
 
             <div class="socials copyright flex-grid two-column-grid pb-24">
-             
+
                 <div class="socials four-column-grid">
                     <a href="#"><img src="static/images/icons/facebook.svg" alt="facebook" class="social-icon"></a>
                     <a href="#"><img src="static/images/icons/instagram.svg" alt="facebook" class="social-icon"></a>
-                    
+
                 </div>
-                
+
                 <div class="copyright four-column-grid">
-                   <a href="#" class="copyright-link"><span class="copyright-date">@2026 </span>Virtual bank. All rights reserved</a>
-                   <a href="#" class="copyright-link">Privacy policy</a>
-                   <a href="#" class="copyright-link">Terms of use</a>
-                    
+                    <a href="#" class="copyright-link"><span class="copyright-date">@2026 </span>Virtual bank. All
+                        rights reserved</a>
+                    <a href="#" class="copyright-link">Privacy policy</a>
+                    <a href="#" class="copyright-link">Terms of use</a>
+
                 </div>
             </div>
 
