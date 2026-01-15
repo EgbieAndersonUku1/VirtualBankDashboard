@@ -5,6 +5,7 @@
     padding: 0;
     margin: 0;
     scroll-behavior: smooth;
+    box-sizing: border-box;
 }
 
 
@@ -397,7 +398,6 @@ header {
     text-align: center;
 }
 
-
 .call-to-action__button:hover {
     transform: translateY(-4px);
 }
@@ -475,18 +475,35 @@ header {
     width: 100%;
     padding-left: 10px;
     padding-right: 10px;  
+    text-transform: capitalize;
+    border-radius: 44px;
 }
+
+/* authentication button div */
+#authentication-btns {
+    column-gap: var(--space-8);
+
+    /* sits on top of the call to image */
+    position: relative;
+    z-index: 10000;
+}
+
+ .authenticate-btn {
+    text-transform: capitalize;
+ }
+
 
 
 #login-btn {
     background: var(--blue-600);
-    border-radius: 4%;
 }
 
 
 #sign-btn {
     background: var(--green-600);
 }
+
+
 
 
 #learn-more-btn,
@@ -567,6 +584,7 @@ header {
 
 .card {
     cursor: pointer;
+    position: relative;
 }
 
 .card-title h3,
@@ -582,6 +600,7 @@ header {
     opacity: 0.8;
     transform: scale(1.05);
     transform: translateY(-4px);
+     box-shadow: 0 12px 24px rgba(0, 0, 0, 0.08);
 }
 
 
@@ -828,4 +847,55 @@ footer {
 .buttom-md {
     width: 40%;
     border: 1px solid black;
+}
+
+
+/* Tags */
+.tag {
+    background: #eef2ff;
+    width: 40%;
+    text-align: center;
+    border-radius: 999px;
+    border: 1px solid lavender;
+    color: black;
+    margin-top: var(--space-8);
+    position: absolute;
+    bottom: 5px;
+ 
+    
+}
+
+.tag span {
+ font-size: 0.85rem;
+ padding: 4px;
+ text-transform: capitalize;
+ color: rgb(4, 4, 79);
+
+}
+
+
+
+/* Base fade-up */
+.fade-up {
+    opacity: 0;
+    transform: translateY(24px) scale(0.98);
+    transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+     transition-delay: var(--delay, 0s)
+
+}
+
+
+/* when Visible, the final state */
+.fade-up.is-visible {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+}
+
+/* Respect reduced motion */
+@media (prefers-reduced-motion: reduce) {
+    .fade-up {
+        opacity: 1;
+        transform: none;
+        transition: none;
+    }
 }
