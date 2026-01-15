@@ -48,15 +48,15 @@
 
                         <!-- Authentication -->
                         <li>
-                            <div class="authentication-btns flex-grid two-column-grid" aria-label="Authentication">
-                                <a href="/login" class="nav-link center authenticate-btns text-uppercase"
+                            <div class="authentication-btns flex-grid two-column-grid" aria-label="Authentication" id="authentication-btns">
+                                <a href="/login" class="nav-link center authenticate-btn text-uppercase"
                                     id="login-btn">
-                                    Log in
+                                    Login
                                 </a>
 
-                                <a href="/signup" class="nav-link center authenticate-btns text-uppercase"
+                                <a href="/signup" class="nav-link center authenticate-btn text-uppercase"
                                     id="signup-btn">
-                                    Sign up
+                                    Signup
                                 </a>
                             </div>
                         </li>
@@ -71,7 +71,7 @@
     <main>
 
         <!-- call to action section -->
-        <section id="call-to-action" aria-labelledby="cta-heading" class="mt-48">
+        <section id="call-to-action" aria-labelledby="cta-heading" class="mt-48 fade-up">
             <div class="call-to-action__container flex-grid two-column-45_65_grid">
 
                 <!-- Text Content -->
@@ -128,7 +128,7 @@
         <!-- who is for section -->
         <section id="who-is-it-for" aria-labelledby="who-is-it-for-heading">
             
-            <div class="who-is-it-for__container">
+            <div class="who-is-it-for__container fade-up">
 
                 <header class="header mb-24">
                     <h2 id="who-is-it-for-heading" class="capitalise pt-8 bold header-8">
@@ -138,7 +138,7 @@
 
                 <div class="who-is-it-for__cards flex-grid three-column-grid p-24">
 
-                    <div class="card flex-grid two-column-30_70_grid border-right" id="learning">
+                    <div class="card flex-grid two-column-30_70_grid border-right fade-up" id="learning">
 
                         <div class="card-head">
                             <img src="static/images/card-icons/learning.png" alt="learning image"
@@ -151,7 +151,7 @@
                         </div>
                     </div>
 
-                    <div class="card flex-grid two-column-30_70_grid border-right" id="testing">
+                    <div class="card flex-grid two-column-30_70_grid border-right fade-up" id="testing">
                         <div class="card-head">
                             <img src="static/images/card-icons/testing.png" alt="testing image"
                                 class="card-img testing-img" loading="lazy">
@@ -164,8 +164,8 @@
                         </div>
                     </div>
 
-                    <div class="card flex-grid two-column-30_70_grid" id="simulated">
-                        <div class="card-head pr-16 pl-8">
+                    <div class="card flex-grid two-column-30_70_grid fade-up" id="simulated">
+                        <div class="card-head pr-16 pl-8 fade-up">
                             <img src="static/images/card-icons/simulated-funds.png" alt="card simulation"
                                 class="card-img simulated-img pr-16" loading="lazy">
                         </div>
@@ -182,7 +182,7 @@
             </div>
         </section>
 
-        <section id="features" aria-labelledby="features-heading" class="mt-48">
+        <section id="features" aria-labelledby="features-heading" class="mt-48 fade-up">
             <div class="features__container">
 
                 <!-- Section Heading -->
@@ -199,7 +199,7 @@
                 <div class="features__cards flex-grid three-column-grid mt-24" role="list">
 
                     <!-- Feature Card 1 -->
-                    <div class="card">
+                    <div class="card fade-up">
                         <div class="card-head flex-grid two-column-40_60_grid">
                             <div class="card-img">
                                 <img src="static/images/card-icons/wallet.png" alt="" aria-hidden="true"
@@ -212,10 +212,14 @@
                         <div class="body">
                             <p>Create and manage virtual bank accounts and secure digital wallets.</p>
                         </div>
+
+                        <div class="tag">
+                            <span aria-label="Secure accounts">🔒 secure</span>
+                        </div>
                     </div>
 
                     <!-- Feature Card 2 -->
-                    <div class="card" id="feature-card-transfer">
+                    <div class="card fade-up" id="feature-card-transfer">
                         <div class="card-head flex-grid two-column-40_60_grid">
                             <div class="card-img">
                                 <img src="static/images/card-icons/transfer.png" alt="" aria-hidden="true"
@@ -228,10 +232,15 @@
                         <div class="body">
                             <p>Instantly transfer funds between your virtual accounts and linked bank account.</p>
                         </div>
+
+                        <div class="tag">
+                            <span aria-label="Simulated feature, no real funds transferred">⚡ Simulated</span>
+                        </div>
+
                     </div>
 
                     <!-- Feature Card 3 -->
-                    <div class="card">
+                    <div class="card fade-up">
                         <div class="card-head flex-grid two-column-40_60_grid">
                             <div class="card-img">
                                 <img src="static/images/card-icons/credit-card.png" alt="" aria-hidden="true"
@@ -244,10 +253,15 @@
                         <div class="body">
                             <p>Send and receive money between wallets and connected accounts in real time.</p>
                         </div>
+
+                         <div class="tag">
+                            <span aria-label="Simulated feature, no real funds transferred">⚡ Simulated</span>
+                        </div>
+
                     </div>
 
                     <!-- Feature Card 4 -->
-                    <div class="card">
+                    <div class="card fade-up">
                         <div class="card-head flex-grid two-column-40_60_grid">
                             <div class="card-img">
                                 <img src="static/images/card-icons/customer-service.png" alt="" aria-hidden="true"
@@ -260,10 +274,18 @@
                         <div class="body">
                             <p>Get help quickly with in-app support, FAQs, and live assistance.</p>
                         </div>
+                        
+                        <div class="tag">
+                             <span aria-label="Guided support experience using predefined help content and assistance.">
+                            💬 Guided
+                             </span>
+                        </div>
+                       
+
                     </div>
 
                     <!-- Feature Card 5 -->
-                    <div class="card">
+                    <div class="card fade-up">
                         <div class="card-head flex-grid two-column-40_60_grid">
                             <div class="card-img">
                                 <img src="static/images/card-icons/security-and-account.png" alt="" aria-hidden="true"
@@ -276,10 +298,14 @@
                         <div class="body">
                             <p>Protect your account with advanced security features.</p>
                         </div>
+
+                           <div class="tag">
+                            <span aria-label="Secure accounts">🔒 secure</span>
+                        </div>
                     </div>
 
                     <!-- Feature Card 6 -->
-                    <div class="card">
+                    <div class="card fade-up">
                         <div class="card-head flex-grid two-column-40_60_grid">
                             <div class="card-img">
                                 <img src="static/images/card-icons/transaction-history.png" alt="" aria-hidden="true"
@@ -292,6 +318,13 @@
                         <div class="body">
                             <p>Access detailed records of all your transactions.</p>
                         </div>
+
+                        <div class="tag">
+                            <span aria-label="Simulated transaction records generated for learning and demonstration purposes.">
+                                📄 Simulated
+                            </span>
+                        </div>
+
                     </div>
 
                 </div>
@@ -305,16 +338,16 @@
             <div class="security-and-funds__container container">
 
                 <!-- Security & Funds Section -->
-                <header class="mt-48">
+                <header class="mt-48 fade-up">
                     <h2 class="center capitalise">Security & Funds</h2>
                     <p class="center security__subtext pt-8">
                         Your money and data are protected with industry-standard security at every step.
                     </p>
                 </header>
 
-                <div class="feature__cards flex-grid two-column-grid mt-24 p-24" role="list" id="feature-cards-2">
+                <div class="feature__cards flex-grid two-column-grid mt-24 p-24 fade-up" role="list" id="feature-cards-2">
 
-                    <div class="card flex-grid two-column-30_70_grid border-right">
+                    <div class="card fade-up flex-grid two-column-30_70_grid border-right">
                         <div class="card-head">
                             <img src="static/images/card-icons/security-badge.png" alt="" aria-hidden="true"
                                 class="feature-card-img">
@@ -325,7 +358,7 @@
                         </div>
                     </div>
 
-                    <div class="card flex-grid two-column-30_70_grid">
+                    <div class="card fade-up flex-grid two-column-30_70_grid">
                         <div class="card-head">
                             <img src="static/images/card-icons/simulated-funds.png" alt="" aria-hidden="true"
                                 class="feature-card-img">
@@ -347,7 +380,7 @@
             <div class="virtual-control__container container">
 
                 <!-- Virtual Banking Control Centre -->
-                <header class="mt-48">
+                <header class="mt-48 fade-up">
                     <h2 class="center features__h1">Virtual Banking Control Centre</h2>
                     <p class="center security__subtext pt-8">
                         A central hub for virtual cards, funding, and spend management.
@@ -356,7 +389,7 @@
 
                 <div class="feature__cards flex-grid two-column-grid mt-24 p-24" role="list" id="feature-cards-3">
 
-                    <div class="card flex-grid two-column-30_70_grid border-right">
+                    <div class="card fade-up flex-grid two-column-30_70_grid border-right">
                         <div class="card-head">
                             <img src="static/images/card-icons/sources-funding.png" alt="" aria-hidden="true"
                                 class="feature-card-img">
@@ -367,7 +400,7 @@
                         </div>
                     </div>
 
-                    <div class="card flex-grid two-column-30_70_grid">
+                    <div class="card fade-up flex-grid two-column-30_70_grid">
                         <div class="card-head">
                             <img src="static/images/card-icons/source-spending-control.png" alt="" aria-hidden="true"
                                 class="feature-card-img">
@@ -378,7 +411,7 @@
                         </div>
                     </div>
 
-                    <div class="card flex-grid two-column-30_70_grid border-right pt-48">
+                    <div class="card fade-up flex-grid two-column-30_70_grid border-right pt-48">
                         <div class="card-head">
                             <img src="static/images/card-icons/source-virtual-card.png" alt="" aria-hidden="true"
                                 class="feature-card-img">
@@ -389,7 +422,7 @@
                         </div>
                     </div>
 
-                    <div class="card flex-grid two-column-30_70_grid pt-48">
+                    <div class="card fade-up flex-grid two-column-30_70_grid pt-48">
                         <div class="card-head">
                             <img src="static/images/card-icons/source-admin-cards.png" alt="" aria-hidden="true"
                                 class="feature-card-img">
@@ -400,7 +433,7 @@
                         </div>
                     </div>
 
-                    <div class="card flex-grid two-column-30_70_grid border-right pt-48">
+                    <div class="card fade-up flex-grid two-column-30_70_grid border-right pt-48">
                         <div class="card-head">
                             <img src="static/images/card-icons/auth-2fa.png" alt="" aria-hidden="true"
                                 class="feature-card-img">
@@ -411,7 +444,7 @@
                         </div>
                     </div>
 
-                    <div class="card flex-grid two-column-30_70_grid pt-48">
+                    <div class="card fade-up flex-grid two-column-30_70_grid pt-48">
                         <div class="card-head">
                             <img src="static/images/card-icons/monitoring.png" alt="" aria-hidden="true"
                                 class="feature-card-img">
@@ -423,68 +456,112 @@
                     </div>
 
                 </div>
+
+                
             </div>
         </section>
 
         <section id="account-control" aria-labelledby="account-control-heading">
-            <div class="account-control__container">
+    <div class="account-control__container">
 
-                <!-- Section Heading -->
-                <header>
-                    <h2 id="account-control-heading" class="center capitalise">
-                        Account and Access Control
-                    </h2>
-                    <p class="center security__subtext pt-8">
-                        Your money and data are protected with industry-standard security at every step.
-                    </p>
-                </header>
+        <!-- Section Heading -->
+        <header class="fade-up">
+            <h2 id="account-control-heading" class="center capitalise">
+                Account and Access Control
+            </h2>
+            <p class="center security__subtext pt-8">
+                Your money and data are protected with industry-standard security at every step.
+            </p>
+        </header>
 
-                <!-- Cards List -->
-                <div class="feature__cards flex-grid two-column-grid mt-24 p-24" role="list" id="account-control-cards">
 
-                    <!-- Card 1 -->
-                    <div class="card flex-grid two-column-30_70_grid border-right" id="2fa-dashboard">
-                        <div class="card-head">
-                            <img src="static/images/card-icons/security-badge.png" alt="" aria-hidden="true"
-                                class="feature-card-img">
-                        </div>
-                        <div class="card-footer">
-                            <h3 class="capitalise">2FA Recovery Code Dashboard</h3>
-                            <p class="pt-16">
-                                Access tools to ensure you are never locked out of your account.
-                            </p>
-                        </div>
+          <div class="card fade-up single-card center mt-24">
+                    <div class="card-head">
+                        <img src="static/images/card-icons/notification-alert.png" alt=""  
+                         aria-hidden="true" class="feature-card-img">
                     </div>
-
-                    <!-- Card 2 -->
-                    <div class="card flex-grid two-column-30_70_grid">
-                        <div class="card-head">
-                            <img src="static/images/card-icons/simulate-funds-2.png" alt="" aria-hidden="true"
-                                class="feature-card-img">
-                        </div>
-                        <div class="card-footer">
-                            <h3 class="capitalise">Simulated Funds</h3>
-                            <p class="pt-16">
-                                No real money is used, making it safe for learning.
-                            </p>
-                        </div>
+                    <div class="card-footer">
+                           <h3 class="capitalise">Notification preferences</h3>
+                           <p class="pt-16">Choose which notifications you want to receive and how we contact you.</p>
                     </div>
-
                 </div>
+        <!-- Cards List -->
+        <div class="feature__cards flex-grid two-column-grid mt-24 p-24" role="list" id="account-control-cards">
 
+            <!-- Card 1 -->
+            <div class="card fade-up flex-grid two-column-30_70_grid border-right">
+                <div class="card-head">
+                    <img src="static/images/card-icons/security-badge.png" alt="" aria-hidden="true"
+                        class="feature-card-img">
+                </div>
+                <div class="card-footer">
+                    <h3 class="capitalise">2FA Recovery Code Dashboard</h3>
+                    <p class="pt-16">
+                        Access tools to ensure you are never locked out of your account.
+                    </p>
+                </div>
             </div>
-        </section>
+
+            <!-- Card 2 -->
+            <div class="card fade-up flex-grid two-column-30_70_grid">
+                <div class="card-head">
+                    <img src="static/images/card-icons/password-manager.png" alt="" aria-hidden="true"
+                        class="feature-card-img">
+                </div>
+                <div class="card-footer">
+                    <h3 class="capitalise">Password Manager</h3>
+                    <p class="pt-16">
+                        Securely stores and manages your passwords in an unencryptable format.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Card 3 -->
+            <div class="card fade-up flex-grid two-column-30_70_grid border-right mt-24">
+                <div class="card-head">
+                    <img src="static/images/card-icons/password-change-alert.png" alt="" aria-hidden="true"
+                        class="feature-card-img">
+                </div>
+                <div class="card-footer">
+                    <h3 class="capitalise">Password change alerts</h3>
+                    <p class="pt-16">
+                        We will notify you by email whenever your password is changed, helping keep your account secure.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Card 4 -->
+            <div class="card fade-up flex-grid two-column-30_70_grid mt-24">
+                <div class="card-head">
+                    <img src="static/images/card-icons/simulate-funds-2.png" alt="" aria-hidden="true"
+                        class="feature-card-img">
+                </div>
+                <div class="card-footer">
+                    <h3 class="capitalise">Simulated Funds</h3>
+                    <p class="pt-16">
+                        Move transactions around without using real money, perfect for fun, learning and testing safely.
+                    </p>
+                </div>
+            </div>
+
+           
+
+        </div>
+
+       
+    </div>
+</section>
 
 
         <section id="how-it-works">
 
             <div class="how-it-works__container">
-                <div class="header">
+                <div class="header fade-up">
                     <h1 class="capitalise pt-16 header-5 bold center">How it works?</h1>
                 </div>
                 <div class="who-is-it-for__cards flex-grid three-column-grid mt-24 p-24">
 
-                    <div class="card flex-grid two-column-25_75_grid border-right" id="learning">
+                    <div class="card fade-up flex-grid two-column-25_75_grid border-right" id="learning">
 
                         <div class="card-head">
                             <img src="static/images/card-icons/email.png" alt="" class="how-it-works-img card-img">
@@ -496,7 +573,7 @@
                         </div>
                     </div>
 
-                    <div class="card flex-grid two-column-25_75_grid border-right" id="testing">
+                    <div class="card fade-up flex-grid two-column-25_75_grid border-right" id="testing">
                         <div class="card-head">
                             <img src="static/images/card-icons/simulated-funds.png" alt="" class="how-it-works-img card-img">
                         </div>
@@ -508,7 +585,7 @@
                         </div>
                     </div>
 
-                    <div class="card flex-grid two-column-25_75_grid" id="simulated">
+                    <div class="card fade-up flex-grid two-column-25_75_grid" id="simulated">
                         <div class="card-head pr-16 pl-8">
                             <img src="static/images/card-icons/simulate-transaction.png" alt=""
                                 class="how-it-works-img card-img">
@@ -604,7 +681,7 @@
 
     </footer>
 
-
+<script src="static/js/index.js" type="module"></script>
 </body>
 
 </html>
