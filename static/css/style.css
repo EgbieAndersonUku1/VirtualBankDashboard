@@ -288,6 +288,10 @@ img:hover {
 
 }
 
+.font-xlg {
+    font-size: 2.5rem;
+}
+
 .small-text {
     font-size: 0.95rem;
 }
@@ -325,6 +329,11 @@ img:hover {
     border-right: 2px solid lavender;
     padding-right: 10px;
     padding-left: 10px;
+}
+
+
+.translate-x-70 {
+  transform: translateX(70%);
 }
 
 
@@ -422,6 +431,10 @@ img:hover {
     grid-template-rows: auto;
 }
 
+.two-column-20_80_grid {
+    grid-template-columns: 20% 80%;
+    grid-template-rows: auto;
+}
 
 /* Site logo */
 #virtual-bank-logo {
@@ -461,13 +474,13 @@ header {
 
 
 /* call to action */
-#call-to-action {
+.call-to-action {
     margin-top: 150px;
     min-height: 100vh;
 }
 
 
-#call-to-action-img {
+.call-to-action-img {
     width: 100%;
     height: 1000px;
     position: relative;
@@ -550,9 +563,10 @@ header {
 }
 
 
-#testimony-quote {
+.testimony-quote {
     position: relative;
     bottom: 240px;
+   
 }
 
 .quote,
@@ -563,6 +577,7 @@ blockquote {
 }
 
 /* how it works section  */
+#virtual-wallet-how-it-works,
 #how-it-works {
     background: white;
 }
@@ -573,14 +588,23 @@ blockquote {
 }
 
 
-/* account control section */
-#account-control {
+/* account control and get started section */
+
+#account-control,
+#get-started {
     position: relative;
-    bottom: 350px;
     width: var(--main-page-width);
     margin: auto;
 }
 
+
+#account-control {
+    bottom: 350px;
+}
+
+#get-started {
+    bottom: 300px;
+}
 
 /* virtual, security control section */
 #features,
@@ -747,6 +771,16 @@ blockquote {
 .feature-card-img {
     height: 120px;
     width: 120px;
+}
+
+.bank-wallet-connection-img {
+    height: 180px;
+    width: 180px;
+}
+
+#bank-and-wallet-img {
+    height: 170px;
+    width: 170px;
 }
 
 #feature-cards-2 {
@@ -1018,6 +1052,13 @@ footer {
 
 
 
+/* wallet images */
+.wallet-img-icon {
+    height: 45px;
+    width: 45px;
+
+}
+
 /* Fade-up animation (mobile-first, desktop-only) */
 
 /* Base: Mobile & Tablet */
@@ -1050,4 +1091,12 @@ footer {
         transform: none; 
         transition: none;
     }
+}
+
+
+/* info p-tag */
+#wallet-bank-connection-info {
+    width: 70%;
+    line-height: 1.7;
+    margin: auto;
 }
