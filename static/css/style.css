@@ -310,6 +310,10 @@ img:hover {
     color: #6c757d;
 }
 
+/* background colours */
+.white-bg {
+    background: #ffff;
+}
 
 /* font colours */
 .white-text {
@@ -331,6 +335,11 @@ img:hover {
     padding-left: 10px;
 }
 
+.dividor {
+    border-top: 2px solid lavender;
+    margin-top: var(--space-12);
+    margin-bottom: var(--space-12)
+}
 
 .translate-x-70 {
   transform: translateX(70%);
@@ -437,10 +446,11 @@ img:hover {
 }
 
 /* Site logo */
-#virtual-bank-logo {
-    font-size: 1.2rem;
-}
 
+#authentication-form-logo {
+    height: 150px;
+    width: 150px;
+}
 
 
 /* nav control */
@@ -639,7 +649,7 @@ blockquote {
 
 /* authentication button div */
 #authentication-btns {
-    column-gap: var(--space-8);
+    column-gap: var(--space-4);
 
     /* sits on top of the call to image */
     position: relative;
@@ -690,6 +700,21 @@ blockquote {
     color: white;
 }
 
+.large-btn {
+    width: 100%;
+}
+
+.auth-btn {
+    padding: var(--space-12)
+}
+
+.auth-btns {
+    column-gap: var(--space-16);
+}
+
+button {
+    border-radius: 999px;
+}
 
 /* The main images */
 #main-image {
@@ -1057,6 +1082,103 @@ footer {
     height: 45px;
     width: 45px;
 
+}
+
+.form-authentication-img {
+   
+}
+
+
+#wallet-register-form .form-group  {
+    
+   
+
+}
+
+.register__container h1 {
+    font-size: 1.2rem;
+}
+
+#wallet-register-form {
+    box-shadow: var(--box-shadow-tietary);
+    width: 35%;
+    margin: auto;
+    margin-top: var(--space-24);
+    margin-bottom: var(--space-24);
+    border-radius: 2%;
+
+}
+
+#wallet-register-form h1 {
+    font-size: 1.2rem;
+}
+ 
+
+#password-strength h2 {
+    font-size: 1.1rem;
+}
+
+#wallet-register-form .form-group {
+    /* position: relative;
+    bottom: 60px; */
+}
+
+#password-strength {
+    border: 1px solid lavender;
+    margin-top: 12px;
+    margin-bottom: 12px;
+    padding: 12px;
+}
+
+.rule-icon {
+    color: var(--green-600);
+}
+
+.rule {
+    opacity: 0.3;
+}
+
+input,
+select,
+textarea {
+    border-color: 0.5px solid #1F4FD8;
+    box-shadow: 0 0 0 3px rgba(31, 79, 216, 0.15);
+    border-radius: 6px;  
+    padding: 12px 14px;
+    font-size: 1.2rem;
+
+}
+
+
+#wallet-register-form .form-group input[type="text"],
+#wallet-register-form .form-group input[type="password"],
+#walet-register-form  .form-group .flex-row input[type="email"]{
+   height: 40px;
+   width: 100%;
+
+}
+
+input[type="text"],
+input[type="password"],
+input[type="email"] {
+    width: 100%;
+}
+
+input[type="checkbox"] {
+  accent-color: #2f80ed;
+}
+
+#terms-privacy-consent {
+    font-size: 0.90rem;
+}
+
+
+#wallet-register-form__passords {
+    column-gap: 10px;
+}
+
+label {
+    margin-top: 8px;
 }
 
 /* Fade-up animation (mobile-first, desktop-only) */

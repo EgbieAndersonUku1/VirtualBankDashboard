@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="static/css/style.css">
+    <link rel="stylesheet" href="static/vendor/fontawesome/css/all.min.css">
+    <link rel="shortcut icon" href="static/images/virtual-bank-logo.png" type="image/x-icon">
+    <title>Virtual wallet</title>
+</head>
+
+<body>
+    <header class="mb-24">
+        <nav aria-label="Main navigation" class="white-bg">
+            <div class="nav-container flex-grid two-column-grid">
+
+                <!-- Logo / Home -->
+                <div class="head">
+                    <a href="/" class="nav-link pt-8 bold" id="virtual-bank-logo">
+                        <img src="static/images/virtual-bank-logo.png" alt="Virtual Bank home" class="logo" />
+                    </a>
+                </div>
+
+                <!-- Navigation Links -->
+                <div class="body">
+                    <ul class="flex-grid three-column-grid" role="list">
+
+                        <li>
+                            <a href="/virtual-bank-homepage.html" class="nav-link light-bold capitalise" id="nav-home">
+                                Back to Home
+                            </a>
+                        </li>
+
+
+                        <li>
+                            <a href="/help" class="nav-link light-bold capitalise" id="nav-help">
+                                Help
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="/login" class="nav-link light-bold capitalise" id="nav-security">
+                                Login
+                            </a>
+                        </li>
+
+                    </ul>
+                </div>
+
+            </div>
+        </nav>
+    </header>
+
+    <main>
+
+        <section id="register" aria-labelledby="register-heading">
+
+            <div class="register__container">
+
+                <h1 id="register-heading" class="capitalise center header-7">
+                    Create your account
+                </h1>
+
+                <p id="register-description" class="mt-4 center">
+                    Sign up to start managing your finances
+                </p>
+
+                <form action="" method="post" id="wallet-register-form" class="p-24 white-bg"
+                    aria-describedby="register-description" novalidate>
+
+                    <h2 class="center header-7">Bank registration</h2>
+
+                    <div class="form-group">
+
+                        <!-- Username -->
+                        <div class="flex-row flex-grid">
+                            <label for="username">
+                                Username <span aria-hidden="true">*</span>
+                            </label>
+                            <input type="text" name="username" id="username" minlength="3" maxlength="30" required
+                                aria-required="true">
+                        </div>
+
+                        <!-- Email -->
+                        <div class="flex-row flex-grid">
+                            <label for="email">
+                                Email <span aria-hidden="true">*</span>
+                            </label>
+                            <input type="email" name="email" id="email" required aria-required="true">
+                        </div>
+
+                        <!-- Wallet code -->
+                        <div class="flex-row flex-grid">
+                            <label for="wallet-code">
+                                Wallet registration code
+                                <span role="button" tabindex="0" aria-label="What is a wallet registration code?">
+                                    <i class="fa-solid fa-circle-question" aria-hidden="true"></i>
+                                </span>
+                            </label>
+
+                            <input type="text" name="wallet_code" id="wallet-code" aria-describedby="wallet-code-help">
+
+                            <small id="wallet-code-help" class="italic">
+                                If you have already created your wallet, enter the wallet registration ID.
+                            </small>
+                        </div>
+
+                        <!-- Passwords -->
+                        <div class="auth-btns flex-grid two-column-grid">
+
+                            <div class="flex-grid">
+                                <label for="password">
+                                    Password <span aria-hidden="true">*</span>
+                                </label>
+                                <input type="password" name="password" id="password" required aria-required="true"
+                                    aria-describedby="password-rules">
+                            </div>
+
+                            <div class="flex-grid">
+                                <label for="confirm-password">
+                                    Confirm password <span aria-hidden="true">*</span>
+                                </label>
+                                <input type="password" name="confirm_password" id="confirm-password" required
+                                    aria-required="true">
+                            </div>
+
+                        </div>
+
+                        <small>
+                            <a href="#">Forgot your password?</a>
+                        </small>
+
+                        <!-- Password strength -->
+                        <div id="password-strength" role="region" aria-labelledby="password-rules-heading"
+                            aria-live="polite">
+
+                            <h3 id="password-rules-heading" class="mb-8 mt-8 capitalise">
+                                Password requirements
+                            </h3>
+
+                            <ul class="password-rules" id="password-rules">
+
+                                <li id="rule-uppercase" class="rule invalid">
+                                    <i class="fa-solid fa-circle-xmark rule-icon" aria-hidden="true"></i>
+                                    <span>Has an uppercase letter</span>
+                                    <span class="sr-only">Not met</span>
+                                </li>
+
+                                <li id="rule-lowercase" class="rule invalid">
+                                    <i class="fa-solid fa-circle-xmark rule-icon" aria-hidden="true"></i>
+                                    <span>Has a lowercase letter</span>
+                                    <span class="sr-only">Not met</span>
+                                </li>
+
+                                <li id="rule-number" class="rule invalid">
+                                    <i class="fa-solid fa-circle-xmark rule-icon" aria-hidden="true"></i>
+                                    <span>Has a number</span>
+                                    <span class="sr-only">Not met</span>
+                                </li>
+
+                                <li id="rule-length" class="rule invalid">
+                                    <i class="fa-solid fa-circle-xmark rule-icon" aria-hidden="true"></i>
+                                    <span>At least 8 characters</span>
+                                    <span class="sr-only">Not met</span>
+                                </li>
+
+                                <li id="rule-symbol" class="rule invalid">
+                                    <i class="fa-solid fa-circle-xmark rule-icon" aria-hidden="true"></i>
+                                    <span>Has at least one symbol</span>
+                                    <span class="sr-only">Not met</span>
+                                </li>
+
+                                <li id="rule-match" class="rule invalid">
+                                    <i class="fa-solid fa-circle-xmark rule-icon" aria-hidden="true"></i>
+                                    <span>Passwords match</span>
+                                    <span class="sr-only">Not met</span>
+                                </li>
+
+                            </ul>
+
+                        </div>
+
+                        <!-- Terms -->
+                        <div id="terms-of-condition" class="mt-8">
+                            <input type="checkbox" name="terms_of_condition" id="terms-of-condition-checkbox" required
+                                aria-required="true">
+                            <label for="terms-of-condition-checkbox" class="pl-8">
+                                I agree to the Terms of Service and Privacy Policy
+                            </label>
+                        </div>
+
+                    </div>
+
+                    <!-- Submit -->
+                    <div class="button mt-8 mb-8">
+                        <button type="submit" id="register-btn" class="large-btn capitalise center auth-btn">
+                            Register
+                        </button>
+                    </div>
+
+                    <hr class="dividor mt-4 mb-4" aria-hidden="true">
+
+                    <div id="already-signed-up" class="center">
+                        <span>
+                            Already have an account?
+                            <a href="#">Log in</a>
+                        </span>
+                    </div>
+
+                </form>
+
+            </div>
+
+        </section>
+
+
+
+
+
+    </main>
+
+
+    <!-- The footer section -->
+    <footer>
+
+        <div class="footer__container">
+
+            <div class="footer__header">
+                <img src="static/images/virtual-wallet-logo.png" alt="The virtual logo" class="footer-logo">
+
+            </div>
+
+
+            <div class="flex-grid five-column-grid" id="footer-sections">
+
+                <!-- About us column -->
+                <div class="col flex-grid" id="about-us">
+                    <h1 class="footer-head pb-16">About us</h1>
+                    <a href="#" class="footer-link">Our company</a>
+                    <a href="#" class="footer-link">Careers</a>
+                    <a href="#" class="footer-link">Security</a>
+                    <a href="#" class="footer-link">Investor relations</a>
+
+                </div>
+
+                <!-- services column -->
+                <div class="col flex-grid" id="services">
+                    <h1 class="footer-head pb-16">services</h1>
+                    <a href="#" class="footer-link">Online banking</a>
+                    <a href="#" class="footer-link">Mobile app</a>
+                    <a href="#" class="footer-link">Credit app</a>
+                    <a href="#" class="footer-link">Loans and mortgages</a>
+                </div>
+
+                <!-- support column -->
+                <div class="col flex-grid" id="support">
+                    <h1 class="footer-head pb-16">support</h1>
+                    <a href="#" class="footer-link">FAQs</a>
+                    <a href="#" class="footer-link">Help Center</a>
+                    <a href="#" class="footer-link">Contact us</a>
+                    <a href="#" class="footer-link">Live chat</a>
+                </div>
+
+                <div class="col flex-grid" id="resources">
+                    <h1 class="footer-head pb-16">resources</h1>
+                    <a href="#" class="footer-link">Financial Education</a>
+                    <a href="#" class="footer-link">Blog</a>
+                    <a href="#" class="footer-link">News and Insight</a>
+                    <a href="#" class="footer-link">Calculators</a>
+                </div>
+
+                <div class="col" id="download-app">
+                    <h1 class="footer-head">Download our app</h1>
+
+                    <div id="apps" class="flex-grid two-column-grid">
+                        <img src="static/images/footer-icons/appStore.svg" alt="" class="footer-icon">
+                        <img src="static/images/footer-icons/googlePlay.svg" alt="" class="footer-icon">
+                    </div>
+
+
+                </div>
+            </div>
+
+            <div class="socials copyright flex-grid two-column-grid pb-24">
+
+                <div class="socials four-column-grid">
+                    <a href="#"><img src="static/images/icons/facebook.svg" alt="facebook" class="social-icon"></a>
+                    <a href="#"><img src="static/images/icons/instagram.svg" alt="facebook" class="social-icon"></a>
+
+                </div>
+
+                <div class="copyright four-column-grid">
+                    <a href="#" class="copyright-link"><span class="copyright-date">@2026 </span>Virtual bank. All
+                        rights reserved</a>
+                    <a href="#" class="copyright-link footer-link">Privacy policy</a>
+                    <a href="#" class="copyright-link footer-link">Terms of use</a>
+
+                </div>
+            </div>
+
+        </div>
+
+    </footer>
+
+    <script src="static/js/index.js" type="module"></script>
+</body>
+
+</html>
