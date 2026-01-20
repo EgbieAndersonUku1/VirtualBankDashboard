@@ -135,7 +135,7 @@
                         <div id="password-strength" role="region" aria-labelledby="password-rules-heading"
                             aria-live="polite">
 
-                            <h3 id="password-rules-heading" class="mb-8 mt-8 capitalise">
+                            <h3 id="password-rules" class="mb-8 mt-8 capitalise header-9 light-bold">
                                 Password requirements
                             </h3>
 
@@ -185,9 +185,9 @@
                         <div id="terms-of-condition" class="mt-8">
                             <input type="checkbox" name="terms_of_condition" id="terms-of-condition-checkbox" required
                                 aria-required="true">
-                            <label for="terms-of-condition-checkbox" class="pl-8">
+                            <small id="terms-of-condition-checkbox" class="pl-8">
                                 I agree to the Terms of Service and Privacy Policy
-                            </label>
+                            </small>
                         </div>
 
                     </div>
@@ -304,6 +304,7 @@
     </footer>
 
     <script src="static/js/index.js" type="module"></script>
+    <script type="module" src="static/js/utils/password/checkPasswordStrength.js"></script>
 </body>
 
 </html>
