@@ -1117,14 +1117,28 @@ footer {
 }
  
 
-#password-strength h2 {
-    font-size: 1.1rem;
-}
+
 
 #wallet-register-form .form-group {
     /* position: relative;
     bottom: 60px; */
 }
+
+
+/* The password strength board. Starts of as not visible */
+#password-strength {
+    display: none;
+}
+
+#password-strength.show {
+    display: grid;
+}
+
+
+#password-strength h2 {
+    font-size: 1.1rem;
+}
+
 
 #password-strength {
     border: 1px solid lavender;
@@ -1137,14 +1151,20 @@ footer {
     color: var(--green-600);
 }
 
+
+/* rules to determine strength board fields are highlighted or not */
 .rule.valid {
-    opacity: 0.3;
+    opacity: 1;
 }
 
 .invalid {
     opacity: 0.3;
 }
 
+
+
+
+/* html selctors  */
 input,
 select,
 textarea {
@@ -1229,3 +1249,5 @@ label {
     line-height: 1.7;
     margin: auto;
 }
+
+

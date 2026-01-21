@@ -135,9 +135,11 @@
                         <div id="password-strength" role="region" aria-labelledby="password-rules-heading"
                             aria-live="polite">
 
-                            <h3 id="password-rules" class="mb-8 mt-8 capitalise header-9 light-bold">
-                                Password requirements
+                            <h3 id="active-password-field" class="mb-8 mt-8 capitalise header-9 light-bold">
+                                Current password field
                             </h3>
+
+                            <!-- The password strength indicator -->
 
                             <ul class="password-rules" id="password-rules">
 
@@ -178,6 +180,8 @@
                                 </li>
 
                             </ul>
+
+                            <!-- end of password strength indicator -->
 
                         </div>
 
@@ -305,6 +309,7 @@
 
     <script src="static/js/index.js" type="module"></script>
     <script type="module" src="static/js/utils/password/checkPasswordStrength.js"></script>
+    <script type="module" src="static/js/authentication/walletRegister.js"></script>
 </body>
 
 </html>
