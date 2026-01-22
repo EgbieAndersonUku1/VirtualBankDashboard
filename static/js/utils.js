@@ -116,11 +116,16 @@ export function sanitizeText(text, onlyNumbers = false, onlyChars = false, inclu
         throw new Error(`Expected an array but got type ${typeof includeChars}`);
     }
 
-    const INCLUDE_CHARS_ARRAY_LENGTH = includeChars.length;
-
-    if (!Array.isArray(includeChars)) {
-        throw new Error(`Expected an array but got ${typeof includeChars}`);
+    if (typeof onlyChars !== "boolean" && typeof onlyNumbers !== "boolean") {
+         throw new Error(`Parameters onlyNumbers and onlyChars must be boolean but got: onlyNumbers - ${typeof onlyNumbers } and onlyChar - ${typeof onlyChars}`);    
     }
+
+    if (onlyNumbers && onlyChars) {
+        throw new Error(`onlyNumbers and onlyChars cannot both be true. onlyNumbers - ${onlyNumbers } and onlyChar - ${onlyChars}`);    
+    }
+
+    const INCLUDE_CHARS_ARRAY_LENGTH = includeChars.length;
+ 
 
     if (INCLUDE_CHARS_ARRAY_LENGTH > 0) {
         const invalidChar = includeChars.find(char => !specialChars[char]);
@@ -405,7 +410,7 @@ export function dimBackground(dimBackgroundElement, dim=false) {
  * @param {number} lengthPerDash - The number of characters between dashes (default: 5).
  * @param {boolean} digitsOnly - If true, removes all non-numeric characters (default: false).
  */
-export function applyDashToInput(e, lengthPerDash=5, digitsOnly=false) {
+export function applyDashToInput(e, lengthPerDash=5, digitsOnly=false, charsOnly=false) {
   
     const value = e.target.value.trim();
 
@@ -414,7 +419,7 @@ export function applyDashToInput(e, lengthPerDash=5, digitsOnly=false) {
         console.error(`The lengthPerDash must be integer. Expected an integer but got ${typeof lengthPerDash}`);
     };
 
-    let santizeValue   = sanitizeText(value, digitsOnly);
+    let santizeValue   = sanitizeText(value, digitsOnly, charsOnly);
     let formattedText  = [];
 
 

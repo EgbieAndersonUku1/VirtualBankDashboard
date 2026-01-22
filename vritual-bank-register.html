@@ -59,7 +59,7 @@
             <div class="register__container">
 
                 <h1 id="register-heading" class="capitalise center header-7">
-                    Create your account
+                    Create your bank account
                 </h1>
 
                 <p id="register-description" class="mt-4 center">
@@ -67,9 +67,7 @@
                 </p>
 
                 <form action="" method="post" id="wallet-register-form" class="p-24 white-bg"
-                    aria-describedby="register-description" novalidate>
-
-                    <h2 class="center header-7">Bank registration</h2>
+                    aria-describedby="register-description" role="form">
 
                     <div class="form-group">
 
@@ -80,6 +78,7 @@
                             </label>
                             <input type="text" name="username" id="username" minlength="3" maxlength="30" required
                                 aria-required="true">
+                            <small id="username-exists" class="field-check">Username already exists</small>
                         </div>
 
                         <!-- Email -->
@@ -87,20 +86,21 @@
                             <label for="email">
                                 Email <span aria-hidden="true">*</span>
                             </label>
-                            <input type="email" name="email" id="email" required aria-required="true">
+                            <input type="email" name="email" id="email" required aria-required="true" maxlength="30">
+                            <small id="email-exists" class="field-check">Email already exists</small>
                         </div>
 
                         <!-- Wallet code -->
-                        <div class="flex-row flex-grid">
+                        <div class="flex-row flex-grid" id="wallet-register-code-container">
+                             <span role="button" tabindex="0" aria-label="What is a wallet registration code?" id="wallet-helper-icon">
+                                <i class="fa-solid fa-circle-question" aria-hidden="true" id="wallet-register-code-info"></i>
+                            </span>
                             <label for="wallet-code">
                                 Wallet registration code
-                                <span role="button" tabindex="0" aria-label="What is a wallet registration code?">
-                                    <i class="fa-solid fa-circle-question" aria-hidden="true"></i>
-                                </span>
                             </label>
 
-                            <input type="text" name="wallet_code" id="wallet-code" aria-describedby="wallet-code-help">
-
+                            <input type="text" name="wallet_code" id="wallet-code" aria-describedby="wallet-code-help" maxlength="34" minlength="34" spellcheck="false">
+                            <small id="wallet-unique-code" class="field-check">The wallet registration code is invalid</small>
                             <small id="wallet-code-help" class="italic">
                                 If you have already created your wallet, enter the wallet registration ID.
                             </small>
@@ -114,7 +114,7 @@
                                     Password <span aria-hidden="true">*</span>
                                 </label>
                                 <input type="password" name="password" id="password" required aria-required="true"
-                                    aria-describedby="password-rules">
+                                    aria-describedby="password-rules" minlength="8" maxlength="25">
                             </div>
 
                             <div class="flex-grid">
@@ -122,7 +122,7 @@
                                     Confirm password <span aria-hidden="true">*</span>
                                 </label>
                                 <input type="password" name="confirm_password" id="confirm-password" required
-                                    aria-required="true">
+                                    aria-required="true" minlength="8" maxlength="25">
                             </div>
 
                         </div>
@@ -216,8 +216,56 @@
 
             </div>
 
+
         </section>
 
+        <section class="moodle registration-help centered" id="wallet-registration-code-explained">
+            <div class="container">
+                <h1 class="center mt-24 mb-24 capitalise">Wallet registration code explained</h1>
+
+                <h2 class="mt-8">What is a wallet registration code?</h2>
+                <p>
+                    A wallet registration code is a twenty nine digit unique code created for you after the creation of your wallet.
+                    It allows you to sign up for a bank account without reusing your email or username.
+                </p>
+
+                <h2 class="mb-24">Do I need wallet registration code?</h2>
+
+                <p>
+                    The short answer is no. You only need a wallet registration code if you created a wallet first and are then signing up for a virtual bank.
+                </p>
+                <p class="mt-8">
+                    If you are registering for a bank/bank account first, you can skip the registration code and continue
+                    using your username, email address, and password.
+                </p>
+
+                <h2 class="mt-8">When is a registration code needed?</h2>
+                <p>
+                    The registration code is only needed if you created a wallet before registering for a bank
+                    account. When you have created a wallet, your email address and username are saved and linked to
+                    you.
+                    These details can only be registered once. The registration code allows the system to recognise
+                    that you have already created a wallet.
+                </p>
+
+                <h2 class="mt-8">Why can’t I just use the same email and username again?</h2>
+                <p>
+                    Reusing registered details without an extra check would make it easier for someone else to
+                    attempt to claim an account using information that doesn’t belong to them. The registration code
+                    avoids this by confirming your existing wallet setup without exposing
+                    any sensitive information.
+                </p>
+
+
+                <h2 class="mt-8">What happens when I enter the registration code?</h2>
+                <p>
+                    The code is checked instantly, without refreshing the page. Once confirmed, your email and
+                    username are locked, and you can safely set your password to
+                    complete your wallet registration.
+                </p>
+
+            </div>
+        </section>
 
 
 
