@@ -14,6 +14,7 @@
     --main-page-width: 75%;
     --green-600: #16A34A;
     --blue-600: #2563EB;
+    --red: #b00020;
     --space-0: 0;
     --space-4: 4px;
     --space-8: 8px;
@@ -310,6 +311,10 @@ img:hover {
     color: #6c757d;
 }
 
+/* background colours */
+.white-bg {
+    background: #ffff;
+}
 
 /* font colours */
 .white-text {
@@ -325,12 +330,32 @@ img:hover {
     align-items: center;
 }
 
+
+/* 
+ * Fixed positioning centring (not layout centring).
+ * Used when the element must be removed from normal flow and
+ * positioned relative to its parent rather than centred by layout (e.g. flexbox).
+ */
+.centered {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1011;
+}
+
+
 .border-right {
     border-right: 2px solid lavender;
     padding-right: 10px;
     padding-left: 10px;
 }
 
+.dividor {
+    border-top: 2px solid lavender;
+    margin-top: var(--space-12);
+    margin-bottom: var(--space-12)
+}
 
 .translate-x-70 {
   transform: translateX(70%);
@@ -373,6 +398,9 @@ img:hover {
     font-size: 1.1rem;
 }
 
+.header-9 {
+    font-size: 1rem;
+}
 
 
 /* Flex and grid variables */
@@ -437,10 +465,11 @@ img:hover {
 }
 
 /* Site logo */
-#virtual-bank-logo {
-    font-size: 1.2rem;
-}
 
+#authentication-form-logo {
+    height: 150px;
+    width: 150px;
+}
 
 
 /* nav control */
@@ -639,7 +668,7 @@ blockquote {
 
 /* authentication button div */
 #authentication-btns {
-    column-gap: var(--space-8);
+    column-gap: var(--space-4);
 
     /* sits on top of the call to image */
     position: relative;
@@ -690,6 +719,21 @@ blockquote {
     color: white;
 }
 
+.large-btn {
+    width: 100%;
+}
+
+.auth-btn {
+    padding: var(--space-12)
+}
+
+.auth-btns {
+    column-gap: var(--space-16);
+}
+
+button {
+    border-radius: 999px;
+}
 
 /* The main images */
 #main-image {
@@ -1059,6 +1103,124 @@ footer {
 
 }
 
+
+#register-btn {
+    background: var(--green-600);
+    color: white;
+    font-size: 1.1rem;
+    cursor: pointer;
+}
+
+#register-btn:hover {
+    background: #0B1220;
+    color: white;
+}
+
+.register__container h1 {
+    font-size: 1.2rem;
+}
+
+#wallet-register-form {
+    box-shadow: var(--box-shadow-tietary);
+    width: 35%;
+    margin: auto;
+    margin-top: var(--space-24);
+    margin-bottom: var(--space-24);
+    border-radius: 2%;
+    cursor: pointer;
+
+}
+
+#wallet-register-form h1 {
+    font-size: 1.2rem;
+}
+ 
+
+
+
+/* The password strength board. Starts of as not visible */
+#password-strength {
+    display: none;
+}
+
+#password-strength.show {
+    display: grid;
+}
+
+
+#password-strength h2 {
+    font-size: 1.1rem;
+}
+
+
+#password-strength {
+    border: 1px solid lavender;
+    margin-top: 12px;
+    margin-bottom: 12px;
+    padding: 12px;
+}
+
+.rule-icon {
+    color: var(--green-600);
+}
+
+
+/* rules to determine strength board fields are highlighted or not */
+.rule.valid {
+    opacity: 1;
+}
+
+.invalid {
+    opacity: 0.3;
+}
+
+
+
+
+/* html selctors  */
+input,
+select,
+textarea {
+    border-color: 0.5px solid #1F4FD8;
+    box-shadow: 0 0 0 3px rgba(31, 79, 216, 0.15);
+    border-radius: 6px;  
+    padding: 12px 14px;
+    font-size: 1.2rem;
+
+}
+
+
+#wallet-register-form .form-group input[type="text"],
+#wallet-register-form .form-group input[type="password"],
+#walet-register-form  .form-group .flex-row input[type="email"]{
+   height: 40px;
+   width: 100%;
+
+}
+
+input[type="text"],
+input[type="password"],
+input[type="email"] {
+    width: 100%;
+}
+
+input[type="checkbox"] {
+  accent-color: #2f80ed;
+}
+
+#terms-privacy-consent {
+    font-size: 0.90rem;
+}
+
+
+#wallet-register-form__passords {
+    column-gap: 10px;
+}
+
+label {
+    margin-top: 8px;
+}
+
 /* Fade-up animation (mobile-first, desktop-only) */
 
 /* Base: Mobile & Tablet */
@@ -1099,4 +1261,79 @@ footer {
     width: 70%;
     line-height: 1.7;
     margin: auto;
+}
+
+
+.moodle {
+    
+    background: white;
+    width: 70%;
+    margin: auto;
+    padding: 32px;
+    box-shadow: var(--box-shadow-primary);
+    border-radius: 1px;
+
+}
+
+.registration-help h2 {
+    margin-bottom: var(--space-16);
+    margin-top: var(--space-16);
+    font-size: 1.02rem;
+    text-transform: capitalize;
+}
+
+.registration-help h1 {
+    font-size: 1.4rem;
+}
+
+.registration-help p {
+    line-height: 1.5;
+}
+
+#wallet-registration-code-explained {
+    z-index: 100000;
+    display: grid;
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transform: translateY(6px);
+    transition: 
+        opacity 200ms ease,
+        transform 200ms ease,
+        visibility 200ms ease;
+}
+
+#wallet-registration-code-explained.show {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+    transform: translateY(0);
+    transform: translate(-50%, -50%);
+}
+
+
+.fa-circle-question {
+    cursor: pointer;;
+}
+
+#wallet-register-code-container {
+    position: relative;
+}
+
+#wallet-helper-icon {
+    position: absolute;
+    right: 0;
+    top: 6px;
+    color: var(--blue-600);
+}
+#wallet-code {
+    text-transform: uppercase;
+    color: rgba(0, 0, 0, 0.7); 
+    font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+       letter-spacing: 0.08em;
+}
+
+.field-check {
+    color: var(--red);
+    display: none;
 }
