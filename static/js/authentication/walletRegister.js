@@ -1,14 +1,13 @@
 import CheckFrontEndPasswordStrength from "../utils/password/checkPasswordStrength.js";
-import { applyDashToInput } from "../utils.js";
+import { applyDashToInput, dimBackground } from "../utils.js";
 
 const walletHelperMoodle          = document.getElementById("wallet-registration-code-explained");
 const registerFormSectionElement  = document.getElementById("register");
-const walletCodeInputFieldElement = document.getElementById("wallet-code")
-
+const walletCodeInputFieldElement = document.getElementById("wallet-code");
+const dimBackgroundElement        = document.getElementById("dim");
 
 // TODO one time function checker to be added later. This is a one time check that checks if the elements are available before the addEventListener is called
 registerFormSectionElement.addEventListener("click", handleDelegation)
-
 walletCodeInputFieldElement.addEventListener("click",  handleCodeInputField);
 walletCodeInputFieldElement.addEventListener("input",  handleCodeInputField);
 
@@ -44,9 +43,11 @@ function handleDelegation(e) {
    
     if (!helperIcon) {
         walletHelperMoodle.classList.remove("show");
+        dimBackground(dimBackgroundElement, false);
         return;
     }
 
+    dimBackground(dimBackgroundElement, true);
     walletHelperMoodle.classList.add("show");
 }
 
