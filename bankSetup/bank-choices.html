@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/static/css/style.css">
+    <title>Bank setup</title>
+</head>
+
+<body>
+
+    <header class="mb-16">
+        <nav aria-label="Main navigation" id="choose-bank-navbar">
+            <div class="nav-container flex-grid two-column-grid">
+
+                <!-- Logo / Home -->
+                <div class="head">
+                    <a href="/" class="nav-link pt-8 bold" id="virtual-bank-logo">
+                        <img src="/static/images/virtual-bank-logo.png" alt="Virtual Bank home" class="logo" />
+                    </a>
+                </div>
+
+                <!-- Navigation Links -->
+                <div class="body flex flex-end">
+                    <ul class="flex-grid two-column-grid" role="list">
+
+
+                        <li>
+                            <a href="/vritual-bank-register.html" class="nav-link light-bold capitalise"
+                                id="nav-security">
+                                Hi, User
+                            </a>
+                        </li>
+
+                    </ul>
+                </div>
+
+            </div>
+        </nav>
+    </header>
+
+    <main>
+
+        <section id="choose-bank" class="mt-48 mb-48">
+            <div class="choose-bank__container">
+                <div class="bank-status mb-24">
+                    <small>Step 2 of 4</small>
+                    <h1 class="capitalise light-bold">Select your bank</h1>
+                    <p>Choose from a list of banks</p>
+                </div>
+                <form action="" method="post">
+                    <div class="choose-bank__cards flex-grid three-column-grid">
+
+                        <!-- card 1 -->
+                        <div class="choose-bank__card card flex-grid two-column-20_80_grid" for="bank-atlas">
+                            <div class="card-head card-head--control">
+                                <input type="radio" name="chosen_bank" id="bank-atlas" value="atlas">
+                            </div>
+
+                            <div class="card-body flex-grid two-column-25_75_grid">
+                                <div class="card-head card-head--logo">
+                                    <img src="" alt="Atlas Bank logo">
+                                </div>
+                                <div class="bank-details">
+                                    <h1 class="bank-title">Atlas Bank</h1>
+                                    <p>Interest <span>0.25%</span></p>
+                                    <p>Minimum deposit <span>£0.00</span></p>
+                                    <p>Overdraft <span>No</span></p>
+                                    <p>Monthly fee <span>£0</span></p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- card 2 -->
+                        <div class="choose-bank__card card flex-grid two-column-20_80_grid" for="bank-riverline">
+                            <div class="card-head card-head--control">
+                                <input type="radio" name="chosen_bank" id="bank-riverline" value="riverline">
+                            </div>
+
+                            <div class="card-body flex-grid two-column-25_75_grid">
+                                <div class="card-head card-head--logo">
+                                    <img src="" alt="Riverline logo">
+                                </div>
+                                <div class="bank-details">
+                                    <h1 class="bank-title">Riverline</h1>
+                                    <p>Interest <span>0.10%</span></p>
+                                    <p>Minimum deposit <span>£10.00</span></p>
+                                    <p>Overdraft <span>Yes (£250)</span></p>
+                                    <p>Monthly fee <span>£3</span></p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- card 3 -->
+                        <div class="choose-bank__card card flex-grid two-column-20_80_grid" for="bank-nova">
+                            <div class="card-head card-head--control">
+                                <input type="radio" name="chosen_bank" id="bank-nova" value="nova">
+                            </div>
+
+                            <div class="card-body flex-grid two-column-25_75_grid">
+                                <div class="card-head card-head--logo">
+                                    <img src="" alt="Nova Credit logo">
+                                </div>
+                                <div class="bank-details">
+                                    <h1 class="bank-title">Nova Credit</h1>
+                                    <p>Interest <span>0.40%</span></p>
+                                    <p>Minimum deposit <span>£50.00</span></p>
+                                    <p>Overdraft <span>No</span></p>
+                                    <p>Monthly fee <span>£0</span></p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- card 4 -->
+                        <div class="choose-bank__card card flex-grid two-column-20_80_grid" for="bank-steadfast">
+                            <div class="card-head card-head--control">
+                                <input type="radio" name="chosen_bank" id="bank-steadfast" value="steadfast">
+                            </div>
+
+                            <div class="card-body flex-grid two-column-25_75_grid">
+                                <div class="card-head card-head--logo">
+                                    <img src="" alt="Steadfast logo">
+                                </div>
+                                <div class="bank-details">
+                                    <h1 class="bank-title">Steadfast</h1>
+                                    <p>Interest <span>0.15%</span></p>
+                                    <p>Minimum deposit <span>£0.00</span></p>
+                                    <p>Overdraft <span>Yes (£500)</span></p>
+                                    <p>Monthly fee <span>£5</span></p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!--card  5 -->
+                        <div class="choose-bank__card card flex-grid two-column-20_80_grid" for="bank-pulse">
+                            <div class="card-head card-head--control">
+                                <input type="radio" name="chosen_bank" id="bank-pulse" value="pulse">
+                            </div>
+
+                            <div class="card-body flex-grid two-column-25_75_grid">
+                                <div class="card-head card-head--logo">
+                                    <img src="" alt="Pulse logo">
+                                </div>
+                                <div class="bank-details">
+                                    <h1 class="bank-title">Pulse</h1>
+                                    <p>Interest <span>0.30%</span></p>
+                                    <p>Minimum deposit <span>£0.00</span></p>
+                                    <p>Overdraft <span>No</span></p>
+                                    <p>Monthly fee <span>£2</span></p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- card 6 -->
+                        <div class="choose-bank__card card flex-grid two-column-20_80_grid" for="bank-harbour">
+                            <div class="card-head card-head--control">
+                                <input type="radio" name="chosen_bank" id="bank-harbour" value="harbour">
+                            </div>
+
+                            <div class="card-body flex-grid two-column-25_75_grid">
+                                <div class="card-head card-head--logo">
+                                    <img src="" alt="Harbour Trust logo">
+                                </div>
+                                <div class="bank-details">
+                                    <h1 class="bank-title">Harbour Trust</h1>
+                                    <p>Interest <span>0.05%</span></p>
+                                    <p>Minimum deposit <span>£25.00</span></p>
+                                    <p>Overdraft <span>Yes (£150)</span></p>
+                                    <p>Monthly fee <span>£0</span></p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- card 7 -->
+                        <div class="choose-bank__card card flex-grid two-column-20_80_grid" for="bank-lumen">
+                            <div class="card-head card-head--control">
+                                <input type="radio" name="chosen_bank" id="bank-lumen" value="lumen">
+                            </div>
+
+                            <div class="card-body flex-grid two-column-25_75_grid">
+                                <div class="card-head card-head--logo">
+                                    <img src="" alt="Lumen logo">
+                                </div>
+                                <div class="bank-details">
+                                    <h1 class="bank-title">Lumen</h1>
+                                    <p>Interest <span>0.35%</span></p>
+                                    <p>Minimum deposit <span>£100.00</span></p>
+                                    <p>Overdraft <span>No</span></p>
+                                    <p>Monthly fee <span>£0</span></p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- card 8 -->
+                        <div class="choose-bank__card card flex-grid two-column-20_80_grid" for="bank-urban">
+                            <div class="card-head card-head--control">
+                                <input type="radio" name="chosen_bank" id="bank-urban" value="urban">
+                            </div>
+
+                            <div class="card-body flex-grid two-column-25_75_grid">
+                                <div class="card-head card-head--logo">
+                                    <img src="" alt="Urban Bank logo">
+                                </div>
+                                <div class="bank-details">
+                                    <h1 class="bank-title">Urban Bank</h1>
+                                    <p>Interest <span>0.20%</span></p>
+                                    <p>Minimum deposit <span>£0.00</span></p>
+                                    <p>Overdraft <span>Yes (£300)</span></p>
+                                    <p>Monthly fee <span>£4</span></p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- card 9 -->
+                        <div class="choose-bank__card card flex-grid two-column-20_80_grid" for="bank-elm">
+                            <div class="card-head card-head--control">
+                                <input type="radio" name="chosen_bank" id="bank-elm" value="elm">
+                            </div>
+
+                            <div class="card-body flex-grid two-column-25_75_grid">
+                                <div class="card-head card-head--logo">
+                                    <img src="" alt="Elm Financial logo">
+                                </div>
+                                <div class="bank-details">
+                                    <h1 class="bank-title">Elm Financial</h1>
+                                    <p>Interest <span>0.18%</span></p>
+                                    <p>Minimum deposit <span>£20.00</span></p>
+                                    <p>Overdraft <span>No</span></p>
+                                    <p>Monthly fee <span>£1</span></p>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="choose-bank__btns flex flex-space-between mt-8">
+                        <div id="choose-bank-helper" class="bank-info">
+                            <p>Can’t find your bank? No problem, you can choose a different one.</p>
+
+                        </div>
+                        <button type="submit" class="btn-medium" id="bank-btn-continue">Continue</button>
+                    </div>
+                </form>
+            </div>
+        </section>
+
+
+
+
+    </main>
+</body>
+
+</html>
