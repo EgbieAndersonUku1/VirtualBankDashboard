@@ -315,9 +315,16 @@ img:hover {
     text-transform: uppercase;
 }
 
+
+
 .text-muted {
-    color: #6c757d;
+    color: #6B7280;
+    font-size: 0.875rem; 
+    line-height: 1.4;
+    display: block;
+    margin-top: 0.25rem;
 }
+
 
 /* background colours */
 .white-bg {
@@ -1422,10 +1429,9 @@ label {
   
 }
 
-
 .choose-bank__cards {
-    column-gap: var(--space-12);
-    row-gap: var(--space-8);
+    column-gap: var(--space-4);
+    row-gap: var(--space-4);
 }
 
 .choose-bank__card {
@@ -1443,6 +1449,8 @@ label {
 .choose-bank__card input[type="radio"] {
     cursor: pointer;
     color: 2px solid var(--blue-600);
+    position: relative;
+    z-index: 1000;
 }
 
 .choose-bank__card:hover {
@@ -1467,6 +1475,9 @@ label {
 
 .bank-details p {
   font-size: 0.875rem;   /* 14px */
+  font-weight: 300;
+  margin-top: 5px;
+  margin-bottom: 5px;
 }
 .bank-details span {
   font-weight: 600;
@@ -1476,6 +1487,7 @@ label {
 .choose-bank__card.is-selected {
   border-color: #D1FAE5;
   background-color: #f0f9ff;
+  border: 2px solid var(--red);
 }
 
 #bank-btn-continue {
@@ -1491,4 +1503,17 @@ label {
     color: black;
     border: 4px solid lavender;
    
+}
+
+.card-head--logo {
+    position: relative;
+    height: 140px;
+    width: 200px;
+}
+
+.choose-bank-img-logo {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    transform: translate(-50%, 0)
 }
