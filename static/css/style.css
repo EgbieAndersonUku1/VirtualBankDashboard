@@ -1385,6 +1385,10 @@ label {
     pointer-events: none;
 }
 
+
+
+/* bank setup page attributes */
+
 .choose-bank__container{
     background-image: url("/static/images/background-3.png");
     background-repeat: no-repeat;
@@ -1413,9 +1417,6 @@ label {
     width: 100%;
 }
 
-.choose-bank__card {
-    border-radius: 12px;
-}
 
 #choose-bank-navbar,
 .choose-bank__container {
@@ -1435,12 +1436,19 @@ label {
 }
 
 .choose-bank__card {
-    padding: 9px;
-  border-radius: 1px;
-  background: #ffff;
-  border: 0.1px solid #54e652;
-  box-shadow: 0 6px 16px rgba(30, 64, 175, 0.08);
+  padding: 9px;
+  border-radius: 6px;
+  background-color: #ffffff;
+  border: 1px solid #E5E7EB;
+  box-shadow: 0 4px 12px rgba(30, 64, 175, 0.06);
+
+  transition:
+    border-color 120ms ease-out,
+    background-color 120ms ease-out,
+    box-shadow 140ms ease-out,
+    transform 120ms ease-out;
 }
+
 
 .choose-bank__btns button {
     border-radius: initial;
@@ -1485,10 +1493,25 @@ label {
 }
 
 .choose-bank__card.is-selected {
-  border-color: #D1FAE5;
-  background-color: #f0f9ff;
-  border: 2px solid var(--red);
+  border: 2px solid #10B981; /* Emerald 500 */
+  background-color: #ECFDF5; /* Soft green tint */
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(16, 185, 129, 0.15);
+  
 }
+
+.choose-bank__card:hover:not(.is-selected) {
+  border-color: #CBD5E1;
+  box-shadow: 0 5px 14px rgba(30, 64, 175, 0.08);
+}
+
+
+.choose-bank__card:focus-visible {
+  outline: 2px solid #2563EB; /* accessible blue colour */
+  outline-offset: 2px;
+}
+
+
 
 #bank-btn-continue {
     background: var(--blue-600);
@@ -1507,7 +1530,7 @@ label {
 
 .card-head--logo {
     position: relative;
-    height: 140px;
+    height: 130px;
     width: 200px;
 }
 
@@ -1516,4 +1539,10 @@ label {
     height: 100%;
     width: 100%;
     transform: translate(-50%, 0)
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .choose-bank__card {
+    transition: none;
+  }
 }
