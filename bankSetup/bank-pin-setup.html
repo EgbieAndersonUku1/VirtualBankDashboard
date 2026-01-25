@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/static/css/style.css">
+    <link rel="shortcut icon" href="/static/images/virtual-bank-logo.png" type="image/x-icon">
+    <link rel="stylesheet" href="/static/vendor/fontawesome/css/all.min.css">
+    <title>Bank pin setup</title>
+</head>
+
+<body>
+
+    <header class="mb-16">
+        <nav aria-label="Main navigation" id="bank-pin-navbar">
+            <div class="nav-container flex-grid two-column-grid">
+
+                <!-- Logo / Home -->
+                <div class="head">
+                    <a href="/" class="nav-link pt-8 bold" id="virtual-bank-logo">
+                        <img src="/static/images/virtual-bank-logo.png" alt="Virtual Bank home" class="logo" />
+                    </a>
+                </div>
+
+                <!-- Navigation Links -->
+                <div class="body flex flex-end">
+                    <ul class="flex-grid two-column-grid" role="list">
+
+
+                        <li>
+                            <a href="/vritual-bank-register.html" class="nav-link light-bold capitalise"
+                                id="nav-security">
+                                Hi, User
+                            </a>
+                        </li>
+
+                    </ul>
+                </div>
+
+            </div>
+        </nav>
+    </header>
+
+    <main>
+
+        <section id="bank-pin-setup" class="mt-48 mb-48">
+            <div class="bank-pin-setup__container account-setup">
+                <div class="bank-status mb-24">
+                    <small>Step 3 of 4</small>
+                    <h1 class="capitalise light-bold">Set your pin</h1>
+                    <p>Create a secure 6-digit PIN to approve bank transactions</p>
+
+                    <hr class="dividor">
+                    <p class="">This will keep your account secure. Don't share your PIN with anyone
+                        and try not to set it as something as easy to guess like 123456
+                    </p>
+
+                </div>
+
+               <form action="" id="bank-pin-form" role="form">
+                
+                <h1 class="capitalise center header-6 light-bold">Set your 6 digit PIN</h1>
+                <p class="center mb-16 text-muted">Create a secure 6-digit PIN to approve bank transactions </p>
+
+                  <div class="pin-wrapper flex-grid six-column-grid">
+                    <input type="text" name="first_pin"  id="first-pin"  inputmode="numeric" maxlength="1" class="pin-number" disabled>
+                    <input type="text" name="second_pin" id="second-pin" inputmode="numeric" maxlength="1" class="pin-number" disabled>
+                    <input type="text" name="third_pin"  id="third-pin"  inputmode="numeric" maxlength="1" class="pin-number" disabled>
+                    <input type="text" name="fourth_pin" id="fourth-pin" inputmode="numeric" maxlength="1" class="pin-number" disabled>
+                    <input type="text" name="fifth_pin"  id="fifth-pin"  inputmode="numeric" maxlength="1" class="pin-number" disabled>
+                    <input type="text" name="six_pin"    id="six-pin"    inputmode="numeric" maxlength="1" class="pin-number" disabled>
+                </div>
+
+                <div id="pin-selection" class="mt-24">
+
+                    <div class="pin-selector__container flex-grid three-column-grid">
+                           <div class="pin-selection__number"  data-number="1">1</div>
+                            <div class="pin-selection__number" data-number="2">2</div>
+                            <div class="pin-selection__number" data-number="3">3</div>
+                            <div class="pin-selection__number" data-number="4">4</div>
+                            <div class="pin-selection__number" data-number="5">5</div>
+                            <div class="pin-selection__number" data-number="6">6</div>
+                            <div class="pin-selection__number" data-number="7">7</div>
+                            <div class="pin-selection__number" data-number="8">8</div>
+                            <div class="pin-selection__number" data-number="9">9</div>
+                    </div>
+
+                    <div class="pin-keypad__actions flex-grid two-column-grid mt-8">
+                         <div class="pin-selection__number" data-number="0">0</div>
+                         <div class="pin-selection__number" data-number=""><i class="fa-solid fa-delete-left"></i></div>
+                    </div>
+
+                </div>
+
+               </form>
+
+                 <div class="choose-bank__btns flex flex-end mt-8">
+                        <a href="/bankSetup/bank-choices.html" class="capitalise btn-medium mr-24 bank-btn-back center capitalise" aria-label="button"> back</a>
+                        <a href="" class="btn-medium bank-btn-continue capitalise" aria-label="button">Continue</a>
+                     
+                </div>
+                
+            </div>
+        </section>
+
+
+
+
+    </main>
+
+    <script src="/static/js/bankSetup/bankSetup.js" type="module"></script>
+</body>
+
+</html>
