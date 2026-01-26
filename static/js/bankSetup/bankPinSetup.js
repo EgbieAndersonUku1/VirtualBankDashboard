@@ -46,16 +46,44 @@ function addDigitToNextEmptyPinField(number) {
 
     for (let i = 0; i < inputPinFieldsElements.length; i++) {
         const inputPinFieldElement = inputPinFieldsElements[i]
-        if (!inputPinFieldElement.value) {
 
+        if (!inputPinFieldElement.value) {
             inputPinFieldElement.value = number;
-            togglePinInputFieldBackgroundState(inputPinFieldElement)
-            inputPinFieldElement.focus()
+            inputPinFieldElement.focus();
+            togglePinInputFieldBackgroundState(inputPinFieldElement);
+            cloakPreviousDigit(i);
             return;
         }
       
     }
    
+}
+
+
+
+/**
+ * Cloaks the previous digit with a disc.
+ * The first digit is visible initially, but once the user
+ * enters the next digit, the previous one is cloaked.
+ *
+ * Note: the last digit has no following digit, so it is
+ * cloaked immediately.
+ */
+function cloakPreviousDigit(currentPinIndex) {
+  const previousIndex = currentPinIndex - 1;
+  const lastIndex     = inputPinFieldsElements.length -1;
+
+  
+  if (previousIndex >= 0) {
+    inputPinFieldsElements[previousIndex].classList.add("cloak")
+  } 
+  
+  if (lastIndex === currentPinIndex) {
+    inputPinFieldsElements[currentPinIndex].classList.add("cloak")
+  }
+
+
+
 }
 
 
@@ -74,6 +102,7 @@ function removeLastDigitFromPin() {
        
         if (inputPinFieldElement.value ) {
             inputPinFieldElement.value = "";
+            inputPinFieldElement.classList.remove("cloak")
 
             addFocusToPreviousPinInputField(i);
             togglePinInputFieldBackgroundState(inputPinFieldElement, false)
