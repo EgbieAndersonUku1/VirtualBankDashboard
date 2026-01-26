@@ -1560,15 +1560,27 @@ label {
 .pin-number {
     text-align: center;
     align-items: center;
-    height: 30px;
+    height: 50px;
     font-weight: bold;
+    background: #FFFFFF;
+    border: 1px solid #C9D3E1;
+    border-radius: 8px;
+    font-size: 2rem;
+    -webkit-text-security: disc;
+    text-security: disc;
+}
+
+.pin-number.filled {
+    background: #E9EEF6;
+    border: 1px solid #C9D3E1;
+    color: #1F2937;
 }
 
 .pin-wrapper {
     column-gap: var(--space-16);
 }
 
-.pin-selection__number {
+.pin-pad-btn {
     text-align: center;
     border: 1px solid lavender;
     background: #f8fafc;   /* very light grey / off-white */
@@ -1580,7 +1592,13 @@ label {
   
 }
 
-.pin-selection__number:hover {
+.pin-pad-btn.clicked {
+    transform: scale(0.8);
+    border: 1px solid #C9D3E1;
+}
+
+
+.pin-pad-btn:hover {
     background: ghostwhite;
 }
 
@@ -1614,4 +1632,11 @@ label {
 
 .bank-btn-back:hover {
     background: #d1d5db;
+}
+
+
+
+.pin-number:focus {
+  border-color: #1E4FD7;
+  box-shadow: 0 0 0 3px rgba(30, 79, 215, 0.15);
 }

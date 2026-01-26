@@ -58,49 +58,62 @@
 
                 </div>
 
-               <form action="" id="bank-pin-form" role="form">
-                
-                <h1 class="capitalise center header-6 light-bold">Set your 6 digit PIN</h1>
-                <p class="center mb-16 text-muted">Create a secure 6-digit PIN to approve bank transactions </p>
+                <form action="" id="bank-pin-form" role="form">
 
-                  <div class="pin-wrapper flex-grid six-column-grid">
-                    <input type="text" name="first_pin"  id="first-pin"  inputmode="numeric" maxlength="1" class="pin-number" disabled>
-                    <input type="text" name="second_pin" id="second-pin" inputmode="numeric" maxlength="1" class="pin-number" disabled>
-                    <input type="text" name="third_pin"  id="third-pin"  inputmode="numeric" maxlength="1" class="pin-number" disabled>
-                    <input type="text" name="fourth_pin" id="fourth-pin" inputmode="numeric" maxlength="1" class="pin-number" disabled>
-                    <input type="text" name="fifth_pin"  id="fifth-pin"  inputmode="numeric" maxlength="1" class="pin-number" disabled>
-                    <input type="text" name="six_pin"    id="six-pin"    inputmode="numeric" maxlength="1" class="pin-number" disabled>
-                </div>
+                    <h1 class="capitalise center header-6 light-bold">Set your 6 digit PIN</h1>
+                    <p class="center mb-16 text-muted">Create a secure 6-digit PIN to approve bank transactions </p>
 
-                <div id="pin-selection" class="mt-24">
+                    <!-- Hidden input for actual pin value (for screen readers + form) -->
+                    <label for="pin-hidden" class="sr-only">Enter 6 digit PIN</label>
+                    <input id="pin-hidden" type="text" inputmode="numeric" maxlength="6" pattern="[0-9]*"
+                        autocomplete="one-time-code" class="sr-only" aria-describedby="pin-status pin-error">
 
-                    <div class="pin-selector__container flex-grid three-column-grid">
-                           <div class="pin-selection__number"  data-number="1">1</div>
-                            <div class="pin-selection__number" data-number="2">2</div>
-                            <div class="pin-selection__number" data-number="3">3</div>
-                            <div class="pin-selection__number" data-number="4">4</div>
-                            <div class="pin-selection__number" data-number="5">5</div>
-                            <div class="pin-selection__number" data-number="6">6</div>
-                            <div class="pin-selection__number" data-number="7">7</div>
-                            <div class="pin-selection__number" data-number="8">8</div>
-                            <div class="pin-selection__number" data-number="9">9</div>
+                     <!-- Visual PIN display -->
+                    <div class="pin-wrapper flex-grid six-column-grid">
+                        <input type="text" name="first_pin" id="first-pin" inputmode="numeric" maxlength="1" class="pin-number" readonly >
+                        <input type="text" name="second_pin" id="second-pin" inputmode="numeric" maxlength="1" class="pin-number" readonly >
+                        <input type="text" name="third_pin" id="third-pin" inputmode="numeric" maxlength="1" class="pin-number" readonly>
+                        <input type="text" name="fourth_pin" id="fourth-pin" inputmode="numeric" maxlength="1" class="pin-number" readonly>
+                        <input type="text" name="fifth_pin" id="fifth-pin" inputmode="numeric" maxlength="1" class="pin-number" readonly >
+                        <input type="text" name="six_pin" id="six-pin" inputmode="numeric" maxlength="1"  class="pin-number" readonly>
                     </div>
 
-                    <div class="pin-keypad__actions flex-grid two-column-grid mt-8">
-                         <div class="pin-selection__number" data-number="0">0</div>
-                         <div class="pin-selection__number" data-number=""><i class="fa-solid fa-delete-left"></i></div>
+                    <!-- Number pad -->
+                    <div id="pin-selection" class="mt-24">
+
+                        <div class="pin-selector__container flex-grid three-column-grid" aria-label="PIN digits">
+                            <div class="pin-pad-btn" data-number="1">1</div>
+                            <div class="pin-pad-btn" data-number="2">2</div>
+                            <div class="pin-pad-btn" data-number="3">3</div>
+                            <div class="pin-pad-btn" data-number="4">4</div>
+                            <div class="pin-pad-btn" data-number="5">5</div>
+                            <div class="pin-pad-btn" data-number="6">6</div>
+                            <div class="pin-pad-btn" data-number="7">7</div>
+                            <div class="pin-pad-btn" data-number="8">8</div>
+                            <div class="pin-pad-btn" data-number="9">9</div>
+                        </div>
+
+                        <div class="pin-keypad__actions flex-grid two-column-grid mt-8">
+                            <div class="pin-pad-btn" data-number="0">0</div>
+                            <div class="pin-pad-btn" data-number="backspace"><i class="fa-solid fa-delete-left"></i>
+                            </div>
+                        </div>
+
                     </div>
+                </form>
+
+
+                <div class="choose-bank__btns flex flex-end mt-8">
+                    <a href="/bankSetup/bank-choices.html"
+                        class="capitalise btn-medium mr-24 bank-btn-back center capitalise" aria-label="Go back to bank choices">
+                        back</a>
+                    
+                     <button type="submit" class="btn-medium bank-btn-continue capitalise">
+                        Continue
+                    </button>
 
                 </div>
 
-               </form>
-
-                 <div class="choose-bank__btns flex flex-end mt-8">
-                        <a href="/bankSetup/bank-choices.html" class="capitalise btn-medium mr-24 bank-btn-back center capitalise" aria-label="button"> back</a>
-                        <a href="" class="btn-medium bank-btn-continue capitalise" aria-label="button">Continue</a>
-                     
-                </div>
-                
             </div>
         </section>
 
@@ -109,7 +122,7 @@
 
     </main>
 
-    <script src="/static/js/bankSetup/bankSetup.js" type="module"></script>
+    <script src="/static/js/bankSetup/bankPinSetup.js" type="module"></script>
 </body>
 
 </html>
