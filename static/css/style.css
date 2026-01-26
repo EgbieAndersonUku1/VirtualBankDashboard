@@ -1395,12 +1395,20 @@ label {
 
 
 /* bank setup page attributes */
+
+.bank-welcome__container {
+    width: 40%;
+    margin: auto;
+}
+
+
 .account-setup {
     background-image: url("/static/images/background-3.png");
     background-repeat: no-repeat;
     background-position: center;
     background-size: cover;
     background-attachment: fixed;
+   
    
 }
 
@@ -1647,4 +1655,39 @@ label {
 .pin-number:focus {
   border-color: #1E4FD7;
   box-shadow: 0 0 0 3px rgba(30, 79, 215, 0.15);
+}
+
+
+.bank-welcome__onboarding {
+  grid-auto-rows: 160px;
+  gap: 16px;
+  
+}
+
+.bank-welcome__message p {
+    line-height: 2;
+}
+
+/* Bank welcome onboarding */
+.bank-welcome__container {
+    box-shadow: var(--box-shadow-primary);
+}
+
+.bank-welcome__image {
+    position: relative;
+    height: 600px;
+    width: 800px;
+    transform: translateY(-300px)
+}
+
+#bank-welcome__image {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+}
+
+#onbard_begin-btn {
+    width: 100%;
+    position: relative;
+    z-index: 10000;
 }
