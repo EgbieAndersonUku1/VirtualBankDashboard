@@ -44,13 +44,16 @@
     <main>
 
         <section id="choose-bank" class="mt-48 mb-48">
-            <div class="choose-bank__container">
+            
+            <div class="choose-bank__container account-setup">
                 <div class="bank-status mb-24">
                     <small>Step 2 of 4</small>
                     <h1 class="capitalise light-bold">Select your bank</h1>
                     <p>Choose from a list of banks</p>
                 </div>
-                <form action="" method="post" id="chooose-bank-form">
+
+                <form action="" method="post" id="chooose-bank-form" role="form">
+
                     <div class="choose-bank__cards flex-grid three-column-grid">
 
                         <!-- card 1 -->
@@ -264,7 +267,8 @@
                             <p>Can’t find your bank? No problem, you can choose a different one.</p>
 
                         </div>
-                        <button type="submit" class="btn-medium" id="bank-btn-continue">Continue</button>
+                        <a href="/bankSetup/bank-pin-setup.html" class="btn-medium bank-btn-continue capitalise">Continue</a>
+                        
                     </div>
                 </form>
             </div>
