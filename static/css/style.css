@@ -1566,9 +1566,17 @@ label {
     border: 1px solid #C9D3E1;
     border-radius: 8px;
     font-size: 2rem;
+   
+}
+
+
+
+.pin-number.cloak {
     -webkit-text-security: disc;
     text-security: disc;
 }
+
+
 
 .pin-number.filled {
     background: #E9EEF6;
