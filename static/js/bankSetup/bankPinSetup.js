@@ -1,3 +1,7 @@
+import runObserver from "../animation.js";
+
+runObserver();
+
 const bankPinForm           = document.getElementById("bank-pin-form")
 const inputPinFieldsElements = document.querySelectorAll(".pin-number")
 

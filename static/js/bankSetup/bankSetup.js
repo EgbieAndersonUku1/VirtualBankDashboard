@@ -18,6 +18,11 @@
  */
 
 
+import runObserver from "../animation.js";
+
+runObserver({thresholdPercent: 0.10});
+
+
 const chooseBankForm = document.getElementById("chooose-bank-form");
 const bankCards = document.querySelectorAll(".choose-bank__card");
 

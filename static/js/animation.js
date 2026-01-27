@@ -82,7 +82,11 @@ function initialIntersectionObserver(activeClass, thresholdPercent = 15) {
  * @param {string} activeClass - Class to add when visible (default: "is-visible")
  * @param {number} thresholdPercent - Percent of element visible to trigger (default: 15)
  */
-export default function runObserver(selector = ".fade-up", activeClass = "is-visible", thresholdPercent = 15) {
+export default function runObserver({
+    selector = ".fade-up",
+    activeClass = "is-visible",
+    thresholdPercent = 15
+} = {}) {
     const elements = document.querySelectorAll(selector);
     const observer = initialIntersectionObserver(activeClass, thresholdPercent);
     if (!observer) return;
