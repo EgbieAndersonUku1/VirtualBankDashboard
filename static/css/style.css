@@ -767,6 +767,12 @@ button {
 }
 
 
+.btn-large {
+    width: 100%;
+    padding: var(--space-8);
+}
+
+
 /* The main images */
 #main-image {
     position: absolute;
@@ -1669,6 +1675,7 @@ label {
 }
 
 /* Bank welcome onboarding */
+
 .bank-welcome__container {
     box-shadow: var(--box-shadow-primary);
 }
@@ -1690,4 +1697,124 @@ label {
     width: 100%;
     position: relative;
     z-index: 10000;
+}
+
+/* bank completion section */
+
+.bank-completion__container {
+    width: 91%;
+    margin: auto;
+    padding: 48px;
+}
+
+.bank-completion__info {
+    border: 4px solid lavender;
+    padding: var(--space-32);
+    width: 45%;
+    line-height: 2;
+    margin: auto;
+    background: white;
+}
+
+
+#bank-completion-img {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+}
+
+
+
+.dashboard-btn {
+    background: var(--blue-600);
+    color: white;
+}
+
+.add-funds-btn {
+    background: var(--green-600);
+    color: white;
+}
+
+
+
+.bank-completion__security-message {
+    font-size: 0.85rem;
+}
+
+
+.bank-completion__note {
+    font-size: 0.9rem;
+}
+
+
+.bank-completion__security,
+.bank-completion__note,
+.bank-completion__actions {
+    width: 45%;
+    margin: auto;
+}
+
+.bank-completion__note {
+    margin-top: var(--space-8);
+    border-top: 2px solid lavender;
+    border-bottom: 2px solid lavender;
+}
+
+.bank-completion__security,
+.bank-completion__note p {
+    padding-left: var(--space-32);
+    padding-top: var(--space-12);
+    padding-bottom: var(--space-12);
+}
+
+.bank-completion__security {
+  border-bottom: 2px solid lavender;
+  margin-bottom: var(--space-4);
+}
+
+
+.bank-completion__actions {
+    column-gap: var(--space-8);
+}
+
+.bank-completion__details dt {
+  text-transform: capitalize; 
+  font-size: 0.875rem;        /* 14px*/
+  font-weight: 400;
+  color: #6b7280;          /* muted grey */
+}
+
+.bank-completion__details dd {
+  font-size: 0.9375rem;        /* 15px*/
+  font-weight: 500;
+  color: #111827;            /* near-black */
+}
+
+
+.check {
+    border: 1px solid;
+    border-radius: 50%;
+    padding: 8px;
+    color: white;
+    background: var(--green-600);
+    font-size: 0.7rem;
+    position: relative;
+    bottom: 6px;
+    border: 3px solid white;
+
+}
+
+
+.bank-completion__row dd.active {
+    font-weight: bold;
+    color: var(--green-600);
+    font-weight: 500;
+    text-transform: uppercase;
+}
+
+.bank-completion__row dd.not-active {
+    font-weight: bold;
+    color: var(--red);
+    font-weight: 500;
+    text-transform: uppercase;
 }
