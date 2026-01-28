@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="/static/css/style.css">
     <link rel="shortcut icon" href="/static/images/virtual-bank-logo.png" type="image/x-icon">
     <link rel="stylesheet" href="/static/vendor/fontawesome/css/all.min.css">
-    <title>Bank setup</title>
+    <title>Bank account creation success</title>
 </head>
 
 <body>
@@ -43,68 +43,141 @@
     </header>
 
     <main>
+        <section id="bank-completion" class="mt-48 mb-48 fade-up" aria-labelledby="bank-completion-title">
+            <div class="bank-completion__container account-setup">
 
-        <section id="choose-bank" class="mt-48 mb-48">
-            
-            <div class="choose-bank__container account-setup">
-                <div class="bank-status mb-24">
+                <!-- Page header -->
+                <div class="bank-completion__status mb-24">
                     <small>Step 4 of 4</small>
-                    <h1 class="capitalise light-bold">Bank account completion</h1>
-                   
                 </div>
 
-                <div class="bank_completion__container">
+                <div class="bank-completion__content">
 
-                    <h1 class="capitalise center"><span>tick to go here</span> <span>Account setup complete</span></h1>
-                    <p class="center">You are all set! Your bank account is active and ready to use</p>
+                    <!-- Success state -->
+                    <div role="status" aria-live="polite">
+                        <h2 id="completion-success" class="capitalise center" tabindex="-1">
+                            <span class="check" aria-hidden="true">✔</span>
+                            <span>Account setup complete</span>
+                        </h2>
 
-                    <div class="bank_completion__info flex flex-grid">
-
-                            <div class="flex flex-space-between">
-                               <span>Impage</span>
-                               <span>Title</span>
-                            </div>
-                            
-                            <hr class="dividor">
-
-                             <div class="flex flex-space-between">
-                               <span>Impage</span>
-                               <span>Account ID: 400217 00327502</span>
-                            </div>
-                            
-                             <div class="flex flex-space-between">
-                               <span>Status</span>
-                               <span>Active</span>
-                            </div>
-                            
-                            <hr class="dividor">
-                           
-                            <p>You can customise alerts, payouts and preferences anytime from your dashboard</p>
-
-                            <div class="account-info flex">
-                                <span>padlock to go here</span>
-                                <span>Your account is protected with your PIN and security settings</span>
-                            </div>
-
-                            <div class="buttons">
-                                <a href="#"  class="btn-medium dashboard-btn capitalise">Go to dashboard</a>
-                                <a href="#"  class="btn-medium add-funds-btn capitalise">Add Funds</a>
-                            </div>
-                        
+                        <p class="center mb-24">
+                            You are all set! Your bank account is active and ready to use.
+                        </p>
                     </div>
 
-                </div>
 
-               
+
+                    <!-- Account info -->
+                    <div class="bank-completion__info flex flex-grid mt-8">
+
+                        <dl class="bank-completion__details">
+
+
+                            <div class="bank-completion__row flex flex-space-between">
+                                <dt>Bank</dt>
+                                <dd>Bank Atlas</dd>
+                            </div>
+
+                            <hr class="dividor">
+                            <div class="bank-completion__row flex flex-space-between">
+                                <dt>Account title</dt>
+                                <dd>Personal current account</dd>
+                            </div>
+
+                            <hr class="dividor">
+
+                            <div class="bank-completion__row flex flex-space-between">
+                                <dt>Sort code</dt>
+                                <dd>400217</dd>
+                            </div>
+
+                            <hr class="dividor">
+
+                            <div class="bank-completion__row flex flex-space-between">
+                                <dt>Account</dt>
+                                <dd>00327502</dd>
+                            </div>
+
+                            <hr class="dividor">
+                            <div class="bank-completion__row flex flex-space-between">
+                                <dt>Status</dt>
+                                <dd class="active">Active</dd>
+                            </div>
+
+                            <hr class="dividor">
+                            <div class="bank-completion__row flex flex-space-between">
+                                <dt>Interest available</dt>
+                                <dd>No</dd>
+
+                            </div>
+
+                            <hr class="dividor">
+                            <div class="bank-completion__row flex flex-space-between">
+                                <dt>Overdraft limit</dt>
+                                <dd>None</dd>
+                            </div>
+
+                            <hr class="dividor">
+                            <div class="bank-completion__row flex flex-space-between">
+                                <dt>Interest available</dt>
+                                <dd>0.25%</dd>
+                            </div>
+
+                            <hr class="dividor">
+                            <div class="bank-completion__row flex flex-space-between">
+                                <dt>Minimum deposition</dt>
+                                <dd><span id="currency">£</span>0.00</dd>
+                            </div>
+
+                            <hr class="dividor">
+                            <div class="bank-completion__row flex flex-space-between">
+                                <dt>Monthly fee</dt>
+                                <dd><span id="currency">£</span>0.00</dd>
+                            </div>
+
+                            <hr class="dividor">
+                            <div class="bank-completion__row flex flex-space-between">
+                                <dt>Saving account</dt>
+                                <dd><span>Not available</span></dd>
+                            </div>
+
+                        </dl>
+
+                    </div>
+
+                    <div class="bank-completion__note fade-up">
+
+                        <p> You can customise alerts, payouts and preferences anytime from your dashboard.</p>
+                    </div>
+
+                    <div class="bank-completion__security flex fade-up">
+                        <span aria-hidden="true">🔒</span>
+                        <span class="light-bold bank-completion__security-message">
+                            Your account is protected with your PIN and security settings.
+                        </span>
+                    </div>
+
+
+                    <div class="bank-completion__actions center flex-grid two-column-grid">
+                        <a href="/dashboard" class="btn-large dashboard-btn capitalise fade-up"
+                            aria-label="Go to your dashboard">
+                            Go to dashboard
+                        </a>
+
+                        <a href="/add-funds" class="btn-large add-funds-btn capitalise fade-up"
+                            aria-label="Add funds to your bank account">
+                            Add funds
+                        </a>
+
+                    </div>
+                </div>
             </div>
         </section>
 
 
-
-
     </main>
 
-  
+    <script type="module" src="/static/js/index.js"></script>
 </body>
 
 </html>
