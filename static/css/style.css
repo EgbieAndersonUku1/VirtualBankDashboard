@@ -66,7 +66,7 @@ body {
     background-repeat: no-repeat;
     min-height: 100vh;
     background: #f6f9fc;
-
+  
 
 
 }
@@ -1817,4 +1817,179 @@ label {
     color: var(--red);
     font-weight: 500;
     text-transform: uppercase;
+}
+
+
+
+/* Dashboard */
+
+/* 
+   DASHBOARD LAYOUT
+   Core structural layout for sidebar + main content
+*/
+
+.dashboard__container__sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 20vw;
+    height: 100vh;
+    overflow-y: auto;
+
+    background: linear-gradient(180deg, #1F4E79 0%, #2F6FAE 100%);
+    border-right: 3px solid black;
+}
+
+.dashboard__container__main {
+    margin-left: 20vw;    /* this is the  offset main content to account for fixed sidebar */
+}
+
+.dashboard__container__main__wrapper {
+    padding-left: var(--space-8);
+}
+
+
+/*
+   SIDEBAR BRAND / LOGO AREA
+   Top section containing logo + brand name
+*/
+
+.sidebar-brand {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+
+    padding: var(--space-24);
+    font-weight: 600;
+    font-size: 1.4rem;
+    color: #1f6feb;
+}
+
+.sidebar-brand__name {
+    letter-spacing: 0.3px;
+}
+
+
+/* 
+   SIDEBAR NAVIGATION ITEMS
+   List items, links, icons, and hover states
+*/
+
+.sidebar-nav__item {
+    cursor: pointer;
+}
+
+.sidebar-nav__item:hover {
+    background: rgba(255, 255, 255, 0.08);
+}
+
+.dashboard__container__sidebar li {
+    padding-block: var(--space-16);
+    padding-inline: var(--space-48);
+
+    font-size: 0.85rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.4);
+}
+
+.dashboard__container__sidebar li a {
+    color: white;
+    font-weight: 400;
+}
+
+.dashboard__container__sidebar li span {
+    padding-right: var(--space-12);
+    flex-shrink: 0; 
+}
+
+
+/* 
+   SIDEBAR SPECIAL ACTIONS
+   Logout & security-related UI
+*/
+
+.logout {
+    position: relative;
+    z-index: 10000;
+
+    background: rgba(0, 0, 0, 0.42);
+    border-top: 1px solid rgba(255, 255, 255, 0.25);
+    cursor: pointer;
+}
+
+.manage-security-btn,
+#latest-login__note {
+    font-size: 0.8rem;
+}
+
+.manage-security-btn {
+    background: ghostwhite;
+    font-weight: 500;
+    text-transform: capitalize;
+    color: #0B1220;
+    border: 2px solid lavender;
+}
+
+.manage-security-btn {
+    border: 2px solid lavender;
+}
+
+
+/* 
+   LATEST LOGIN / SECURITY INFO CARD
+  */
+
+#latest-login {
+    margin: 4px;
+    padding: var(--space-24);
+
+    background: white;
+    box-shadow: var(--box-shadow-primary);
+  
+}
+
+#latest-login p {
+    color: var(--red);
+}
+
+/* 
+   FOOTER
+   Dashboard footer layout
+ */
+
+.dashboard__container footer {
+    width: 100%;
+    margin-left: 20vh;
+
+    background-color: #f9f9f9;
+    padding: 24px;
+}
+
+.dashboard__container footer .footer__container {
+    width: 80%;
+    top: 0;
+}
+
+
+/* 
+   SCROLLBAR STYLING (SIDEBAR ONLY)
+   Optional cosmetic enhancement for modern browsers
+ */
+
+.dashboard__container__sidebar::-webkit-scrollbar {
+    width: 6px;
+}
+
+.dashboard__container__sidebar::-webkit-scrollbar-thumb {
+    background-color: rgba(255, 255, 255, 0.3);
+    border-radius: 3px;
+}
+
+.dashboard__container__sidebar::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+
+
+time {
+    font-size: 0.9rem;
 }
