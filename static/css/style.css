@@ -336,6 +336,10 @@ img:hover {
     color: white;
 }
 
+.black-text {
+    color: beige;
+}
+
 
 /* utilities */
 
@@ -345,6 +349,9 @@ img:hover {
     align-items: center;
 }
 
+.lower-case  {
+    text-transform: lowercase;
+}
 
 /* 
  * Fixed positioning centring (not layout centring).
@@ -485,6 +492,7 @@ img:hover {
 .two-column-20_80_grid {
     grid-template-columns: 20% 80%;
     grid-template-rows: auto;
+
 }
 
 /* Site logo */
@@ -1965,7 +1973,7 @@ label {
 }
 
 .dashboard__container footer .footer__container {
-    width: 80%;
+    width: 75%;
     top: 0;
 }
 
@@ -1992,4 +2000,105 @@ label {
 
 time {
     font-size: 0.9rem;
+}
+
+
+.dashbaord__container__nav-head {
+    padding: 0;
+}
+
+
+/* dashboard navigation bar */
+
+.dashboard__container__navbar {
+    box-shadow: var(--box-shadow-secondary);
+    padding: var(--space-12);
+   
+    
+}
+
+
+.notification-dashboard-img,
+.dashboard-profile-img {
+    height: 30px;
+}
+
+.dashboard-notification-bell-img{
+    height: 25px;
+}
+
+.dashboard__container__nav-body {
+    column-gap: 5px;
+}
+
+.dashboard-nav-site-name {
+    font-size: 1.1rem;
+}
+
+.dashboard__profile {
+    position: relative;
+}
+.dashboard__container__dropdown-menu {
+    position: absolute;
+    right: 10px;
+    background: white;
+    z-index: 10000;
+    padding: var(--space-8);
+    box-shadow: var(--box-shadow-secondary);
+    border: 4px solid lavender;
+
+    /* hidden state */
+    opacity: 0;
+    transform: translateY(-8px) scale(0.98);
+    visibility: hidden;
+    pointer-events: none;
+
+    /* animation setup */
+    transform-origin: top right;
+    transition:
+        opacity 0.25s ease,
+        transform 0.25s ease;
+}
+
+
+.dashboard__container__dropdown-menu.show {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    visibility: visible;
+    pointer-events: auto;
+}
+
+
+
+.dropdown-menu {
+  font-size: 0.9rem; 
+  
+}
+
+.dropdown-menu li {
+  line-height: 1.4;
+  padding: var(--space-16);
+  text-transform: capitalize;
+  cursor: pointer;
+}
+
+
+.dropdown-menu li:hover:not(:first-child) {
+  background-color: rgba(245, 240, 240, 0.93);
+  font-weight: 500;
+
+}
+
+
+.dropdown-menu li:not(:last-child) {
+    border-bottom: 2px solid lavender;
+}
+
+.dropdown-menu li span {
+    margin-right: var(--space-8);
+}
+
+.dashboard-logout {
+    color: var(--red);
+    font-weight: 500;
 }
