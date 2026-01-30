@@ -69,6 +69,15 @@
                         <li class="sidebar-nav__item">
                             <a href="#" class="sidebar-nav__link">
                                 <span class="sidebar-nav__icon" aria-hidden="true">
+                                    <i class="fa-solid fa-money-bill-transfer"></i>
+                                </span>
+                                <span class="sidebar-nav__label">Link funding source</span>
+                            </a>
+                        </li>
+
+                        <li class="sidebar-nav__item">
+                            <a href="#" class="sidebar-nav__link">
+                                <span class="sidebar-nav__icon" aria-hidden="true">
                                     <i class="fa-solid fa-eye"></i>
                                 </span>
                                 <span class="sidebar-nav__label">Insights</span>
@@ -94,8 +103,8 @@
                         </li>
                     </ul>
 
-                      
-                   
+
+
                     <!-- Latest login info -->
                     <section id="latest-login" aria-labelledby="latest-login-heading">
                         <div class="flex-grid two-column-20_80_grid">
@@ -147,8 +156,8 @@
 
                     <nav class="dashboard__container__navbar flex flex-space-between">
                         <div class="dashbaord__container__nav-head sidebar-brand">
-                             <i class="fa-solid fa-building-columns" aria-hidden="true"></i>
-                             <span class="sidebar-brand__name dashboard-nav-site-name">Virtual Bank</span>
+                            <i class="fa-solid fa-building-columns" aria-hidden="true"></i>
+                            <span class="sidebar-brand__name dashboard-nav-site-name">Virtual Bank</span>
                         </div>
 
                         <div class="dashboard__container__nav-body flex-grid three-column-grid">
@@ -157,13 +166,15 @@
                             </div>
 
                             <div class="dashboard__profile" id="dashboard-profile">
-                               <img src="/static/images/icons/profile.png" alt="" class="dashboard-profile-img">
+                                <img src="/static/images/icons/profile.png" alt="" class="dashboard-profile-img">
 
-                               <div class="dashboard__container__dropdown-menu dropdown-menu" id="dashboard__container__dropdown-menu">
+                                <div class="dashboard__container__dropdown-menu dropdown-menu"
+                                    id="dashboard__container__dropdown-menu">
                                     <ul>
                                         <li class="flex-grid two-column-20_80_grid">
                                             <span>
-                                                  <img src="/static/images/icons/profile.png" alt="" class="dashboard-profile-img">
+                                                <img src="/static/images/icons/profile.png" alt=""
+                                                    class="dashboard-profile-img">
                                             </span>
 
                                             <span class="flex-grid">
@@ -175,38 +186,162 @@
                                         <li>
                                             <span><i class="fa-regular fa-user"></i></span><span>Account</span>
                                         </li>
-                                         <li>
+                                        <li>
                                             <span><i class="fa-solid fa-shield-halved"></i></span><span>Security</span>
                                         </li>
-                                         <li>
-                                            <span><i class="fa-regular fa-circle-question"></i></span><span>Help & Support</span>
+                                        <li>
+                                            <span><i class="fa-regular fa-circle-question"></i></span><span>Help &
+                                                Support</span>
                                         </li>
 
-                                         <li class="dashboard-logout">
-                                            <span><i class="fa-solid fa-right-from-bracket"></i></span><span>Log out</span>
+                                        <li class="dashboard-logout">
+                                            <span><i class="fa-solid fa-right-from-bracket"></i></span><span>Log
+                                                out</span>
                                         </li>
                                     </ul>
-                                 </div>
+                                </div>
 
                             </div>
 
                             <div class="dashboard__container__notification-bell">
-                                 <div class="notifications">
-                                     <img src="/static/images/icons/notification_smartphone_icon.png" alt="" class="dashboard-notification-bell-img">
-                                 </div>
+                                <div class="notifications">
+                                    <img src="/static/images/icons/notification_smartphone_icon.png" alt=""
+                                        class="dashboard-notification-bell-img">
+                                </div>
 
-                                 
+
                             </div>
 
-                            
+
                         </div>
 
 
                     </nav>
 
 
+                    <!-- The main content -->
+                    <div class="dashboard__container__main__wrapper mt-48">
 
-                    <div class="dashboard__container__main__wrapper">
+                        <!-- Greetings -->
+                        <div class="greeting">
+                            <h1 class="header-7 capitalise">Hi, User, Welcome back!</h1>
+                            <p class="text-muted capitalise">Manage your finances</p>
+                        </div>
+
+
+                        <!-- quick menu -->
+                        <section id="bank-options" aria-labelledby="bank-options-title">
+                            <div class="bank-options__container mb-24 mt-16">
+
+                                <!-- Section Heading for Screen Readers -->
+                                <h2 id="bank-options-title" class="sr-only">Banking Options</h2>
+
+                                <ul class="bank-options__cards flex-grid five-column-grid" role="list">
+
+                                    <li>
+                                        <a href="#" class="bank-option-card-link"
+                                            aria-label="Add funds to your account">
+                                            <div class="bank-options__card center">
+                                                <div class="card-head">
+                                                    <img src="/static/images/card-icons/wallet.png" alt=""
+                                                        class="bank-option-img" aria-hidden="true">
+                                                </div>
+
+                                                <div class="card-body">
+                                                    <h3 class="header-9">Add Funds</h3>
+                                                </div>
+
+                                                <div class="card-footer">
+                                                    <small>Top up your account</small>
+                                                </div>
+                                            </div>
+                                        </a>
+                                    </li>
+
+                                    <li>
+                                        <a href="#" class="bank-option-card-link"
+                                            aria-label="Transfer money to another account">
+                                            <div class="bank-options__card center">
+                                                <div class="card-head">
+                                                    <img src="/static/images/card-icons/transfer.png" alt=""
+                                                        class="bank-option-img" aria-hidden="true">
+                                                </div>
+
+                                                <div class="card-body">
+                                                    <h3 class="header-9">Transfer Money</h3>
+                                                </div>
+
+                                                <div class="card-footer">
+                                                    <small>Send to another account</small>
+                                                </div>
+                                            </div>
+                                        </a>
+                                    </li>
+
+                                    <li>
+                                        <a href="#" class="bank-option-card-link" aria-label="Manage your credit cards">
+                                            <div class="bank-options__card center">
+                                                <div class="card-head">
+                                                    <img src="/static/images/card-icons/credit-card.png" alt=""
+                                                        class="bank-option-img" aria-hidden="true">
+                                                </div>
+
+                                                <div class="card-body">
+                                                    <h3 class="header-9">Credit Cards</h3>
+                                                </div>
+
+                                                <div class="card-footer">
+                                                    <small>Manage your cards</small>
+                                                </div>
+                                            </div>
+                                        </a>
+                                    </li>
+
+                                    <li>
+                                        <a href="#" class="bank-option-card-link"
+                                            aria-label="Transfer money to your wallet">
+                                            <div class="bank-options__card center">
+                                                <div class="card-head">
+                                                    <img src="/static/images/card-icons/wallet-activity.png" alt=""
+                                                        class="bank-option-img" aria-hidden="true">
+                                                </div>
+
+                                                <div class="card-body">
+                                                    <h3 class="header-9">Wallet Transfer</h3>
+                                                </div>
+
+                                                <div class="card-footer">
+                                                    <small>Transfer to wallet</small>
+                                                </div>
+                                            </div>
+                                        </a>
+                                    </li>
+
+                                    <li>
+                                        <a href="#" class="bank-option-card-link"
+                                            aria-label="Link an external wallet to your account">
+                                            <div class="bank-options__card center">
+                                                <div class="card-head">
+                                                    <img src="/static/images/card-icons/analytics.png" alt=""
+                                                        class="bank-option-img" aria-hidden="true">
+                                                </div>
+
+                                                <div class="card-body">
+                                                    <h3 class="header-9">Link Wallet</h3>
+                                                </div>
+
+                                                <div class="card-footer">
+                                                    <small>Connect to your account</small>
+                                                </div>
+                                            </div>
+                                        </a>
+                                    </li>
+
+                                </ul>
+                            </div>
+                        </section>
+
+
 
 
                     </div>
@@ -307,7 +442,7 @@
 
     </main>
 
-<script src="/static/js/dashboard/bank-dashboard.js" type="module"></script>
+    <script src="/static/js/dashboard/bank-dashboard.js" type="module"></script>
 </body>
 
 </html>

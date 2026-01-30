@@ -1883,6 +1883,10 @@ label {
    List items, links, icons, and hover states
 */
 
+.sidebar-nav__label {
+    text-transform: capitalize;
+}
+
 .sidebar-nav__item {
     cursor: pointer;
 }
@@ -2011,9 +2015,9 @@ time {
 /* dashboard navigation bar */
 
 .dashboard__container__navbar {
-    box-shadow: var(--box-shadow-secondary);
     padding: var(--space-12);
-   
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+   cursor: pointer;
     
 }
 
@@ -2101,4 +2105,52 @@ time {
 .dashboard-logout {
     color: var(--red);
     font-weight: 500;
+}
+
+.bank-option-img {
+    height: 70px;
+    width: 70px;
+}
+
+
+
+.bank-options__cards {
+    column-gap: 5px;
+}
+
+.bank-options__container {
+    width: 95%;
+
+}
+
+.bank-options__card {
+    color: black;
+    padding: var(--space-8);
+    border: 3px solid lavender;
+    box-shadow: var(--box-shadow-primary);
+    border-radius: 8px;
+    background: white;
+   
+}
+
+.bank-options__card .card-body h3 {
+    font-size: 0.9rem;
+    font-weight: 700;
+    text-transform: capitalize;
+}
+
+.bank-options__card:hover {
+  transform: scale(0.95);
+  border: 1px solid var(--green-600);
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px; 
+
+}
+
+.bank-options__card .card-footer small {
+   color: #6B7280;
+}
+
+.bank-option-card-link:focus {
+    outline: 3px solid #4A90E2;
+    outline-offset: 4px;
 }
