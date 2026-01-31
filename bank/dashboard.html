@@ -236,7 +236,7 @@
                                 <!-- Section Heading for Screen Readers -->
                                 <h2 id="bank-options-title" class="sr-only">Banking Options</h2>
 
-                                <ul class="bank-options__cards flex-grid five-column-grid" role="list">
+                                <ul class="bank-options__cards flex-grid four-column-grid" role="list">
 
                                     <li>
                                         <a href="#" class="bank-option-card-link"
@@ -317,32 +317,142 @@
                                         </a>
                                     </li>
 
-                                    <li>
-                                        <a href="#" class="bank-option-card-link"
-                                            aria-label="Link an external wallet to your account">
-                                            <div class="bank-options__card center">
-                                                <div class="card-head">
-                                                    <img src="/static/images/card-icons/analytics.png" alt=""
-                                                        class="bank-option-img" aria-hidden="true">
-                                                </div>
 
-                                                <div class="card-body">
-                                                    <h3 class="header-9">Link Wallet</h3>
-                                                </div>
-
-                                                <div class="card-footer">
-                                                    <small>Connect to your account</small>
-                                                </div>
-                                            </div>
-                                        </a>
-                                    </li>
 
                                 </ul>
                             </div>
                         </section>
 
+                        <!-- my wallet connection/disconnection -->
+                        <div id="bank-overview" class="flex-grid">
+
+                            <section id="my-wallet">
+                                <div class="my-wallet__container">
+                                    <div class="my-wallet__container__header p-8">
+                                        <h3 class="capitalise" class="">My Wallet</h3>
+                                    </div>
+
+                                    <div class="my-wallet__body">
+                                        <div class="wallet-head flex-grid two-column-20_80_grid">
+                                            <div class="my-wallet-img center mt-16">
+
+                                                <img src="/static/images/card-icons/wallet.png" alt=""
+                                                    class="bank-option-img" aria-hidden="true">
+                                            </div>
+
+                                            <div id="my-wallet__link">
+
+                                                <!-- Section Heading -->
+                                                <h3 class="mt-8 capitalize">Link Account</h3>
+
+                                                <!-- Instructions / Messages -->
+                                                <p class="mt-8 subtitle">
+                                                    Connect your wallet to your bank account to securely manage your
+                                                    funds.
+                                                </p>
+                                                <p class="subtitle">
+                                                    Your wallet is currently not linked.
+                                                </p>
+                                                <p class="subtitle">
+                                                    Once linked, you will be able to:
+                                                </p>
+                                                <ul class="subtitle-list">
+                                                    <li>View your wallet balance</li>
+                                                    <li>Disconnect your wallet if needed</li>
+                                                    <li>Access your wallet from the “My Wallet” tab</li>
+                                                </ul>
+
+                                                <!-- Action Buttons -->
+                                                <div class="my-wallet__buttons flex-grid two-column-grid pt-16 pb-16">
+                                                    <a href="#" class="btn-large capitalize center bank-dashboard-btn"
+                                                        id="connect-wallet">Connect Wallet</a>
+                                                    <a href="#" class="btn-large capitalize center bank-dashboard-btn"
+                                                        id="disconnect-wallet">Disconnect</a>
+                                                </div>
+
+                                            </div>
+
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </section>
 
 
+
+
+                        </div>
+
+
+                    </div>
+                </section>
+
+
+                <section id="connect-wallet-modal" role="dialog" aria-modal="true"
+                    aria-labelledby="connect-wallet-title">
+                    <div class="connect-wallet-modal__container">
+
+                        <div class="flex flex-space-between pl-24 pt-8 pb-4 pr-24">
+                            <h2 id="connect-wallet-title" class="capitalise">Link new wallet</h2>
+                            <button aria-label="Close modal" class="modal-close-btn">
+                                ✕
+                            </button>
+                        </div>
+
+                        <hr class="dividor">
+
+                        <div class="connect-wallet-modal__step-one p-24">
+                            <h3>Link Your Wallet</h3>
+                            <p class="subtitle mt-8">
+                                Follow these simple steps to securely link your wallet to your bank account.
+                            </p>
+                            <p class="subtitle">
+                                Once linked, you will be able to view all wallet transactions, including your past
+                                activity.
+                            </p>
+
+                            <hr class="divider">
+
+                            <p class="step mt-24 mb-8">
+                                Step 1: <span> Let’s begin linking</span>
+                            </p>
+
+                            <div class="choose-wallet">
+                                <div class="wallet-option flex-grid two-column-20_80_grid">
+                                    <div class="my-wallet-img mt-8 center">
+                                        <img src="/static/images/card-icons/wallet.png" alt="Wallet icon"
+                                            class="bank-option-img">
+                                    </div>
+
+                                    <div class="choice flex flex-space-between">
+                                        <div class="flex-box mt-16">
+                                            <h4>Wallet</h4>
+                                            <small> <span class="check-mark mr-4" id="wallet-to-connect-checkmark">
+                                                    ✓</span> The wallet to connect</small>
+                                        </div>
+
+                                        <div class="check-mark mt-24" aria-hidden="true" id="choice-check-mark">
+                                            ✓
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div id="completion-steps" class="mt-8">
+                                <div class="completion-steps" aria-live="polite">
+                                    <div class="step">Step 1 of 3</div>
+                                    <div id="completion-percentage">
+                                        <div class="percentage-container"></div>
+                                    </div>
+                                </div>
+
+                                <button id="connect-wallet__continue-btn" class="btn-large mt-16">
+                                    Continue
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="connect-wallet-modal__step-two"></div>
 
                     </div>
                 </section>
