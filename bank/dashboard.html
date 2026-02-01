@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/static/css/style.css">
     <link rel="stylesheet" href="static/vendor/fontawesome/css/all.min.css">
-    <link rel="shortcut icon" href="static/images/virtual-bank-logo.png" type="image/x-icon">
+    <link rel="shortcut icon" href="/static/images/virtual-bank-logo.png" type="image/x-icon">
     <link rel="stylesheet" href="/static/vendor/fontawesome/css/all.min.css">
     <title>Virtual bank Dashboard</title>
 </head>
@@ -392,17 +392,17 @@
                     aria-labelledby="connect-wallet-title">
                     <div class="connect-wallet-modal__container">
 
-                        <div class="flex flex-space-between pl-24 pt-8 pb-4 pr-24">
+                        <div class="flex flex-space-between pl-24 pt-8 pb-4 pr-24 modal-top">
                             <h2 id="connect-wallet-title" class="capitalise">Link new wallet</h2>
                             <button aria-label="Close modal" class="modal-close-btn">
                                 ✕
                             </button>
                         </div>
 
-                        <hr class="dividor">
-
-                        <div class="connect-wallet-modal__step-one p-24">
-                            <h3>Link Your Wallet</h3>
+                        
+                        <!-- step one -->
+                        <div id="connect-wallet-modal__step-one" class="p-24">
+                            <h3 class="capitalise">Choose Your new Wallet</h3>
                             <p class="subtitle mt-8">
                                 Follow these simple steps to securely link your wallet to your bank account.
                             </p>
@@ -452,9 +452,114 @@
                             </div>
                         </div>
 
-                        <div class="connect-wallet-modal__step-two"></div>
+                        <!-- Step 2 -->
+                        <div id="connect-wallet-modal__step-two" class="p-24">
 
-                    </div>
+                            <h3 id="step-two-title">Link Your Wallet</h3>
+
+                            <p class="subtitle mt-8">
+                                Select a method to securely link your wallet to your bank account.
+                            </p>
+
+                            <hr class="dividor" aria-hidden="true">
+
+                            <p class="step mt-24 mb-8">
+                                Step 2 of 3: <span>Link bank account</span>
+                            </p>
+
+                            <div class="choose-wallet-connection">
+
+                                <div class="flex-grid">
+
+                                    <!-- Option 1 -->
+                                    <div id="wallet-option__one" class="wallet-option our-recommendation" role="group"
+                                        aria-labelledby="wallet-option-id">
+
+                                        <div class="wallet-option__one_logo">
+                                            <img src="/static/images/card-icons/security-badge.png"
+                                                alt="Secure wallet connection icon" class="wallet-option-img">
+                                        </div>
+
+                                        <div class="wallet-option__one_description mt-16">
+
+                                            <h4 id="wallet-option-id" class="capitalise light-bold">
+                                                Connect with Wallet ID
+                                                <span class="recommendation">(Recommended)</span>
+                                            </h4>
+
+                                            <p class="pt-4 wallet-option-info">
+                                                Securely connect using wallet ID credentials for a fast and secure
+                                                connection.
+                                            </p>
+
+                                        </div>
+
+                                        <div class="wallet-option__one_confirmation mr-8 mt-24">
+
+                                            <button class="blue-bg white-text center btn-large wallet-option-btn" id="wallet-id-connect">
+                                                Select wallet id connection
+                                            </button>
+
+                                        </div>
+
+                                    </div>
+
+                                    <!-- Option 2 -->
+                                    <div id="wallet-option__two" class="mt-16" role="group"
+                                        aria-labelledby="wallet-option-manual">
+
+                                        <div class="wallet-option__one_logo center">
+                                            <i class="fa fa-pencil" aria-hidden="true" id="wallet-option-icon"></i>
+                                        </div>
+
+                                        <div class="wallet-option__two_description">
+
+                                            <h4 id="wallet-option-manual" class="capitalise light-bold">
+                                                Enter wallet credentials manually
+                                            </h4>
+
+                                            <p class="pt-4 wallet-option-info">
+                                                Use the email and username associated with your wallet.
+                                            </p>
+
+                                        </div>
+
+                                        <div class="wallet-option__one_confirmation mr-8 mt-16">
+
+                                            <button class="blue-bg white-text center btn-large wallet-option-btn">
+                                                Select manual connection
+                                            </button>
+
+                                        </div>
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                            <!-- Progress -->
+                            <div id="completion-steps" class="mt-8">
+
+                                <div class="completion-steps" aria-live="polite">
+                                    <div class="step">Step 2 of 3</div>
+
+                                    <div id="completion-percentage" role="progressbar" aria-valuemin="0"
+                                        aria-valuemax="3" aria-valuenow="2" aria-label="Wallet connection progress">
+
+                                        <div class="percentage-container step2-percentage"></div>
+
+                                    </div>
+                                </div>
+
+                                <button id="connect-wallet__continue-btn" class="btn-large mt-16">
+                                    Continue
+                                </button>
+
+                            </div>
+
+                        </div>
+
                 </section>
 
 
