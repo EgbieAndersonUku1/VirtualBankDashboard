@@ -1,0 +1,775 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/static/css/style.css">
+    <link rel="shortcut icon" href="/static/images/virtual-bank-logo.png" type="image/x-icon">
+    <link rel="stylesheet" href="/static/vendor/fontawesome/css/all.min.css">
+    <title>Virtual bank Dashboard</title>
+</head>
+
+<body>
+
+
+    <main>
+
+        <section id="dashboard" aria-label="User dashboard">
+
+            <div class="dashboard__container">
+
+                <!-- Sidebar navigation -->
+                <nav class="dashboard__container__sidebar" aria-label="Primary dashboard navigation">
+
+                    <div class="sidebar-brand">
+                        <i class="fa-solid fa-building-columns" aria-hidden="true"></i>
+                        <span class="sidebar-brand__name">Virtual Bank</span>
+                    </div>
+                    <ul class="sidebar-nav">
+
+
+                        <li class="sidebar-nav__item">
+                            <a href="#" class="sidebar-nav__link" aria-current="page">
+                                <span class="sidebar-nav__icon" aria-hidden="true">
+                                    <i class="fa-regular fa-house"></i>
+                                </span>
+                                <span class="sidebar-nav__label">Dashboard</span>
+                            </a>
+                        </li>
+
+                        <li class="sidebar-nav__item">
+                            <a href="#" class="sidebar-nav__link">
+                                <span class="sidebar-nav__icon" aria-hidden="true">
+                                    <i class="fa-solid fa-wallet"></i>
+                                </span>
+                                <span class="sidebar-nav__label">My Wallet</span>
+                            </a>
+                        </li>
+
+                        <li class="sidebar-nav__item">
+                            <a href="#" class="sidebar-nav__link">
+                                <span class="sidebar-nav__icon" aria-hidden="true">
+                                    <i class="fa-solid fa-money-bill-transfer"></i>
+                                </span>
+                                <span class="sidebar-nav__label">Money Transfer</span>
+                            </a>
+                        </li>
+
+                        <li class="sidebar-nav__item">
+                            <a href="#" class="sidebar-nav__link">
+                                <span class="sidebar-nav__icon" aria-hidden="true">
+                                    <i class="fa-solid fa-credit-card"></i>
+                                </span>
+                                <span class="sidebar-nav__label">Credit Cards</span>
+                            </a>
+                        </li>
+
+                        <li class="sidebar-nav__item">
+                            <a href="#" class="sidebar-nav__link">
+                                <span class="sidebar-nav__icon" aria-hidden="true">
+                                    <i class="fa-solid fa-money-bill-transfer"></i>
+                                </span>
+                                <span class="sidebar-nav__label">Link funding source</span>
+                            </a>
+                        </li>
+
+                        <li class="sidebar-nav__item">
+                            <a href="#" class="sidebar-nav__link">
+                                <span class="sidebar-nav__icon" aria-hidden="true">
+                                    <i class="fa-solid fa-eye"></i>
+                                </span>
+                                <span class="sidebar-nav__label">Insights</span>
+                            </a>
+                        </li>
+
+                        <li class="sidebar-nav__item">
+                            <a href="#" class="sidebar-nav__link">
+                                <span class="sidebar-nav__icon" aria-hidden="true">
+                                    <i class="fa-solid fa-gear"></i>
+                                </span>
+                                <span class="sidebar-nav__label">Settings</span>
+                            </a>
+                        </li>
+
+                        <li class="sidebar-nav__item">
+                            <a href="#" class="sidebar-nav__link">
+                                <span class="sidebar-nav__icon" aria-hidden="true">
+                                    <i class="fa-solid fa-shield-halved"></i>
+                                </span>
+                                <span class="sidebar-nav__label">Security</span>
+                            </a>
+                        </li>
+                    </ul>
+
+
+
+                    <!-- Latest login info -->
+                    <section id="latest-login" aria-labelledby="latest-login-heading">
+                        <div class="flex-grid two-column-20_80_grid">
+                            <span aria-hidden="true">
+                                <i class="fa-solid fa-right-to-bracket"></i>
+                            </span>
+
+                            <div id="latest-login__details">
+                                <h2 id="latest-login-heading" class="capitalise header-9">
+                                    Last login
+                                </h2>
+                                <time datetime="2026-01-29T20:32">Today at 20:32</time>
+                            </div>
+                        </div>
+
+                        <hr class="dividor" aria-hidden="true">
+
+                        <p id="latest-login__note">
+                            Add two-factor authentication recovery codes to your account so you
+                            never lose access.
+                        </p>
+
+                        <div class="btns centre mt-24">
+                            <a href="#" class="btn-large manage-security-btn" aria-describedby="latest-login__note">
+                                Manage security
+                                <span aria-hidden="true"> &gt; </span>
+                            </a>
+                        </div>
+                    </section>
+
+                    <!-- Logout -->
+                    <nav class="logout" aria-label="Account actions">
+                        <ul class="sidebar-nav">
+                            <li class="sidebar-nav__item">
+                                <a href="#" class="sidebar-nav__link" id="logout-dashboard-link">
+                                    <span class="sidebar-nav__icon" aria-hidden="true">
+                                        <i class="fa-solid fa-right-from-bracket"></i>
+                                    </span>
+                                    <span class="sidebar-nav__label">Log out</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </nav>
+
+                </nav>
+
+                <!-- Main content -->
+                <section class="dashboard__container__main" tabindex="-1">
+
+                    <nav class="dashboard__container__navbar flex flex-space-between">
+                        <div class="dashbaord__container__nav-head sidebar-brand">
+                            <i class="fa-solid fa-building-columns" aria-hidden="true"></i>
+                            <span class="sidebar-brand__name dashboard-nav-site-name">Virtual Bank</span>
+                        </div>
+
+                        <div class="dashboard__container__nav-body flex-grid three-column-grid">
+                            <div class="dashboard_container__amount">
+                                <span class="bold"><span class="currency">£</span>1,500</span>
+                            </div>
+
+                            <div class="dashboard__profile" id="dashboard-profile">
+                                <img src="/static/images/icons/profile.png" alt="" class="dashboard-profile-img">
+
+                                <div class="dashboard__container__dropdown-menu dropdown-menu"
+                                    id="dashboard__container__dropdown-menu">
+                                    <ul>
+                                        <li class="flex-grid two-column-20_80_grid">
+                                            <span>
+                                                <img src="/static/images/icons/profile.png" alt=""
+                                                    class="dashboard-profile-img">
+                                            </span>
+
+                                            <span class="flex-grid">
+                                                <span class="bold">John Doe</span>
+                                                <span class="lower-case">Johndoe@example.com</span>
+                                            </span>
+                                        </li>
+
+                                        <li>
+                                            <span><i class="fa-regular fa-user"></i></span><span>Account</span>
+                                        </li>
+                                        <li>
+                                            <span><i class="fa-solid fa-shield-halved"></i></span><span>Security</span>
+                                        </li>
+                                        <li>
+                                            <span><i class="fa-regular fa-circle-question"></i></span><span>Help &
+                                                Support</span>
+                                        </li>
+
+                                        <li class="dashboard-logout">
+                                            <span><i class="fa-solid fa-right-from-bracket"></i></span><span>Log
+                                                out</span>
+                                        </li>
+                                    </ul>
+                                </div>
+
+                            </div>
+
+                            <div class="dashboard__container__notification-bell">
+                                <div class="notifications">
+                                    <img src="/static/images/icons/notification_smartphone_icon.png" alt=""
+                                        class="dashboard-notification-bell-img">
+                                </div>
+
+
+                            </div>
+
+
+                        </div>
+
+
+                    </nav>
+
+
+                    <!-- The main content -->
+                    <div class="dashboard__container__main__wrapper mt-48">
+
+                        <!-- Greetings -->
+                        <div class="greeting">
+                            <h1 class="header-7 capitalise">Hi, User, Welcome back!</h1>
+                            <p class="text-muted capitalise">Manage your finances</p>
+                        </div>
+
+
+                        <!-- quick menu -->
+                        <section id="bank-options" aria-labelledby="bank-options-title">
+                            <div class="bank-options__container mb-24 mt-16">
+
+                                <!-- Section Heading for Screen Readers -->
+                                <h2 id="bank-options-title" class="sr-only">Banking Options</h2>
+
+                                <ul class="bank-options__cards flex-grid four-column-grid" role="list">
+
+                                    <li>
+                                        <a href="#" class="bank-option-card-link"
+                                            aria-label="Add funds to your account">
+                                            <div class="bank-options__card center">
+                                                <div class="card-head">
+                                                    <img src="/static/images/card-icons/wallet.png" alt=""
+                                                        class="bank-option-img" aria-hidden="true">
+                                                </div>
+
+                                                <div class="card-body">
+                                                    <h3 class="header-9">Add Funds</h3>
+                                                </div>
+
+                                                <div class="card-footer">
+                                                    <small>Top up your account</small>
+                                                </div>
+                                            </div>
+                                        </a>
+                                    </li>
+
+                                    <li>
+                                        <a href="#" class="bank-option-card-link"
+                                            aria-label="Transfer money to another account">
+                                            <div class="bank-options__card center">
+                                                <div class="card-head">
+                                                    <img src="/static/images/card-icons/transfer.png" alt=""
+                                                        class="bank-option-img" aria-hidden="true">
+                                                </div>
+
+                                                <div class="card-body">
+                                                    <h3 class="header-9">Transfer Money</h3>
+                                                </div>
+
+                                                <div class="card-footer">
+                                                    <small>Send to another account</small>
+                                                </div>
+                                            </div>
+                                        </a>
+                                    </li>
+
+                                    <li>
+                                        <a href="#" class="bank-option-card-link" aria-label="Manage your credit cards">
+                                            <div class="bank-options__card center">
+                                                <div class="card-head">
+                                                    <img src="/static/images/card-icons/credit-card.png" alt=""
+                                                        class="bank-option-img" aria-hidden="true">
+                                                </div>
+
+                                                <div class="card-body">
+                                                    <h3 class="header-9">Credit Cards</h3>
+                                                </div>
+
+                                                <div class="card-footer">
+                                                    <small>Manage your cards</small>
+                                                </div>
+                                            </div>
+                                        </a>
+                                    </li>
+
+                                    <li>
+                                        <a href="#" class="bank-option-card-link"
+                                            aria-label="Transfer money to your wallet">
+                                            <div class="bank-options__card center">
+                                                <div class="card-head">
+                                                    <img src="/static/images/card-icons/wallet-activity.png" alt=""
+                                                        class="bank-option-img" aria-hidden="true">
+                                                </div>
+
+                                                <div class="card-body">
+                                                    <h3 class="header-9">Wallet Transfer</h3>
+                                                </div>
+
+                                                <div class="card-footer">
+                                                    <small>Transfer to wallet</small>
+                                                </div>
+                                            </div>
+                                        </a>
+                                    </li>
+
+
+
+                                </ul>
+                            </div>
+                        </section>
+
+                        <!-- my wallet connection/disconnection -->
+                        <div id="bank-overview" class="flex-grid">
+
+                            <section id="my-wallet">
+                                <div class="my-wallet__container">
+                                    <div class="my-wallet__container__header p-8">
+                                        <h3 class="capitalise" class="">My Wallet</h3>
+                                    </div>
+
+                                    <div class="my-wallet__body">
+                                        <div class="wallet-head flex-grid two-column-20_80_grid">
+                                            <div class="my-wallet-img center mt-16">
+
+                                                <img src="/static/images/card-icons/wallet.png" alt=""
+                                                    class="bank-option-img" aria-hidden="true">
+                                            </div>
+
+                                            <div id="my-wallet__link">
+
+                                                <!-- Section Heading -->
+                                                <h3 class="mt-8 capitalize">Link Account</h3>
+
+                                                <!-- Instructions / Messages -->
+                                                <p class="mt-8 subtitle">
+                                                    Connect your wallet to your bank account to securely manage your
+                                                    funds.
+                                                </p>
+                                                <p class="subtitle">
+                                                    Your wallet is currently not linked.
+                                                </p>
+                                                <p class="subtitle">
+                                                    Once linked, you will be able to:
+                                                </p>
+                                                <ul class="subtitle-list">
+                                                    <li>View your wallet balance</li>
+                                                    <li>Disconnect your wallet if needed</li>
+                                                    <li>Access your wallet from the “My Wallet” tab</li>
+                                                </ul>
+
+                                                <!-- Action Buttons -->
+                                                <div class="my-wallet__buttons flex-grid two-column-grid pt-16 pb-16">
+                                                    <a href="#" class="btn-large capitalize center bank-dashboard-btn"
+                                                        id="connect-wallet-btn">Connect Wallet</a>
+                                                    <a href="#" class="btn-large capitalize center bank-dashboard-btn"
+                                                        id="disconnect-wallet">Disconnect</a>
+                                                </div>
+
+                                            </div>
+
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </section>
+
+
+
+
+                        </div>
+
+
+                    </div>
+                </section>
+
+
+                <section id="connect-wallet-modal" role="dialog" aria-modal="true"
+                    aria-labelledby="connect-wallet-title">
+                    <div class="connect-wallet-modal__container">
+
+                        <div class="flex flex-space-between pl-24 pt-8 pb-4 pr-24 modal-top">
+                            <h2 id="connect-wallet-title" class="capitalise">Link new wallet</h2>
+                            <button aria-label="Close modal" class="modal-close-btn" id="modal-close-btn">
+                                ✕
+                            </button>
+                        </div>
+
+
+                        <!-- step one -->
+                        <div id="connect-wallet-modal__step-one" class="p-24">
+                            <h3 class="capitalise">Choose Your new Wallet</h3>
+                            <p class="subtitle mt-8">
+                                Follow these simple steps to securely link your wallet to your bank account.
+                            </p>
+                            <p class="subtitle">
+                                Once linked, you will be able to view all wallet transactions, including your past
+                                activity.
+                            </p>
+
+                            <hr class="divider">
+
+                            <p class="step mt-24 mb-8">
+                                Step 1: <span> Let’s begin linking</span>
+                            </p>
+
+                            <div class="choose-wallet">
+                                <div class="wallet-active flex-grid two-column-20_80_grid">
+                                    <div class="my-wallet-img mt-8 center">
+                                        <img src="/static/images/card-icons/wallet.png" alt="Wallet icon"
+                                            class="bank-option-img">
+                                    </div>
+
+                                    <div class="choice flex flex-space-between">
+                                        <div class="flex-box mt-16">
+                                            <h4>Wallet</h4>
+                                            <small>
+                                                <span class="check-mark mr-4" id="wallet-to-connect-checkmark"
+                                                    aria-checked="true" role="status"><i class="fas fa-check"></i>
+                                                </span> Wallet option
+                                            </small>
+                                        </div>
+
+                                        <div class="check-mark mt-24" aria-hidden="true" id="choice-check-mark">
+                                            ✓
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div id="completion-steps" class="mt-8">
+                                <div class="completion-steps" aria-live="polite">
+                                    <div class="step">Step 1 of 3</div>
+                                    <div id="completion-percentage">
+                                        <div class="percentage-container step1-percentage"></div>
+                                    </div>
+                                </div>
+
+                                <button id="connect-wallet-step1-btn"
+                                    class="btn-large mt-16 connect-wallet__continue-btn">
+                                    Continue
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Step 2 -->
+                        <div id="connect-wallet-modal__step-two" class="p-24">
+
+                            <a href="#" id="wallet-modal-previous-step1" class="mb-8">&lt; back</a>
+                            <h3 id="step-two-title">Link Your Wallet</h3>
+
+                            <p class="subtitle mt-8">
+                                Select a method to securely link your wallet to your bank account.
+                            </p>
+
+                            <hr class="dividor" aria-hidden="true">
+
+                            <p class="step mt-24 mb-8">
+                                Step 2 of 3: <span>Link bank account</span>
+                            </p>
+
+                            <div class="choose-wallet-connection">
+
+                                <div class="flex-grid">
+
+                                    <!-- Option 1 -->
+                                    <div id="wallet-option__one"
+                                        class="wallet-active our-recommendation choose-wallet-option" role="group"
+                                        aria-labelledby="wallet-option-id">
+
+                                        <div class="wallet-option__one_logo">
+                                            <img src="/static/images/card-icons/security-badge.png"
+                                                alt="Secure wallet connection icon" class="wallet-option-img">
+                                        </div>
+
+                                        <div class="wallet-option__one_description mt-16">
+
+                                            <h4 id="wallet-option-id" class="capitalise light-bold">
+                                                Connect with Wallet ID
+                                                <span class="recommendation">(Recommended)</span>
+                                            </h4>
+
+                                            <p class="pt-4 wallet-option-info">
+                                                Securely connect using wallet ID credentials for a fast and secure
+                                                connection.
+                                            </p>
+
+                                        </div>
+
+                                        <div class="wallet-option__one_confirmation mr-8 mt-24">
+
+                                            <button class="blue-bg white-text center btn-large wallet-option-btn"
+                                                id="wallet-id-connect">
+                                                Select wallet id connection
+                                            </button>
+
+                                        </div>
+
+                                    </div>
+
+                                    <!-- Option 2 -->
+                                    <div id="wallet-option__two" class="mt-16 choose-wallet-option" role="group"
+                                        aria-labelledby="wallet-option-manual">
+
+                                        <div class="wallet-option__one_logo center">
+                                            <i class="fa fa-pencil" aria-hidden="true" id="wallet-option-icon"></i>
+                                        </div>
+
+                                        <div class="wallet-option__two_description">
+
+                                            <h4 id="wallet-option-manual" class="capitalise light-bold">
+                                                Enter wallet credentials manually
+                                            </h4>
+
+                                            <p class="pt-4 wallet-option-info">
+                                                Use the email, username and password associated with your wallet.
+                                            </p>
+
+                                        </div>
+
+                                        <div class="wallet-option__one_confirmation mr-8 mt-16">
+
+                                            <button class="blue-bg white-text center btn-large wallet-option-btn">
+                                                Select manual connection
+                                            </button>
+
+                                        </div>
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                            <!-- Progress -->
+                            <div id="completion-steps" class="mt-8">
+
+                                <div class="completion-steps" aria-live="polite">
+                                    <div class="step">Step 2 of 3</div>
+
+                                    <div id="completion-percentage" role="progressbar" aria-valuemin="0"
+                                        aria-valuemax="3" aria-valuenow="2" aria-label="Wallet connection progress">
+
+                                        <div class="percentage-container step2-percentage"></div>
+
+                                    </div>
+                                </div>
+
+                                <button id="connect-wallet-step2-btn"
+                                    class="btn-large mt-16 connect-wallet__continue-btn">
+                                    Continue
+                                </button>
+
+                            </div>
+
+                        </div>
+
+
+                        <!-- Step 3 -->
+                        <div id="connect-wallet-modal__step-three" class="p-24">
+
+                            <a href="#" id="wallet-modal-previous-step2" class="mb-8">&lt; back</a>
+                            <h3 id="step-three-title">Review and confirm</h3>
+
+                            <p class="subtitle mt-8">
+                                Please review the information below before linking your wallet to your bank account.
+                            </p>
+
+                            <hr class="dividor" aria-hidden="true">
+
+                            <p class="step mt-24 mb-8">
+                                Step 3 of 3: <span>Link wallet account</span>
+                            </p>
+
+                            <div class="choose-wallet-connection">
+
+                                <div class="flex-grid">
+
+                                    <!-- Option 1 -->
+                                    <div id="wallet-option__three"
+                                        class="wallet-option our-recommendation flex-grid two-column-20_80_grid"
+                                        role="group" aria-labelledby="wallet-option-label">
+
+                                        <div class="wallet-option__one_logo center">
+                                            <img src="/static/images/card-icons/wallet.png" alt="Wallet icon"
+                                                class="wallet-option-img">
+                                        </div>
+
+                                        <div class="wallet-option__one_description mt-16">
+
+                                            <h4 id="wallet-option-label" class="capitalise light-bold">
+                                                Wallet
+                                                <span class="recommendation">****3658</span>
+                                            </h4>
+                                            <small>
+                                                <span class="check-mark mr-4" id="wallet-to-connect-checkmark"
+                                                    aria-checked="true" role="status"><i class="fas fa-check"></i>
+                                                </span> Verified
+                                            </small>
+
+                                        </div>
+
+                                    </div>
+
+                                    <!-- Confirmation form -->
+                                    <div id="wallet-option__three-form" class="mt-16" role="group"
+                                        aria-labelledby="wallet-option-manual">
+
+                                        <form action="" method="post">
+
+                                            <div class=" mt-8 mb-24">
+                                                <input type="checkbox" name="verify-wallet" id="verify-wallet-checkbox"
+                                                    required>
+                                                <label for="verify-wallet" class="mr-8">
+                                                    I authorise Virtual bank to link this wallet
+                                                </label>
+                                            </div>
+
+                                            <div class="buttons flex-grid two-column-grid mt-16"
+                                                id="confirmation-buttons">
+
+                                                <!-- Cancel button -->
+                                                <button id="connect-wallet__cancel-btn" class="btn-large cancel-btn"
+                                                    type="button" data-action="cancel">
+                                                    Cancel
+                                                </button>
+
+                                                <!-- Submit button -->
+                                                <button id="connect-wallet-step3-btn"
+                                                    class="btn-large blue-bg white-text" type="submit">
+                                                    Link account
+                                                </button>
+
+                                            </div>
+
+                                        </form>
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                            <!-- Progress -->
+                            <div id="completion-steps" class="mt-8">
+
+                                <div class="completion-steps" aria-live="polite">
+                                    <div class="step">Step 3 of 3</div>
+
+                                    <div id="completion-percentage" role="progressbar" aria-valuemin="0"
+                                        aria-valuemax="3" aria-valuenow="2" aria-label="Wallet connection progress">
+
+                                        <div class="percentage-container step3-percentage"></div>
+
+                                    </div>
+                                </div>
+
+                            </div>
+
+                        </div>
+
+
+                </section>
+
+
+                <!-- The footer section -->
+                <footer>
+
+                    <div class="footer__container">
+
+                        <div class="footer__header">
+                            <img src="/static/images/virtual-wallet-logo.png" alt="The virtual logo"
+                                class="footer-logo">
+
+                        </div>
+
+
+                        <div class="flex-grid five-column-grid" id="footer-sections">
+
+                            <!-- About us column -->
+                            <div class="col flex-grid" id="about-us">
+                                <h1 class="footer-head pb-16">About us</h1>
+                                <a href="#" class="footer-link">Our company</a>
+                                <a href="#" class="footer-link">Careers</a>
+                                <a href="#" class="footer-link">Security</a>
+                                <a href="#" class="footer-link">Investor relations</a>
+
+                            </div>
+
+                            <!-- services column -->
+                            <div class="col flex-grid" id="services">
+                                <h1 class="footer-head pb-16">services</h1>
+                                <a href="#" class="footer-link">Online banking</a>
+                                <a href="#" class="footer-link">Mobile app</a>
+                                <a href="#" class="footer-link">Credit app</a>
+                                <a href="#" class="footer-link">Loans and mortgages</a>
+                            </div>
+
+                            <!-- support column -->
+                            <div class="col flex-grid" id="support">
+                                <h1 class="footer-head pb-16">support</h1>
+                                <a href="#" class="footer-link">FAQs</a>
+                                <a href="#" class="footer-link">Help Center</a>
+                                <a href="#" class="footer-link">Contact us</a>
+                                <a href="#" class="footer-link">Live chat</a>
+                            </div>
+
+                            <div class="col flex-grid" id="resources">
+                                <h1 class="footer-head pb-16">resources</h1>
+                                <a href="#" class="footer-link">Financial Education</a>
+                                <a href="#" class="footer-link">Blog</a>
+                                <a href="#" class="footer-link">News and Insight</a>
+                                <a href="#" class="footer-link">Calculators</a>
+                            </div>
+
+                            <div class="col" id="download-app">
+                                <h1 class="footer-head">Download our app</h1>
+
+                                <div id="apps" class="flex-grid two-column-grid">
+                                    <img src="/static/images/footer-icons/appStore.svg" alt="" class="footer-icon">
+                                    <img src="/static/images/footer-icons/googlePlay.svg" alt="" class="footer-icon">
+                                </div>
+
+
+                            </div>
+                        </div>
+
+                        <div class="socials copyright flex-grid two-column-grid pb-24">
+
+                            <div class="socials four-column-grid">
+                                <a href="#"><img src="/static/images/icons/facebook.svg" alt="facebook"
+                                        class="social-icon"></a>
+                                <a href="#"><img src="/static/images/icons/instagram.svg" alt="facebook"
+                                        class="social-icon"></a>
+
+                            </div>
+
+                            <div class="copyright four-column-grid">
+                                <a href="#" class="copyright-link"><span class="copyright-date">@2026 </span>Virtual
+                                    bank. All
+                                    rights reserved</a>
+                                <a href="#" class="copyright-link footer-link">Privacy policy</a>
+                                <a href="#" class="copyright-link footer-link">Terms of use</a>
+
+                            </div>
+                        </div>
+
+                    </div>
+
+                </footer>
+
+
+
+            </div>
+
+        </section>
+
+    </main>
+
+    <script src="/static/js/dashboard/bank-dashboard.js" type="module"></script>
+</body>
+
+</html>
