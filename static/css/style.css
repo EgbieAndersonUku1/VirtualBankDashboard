@@ -781,6 +781,15 @@ button {
     cursor: pointer;
 }
 
+button:hover {
+    transform: scale(0.9);
+}
+
+.cancel-btn {
+  background-color: #e0e0e0; /* light grey */
+  color: #333;
+}
+
 
 .btn-medium {
     width: 10%;
@@ -1264,6 +1273,7 @@ input[type="email"] {
 
 input[type="checkbox"] {
   accent-color: #2f80ed;
+  vertical-align: middle;
 }
 
 #terms-privacy-consent {
@@ -2189,7 +2199,7 @@ time {
     font-size: 1rem;
 }
 
-#connect-wallet {
+#connect-wallet-btn {
     background: var(--blue-600);
 }
 
@@ -2197,7 +2207,7 @@ time {
     background: var(--red);
 }
 
-#connect-wallet,
+#connect-wallet-btn,
 #disconnect-wallet {
     color: white;
 }
@@ -2269,15 +2279,29 @@ time {
     height: 20px;
 }
 
-.step2-percentage {
+.percentage-container {
     height: 100%;
+     border-radius: 999px;
+}
+.step1-percentage {
+   
+    width: 25%;
+    background: var(--red);
+}
+
+.step2-percentage {
+ 
     width: 50%;
-    border-radius: 999px;
     background: orangered;
 }
 
+.step3-percentage {
+    width: 100%;
+    background: var(--green-600);
+}
 
-.wallet-option {
+
+.wallet-active {
     border: 4px solid lavender;
     padding-right: 10px;
     background: ghostwhite;
@@ -2292,7 +2316,7 @@ time {
  
 }
 
-#connect-wallet__continue-btn {
+.connect-wallet__continue-btn {
     background: var(--blue-600);
     color: white;
     font-size: 1rem;
@@ -2302,17 +2326,16 @@ time {
 
 #wallet-to-connect-checkmark {
     background: var(--green-600);
-    font-size: 0.6rem;
+    font-size: 0.5rem;
     border: 1px solid white;
-    transform: translateX(-4px);
+    transform: translateX(-1px);
     color: white;
     font-weight: 400;
-    padding: var(--space-8);
     font-weight: bolder;
 }
 
 .check-mark {
-    border-radius: 50%;
+    border-radius: 40%;
     padding: var(--space-4);
  
 }
@@ -2326,10 +2349,21 @@ time {
 }
 
 
-#connect-wallet-modal__step-one {
+#connect-wallet-modal,
+#connect-wallet-modal__step-one,
+#connect-wallet-modal__step-two,
+#connect-wallet-modal__step-three {
     display: none;
+    
 }
 
+#connect-wallet-modal.show,
+#connect-wallet-modal__step-one.show,
+#connect-wallet-modal__step-two.show,
+#connect-wallet-modal__step-three.show {
+    display: grid;
+   
+}
 
 #wallet-option__one,
 #wallet-option__two {
@@ -2387,4 +2421,43 @@ time {
 #wallet-option__one:hover,
 #wallet-option__two:hover {
     transform: scale(0.99);
+}
+
+#confirmation-buttons button {
+    border-radius: initial;
+  
+}
+
+#confirmation-buttons {
+    width: 40%;
+    margin: auto;
+      column-gap: var(--space-4);
+}
+
+#verify-wallet-checkbox {
+   
+
+    display: inline-block;
+    width: 1rem;
+    height: 1rem;
+    border: 0.5px solid #1F4FD8;
+    border-radius: 0;
+    box-shadow: none;
+    cursor: pointer;
+    vertical-align: middle;
+}
+
+#verify-wallet-checkbox:focus {
+    outline: 2px solid #1F4FD8;
+    outline-offset: 2px;
+}
+
+#verify-wallet-checkbox:hover {
+    border-color: #163ea6;
+}
+
+.modal-close-btn:hover {
+     border-color: #163ea6;
+     color: var(--red);
+     font-weight: bolder;
 }
