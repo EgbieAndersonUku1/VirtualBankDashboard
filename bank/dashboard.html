@@ -618,7 +618,7 @@
                                     <div id="wallet-option__three-form" class="mt-16" role="group"
                                         aria-labelledby="wallet-option-manual">
 
-                                        <form action="" method="post">
+                                        <form action="" method="post" id="link-wallet-form">
 
                                             <div class=" mt-8 mb-24">
                                                 <input type="checkbox" name="verify-wallet" id="verify-wallet-checkbox"
@@ -672,6 +672,8 @@
                         </div>
 
                         <section id="connect-with-wallet-id">
+
+                             <a href="#" id="wallet-modal-connect-back-anchor" class="mb-8">&lt; back</a>
 
                             <div id="connect-with-wallet-id__container">
                                 <h1 class="center header-6">Connect with wallet ID</h1>
@@ -758,9 +760,9 @@
                                 <div id="wallet-auth-completion" class="center mt-8 hide">
                                         <p id="wallet-connect-msg" class="mt-8">Your wallet has successfully been
                                         connected to your bank account, you can now close the page and proceed to step 3</p>
-                                    <button id="auth-wallet__cancel-btn" class="btn-semi-medium cancel-btn mt-8" type="button"
+                                    <button id="auth-wallet__cancel-btn" class="btn-semi-medium mt-8 blue-bg white-text" type="button"
                                         data-action="cancel">
-                                        Cancel
+                                        Close
                                     </button>
                                 </div>
                                
@@ -865,7 +867,7 @@
         </section>
 
     </main>
-
+     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.12.2/dist/sweetalert2.all.min.js"></script>
     <script src="/static/js/dashboard/bank-dashboard.js" type="module"></script>
 </body>
 

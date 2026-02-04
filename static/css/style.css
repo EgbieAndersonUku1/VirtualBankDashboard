@@ -2290,6 +2290,11 @@ time {
 
 }
 
+#connect-with-wallet-id.show {
+    display: grid;
+  
+}
+
 
 #connect-wallet-modal h2 {
     font-weight: 500;

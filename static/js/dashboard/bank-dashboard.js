@@ -1,4 +1,5 @@
 import { sanitizeText } from "../utils.js";
+import { AlertUtils } from "../alerts.js";
 
 
 const dashboardProfileElement = document.getElementById("dashboard-profile");
@@ -15,6 +16,7 @@ const walletAuthInputFieldPanel = document.getElementById("connect-with-wallet-i
 const progressElement = document.getElementById("walletProgress");
 const progressValue = document.getElementById("walletProgressValue");
 const walletAuthForm = document.getElementById("connect-wallet-form");
+const linkAccountForm = document.getElementById("link-wallet-form");
 let walletModalStep2Button;
 
 
@@ -31,7 +33,8 @@ walletAuthForm.addEventListener("submit", handleWalletAuthForm);
 
 
 
-console.log(connectWalletModal)
+
+
 
 function handleDropDownMenu(e) {
     const profileImg = e.target.closest("img");
@@ -40,14 +43,6 @@ function handleDropDownMenu(e) {
     }
 }
 
-
-
-function handleDelegation(e) {
-
-    WalletWizard.handleWalletConnectionSteps(e)
-
-
-}
 
 
 
@@ -71,7 +66,7 @@ const WalletWizard = (() => {
     }
 
     function closeWalletAuthPanel() {
-        walletAuthInputFieldPanel.style.display = "none";
+        toggleElement({element: walletAuthInputFieldPanel, show: false})
 
 
     }
@@ -102,9 +97,11 @@ const WalletWizard = (() => {
     }
 
     function selectWalletIdConnect(e) {
-        console.log("clicked")
-        disableStep2Button();
-        WalletWizard.handleWalletConnectAuthInputFields(e)
+        
+            disableStep2Button();
+            WalletWizard.handleWalletConnectAuthInputFields(e)
+        
+        
     }
 
 
@@ -165,6 +162,8 @@ const WalletWizard = (() => {
         },
 
         handleWalletConnectAuthInputFields(e, deleteMode = false) {
+
+            
             openWalletAuthInputPanel();
 
             walletOptionAuthInputFields[0]?.focus()
@@ -195,12 +194,17 @@ const WalletWizard = (() => {
                     walletOptionAuthInputFields[currentIndex].value = "";
                 }
 
+                if (currentIndex === lastIndex && !deleteMode) {
+                  walletOptionAuthInputFields[currentIndex].focus();   
+                }
+
 
             }
         },
         handleWalletConnectionSteps(e) {
             const elementID = e.target.id;
 
+           
             if (elementID === "modal-close-btn") {
                 WalletWizard.closeModal();
                 return;
@@ -234,6 +238,11 @@ const WalletWizard = (() => {
                 case "wallet-modal-previous-step1":
                     WalletWizard.previousStep(1);
                     break;
+                case "wallet-modal-connect-back-anchor":
+                    enableStep2Button();
+                    closeWalletAuthPanel()
+                    WalletWizard.previousStep(2);
+                    break;
 
 
             }
@@ -256,6 +265,8 @@ function toggleElement({ element, cSSSelector = "show", show = true }) {
 
 
 dashboard.addEventListener("input", (e) => {
+
+    if (e && e.target.type === "checkbox") return;
     WalletWizard.handleWalletConnectAuthInputFields(e);
 });
 
@@ -263,6 +274,18 @@ dashboard.addEventListener("input", (e) => {
 dashboard.addEventListener("keydown", (e) => {
     WalletWizard.handleBackspaceOrDelete(e);
 });
+
+linkAccountForm.addEventListener("submit", handleWalletLinkFormSubmission)
+
+function handleDelegation(e) {
+ 
+
+    WalletWizard.handleWalletConnectionSteps(e)
+
+
+}
+
+
 
 
 
@@ -341,5 +364,30 @@ function showWalletAuthCompletionMsg() {
  */
 function removeAuthWalletVerifyBtn() {
     const btn = document.getElementById("auth-verify-btn");
-    toggleElement({ element: btn, cSSSelector: "hide", show: false });
+    btn.style.display = "none";
+}
+
+
+
+/**
+ * Handles the form link confirmation form, the final step before
+ * a wallet is linked to the bank account.
+ */
+async function handleWalletLinkFormSubmission(e) {
+    e.preventDefault();
+
+    const confirmed = await AlertUtils.showConfirmationAlert({
+        title: "Link wallet to bank account?",
+        text: "This will securely link your wallet so funds can move between accounts.",
+        confirmButtonText: "Link account",
+        messageToDisplayOnSuccess: "The accounts have been linked",
+        denyButtonText: "Cancel",
+        cancelMessage: "Wallet linking cancelled."
+    });
+
+   if (confirmed) {
+    WalletWizard.closeModal();
+   }
+
+ 
 }
