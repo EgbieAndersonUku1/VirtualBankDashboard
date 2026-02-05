@@ -1224,9 +1224,6 @@ footer {
     display: none;
 }
 
-#password-strength.show {
-    display: grid;
-}
 
 
 #password-strength h2 {
@@ -1262,11 +1259,12 @@ footer {
 input,
 select,
 textarea {
-    border-color: 0.5px solid #1F4FD8;
+    /* border-color: 0.5px solid #1F4FD8; */
+    border: 1px solid #d1d5db;
     box-shadow: 0 0 0 3px rgba(31, 79, 216, 0.15);
     border-radius: 6px;
     padding: 12px 14px;
-    font-size: 1.2rem;
+    font-size: 1rem;
 
 }
 
@@ -2267,6 +2265,7 @@ time {
 }
 
 
+#link-wallet-verifcation,
 #connect-with-wallet-id,
 #connect-wallet-modal {
     position: fixed;
@@ -2405,7 +2404,9 @@ time {
 #connect-wallet-modal.show,
 #connect-wallet-modal__step-one.show,
 #connect-wallet-modal__step-two.show,
-#connect-wallet-modal__step-three.show {
+#connect-wallet-modal__step-three.show,
+#link-wallet-verifcation.show,
+#password-strength.show {
     display: grid;
 
 }
@@ -2569,4 +2570,46 @@ time {
 
     font-size: 20px;
     font-weight: bold;
+}
+
+
+/* Link verification form manually */
+#link-wallet-verification-form__header .logo-img-container {
+    position: relative;
+    height: 100px;
+    width: 100px;
+}
+
+#link-wallet-verification-form__header .logo-img-container img {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+}
+
+#link-wallet-verification-form__header {
+  
+     background: #f6f9fc;
+}
+
+#manually-verification-wallet-form{
+    padding: 108px;
+    padding-top: var(--space-24);
+}
+
+#manually-wallet-error-msg {
+    background: var(--red);
+    color: white;
+    padding: var(--space-12);
+}
+
+#link-wallet-verifcation {
+    display: none;
+}
+
+#manually-wallet-error-msg {
+    display: none;
+}
+
+#manually-wallet-link-btn {
+    font-size: 1rem;
 }
