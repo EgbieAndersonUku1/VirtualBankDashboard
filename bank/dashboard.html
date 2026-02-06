@@ -366,7 +366,7 @@
                                                     <a href="#" class="btn-large capitalize center bank-dashboard-btn"
                                                         id="connect-wallet-btn">Connect Wallet</a>
                                                     <a href="#" class="btn-large capitalize center bank-dashboard-btn"
-                                                        id="disconnect-wallet">Disconnect</a>
+                                                        id="disconnect-wallet">Status</a>
                                                 </div>
 
                                             </div>
@@ -760,7 +760,7 @@
 
                                 <div id="wallet-auth-completion" class="center mt-8 hide">
                                     <p id="wallet-connect-msg" class="mt-8">Your wallet has successfully been
-                                        connected to your bank account, you can now close the page and proceed to step 3
+                                        verified, you can now close the page and proceed to step 3
                                     </p>
                                     <button id="auth-wallet__cancel-btn" class="btn-semi-medium mt-8 blue-bg white-text"
                                         type="button" data-action="cancel">
@@ -824,8 +824,8 @@
                                     </div>
 
                                     <div class="buttons mt-16 mb-16">
-                                        <button type="submit" class="btn-large blue-bg white-text" id="manually-wallet-link-btn">
-                                            Link Wallet!
+                                        <button type="submit" class="btn-large blue-bg white-text capitalise" id="manually-wallet-link-btn">
+                                            verify Wallet credentials!
                                         </button>
                                     </div>
 
@@ -840,9 +840,47 @@
 
                         </section>
 
+                      
 
                 </section>
 
+                  <section id="dashboard__status">
+                            <div class="flex flex-space-between pl-24 pt-8 pb-4 pr-24 modal-top">
+                            <h2 id="connect-wallet-title" class="capitalise header-7">Manage Account</h2>
+                            <button aria-label="Close modal" class="modal-close-btn" id="modal-close-btn">
+                                ✕
+                            </button>
+                        </div>
+
+                            <div id="status__container" class="">
+
+                                <div class="status__head">
+                                
+                                    <div class="status__head_body flex-grid two-column-20_80_grid">
+                                        <div class="img-container">
+                                            <img src="/static/images/card-icons/atlas-bank.png" alt="Elm Financial logo"
+                                                class="status__head-img">
+                                        </div>    
+                                        <div class="status__bank-attributes">
+                                            <p class="mt-48">Elm Financial checking ****1246</p>
+                                        </div>
+                                       
+                                    </div>
+                                    <hr class="dividor">
+                                </div>
+
+                                <div class="status__body pl-24">
+                                  <p>View and manage your connected bank</p>
+                                </div>
+
+                                <div class="status__footer">
+
+                                </div>
+
+                            </div>
+
+
+                        </section>
 
                 <!-- The footer section -->
                 <footer>

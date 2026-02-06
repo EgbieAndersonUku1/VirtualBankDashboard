@@ -1086,7 +1086,7 @@ footer {
     padding-right: var(--space-16);
     padding-left: var(--space-16);
     color: white;
-    font-size: 0.85rem;
+    font-size: 0.75rem;
     text-transform: capitalize;
 }
 
@@ -2264,7 +2264,7 @@ time {
     scale: var(0.9);
 }
 
-
+#dashboard__status,
 #link-wallet-verifcation,
 #connect-with-wallet-id,
 #connect-wallet-modal {
@@ -2612,4 +2612,26 @@ time {
 
 #manually-wallet-link-btn {
     font-size: 1rem;
+}
+
+
+/* status button modal section*/
+.img-container {
+    position: relative;
+    height: 133px;
+    width: 150px;
+    transform: translateX(-45px);
+   
+}
+
+.img-container img {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+}
+
+.status__head_body {
+    transform: translateY(-45px);
+    grid-template-rows: 16px;
+    padding-left: 24px;
 }
