@@ -947,12 +947,12 @@
                                         </div>
 
                                         <div class="connection-status-description">
-                                            <p class="light-bold">
+                                            <p class="light-bold" id="connection-status-description__title">
                                                 Connection is healthy
                                             </p>
-                                            <p>
+                                            <small id="sync-time">
                                                 Last synced February 6 2026 at 22:30 hrs
-                                            </p>
+                                            </small>
                                         </div>
                                     </div>
 
@@ -1035,6 +1035,96 @@
                         </div>
 
                     </div>
+                </section>
+
+                <!-- A modal box asking the user to enter disconnect in order to disconnect the modal -->
+                <section id="wallet-disconnection-confirmation" role="dialog" aria-modal="true"
+                    aria-labelledby="wallet-disconnect-modal-title" aria-describedby="wallet-disconnect-warning">
+
+                    <!-- Header -->
+                    <div class="flex flex-space-between pl-24 pt-8 pb-4 pr-24 modal-top">
+
+                        <h2 id="wallet-disconnect-modal-title" class="capitalise header-8 mt-8 mb-8 light-bold">
+                            Disconnect wallet or bank account
+                        </h2>
+
+                        <button aria-label="Close disconnect confirmation dialog" class="modal-close-btn"
+                            id="modal-close-btn" type="button">
+                            <span aria-hidden="true">✕</span>
+                        </button>
+                    </div>
+
+                    <div class="wallet-disconnection-confirmation__container">
+
+                        <!-- Warning block -->
+                        <div class="flex-grid disconnection-info__container mt-16 mb-16">
+
+                            <div class="disconnection-info-icon center">
+                                <i class="fa-solid fa-triangle-exclamation" aria-hidden="true"></i>
+                            </div>
+
+                            <div class="disconnection-description">
+
+                                <h3 id="wallet-disconnect-title" class="header-9 disconnect-heading light-bold">
+                                    Are you sure you want to disconnect this external bank account?
+                                </h3>
+
+                            </div>
+                        </div>
+
+                        <!-- Consequences -->
+                        <ul id="wallet-disconnect-warning" class="mt-4 ml-16 mr-16 mb-16 pt-16 pb-16 flex-grid">
+                            <li>Synchronisation and display will stop</li>
+                            <li>Transaction updates will stop</li>
+                            <li>Historical financial data will be removed</li>
+                            <li>You must reconnect to access data again</li>
+                        </ul>
+
+                        <!-- Confirmation instruction -->
+                        <p id="disconnect-confirm-instruction" class="ml-16">
+                            Please type <strong>DISCONNECT</strong> below to confirm.
+                        </p>
+
+                        <!-- Input -->
+                        <div id="confirmation-disconnection-input-field"
+                            class="flex-grid two-column-20_80_grid ml-16 mr-16 mb-16 mt-8">
+
+                            <div class="lock center p-8">
+                                <i class="fa-solid fa-lock" aria-hidden="true"></i>
+                                <span class="sr-only">Secure confirmation input</span>
+                            </div>
+
+                            <div class="form-row">
+                                <label for="wallet-disconnect" class="sr-only">
+                                    Type DISCONNECT to confirm bank disconnection
+                                </label>
+
+                                <form action="" method="post">
+                                      <input type="text" name="wallet-disconnect" id="wallet-disconnect" maxlength="10"
+                                       minlength="10" aria-describedby="disconnect-confirm-instruction" autocomplete="off" required>
+
+                                       
+                                </form>
+
+                              
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <!-- Footer -->
+                    <div id="wallet-disconnection-confirmation__footer" class="flex flex-end mr-16 mb-24">
+
+                        <button type="button" class="cancel-disconnect-btn mr-8">
+                            Cancel
+                        </button>
+
+                        <button type="submit" class="confirm-disconnect-btn">
+                            Disconnect account
+                        </button>
+
+                    </div>
+
                 </section>
 
 

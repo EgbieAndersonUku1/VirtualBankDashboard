@@ -22,7 +22,7 @@ const walletOptionAuthInputFields = document.querySelectorAll("#connect-wallet-a
 let walletModalStep2Button;
 
 const excludeFields = new Set(["username", "email", "password"]);
-const excludeTypes = new Set(["checkbox", "radio"]);
+const excludeTypes = new Set(["checkbox", "radio", "text"]);
 
 // console.log(walletOptionAuthInputFields)
 
