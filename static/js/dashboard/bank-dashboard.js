@@ -17,14 +17,15 @@ const walletAuthInputFieldPanel   = document.getElementById("connect-with-wallet
 const walletManualForm            = document.getElementById("manually-verification-wallet-form");
 const walletManualFormSection     = document.getElementById("link-wallet-verifcation");
 const walletOptionAuthInputFields = document.querySelectorAll("#connect-wallet-auth-id-wrapper input");
-
+const statusWalletDisconnectPanel = document.getElementById("dashboard__status")
+const disconnectInputFieldElement = document.getElementById("wallet-disconnect-inputfield");
+const disconnectConfirmaionPanel  = document.getElementById("wallet-disconnection-confirmation")
 
 let walletModalStep2Button;
 
 const excludeFields = new Set(["username", "email", "password"]);
 const excludeTypes = new Set(["checkbox", "radio", "text"]);
 
-// console.log(walletOptionAuthInputFields)
 
 // Constants for wallet modal element IDs
 const WalletWizardIds = {
@@ -48,9 +49,6 @@ const WalletWizardIds = {
 dashboardProfileElement.addEventListener("click", handleDropDownMenu);
 dashboard.addEventListener("click", handleDelegation);
 walletAuthForm.addEventListener("submit", handleWalletAuthForm);
-
-
-
 
 
 
@@ -271,15 +269,6 @@ function handleDropDownMenu(e) {
 
 
 
-function toggleElement({ element, cSSSelector = "show", show = true }) {
-    if (show) {
-        element.classList.add(cSSSelector);
-        return;
-    }
-
-    element.classList.remove(cSSSelector);
-}
-
 
 
 
@@ -296,6 +285,7 @@ dashboard.addEventListener("input", (e) => {
     // Skip excluded types or IDs
     if (excludeTypes.has(target.type) || excludeFields.has(target.id)) return;
     WalletWizard.handleWalletConnectAuthInputFields(e);
+    handleDisconnecectionConfirmationButton(e)
 });
 
 dashboard.addEventListener("keydown", (e) => {
@@ -317,11 +307,11 @@ walletManualForm.addEventListener("submit", handleManualFormSubmission);
  * @param {Event} e Click or submit event.
  */
 function handleDelegation(e) {
+   
     WalletWizard.handleWalletConnectionSteps(e);
+    handleStatusButtonClick(e);
+
 }
-
-
-
 
 
 
@@ -428,6 +418,8 @@ async function handleWalletLinkFormSubmission(e) {
 
  
 }
+
+
 /**
  * Disables the Step 2 button in the wallet wizard.
  * Sets the button text to "Disabled" and reduces opacity.
@@ -441,6 +433,7 @@ function disableStep2Button() {
     walletModalStep2Button.textContent = "Disabled";
     walletModalStep2Button.style.opacity = "0.5";
 }
+
 
 /**
  * Enables the Step 2 button in the wallet wizard.
@@ -471,4 +464,164 @@ function handleManualFormSubmission(e) {
 
     toggleElement({ element: walletManualFormSection, show: false });
     enableStep2Button();
+}
+
+
+/**
+ * Handles clicks on status buttons.
+ * Delegates the click to toggleStatusPanel.
+ * @param {MouseEvent} e - The click event.
+ * @returns {void}
+ */
+function handleStatusButtonClick(e) {
+    toggleStatusPanel(e)
+}
+
+/**
+ * Handles the confirmation process for disconnecting a wallet.
+ * @async
+ * @returns {Promise<void>}
+ */
+async function handleDisconnecectionConfirmationButton() {
+    const expectedWord  = "disconnect";
+
+    if (!disconnectInputFieldElement) return;
+    if (disconnectInputFieldElement.value.length < expectedWord.length) return;
+    if (disconnectInputFieldElement.value.toLowerCase() !== expectedWord) return;
+
+    const confirmed = await AlertUtils.showConfirmationAlert({
+        title: "Are you sure you want to disconnect wallet?",
+        text: "This action will disconnect your wallet from your bank, and stop all information.",
+        confirmButtonText: "Disconnect wallet",
+        messageToDisplayOnSuccess: "The wallet has been disconnected",
+        denyButtonText: "Cancel Disconnect",
+        cancelMessage: "No action taken."
+    });
+
+   if (confirmed) {
+    closeStatusPanels();
+    WalletWizard.closeModal();
+   }
+}
+
+/**
+ * Handles the wallet connection refresh action.
+ * Shows a confirmation alert and displays a success message if confirmed.
+ * @async
+ * @returns {Promise<void>}
+ */
+async function handleRefreshConnection() {
+    const confirmed = await AlertUtils.showConfirmationAlert({
+        title: "Refresh wallet connection?",
+        text: "This will refresh your current wallet connection.",
+        confirmButtonText: "Refresh connection",
+        messageToDisplayOnSuccess: "Wallet connection refreshed successfully.",
+        denyButtonText: "Cancel",
+        cancelMessage: "No changes were made."
+    });
+}
+
+/**
+ * Handles testing the wallet connection.
+ * Shows a confirmation alert and displays a success message if confirmed.
+ * @async
+ * @returns {Promise<void>}
+ */
+async function handleTestConnection() {
+    const confirmed = await AlertUtils.showConfirmationAlert({
+        title: "Test wallet connection?",
+        text: "This will test if your wallet connection is working properly.",
+        confirmButtonText: "Run test",
+        messageToDisplayOnSuccess: "Wallet connection is working!",
+        denyButtonText: "Cancel",
+        cancelMessage: "No changes were made."
+    });
+}
+
+/**
+ * Toggles visibility of various status and confirmation panels
+ * based on which button was clicked.
+ * @param {MouseEvent} e - The click event.
+ * @returns {void}
+ */
+function toggleStatusPanel(e) {
+    console.log(e.target.id)
+
+    if (e.target.id === "disconnect-wallet-status") {
+         statusWalletDisconnectPanel.classList.add("show");
+         return;
+    }
+
+    const buttonID = e.target.closest("button")?.id;
+    console.log(buttonID)
+
+    switch(buttonID) {
+        case "disconnect-btn":
+            disconnectConfirmaionPanel.classList.add("show")
+            break;
+        case "confirm-disconnect-btn":
+            handleDisconnecectionConfirmationButton();
+            break;
+        case "cancel-disconnect-btn":
+            disconnectConfirmaionPanel.classList.remove("show");
+            break;
+        case "disconnection-modal-close-btn":
+            closeConfirmationPanel();
+            break;
+        case "dashboard-status-modal-close-btn":
+            closeStatusPanels();
+            break;
+        case "refresh-connection-btn":
+            handleRefreshConnection();
+            break;
+        case "test-connection-btn":
+            handleTestConnection();
+            break;
+    }
+}
+
+
+/**
+ * Closes all wallet-related status panels and clears input fields.
+ * @returns {void}
+ */
+function closeStatusPanels(){
+    toggleElement({element: statusWalletDisconnectPanel, show:false})
+    closeConfirmationPanel();
+    clearDisconnectInputField();
+}
+
+
+/**
+ * Closes the disconnect confirmation panel.
+ * @returns {void}
+ */
+function closeConfirmationPanel() {
+    toggleElement({element: disconnectConfirmaionPanel, show:false})
+}
+
+
+/**
+ * Clears the input field used for confirming wallet disconnection.
+ * @returns {void}
+ */
+function clearDisconnectInputField() {
+     disconnectInputFieldElement.value = "";
+}
+
+
+/**
+ * Toggles the visibility of a DOM element.
+ * @param {Object} options - Options object.
+ * @param {HTMLElement} options.element - The element to toggle.
+ * @param {boolean} options.show - Whether to show (true) or hide (false) the element.
+ * @returns {void}
+ */
+function toggleElement({element, show}) {
+    if (!element) return;
+    if (show) {
+        element.classList.add("show");
+    } else {
+        element.classList.remove("show");
+    }
 }

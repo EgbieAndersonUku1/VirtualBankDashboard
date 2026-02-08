@@ -2240,12 +2240,12 @@ time {
     background: var(--blue-600);
 }
 
-#disconnect-wallet {
+#disconnect-wallet-status {
     background: var(--red);
 }
 
 #connect-wallet-btn,
-#disconnect-wallet {
+#disconnect-wallet-status {
     color: white;
 }
 
@@ -2277,7 +2277,6 @@ time {
     scale: var(0.9);
 }
 
-#dashboard__status,
 #link-wallet-verifcation,
 #connect-with-wallet-id,
 #connect-wallet-modal {
@@ -2302,10 +2301,6 @@ time {
 
 }
 
-#connect-with-wallet-id.show {
-    display: grid;
-  
-}
 
 
 #connect-wallet-modal h2 {
@@ -2413,6 +2408,9 @@ time {
 
 }
 
+
+#dashboard__status.show,
+#wallet-disconnection-confirmation.show,
 #connect-with-wallet-id.show,
 #connect-wallet-modal.show,
 #connect-wallet-modal__step-one.show,
@@ -2632,6 +2630,12 @@ time {
 /* This is the part of the modal in the dashboard that will open up the modal when the user hits
  status button
 */
+
+#dashboard-status-modal-close-btn {
+    position: relative;
+    z-index: 10000;
+}
+
 .img-container {
     position: relative;
     height: 133px;
@@ -2663,6 +2667,7 @@ time {
   text-transform: capitalize;
   
 }
+
 
 .wallet-disconnection-confirmation__container p,
 .dsiconnection-description h2,
@@ -2708,8 +2713,11 @@ time {
     box-shadow: var(--box-shadow-primary);
     cursor: pointer;
     border: 2px solid black;
+    background: white;
     border-radius: 8px;
+    display: none;
 }
+
 
 
 #bank-connection {
@@ -2808,7 +2816,7 @@ time {
     position: fixed;
     left: 32%;
     top: 20%;
-    z-index: 100000;
+    z-index: 1000;
      width: 40%;
     margin: auto;
     background: #ffff;
@@ -2816,7 +2824,11 @@ time {
     border-radius: 4px;
     cursor: pointer;
     box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+    border: 1px solid black;
+    display: none;
+   
 }
+
 
 #wallet-disconnect-title span {
     font-size: 0.94rem;
@@ -2853,7 +2865,7 @@ time {
     font-weight: bold;
 }
 
-.confirm-disconnect-btn {
+#confirm-disconnect-btn {
     background: var(--red);
     color: white;
 }

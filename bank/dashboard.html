@@ -366,7 +366,7 @@
                                                     <a href="#" class="btn-large capitalize center bank-dashboard-btn"
                                                         id="connect-wallet-btn">Connect Wallet</a>
                                                     <a href="#" class="btn-large capitalize center bank-dashboard-btn"
-                                                        id="disconnect-wallet">Status</a>
+                                                        id="disconnect-wallet-status">Status</a>
                                                 </div>
 
                                             </div>
@@ -393,7 +393,7 @@
 
                         <div class="flex flex-space-between pl-24 pt-8 pb-4 pr-24 modal-top">
                             <h2 id="connect-wallet-title" class="capitalise">Link new wallet</h2>
-                            <button aria-label="Close modal" class="modal-close-btn" id="modal-close-btn">
+                            <button aria-label="Close modal" class="modal-close-btn" id="connect-modal-close-btn">
                                 ✕
                             </button>
                         </div>
@@ -854,10 +854,12 @@
                             Manage account
                         </h2>
 
-                        <button aria-label="Close manage account dialog" class="modal-close-btn" id="modal-close-btn"
+                        <button aria-label="Close manage account dialog" class="modal-close-btn" id="dashboard-status-modal-close-btn"
                             type="button">
-                            <span aria-hidden="true">✕</span>
+                            <span aria-hidden="true" id="">✕</span>
                         </button>
+
+                        
                     </div>
 
                     <div id="status__container" class="pt-8">
@@ -962,12 +964,14 @@
                                     <div class="connection__actions flex-grid two-column-grid">
 
                                         <button type="button"
+                                           id="refresh-connection-btn"
                                             class="connection__button btn-large blue-bg white-text js-refresh-connection">
                                             <i class="fa-solid fa-arrows-rotate" aria-hidden="true"></i>
                                             Refresh connection
                                         </button>
 
                                         <button type="button"
+                                            id="test-connection-btn"
                                             class="connection__button btn-large green-bg white-text js-test-connection">
                                             <i class="fa-solid fa-plug" aria-hidden="true"></i>
                                             Test connection
@@ -1026,6 +1030,7 @@
 
                             <div class="connection__actions">
                                 <button type="button"
+                                   id="disconnect-btn"
                                     class="connection__button btn-large white-text disconnect-btn capitalise"
                                     aria-describedby="disconnect-title">
                                     <i class="fa-solid fa-xmark" aria-hidden="true"></i>
@@ -1049,7 +1054,7 @@
                         </h2>
 
                         <button aria-label="Close disconnect confirmation dialog" class="modal-close-btn"
-                            id="modal-close-btn" type="button">
+                            id="disconnection-modal-close-btn" type="button">
                             <span aria-hidden="true">✕</span>
                         </button>
                     </div>
@@ -1066,7 +1071,7 @@
                             <div class="disconnection-description">
 
                                 <h3 id="wallet-disconnect-title" class="header-9 disconnect-heading light-bold">
-                                    Are you sure you want to disconnect this external bank account?
+                                    Are you sure you want to disconnect this wallet from your external bank account?
                                 </h3>
 
                             </div>
@@ -1099,14 +1104,14 @@
                                     Type DISCONNECT to confirm bank disconnection
                                 </label>
 
-                                <form action="" method="post">
-                                      <input type="text" name="wallet-disconnect" id="wallet-disconnect" maxlength="10"
-                                       minlength="10" aria-describedby="disconnect-confirm-instruction" autocomplete="off" required>
+                                <input type="text" name="wallet-disconnect" id="wallet-disconnect-inputfield" maxlength="10"
+                                    minlength="10" aria-describedby="disconnect-confirm-instruction" autocomplete="off"
+                                    required>
 
-                                       
-                                </form>
 
-                              
+
+
+
                             </div>
 
                         </div>
@@ -1115,11 +1120,11 @@
                     <!-- Footer -->
                     <div id="wallet-disconnection-confirmation__footer" class="flex flex-end mr-16 mb-24">
 
-                        <button type="button" class="cancel-disconnect-btn mr-8">
+                        <button type="button" class="mr-8" id="cancel-disconnect-btn">
                             Cancel
                         </button>
 
-                        <button type="submit" class="confirm-disconnect-btn">
+                        <button type="button" id="confirm-disconnect-btn">
                             Disconnect account
                         </button>
 
