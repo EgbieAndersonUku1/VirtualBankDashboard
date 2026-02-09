@@ -23,8 +23,8 @@ const disconnectConfirmaionPanel  = document.getElementById("wallet-disconnectio
 
 let walletModalStep2Button;
 
-const excludeFields = new Set(["username", "email", "password"]);
-const excludeTypes = new Set(["checkbox", "radio", "text"]);
+const excludeFields = new Set(["username",  "email", "wallet-disconnect-inputfield"]);
+const excludeTypes = new Set(["checkbox", "radio", "password", "email"]);
 
 
 // Constants for wallet modal element IDs
@@ -577,6 +577,9 @@ function toggleStatusPanel(e) {
         case "test-connection-btn":
             handleTestConnection();
             break;
+        case "connect-modal-close-btn":
+            WalletWizard.closeModal();
+            break;
     }
 }
 
@@ -614,14 +617,22 @@ function clearDisconnectInputField() {
  * Toggles the visibility of a DOM element.
  * @param {Object} options - Options object.
  * @param {HTMLElement} options.element - The element to toggle.
+ * @param {cSSSelector} - The selector for the element
  * @param {boolean} options.show - Whether to show (true) or hide (false) the element.
  * @returns {void}
  */
-function toggleElement({element, show}) {
-    if (!element) return;
+
+function toggleElement({ element, cSSSelector = "show", show = true }) {
     if (show) {
-        element.classList.add("show");
-    } else {
-        element.classList.remove("show");
+        element.classList.add(cSSSelector);
+        return;
     }
+
+    element.classList.remove(cSSSelector);
 }
+
+
+
+
+
+
