@@ -30,6 +30,8 @@
     --box-shadow-tietary: rgba(0, 0, 0, 0.12) 0px 1px 3px, rgba(0, 0, 0, 0.24) 0px 1px 2px;
     --gradient-blue: linear-gradient(135deg, #0F4C81 0%, #1CB5E0 100%);
 
+    --warning-color: #FFF8E1;
+
 }
 
 
@@ -147,6 +149,9 @@ body {
     margin-right: var(--space-16);
 }
 
+.mr-24 {
+    margin-right: var(--space-24); 
+}
 /* Bottom */
 .mb-4 {
     margin-bottom: var(--space-4);
@@ -1086,7 +1091,7 @@ footer {
     padding-right: var(--space-16);
     padding-left: var(--space-16);
     color: white;
-    font-size: 0.85rem;
+    font-size: 0.75rem;
     text-transform: capitalize;
 }
 
@@ -1857,6 +1862,14 @@ label {
 
 }
 
+.verified {
+    border: 1px solid;
+    border-radius: 50%;
+    background: green;
+    color: white;
+    padding: 2px;
+}
+
 
 .bank-completion__row dd.active {
     font-weight: bold;
@@ -2227,12 +2240,12 @@ time {
     background: var(--blue-600);
 }
 
-#disconnect-wallet {
+#disconnect-wallet-status {
     background: var(--red);
 }
 
 #connect-wallet-btn,
-#disconnect-wallet {
+#disconnect-wallet-status {
     color: white;
 }
 
@@ -2264,7 +2277,6 @@ time {
     scale: var(0.9);
 }
 
-
 #link-wallet-verifcation,
 #connect-with-wallet-id,
 #connect-wallet-modal {
@@ -2289,10 +2301,6 @@ time {
 
 }
 
-#connect-with-wallet-id.show {
-    display: grid;
-  
-}
 
 
 #connect-wallet-modal h2 {
@@ -2400,6 +2408,9 @@ time {
 
 }
 
+
+#dashboard__status.show,
+#wallet-disconnection-confirmation.show,
 #connect-with-wallet-id.show,
 #connect-wallet-modal.show,
 #connect-wallet-modal__step-one.show,
@@ -2612,4 +2623,249 @@ time {
 
 #manually-wallet-link-btn {
     font-size: 1rem;
+}
+
+
+/* status button modal section*/
+/* This is the part of the modal in the dashboard that will open up the modal when the user hits
+ status button
+*/
+
+#dashboard-status-modal-close-btn {
+    position: relative;
+    z-index: 10000;
+}
+
+.img-container {
+    position: relative;
+    height: 133px;
+    width: 150px;
+    transform: translateX(-45px);
+   
+}
+
+.img-container img {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+}
+
+.status__head_body {
+    transform: translateY(-45px);
+    grid-template-rows: 20px;
+    padding-left: 24px;
+}
+
+
+.status__bank_details div {
+    border: 2px solid lavender;
+    padding: var(--space-8);
+}
+
+.status__bank_details div dt {
+  font-weight: 500;
+  text-transform: capitalize;
+  
+}
+
+
+.wallet-disconnection-confirmation__container p,
+.dsiconnection-description h2,
+.status__info-link,
+.status__head p,
+.status__body p,
+.bank-connection span,
+.status__bank_details div dt,
+.status__bank_details div dd {
+  font-size: 0.9rem;
+}
+
+.bank-connection {
+    background: ghostwhite;
+    padding: var(--space-8);
+}
+
+.status__body__container {
+ 
+  border: 2px solid lavender;
+  margin-right: var(--space-48);
+  padding: var(--space-16);
+  margin-bottom: var(--space-12);
+  margin-right: var(--space-24);
+  
+}
+
+#bank-connection-status {
+    border: 1px solid black;
+    margin-right: var(--space-4);
+    padding: var(--space-4);
+    font-size: 0.8rem;
+}
+
+
+#dashboard__status {
+    position: fixed;
+    top: 0;
+    left: 28%;
+    width: 47%;
+    margin: auto;
+    z-index: 1000;
+    box-shadow: var(--box-shadow-primary);
+    cursor: pointer;
+    border: 2px solid black;
+    background: white;
+    border-radius: 8px;
+    display: none;
+}
+
+
+
+#bank-connection {
+    box-shadow: var(--box-shadow-primary);
+    margin-top: var(--space-4);
+    margin-bottom: var(--space-4);
+    padding: var(--space-12);
+    border-radius: 8px;
+}
+
+.connection__actions {
+    column-gap: var(--space-4);
+}
+
+.connection__button {
+    text-align: center;
+    font-size: 0.9rem;
+    padding: var(--space-4);
+    margin-top: var(--space-8);
+    border-radius: 8px; 
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    font-weight: 600;
+    transition: transform 0.1s ease, box-shadow 0.1s ease;
+    gap: 0.5rem; /*Space between icon and text*/
+    padding-top: var(--space-4);
+    padding-bottom: var(--space-4);
+}
+
+
+.connection__button:hover {
+    transform: translateY(-1px); 
+    box-shadow: 0 4px 6px rgba(0,0,0,0.15); 
+}
+
+.wallet-disconnection-confirmation__container ul li,
+.disconnection-description ul li {
+    list-style: disc;
+    margin-left: var(--space-8);
+    font-size: 0.85rem;
+    color: #333;
+    line-height: 1.5;
+}
+
+
+.disconnection-info {
+    background: var(--warning-color);
+    border: 1px solid #FFE082;
+    padding: var(--space-8);
+    border-radius: 8px;
+    color: #333333;
+}
+
+
+.disconnection-info-icon i {
+    font-size: 1.5rem;
+    color: #E6A700;
+}
+
+
+.status__bank-disconnection {
+    column-gap: var(--space-4);
+}
+
+.disconnection-info__container {
+    display: grid;
+    grid-template-columns: 10% 90%;
+    grid-template-rows: auto;
+    column-gap: 1px;
+}
+
+
+.disconnect-btn {
+    background: var(--red);
+    padding-left: var(--space-8);
+    padding-right: var(--space-8);
+ 
+}
+
+.disconnect-btn:hover {
+   
+    background: black;
+    color: white;
+   
+}
+
+.connection-check-status {
+    display: grid;
+    grid-template-columns: 5% 95%;
+    grid-template-rows: auto;
+    column-gap: var(--space-4);
+}
+
+
+/* Disconnection wallet confirmation modal attribrutes */
+#wallet-disconnection-confirmation {
+    position: fixed;
+    left: 32%;
+    top: 20%;
+    z-index: 1000;
+     width: 40%;
+    margin: auto;
+    background: #ffff;
+    border: 1px solid lavender;
+    border-radius: 4px;
+    cursor: pointer;
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+    border: 1px solid black;
+    display: none;
+   
+}
+
+
+#wallet-disconnect-title span {
+    font-size: 0.94rem;
+}
+#wallet-disconnect-title span:last-child {
+    font-weight: 400;
+}
+
+.wallet-disconnection-confirmation__container ul {
+    background: var(--warning-color);
+    border: 4px solid var(--warning-color);
+    
+}
+
+.wallet-disconnection-confirmation__container ul li {
+    margin-left: var(--space-16);
+
+}
+
+#confirmation-disconnection-input-field .lock {
+    background: lavender;
+}
+
+#confirmation-disconnection-input-field .form-row input {
+    text-transform: uppercase;
+    border: 2px solid lavender;
+    outline: none;
+    box-shadow: none;
+}
+
+#wallet-disconnection-confirmation__footer button {
+    border-radius: 0px;
+    padding: var(--space-12);
+    font-weight: bold;
+}
+
+#confirm-disconnect-btn {
+    background: var(--red);
+    color: white;
 }
