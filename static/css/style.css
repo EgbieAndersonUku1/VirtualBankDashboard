@@ -351,6 +351,9 @@ img:hover {
     background: var(--green-600);
 }
 
+.red-bg {
+    background: var(--red);
+}
 
 /* font colours */
 .white-text {
@@ -378,6 +381,9 @@ img:hover {
     text-transform: lowercase;
 }
 
+.text-align-left {
+    text-align: left;
+}
 /* 
  * Fixed positioning centring (not layout centring).
  * Used when the element must be removed from normal flow and
@@ -2228,8 +2234,14 @@ time {
     background: lavender;
 }
 
+.my-wallet-img img {
+    height: 200px;
+    width: 130px;
+}
+
 .my-wallet__container__header h3 {
-    font-size: 1rem;
+    font-size: 1.3rem;
+    font-size: 500;
 }
 
 #my-wallet__link h3 {
@@ -2264,11 +2276,7 @@ time {
 }
 
 
-#bank-overview {
-    display: grid;
-    grid-template-columns: 60% 40%;
-    grid-template-rows: auto;
-}
+
 
 .bank-dashboard-btn:hover {
     background: white;
@@ -2868,4 +2876,133 @@ time {
 #confirm-disconnect-btn {
     background: var(--red);
     color: white;
+}
+
+
+
+.dashboard__container__main__wrapper {
+    display: grid;
+    grid-template-columns: 60% 40%;
+    grid-template-rows: auto;
+    column-gap: var(--space-8);
+}
+
+
+.dash-bank-account-main-img {
+    position: relative;
+    height: 200px;
+    width: 250px;
+}
+
+.dash-bank-account-main-img img {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+}
+
+
+.dash-bank-account {
+    box-shadow: var(--box-shadow-primary);
+    background: url("/static/images/background.png");
+    padding: var(--space-24);
+    
+}
+
+.dash-bank-account__body {
+    background: #ffff;
+}
+
+.dash-bank-account-info .flex-row {
+    display: flex;
+    gap: var(--space-4);
+}
+
+
+.dash-bank-account__buttons {
+    column-gap: var(--space-4);
+}
+
+
+.dash-bank-account__buttons button {
+    border-radius: 0;
+    padding-left: var(--space-16);
+    padding-right: var(--space-16);
+    font-weight: bold;
+}
+
+
+.bank-amount span {
+    font-size: 2rem;
+}
+
+
+.dashboard-card {
+    border-radius: 12px;
+}
+
+.dashboard-card:hover {
+    transform: translateY(-4px);
+}
+
+
+
+.dash-bank-account__footer {
+    margin-top: 24px;
+    padding-top: 16px;
+    border-top: 1px solid #eee;
+}
+
+
+
+
+/* the bank panel */
+.account-status {
+    color: var(--green-600);
+}
+
+
+.dashboard-card {
+    border-radius: 16px;
+    background: #fff;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.06);
+    cursor: pointer;
+}
+
+/* Balance highlight */
+.balance-highlight {
+    margin: 20px 0;
+}
+
+.balance-label {
+    font-size: 0.8rem;
+    color: #777;
+}
+
+.balance-value {
+    font-size: 2rem;
+    font-weight: 700;
+}
+
+/* Action Bank buttons */
+.action-btn {
+    flex: 1;
+    padding: 14px;
+    border-radius: 12px;
+    font-weight: 600;
+    border: none;
+    cursor: pointer;
+}
+
+.action-btn.primary {
+    background: #111;
+    color: white;
+}
+
+.action-btn.secondary {
+    background: #f2f2f2;
+}
+
+.bank-last-updated {
+    font-size: 0.75rem;
+    color: #777;
 }
