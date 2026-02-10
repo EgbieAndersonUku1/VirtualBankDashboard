@@ -381,6 +381,9 @@ img:hover {
     text-transform: lowercase;
 }
 
+.text-align-left {
+    text-align: left;
+}
 /* 
  * Fixed positioning centring (not layout centring).
  * Used when the element must be removed from normal flow and
@@ -2237,7 +2240,8 @@ time {
 }
 
 .my-wallet__container__header h3 {
-    font-size: 1rem;
+    font-size: 1.3rem;
+    font-size: 500;
 }
 
 #my-wallet__link h3 {
@@ -2272,9 +2276,7 @@ time {
 }
 
 
-#bank-overview {
-   
-}
+
 
 .bank-dashboard-btn:hover {
     background: white;
@@ -2902,6 +2904,7 @@ time {
 .dash-bank-account {
     box-shadow: var(--box-shadow-primary);
     background: url("/static/images/background.png");
+    padding: var(--space-24);
     
 }
 
@@ -2922,8 +2925,6 @@ time {
 
 .dash-bank-account__buttons button {
     border-radius: 0;
-    padding-top: var(--space-4);
-    padding-bottom: var(--space-4);
     padding-left: var(--space-16);
     padding-right: var(--space-16);
     font-weight: bold;
@@ -2944,3 +2945,64 @@ time {
 }
 
 
+
+.dash-bank-account__footer {
+    margin-top: 24px;
+    padding-top: 16px;
+    border-top: 1px solid #eee;
+}
+
+
+
+
+/* the bank panel */
+.account-status {
+    color: var(--green-600);
+}
+
+
+.dashboard-card {
+    border-radius: 16px;
+    background: #fff;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.06);
+    cursor: pointer;
+}
+
+/* Balance highlight */
+.balance-highlight {
+    margin: 20px 0;
+}
+
+.balance-label {
+    font-size: 0.8rem;
+    color: #777;
+}
+
+.balance-value {
+    font-size: 2rem;
+    font-weight: 700;
+}
+
+/* Action Bank buttons */
+.action-btn {
+    flex: 1;
+    padding: 14px;
+    border-radius: 12px;
+    font-weight: 600;
+    border: none;
+    cursor: pointer;
+}
+
+.action-btn.primary {
+    background: #111;
+    color: white;
+}
+
+.action-btn.secondary {
+    background: #f2f2f2;
+}
+
+.bank-last-updated {
+    font-size: 0.75rem;
+    color: #777;
+}

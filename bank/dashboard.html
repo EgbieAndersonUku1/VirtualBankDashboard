@@ -217,181 +217,197 @@
 
                     </nav>
 
-                        <!-- Greetings -->
-                        <div class="greeting mt-16 ml-4">
-                            <h1 class="header-7 capitalise">Hi, User, Welcome back!</h1>
-                            <p class="text-muted capitalise">Manage your finances</p>
+                    <!-- Greetings -->
+                    <div class="greeting mt-16 ml-4">
+                        <h1 class="header-7 capitalise">Hi, User, Welcome back!</h1>
+                        <p class="text-muted capitalise">Manage your finances</p>
+                    </div>
+
+
+                    <!-- quick menu -->
+                    <section id="bank-options" aria-labelledby="bank-options-title">
+                        <div class="bank-options__container mb-24 mt-16">
+
+                            <!-- Section Heading for Screen Readers -->
+                            <h2 id="bank-options-title" class="sr-only">Banking Options</h2>
+
+                            <ul class="bank-options__cards flex-grid four-column-grid" role="list">
+
+                                <li>
+                                    <a href="#" class="bank-option-card-link" aria-label="Add funds to your account">
+                                        <div class="bank-options__card center">
+                                            <div class="card-head">
+                                                <img src="/static/images/card-icons/wallet.png" alt=""
+                                                    class="bank-option-img" aria-hidden="true">
+                                            </div>
+
+                                            <div class="card-body">
+                                                <h3 class="header-9">Add Funds</h3>
+                                            </div>
+
+                                            <div class="card-footer">
+                                                <small>Top up your account</small>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </li>
+
+                                <li>
+                                    <a href="#" class="bank-option-card-link"
+                                        aria-label="Transfer money to another account">
+                                        <div class="bank-options__card center">
+                                            <div class="card-head">
+                                                <img src="/static/images/card-icons/transfer.png" alt=""
+                                                    class="bank-option-img" aria-hidden="true">
+                                            </div>
+
+                                            <div class="card-body">
+                                                <h3 class="header-9">Transfer Money</h3>
+                                            </div>
+
+                                            <div class="card-footer">
+                                                <small>Send to another account</small>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </li>
+
+                                <li>
+                                    <a href="#" class="bank-option-card-link" aria-label="Manage your credit cards">
+                                        <div class="bank-options__card center">
+                                            <div class="card-head">
+                                                <img src="/static/images/card-icons/credit-card.png" alt=""
+                                                    class="bank-option-img" aria-hidden="true">
+                                            </div>
+
+                                            <div class="card-body">
+                                                <h3 class="header-9">Credit Cards</h3>
+                                            </div>
+
+                                            <div class="card-footer">
+                                                <small>Manage your cards</small>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </li>
+
+                                <li>
+                                    <a href="#" class="bank-option-card-link"
+                                        aria-label="Transfer money to your wallet">
+                                        <div class="bank-options__card center">
+                                            <div class="card-head">
+                                                <img src="/static/images/card-icons/wallet-activity.png" alt=""
+                                                    class="bank-option-img" aria-hidden="true">
+                                            </div>
+
+                                            <div class="card-body">
+                                                <h3 class="header-9">Wallet Transfer</h3>
+                                            </div>
+
+                                            <div class="card-footer">
+                                                <small>Transfer to wallet</small>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </li>
+                            </ul>
                         </div>
+                    </section>
 
-
-                          <!-- quick menu -->
-                        <section id="bank-options" aria-labelledby="bank-options-title">
-                            <div class="bank-options__container mb-24 mt-16">
-
-                                <!-- Section Heading for Screen Readers -->
-                                <h2 id="bank-options-title" class="sr-only">Banking Options</h2>
-
-                                <ul class="bank-options__cards flex-grid four-column-grid" role="list">
-
-                                    <li>
-                                        <a href="#" class="bank-option-card-link"
-                                            aria-label="Add funds to your account">
-                                            <div class="bank-options__card center">
-                                                <div class="card-head">
-                                                    <img src="/static/images/card-icons/wallet.png" alt=""
-                                                        class="bank-option-img" aria-hidden="true">
-                                                </div>
-
-                                                <div class="card-body">
-                                                    <h3 class="header-9">Add Funds</h3>
-                                                </div>
-
-                                                <div class="card-footer">
-                                                    <small>Top up your account</small>
-                                                </div>
-                                            </div>
-                                        </a>
-                                    </li>
-
-                                    <li>
-                                        <a href="#" class="bank-option-card-link"
-                                            aria-label="Transfer money to another account">
-                                            <div class="bank-options__card center">
-                                                <div class="card-head">
-                                                    <img src="/static/images/card-icons/transfer.png" alt=""
-                                                        class="bank-option-img" aria-hidden="true">
-                                                </div>
-
-                                                <div class="card-body">
-                                                    <h3 class="header-9">Transfer Money</h3>
-                                                </div>
-
-                                                <div class="card-footer">
-                                                    <small>Send to another account</small>
-                                                </div>
-                                            </div>
-                                        </a>
-                                    </li>
-
-                                    <li>
-                                        <a href="#" class="bank-option-card-link" aria-label="Manage your credit cards">
-                                            <div class="bank-options__card center">
-                                                <div class="card-head">
-                                                    <img src="/static/images/card-icons/credit-card.png" alt=""
-                                                        class="bank-option-img" aria-hidden="true">
-                                                </div>
-
-                                                <div class="card-body">
-                                                    <h3 class="header-9">Credit Cards</h3>
-                                                </div>
-
-                                                <div class="card-footer">
-                                                    <small>Manage your cards</small>
-                                                </div>
-                                            </div>
-                                        </a>
-                                    </li>
-
-                                    <li>
-                                        <a href="#" class="bank-option-card-link"
-                                            aria-label="Transfer money to your wallet">
-                                            <div class="bank-options__card center">
-                                                <div class="card-head">
-                                                    <img src="/static/images/card-icons/wallet-activity.png" alt=""
-                                                        class="bank-option-img" aria-hidden="true">
-                                                </div>
-
-                                                <div class="card-body">
-                                                    <h3 class="header-9">Wallet Transfer</h3>
-                                                </div>
-
-                                                <div class="card-footer">
-                                                    <small>Transfer to wallet</small>
-                                                </div>
-                                            </div>
-                                        </a>
-                                    </li>
-                                </ul>
-                            </div>
-                        </section>
-
+                    <hr class="dividor">
 
                     <!-- The main content -->
-                    <div class="dashboard__container__main__wrapper mt-48">
+                    <div class="dashboard__container__main__wrapper mt-16">
 
-                    
-                        
 
-                        <!-- my wallet connection/disconnection -->
+                        <!-- Dasshboard overview main body -->
                         <div id="bank-overview" class="flex-grid">
 
-                            <section class="dash-bank-account mb-16 dashboard-card">
+                            <section class="dash-bank-account dashboard-card mb-24"
+                                aria-labelledby="bank-account-title">
 
-                                    <div class="dash-bank-account__header flex flex-space-between p-24">
+                                <!-- Header -->
+                                <div class="dash-bank-account__header flex flex-space-between">
 
-                                        <div class="dash-bank-account-inner-header flex-grid">
-                                           
+                                    <h2 id="bank-account-title" class="bank-name capitalise">
+                                        My bank account
+                                    </h2>
 
-                                            <div class="bank-name">
-                                                <span class="pr-8">My bank account</span>
-                                            </div>
+                                    <span class="account-status" role="status" aria-live="polite"
+                                        aria-label="Bank account status active">
+
+                                        <i class="fas fa-circle" aria-hidden="true"></i>
+                                        Active
+                                    </span>
+
+                                </div>
+
+                                <!-- Body -->
+                                <div class="dash-bank-account__body flex flex-space-between">
+
+                                    <div class="dash-bank-account-info">
+
+                                        <!-- Bank -->
+                                        <div class="flex-row">
+                                            <span class="bank-name-value">
+                                                Chase Bank
+                                            </span>
                                         </div>
 
-                                        <div class="secured">
-                                            <span>secured</span>
+                                        <!-- Account -->
+                                        <div class="flex-row account-number" aria-label="Account ending in 7052">
+                                            Account •••• 7052
                                         </div>
-                                        
+
+                                        <!-- Last updated -->
+                                        <div class="bank-last-updated">
+                                            Last updated 2 minutes ago
+                                        </div>
+
                                     </div>
 
-                                    <div class="dash-bank-account__body flex flex-space-between pl-24">
-
-                                        <div class="dash-bank-account-info mt-48">
-
-                                            <div class="flex-row">
-                                                 <span><i class="fas fa-piggy-bank"></i></span><span>Chase bank</span>
-                                            </div>
-
-                                            <div class="flex-row">
-                                                 <span>IB</span><span>171283015</span>
-                                            </div>
-                                           
-                                            <div class="flex-row">
-                                                 <span><i class="fas fa-check"></i><span>Active</span>
-                                            </div>
-                                           
-                                           
-                                        </div>
-
-                                        <div class="dash-bank-account-main-img">
-                                            <img src="/static/images/icons/bank_icon.png" alt="" srcset="" id="">
-                                        </div>
-
+                                    <!-- Illustration -->
+                                    <div class="dash-bank-account-main-img">
+                                        <img src="/static/images/icons/bank_icon.png"
+                                            alt="Illustration representing connected bank account">
                                     </div>
 
-                                    <div class="dash-bank-account__footer flex flex-space-between p-24">
-                                        <div class="dash-bank-account__buttons flex-grid two-column-grid">
-                                            <button class="large-btn capitalise green-bg white-text" id="add-bank-funds">
-                                                Add Funds
-                                            </button>
+                                </div>
 
-                                              <button class="large-btn capitalise red-bg white-text" id="view-bank-transactions">
-                                                View transactions
-                                            </button>
+                                <!-- Balance Highlight -->
+                                <div class="balance-highlight" aria-live="polite" aria-label="Available balance">
 
-                                        </div>
-
-                                        <div class="bank-amount center">
-                                            <span class="currency">£</span> <span class="bank-amount">0.00</span>
-                                        </div>
+                                    <div class="balance-label">
+                                        Available balance
                                     </div>
+
+                                    <div class="balance-value">
+                                        <span class="currency" aria-hidden="true">£</span>
+                                        <span>0.00</span>
+                                    </div>
+
+                                </div>
+
+                                <!-- Action buttons -->
+                                <div class="dash-bank-account__footer flex">
+
+                                    <button class="action-btn primary" aria-label="Add funds to bank account">
+                                        Add funds
+                                    </button>
+
+                                    <button class="action-btn secondary" aria-label="View bank account transactions">
+                                        Transactions
+                                    </button>
+
+                                </div>
 
                             </section>
 
-
+                            <!-- My wallet section -->
                             <section id="my-wallet" class="dashboard-card">
                                 <div class="my-wallet__container">
                                     <div class="my-wallet__container__header p-8">
-                                        <h3 class="capitalise" class="">My Wallet</h3>
+                                        <h3 class="capitalise header-7" class="">My Wallet</h3>
                                     </div>
 
                                     <div class="my-wallet__body">
@@ -445,7 +461,7 @@
 
 
                         <div class="main-sidebar">
-                         
+
                         </div>
 
                     </div>
