@@ -557,13 +557,15 @@ function toggleStatusPanel(e) {
 
     switch(buttonID) {
         case "disconnect-btn":
-            disconnectConfirmaionPanel.classList.add("show")
+           
+            toggleElement({element: disconnectConfirmaionPanel});
+            disconnectInputFieldElement.focus()
             break;
         case "confirm-disconnect-btn":
             handleDisconnecectionConfirmationButton();
             break;
         case "cancel-disconnect-btn":
-            disconnectConfirmaionPanel.classList.remove("show");
+            toggleElement({element: disconnectConfirmaionPanel, show: false});
             break;
         case "disconnection-modal-close-btn":
             closeConfirmationPanel();

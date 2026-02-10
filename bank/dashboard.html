@@ -217,18 +217,14 @@
 
                     </nav>
 
-
-                    <!-- The main content -->
-                    <div class="dashboard__container__main__wrapper mt-48">
-
                         <!-- Greetings -->
-                        <div class="greeting">
+                        <div class="greeting mt-16 ml-4">
                             <h1 class="header-7 capitalise">Hi, User, Welcome back!</h1>
                             <p class="text-muted capitalise">Manage your finances</p>
                         </div>
 
 
-                        <!-- quick menu -->
+                          <!-- quick menu -->
                         <section id="bank-options" aria-labelledby="bank-options-title">
                             <div class="bank-options__container mb-24 mt-16">
 
@@ -315,17 +311,84 @@
                                             </div>
                                         </a>
                                     </li>
-
-
-
                                 </ul>
                             </div>
                         </section>
 
+
+                    <!-- The main content -->
+                    <div class="dashboard__container__main__wrapper mt-48">
+
+                    
+                        
+
                         <!-- my wallet connection/disconnection -->
                         <div id="bank-overview" class="flex-grid">
 
-                            <section id="my-wallet">
+                            <section class="dash-bank-account mb-16 dashboard-card">
+
+                                    <div class="dash-bank-account__header flex flex-space-between p-24">
+
+                                        <div class="dash-bank-account-inner-header flex-grid">
+                                           
+
+                                            <div class="bank-name">
+                                                <span class="pr-8">My bank account</span>
+                                            </div>
+                                        </div>
+
+                                        <div class="secured">
+                                            <span>secured</span>
+                                        </div>
+                                        
+                                    </div>
+
+                                    <div class="dash-bank-account__body flex flex-space-between pl-24">
+
+                                        <div class="dash-bank-account-info mt-48">
+
+                                            <div class="flex-row">
+                                                 <span><i class="fas fa-piggy-bank"></i></span><span>Chase bank</span>
+                                            </div>
+
+                                            <div class="flex-row">
+                                                 <span>IB</span><span>171283015</span>
+                                            </div>
+                                           
+                                            <div class="flex-row">
+                                                 <span><i class="fas fa-check"></i><span>Active</span>
+                                            </div>
+                                           
+                                           
+                                        </div>
+
+                                        <div class="dash-bank-account-main-img">
+                                            <img src="/static/images/icons/bank_icon.png" alt="" srcset="" id="">
+                                        </div>
+
+                                    </div>
+
+                                    <div class="dash-bank-account__footer flex flex-space-between p-24">
+                                        <div class="dash-bank-account__buttons flex-grid two-column-grid">
+                                            <button class="large-btn capitalise green-bg white-text" id="add-bank-funds">
+                                                Add Funds
+                                            </button>
+
+                                              <button class="large-btn capitalise red-bg white-text" id="view-bank-transactions">
+                                                View transactions
+                                            </button>
+
+                                        </div>
+
+                                        <div class="bank-amount center">
+                                            <span class="currency">£</span> <span class="bank-amount">0.00</span>
+                                        </div>
+                                    </div>
+
+                            </section>
+
+
+                            <section id="my-wallet" class="dashboard-card">
                                 <div class="my-wallet__container">
                                     <div class="my-wallet__container__header p-8">
                                         <h3 class="capitalise" class="">My Wallet</h3>
@@ -333,7 +396,7 @@
 
                                     <div class="my-wallet__body">
                                         <div class="wallet-head flex-grid two-column-20_80_grid">
-                                            <div class="my-wallet-img center mt-16">
+                                            <div class="my-wallet-img center mt-48">
 
                                                 <img src="/static/images/card-icons/wallet.png" alt=""
                                                     class="bank-option-img" aria-hidden="true">
@@ -378,12 +441,16 @@
                             </section>
 
 
-
-
                         </div>
 
 
+                        <div class="main-sidebar">
+                         
+                        </div>
+
                     </div>
+
+
                 </section>
 
 
@@ -854,12 +921,12 @@
                             Manage account
                         </h2>
 
-                        <button aria-label="Close manage account dialog" class="modal-close-btn" id="dashboard-status-modal-close-btn"
-                            type="button">
+                        <button aria-label="Close manage account dialog" class="modal-close-btn"
+                            id="dashboard-status-modal-close-btn" type="button">
                             <span aria-hidden="true" id="">✕</span>
                         </button>
 
-                        
+
                     </div>
 
                     <div id="status__container" class="pt-8">
@@ -963,15 +1030,13 @@
                                     <!-- Actions -->
                                     <div class="connection__actions flex-grid two-column-grid">
 
-                                        <button type="button"
-                                           id="refresh-connection-btn"
+                                        <button type="button" id="refresh-connection-btn"
                                             class="connection__button btn-large blue-bg white-text js-refresh-connection">
                                             <i class="fa-solid fa-arrows-rotate" aria-hidden="true"></i>
                                             Refresh connection
                                         </button>
 
-                                        <button type="button"
-                                            id="test-connection-btn"
+                                        <button type="button" id="test-connection-btn"
                                             class="connection__button btn-large green-bg white-text js-test-connection">
                                             <i class="fa-solid fa-plug" aria-hidden="true"></i>
                                             Test connection
@@ -1029,8 +1094,7 @@
                             </small>
 
                             <div class="connection__actions">
-                                <button type="button"
-                                   id="disconnect-btn"
+                                <button type="button" id="disconnect-btn"
                                     class="connection__button btn-large white-text disconnect-btn capitalise"
                                     aria-describedby="disconnect-title">
                                     <i class="fa-solid fa-xmark" aria-hidden="true"></i>
@@ -1104,9 +1168,9 @@
                                     Type DISCONNECT to confirm bank disconnection
                                 </label>
 
-                                <input type="text" name="wallet-disconnect" id="wallet-disconnect-inputfield" maxlength="10"
-                                    minlength="10" aria-describedby="disconnect-confirm-instruction" autocomplete="off"
-                                    required>
+                                <input type="text" name="wallet-disconnect" id="wallet-disconnect-inputfield"
+                                    maxlength="10" minlength="10" aria-describedby="disconnect-confirm-instruction"
+                                    autocomplete="off" required>
 
 
 
