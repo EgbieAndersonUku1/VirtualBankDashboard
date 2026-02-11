@@ -1213,6 +1213,182 @@
                 </section>
 
 
+                <!-- The interactive model when the user clicks add funds from the bank panel -->
+                <section id="bank-account-add-funds">
+                    <div class="bank-account-add-funds__head">
+
+                        <!-- TEMP: Navbar is duplicated here for now. 
+                         Will be replaced by a backend partial in a single location once backend is ready. 
+                         This only kept here to see how it looks visually
+                         -->
+                        <nav class="dashboard__container__navbar flex flex-space-between">
+                            <div class="dashbaord__container__nav-head sidebar-brand">
+                                <i class="fa-solid fa-building-columns" aria-hidden="true"></i>
+                                <span class="sidebar-brand__name dashboard-nav-site-name">Virtual Bank</span>
+                            </div>
+
+                            <div class="dashboard__container__nav-body flex-grid two-column-grid">
+                                <div class="dashboard_container__amount">
+                                    <span class="bold"><span class="currency">£</span>1,500</span>
+                                </div>
+
+                                <div class="dashboard__profile" id="dashboard-profile">
+                                    <img src="/static/images/icons/profile.png" alt="" class="dashboard-profile-img">
+
+                                    <div class="dashboard__container__dropdown-menu dropdown-menu"
+                                        id="dashboard__container__dropdown-menu">
+                                        <ul>
+                                            <li class="flex-grid two-column-20_80_grid">
+                                                <span>
+                                                    <img src="/static/images/icons/profile.png" alt=""
+                                                        class="dashboard-profile-img">
+                                                </span>
+
+                                                <span class="flex-grid">
+                                                    <span class="bold">John Doe</span>
+                                                    <span class="lower-case">Johndoe@example.com</span>
+                                                </span>
+                                            </li>
+
+                                            <li>
+                                                <span><i class="fa-regular fa-user"></i></span><span>Account</span>
+                                            </li>
+                                            <li>
+                                                <span><i
+                                                        class="fa-solid fa-shield-halved"></i></span><span>Security</span>
+                                            </li>
+                                            <li>
+                                                <span><i class="fa-regular fa-circle-question"></i></span><span>Help &
+                                                    Support</span>
+                                            </li>
+
+                                            <li class="dashboard-logout">
+                                                <span><i class="fa-solid fa-right-from-bracket"></i></span><span>Log
+                                                    out</span>
+                                            </li>
+                                        </ul>
+                                    </div>
+
+                                </div>
+
+
+
+                            </div>
+
+
+                        </nav>
+                    </div>
+
+                    <div class="account-add-funds__content mb-16 pl-24 pr-24 pb-48">
+
+                        <h1 id="add-funds-title" class="capitalise mt-16 light-bold">
+                            Add funds
+                        </h1>
+
+                        <p class="text-muted light-bold">
+                            To your bank account VB: IB145-210-985
+                        </p>
+
+                        <h2 class="mt-24 mb-8 capitalise header-8 light-bold">
+                            Select source
+                        </h2>
+
+                        <!-- Source cards should behave like buttons -->
+                        <div class="account-card flex flex-space-between mb-8" role="button" tabindex="0"
+                            aria-label="Select bank account ending 705">
+
+                            <div class="account-card-details flex-grid two-column-20_80_grid">
+                                <div class="account-card__image">
+                                    <img src="/static/images/card-icons/account-bank-icon.png" alt="Bank account icon">
+                                </div>
+
+                                <div class="account-card-__description pt-16">
+                                    <h3 class="card-title">Bank account</h3>
+                                    <p>Funding source from Atlas bank ending 705</p>
+                                </div>
+                            </div>
+
+                            <span aria-hidden="true" class="mt-48 pr-24">&gt;</span>
+                        </div>
+
+                        <!-- Debit card -->
+                        <div class="account-card flex flex-space-between" role="button" tabindex="0"
+                            aria-label="Select debit card source">
+
+                            <div class="account-card-details flex-grid two-column-20_80_grid">
+                                <div class="account-card__image">
+                                    <img src="/static/images/card-icons/credit-card.png" alt="Debit card icon">
+                                </div>
+
+                                <div class="account-card-__description pt-16 ml-4">
+                                    <h3 class="card-title">Debit card</h3>
+                                    <p>Funding source from your debit cards</p>
+                                </div>
+                            </div>
+
+                            <span aria-hidden="true" class="mt-48 pr-24">&gt;</span>
+                        </div>
+
+                        <!-- Wallet -->
+                        <div class="account-card flex flex-space-between" role="button" tabindex="0"
+                            aria-label="Select wallet funding source">
+
+                            <div class="account-card-details flex-grid two-column-20_80_grid">
+                                <div class="account-card__image">
+                                    <img src="/static/images/icons/wallet-icon.png" alt="Wallet icon">
+                                </div>
+
+                                <div class="account-card-__description pt-16 ml-4">
+                                    <h3 class="card-title">Wallet</h3>
+                                    <p>Funding source from your wallet</p>
+                                </div>
+                            </div>
+
+                            <span aria-hidden="true" class="mt-48 pr-24">&gt;</span>
+                        </div>
+
+                        <!-- Amount -->
+                        <div class="account-card-input flex flex-space-between mt-24">
+
+                            <label for="account-card__amount" class="light-bold">
+                                <span class="fas fa-circle-question" aria-hidden="true"></span>
+                                Amount
+                            </label>
+
+                            <div class="account-card__add-amount flex">
+
+                                <button type="button" class="amount-btn" id="minus" aria-label="Decrease amount">
+                                    −
+                                </button>
+
+                                <input type="text" id="account-card__amount" inputmode="decimal" placeholder="0.00"
+                                    class="center" max="10000000" readonly aria-live="polite"
+                                    aria-label="Amount to add">
+
+                                <button type="button" class="amount-btn" id="plus" aria-label="Increase amount">
+                                    +
+                                </button>
+
+                            </div>
+                        </div>
+
+                        <!-- Buttons -->
+                        <div class="account-card__button mt-16 mt-4">
+
+                            <button class="btn-large capitalise green-bg white-text" id="account_card__add_funds">
+                                Add funds
+                            </button>
+
+                            <a href="#" class="capitalise">
+                                Cancel
+                            </a>
+
+                        </div>
+
+                    </div>
+
+                </section>
+
                 <!-- The footer section -->
                 <footer>
 
