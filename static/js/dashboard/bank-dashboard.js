@@ -1,5 +1,6 @@
 import { sanitizeText } from "../utils.js";
 import { AlertUtils } from "../alerts.js";
+import { checkIfHTMLElement } from "../utils.js";
 
 
 const connectWalletModal          = document.getElementById("connect-wallet-modal");
@@ -19,7 +20,11 @@ const walletManualFormSection     = document.getElementById("link-wallet-verifca
 const walletOptionAuthInputFields = document.querySelectorAll("#connect-wallet-auth-id-wrapper input");
 const statusWalletDisconnectPanel = document.getElementById("dashboard__status")
 const disconnectInputFieldElement = document.getElementById("wallet-disconnect-inputfield");
-const disconnectConfirmaionPanel  = document.getElementById("wallet-disconnection-confirmation")
+const disconnectConfirmaionPanel  = document.getElementById("wallet-disconnection-confirmation");
+const amountInputField            = document.getElementById("account-card__amount");
+const bankCardSelectionTypes      = document.querySelectorAll(".account-card");
+const addFundsToBankPanel         = document.getElementById("bank-account-add-funds");
+
 
 let walletModalStep2Button;
 
@@ -49,6 +54,7 @@ const WalletWizardIds = {
 dashboardProfileElement.addEventListener("click", handleDropDownMenu);
 dashboard.addEventListener("click", handleDelegation);
 walletAuthForm.addEventListener("submit", handleWalletAuthForm);
+amountInputField.addEventListener("keydown", handleEnter)
 
 
 
@@ -69,7 +75,6 @@ function handleDropDownMenu(e) {
  */const WalletWizard = (() => {
 
      // Cached DOM elements
-
 
     /** Hides the wallet authentication input panel. */
     function closeWalletAuthPanel() {
@@ -310,6 +315,12 @@ function handleDelegation(e) {
    
     WalletWizard.handleWalletConnectionSteps(e);
     handleStatusButtonClick(e);
+    handleBankFundInput(e);
+    handleBankCardTypes(e);
+    handleFundAccountBtn(e);
+    handleToggleAddFundsPanel(e)
+    
+    
 
 }
 
@@ -545,15 +556,13 @@ async function handleTestConnection() {
  * @returns {void}
  */
 function toggleStatusPanel(e) {
-    console.log(e.target.id)
-
+   
     if (e.target.id === "disconnect-wallet-status") {
          statusWalletDisconnectPanel.classList.add("show");
          return;
     }
 
     const buttonID = e.target.closest("button")?.id;
-    console.log(buttonID)
 
     switch(buttonID) {
         case "disconnect-btn":
@@ -625,6 +634,8 @@ function clearDisconnectInputField() {
  */
 
 function toggleElement({ element, cSSSelector = "show", show = true }) {
+    if (!checkIfHTMLElement(element, "Unknown"));
+
     if (show) {
         element.classList.add(cSSSelector);
         return;
@@ -637,4 +648,221 @@ function toggleElement({ element, cSSSelector = "show", show = true }) {
 
 
 
+function handleBankFundInput(e) {
 
+    switch(e.target.id) {
+        case "plus":
+            adjustCurrencyInput(amountInputField);
+            break;
+        case "minus":
+            adjustCurrencyInput(amountInputField, -1);
+            break;
+
+    }
+    
+}
+
+
+
+/**
+ * Adjusts a currency input value by a specified number of pennies.
+ * The function increase or decrease the amount by `0.01`. It also
+ * assures that amount doesn't pass the maximum amount or minimum 
+ * threshold
+ *
+ *
+ * @param {HTMLInputElement} amountInputField - The input element containing the currency amount.
+ * @param {number} [deltaPennies=1] - Number of pennies to adjust by.
+ *        Use positive values to increase and negative values to decrease.
+ * @param {number} - The maximum number the field cannot exceed by. Default 1,000,000
+ * @param {number} - The minimun number the field cannot go below by. Default -
+ *
+ * @example
+ * stepCurrencyInput(input, 1);   // Increase by £0.01
+ * stepCurrencyInput(input, -1);  // Decrease by £0.01
+ */
+function adjustCurrencyInput(amountInputField, deltaPennies = 1, maxAmount=1_000_000, minAmount=0) {
+   
+    const current = Number(amountInputField.value) || 0;
+   
+    const pennies = Math.round(current * 100);
+    const newAmount = (pennies + deltaPennies) / 100;
+
+
+    if (newAmount > maxAmount || newAmount < minAmount) return;
+    
+    amountInputField.value = newAmount.toFixed(2);
+}
+
+
+/**
+ * Handles the Enter key press on the amount input field.
+ * 
+ * When the Enter key is pressed, the function ensures that the input value
+ * is within the defined minimum and maximum limits. It also formats it to two
+ * decimal places.
+ * 
+ * @param {KeyboardEvent} e - The keyboard event triggered by a key press.
+ */
+function handleEnter(e) {
+    if (e.key !== "Enter") return;
+
+    const maxAmount = 1000000;
+    const minAmount = 0;
+
+    let value = Number(amountInputField.value) || 0;
+    value      = Math.min(Math.max(value, minAmount), maxAmount);
+
+    amountInputField.value = value.toFixed(2);
+}
+
+
+
+
+/**
+ * Handles the selection of bank card types when a user interacts with an account card.
+ * 
+ * This function checks if the clicked card is one of the expected account types 
+ * (savings account, debit card, or wallet). If it is, it deselects all other 
+ * bank card types and selects the clicked card.
+ * 
+ * @param {Event} e - The event triggered by user interaction (e.g., click).
+ */
+function handleBankCardTypes(e){
+    const accountCardSelector = ".account-card";
+    const accountCard         = e.target.closest(`${accountCardSelector}`);
+
+    const expectedAccountTypes = ["savings-account", "debit-cards", "wallet"]
+
+    if(!expectedAccountTypes.includes(accountCard?.dataset.account)) return;
+
+    deselectBankCardTypes(accountCard);
+    selectBankCardTypes(accountCard)
+   
+}
+
+
+/**
+ * Deselects all bank card types by removing the "active" class from each card element.
+ * 
+ * Note there must be an "active" class selector in the CSS style file. If it is called by
+ * another name, that name must be passed to CSSelector variable
+ * @param {HTMLElement} accountCard - The account card element to validate before deselecting others.
+ */
+function deselectBankCardTypes(accountCard, cssSelectorElement = "active") {
+
+    if (!checkIfHTMLElement(accountCard, "account card")) return;
+
+    bankCardSelectionTypes.forEach((cardElement) => {
+        cardElement.classList.remove(cssSelectorElement);
+    })
+    
+}
+
+
+/**
+ * Selects a specific bank card type by adding the "active" class (or custom CSS selector file) to it.
+ * If a custom is used, it must be passed as a paramenter to the function
+ * 
+ * The function first validates that the provided element is a valid HTML element.
+ * If valid, it adds the class defined in `cssSelectorElement` to visually indicate selection.
+ * 
+ * @param {HTMLElement} accountCard - The account card element to be selected.
+ */
+function selectBankCardTypes(accountCard, cssSelectorElement="active") {
+    if (!checkIfHTMLElement(accountCard)) return;
+    accountCard.classList.add(cssSelectorElement)
+}
+
+
+
+/**
+ * Handles the "Add Funds" button click for transferring money to the user's bank account
+ * when the add funds button is clicked. The functions shows a confirmation message
+ * before and after the transfer
+ * 
+ * @param {Event} e - The click event triggered by the user.
+ */
+async function handleFundAccountBtn(e) {
+    const buttonId = "account_card__add_funds-btn";
+    if (e.target.id !== buttonId) return;
+
+    const amount = amountInputField.value;
+    if (!amount) return;
+
+      const confirmed = await AlertUtils.showConfirmationAlert({
+        title: "Do you want to proceed?",
+        text: `You about to transfer £${amount} to your bank account, do you want to proceed?`,
+        confirmButtonText: "Transfer funds",
+        messageToDisplayOnSuccess: "The funds have been transferred",
+        denyButtonText: "Cancel Transfer",
+        cancelMessage: "No action taken."
+    });
+
+   if (confirmed) {
+       // This will be replaced with a fetch and at the momemnt it is simply a placeholder
+        console.log("Funds have been transferred");
+        clearAmountInputField();
+   }
+   
+}
+
+
+/**
+ * Clears the amount input field by setting its value to an empty string.
+ */
+function clearAmountInputField() {
+    amountInputField.value = "";
+}
+
+
+
+/**
+ * Handles toggling the "Add Funds" panel open or closed based on which element is clicked.
+ * 
+ * Depending on the clicked button, this function either opens or closes the add funds panel.
+ * 
+ * @param {Event} e - The click event triggered by the user.
+ */
+function handleToggleAddFundsPanel(e) {
+    const closeBtnId = "add-funds-close-panel";
+    const addFundsBtn = "add-funds-bank";
+
+    // console.log(e.target.id)
+    // console.log("I am here")
+    switch(e.target.id) {
+
+        case closeBtnId:
+            closeAddFundsPanel();
+            break;
+        case addFundsBtn:
+            openAddFundsPanel();
+            break;
+    }
+}
+
+
+
+/**
+ * Opens the "Add Funds" panel.
+ * 
+ * This function toggles the visibility of the add funds panel and sets focus 
+ * to the amount input field for immediate user input.
+ */
+function openAddFundsPanel() {
+    // console.log("open");
+    toggleElement({ element: addFundsToBankPanel }); 
+    amountInputField.focus(); // Focus input for convenience
+}
+
+
+
+
+/**
+ * Closes the "Add Funds" panel.
+ * 
+ * This function hides the add funds panel by setting its visibility to false.
+ */
+function closeAddFundsPanel() {
+    toggleElement({ element: addFundsToBankPanel, show: false }); // Hide the panel
+}
