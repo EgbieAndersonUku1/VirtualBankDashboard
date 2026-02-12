@@ -2322,16 +2322,6 @@ time {
 
 }
 
-#bank-account-add-funds {
-    top: var(--space-8);
-    width: 38%;
-    left: 30%;
-    bottom: var(--space-16);
-  
-
-    /* ToDo remove after is created  just to show*/
-    display: grid;  
-}
 
 
 
@@ -2433,6 +2423,7 @@ time {
 
 
 #connect-wallet-modal,
+#bank-account-add-funds,
 #connect-wallet-modal__step-one,
 #connect-wallet-modal__step-two,
 #connect-wallet-modal__step-three {
@@ -2449,7 +2440,8 @@ time {
 #connect-wallet-modal__step-two.show,
 #connect-wallet-modal__step-three.show,
 #link-wallet-verifcation.show,
-#password-strength.show {
+#password-strength.show,
+#bank-account-add-funds.show {
     display: grid;
 
 }
@@ -2941,6 +2933,10 @@ time {
     gap: var(--space-4);
 }
 
+.dash-bank-account-info li a:hover {
+    color: var(--green-600);
+}
+
 
 .dash-bank-account__buttons {
     column-gap: var(--space-4);
@@ -3035,9 +3031,58 @@ time {
 /* The bank add funds panel. This is shown when the user 
 clicks the button 
 */
-#bank-account-add-funds {
-    border-radius: 16px;
+
+
+.balance-highlight {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 12px;
 }
+
+.balance-label {
+    font-size: 0.9rem;
+    color: #666; /* subtle label */
+    margin-bottom: 4px;
+}
+
+.balance-value {
+    font-weight: 600;
+    display: flex;
+    align-items: baseline;
+}
+
+.balance-value .currency {
+    font-size: 1rem; 
+    margin-right: 2px;
+    color: inherit;
+}
+
+.balance-value span:last-child {
+    font-size: 1.5rem; 
+    color: #111; /* default dark for total */
+}
+
+.balance-highlight.total .balance-value span:last-child {
+    font-size: 2rem;
+    color: var(--blue-600); /* primary colour for total */
+}
+
+.balance-highlight.pending .balance-value span:last-child {
+    font-size: 1.25rem;
+    color: #FF9800; /* orange for pending */
+}
+
+.balance-highlight.available .balance-value span:last-child {
+    font-size: 1.25rem;
+    color: #4CAF50; /* green for available balances */
+}
+
+.bank-account-summary {
+    color: var(--green-600);
+}
+
+
+
 .bank-account-add-funds__head nav .sidebar-brand__name,
 .bank-account-add-funds__head nav{
     background: lavender;
@@ -3069,8 +3114,13 @@ clicks the button
         #dde6f5 100%
     );
     border-radius: 18px;
-   padding: var(--space-8);
-   margin-bottom: var(--space-16);
+    padding: var(--space-8);
+    margin-bottom: var(--space-16);
+    transition: background 0.3s ease,
+        color 0.3s ease,
+        transform 0.2s ease,
+        box-shadow 0.3s ease;
+
 }
 
 
@@ -3081,22 +3131,29 @@ clicks the button
 
 .account-card__add-amount input {
     outline: none;
-    width: 150px;
-}
-
-#account_card__add_funds {
-    font-size: 1.1rem;
+    width: 250px;
+    font-size: 1.5rem;
     font-weight: bold;
 }
 
-.account-card-__description h3,
+#account_card__add_funds-btn {
+    font-size: 1.05rem;
+    font-weight: bold;
+}
+
+.account-card__description h3,
 .account-card-input label {
     font-size: 1.125rem; /* 18px */
+
+}
+
+.account-card__description h3 {
+    text-transform: capitalize;
+
 }
 
 
-
-.account-card-__description p {
+.account-card__description p {
    
   font-size: 0.875rem;   /* 14px */
   color: #6C7A90;
@@ -3107,3 +3164,36 @@ clicks the button
 .account-card__button a {
     font-size: 0.8rem;
 }
+
+.account-card.active {
+    background: var(--blue-600);
+    color: white;
+}
+
+
+.account-card h3,
+.account-card p,
+.account-card span {
+    transition: color 0.3s ease;
+}
+
+.account-card h3 {
+    font-size: 0.9rem;
+}
+
+.account-card.active h3,
+.account-card.active p,
+.account-card.active span {
+    color: #ffffff;
+}
+
+
+#bank-account-add-funds {
+    top: 0;
+    width: 35%;
+    left: 35%;
+    bottom: 1px;
+    border-radius: 16px;
+    display: none;  
+}
+
