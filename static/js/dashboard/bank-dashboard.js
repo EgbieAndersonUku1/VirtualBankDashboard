@@ -26,6 +26,7 @@ const bankCardSelectionTypes      = document.querySelectorAll(".account-card");
 const addFundsToBankPanel         = document.getElementById("bank-account-add-funds");
 
 
+const MAX_TRANSFER_AMOUNT = 1_000_000;
 let walletModalStep2Button;
 
 const excludeFields = new Set(["username",  "email", "wallet-disconnect-inputfield"]);
@@ -788,7 +789,21 @@ async function handleFundAccountBtn(e) {
     if (e.target.id !== buttonId) return;
 
     const amount = amountInputField.value;
-    if (!amount) return;
+    if (!amount || amount <= 0) return;
+
+
+    if (amount > MAX_TRANSFER_AMOUNT) {
+        resetTransferAmountToDefault();
+        AlertUtils.showAlert({
+        title: "Transfer amount too high",
+        text: `The amount you entered exceeds the maximum allowed transfer of £${MAX_TRANSFER_AMOUNT.toLocaleString()}. Please enter an amount up to £${MAX_TRANSFER_AMOUNT.toLocaleString()}.`,
+        icon: "warning",
+        confirmButtonText: "OK",
+        });
+
+     
+        return;
+    }
 
       const confirmed = await AlertUtils.showConfirmationAlert({
         title: "Do you want to proceed?",
@@ -815,6 +830,13 @@ function clearAmountInputField() {
     amountInputField.value = "";
 }
 
+
+/**
+ * Resets the transfer amount to the default amount
+ */
+function resetTransferAmountToDefault() {
+    amountInputField.value = MAX_TRANSFER_AMOUNT.toFixed(2)
+}
 
 
 /**

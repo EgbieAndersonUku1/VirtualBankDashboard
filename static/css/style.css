@@ -186,6 +186,10 @@ body {
     margin-left: var(--space-16);
 }
 
+.ml-24 {
+    margin-left: var(--space-24);
+}
+
 /* Horizontal & Vertical */
 .mx-8 {
     margin-left: var(--space-8);
@@ -3115,7 +3119,7 @@ clicks the button
     );
     border-radius: 18px;
     padding: var(--space-8);
-    margin-bottom: var(--space-16);
+    margin-bottom: var(--space-8);
     transition: background 0.3s ease,
         color 0.3s ease,
         transform 0.2s ease,
