@@ -381,6 +381,7 @@ img:hover {
 
 /* utilities */
 
+
 .hide {
     display: none;
 }
@@ -1268,6 +1269,15 @@ footer {
 }
 
 
+/* Accessible yellow highlight for important text or warnings */
+.highlight-row {
+    background-color: #FFF9C4; /* light accessible yellow */
+    color: #000000;         
+    padding: 0.1em 0.3em;     
+    border-radius: 0.15em;     
+}
+
+
 /* rules to determine strength board fields are highlighted or not */
 .rule.valid {
     opacity: 1;
@@ -1398,6 +1408,7 @@ label {
     line-height: 1.5;
 }
 
+#bank-account-view-transactions,
 #wallet-registration-code-explained {
     z-index: 100000;
     display: grid;
@@ -1411,12 +1422,17 @@ label {
         visibility 200ms ease;
 }
 
+#bank-account-view-transactions.show,
 #wallet-registration-code-explained.show {
     opacity: 1;
     visibility: visible;
     pointer-events: auto;
     transform: translateY(0);
     transform: translate(-50%, -50%);
+}
+
+#bank-account-view-transactions.show {
+    transform: initial;
 }
 
 
@@ -2300,6 +2316,7 @@ time {
     scale: var(0.9);
 }
 
+#bank-account-view-transactions,
 #bank-account-add-funds,
 #link-wallet-verifcation,
 #connect-with-wallet-id,
@@ -3086,7 +3103,7 @@ clicks the button
 }
 
 
-
+.bank-account-transactions__head nav,
 .bank-account-add-funds__head nav .sidebar-brand__name,
 .bank-account-add-funds__head nav{
     background: lavender;
@@ -3201,3 +3218,97 @@ clicks the button
     display: none;  
 }
 
+
+/* panel for bank transactions */
+
+#bank-account-view-transactions {
+    top: 0;
+}
+
+#bank-filter-btn {
+    all: unset;
+    cursor: pointer;
+    border: 1px solid black;
+    padding-left: var(--space-12);
+    padding-right: var(--space-12);
+    background: var(--blue-600);
+    color: white;
+    margin-top: var(--space-8);
+}
+
+#bank-filter-btn:hover {
+    background: black;
+ 
+}
+
+.align-right {
+    text-align: right;
+}
+
+.negative {
+    color: #c0392b;
+}
+
+.positive {
+    color: #1f8a70;
+}
+
+#transaction-report table {
+    width: 100%;
+    
+}
+
+
+#transaction-report table tr {
+   text-align: center;
+   border-bottom: 3px solid black;
+
+}
+
+#transaction-report table th {
+  background: lavender;
+ 
+}
+
+.bank-transaction-form-wrapper .form-row > input,
+.bank-transaction-form-wrapper .form-row > select {
+     padding: 4px 6px;
+     font-size: 0.9rem;
+}
+
+.bank-transaction-form-wrapper {
+    column-gap: var(--space-16);
+}
+
+#transaction-report {
+    font-size: 0.875rem; /* 14px */
+}
+
+#transaction-report th,
+#transaction-report td {
+    padding: 8px 12px; 
+    border-bottom: 2px solid #eee;;
+}
+
+#transaction-report tr:hover {
+    background: ghostwhite;
+}
+
+
+.pagination a {
+    border: 1px solid black;
+    padding: var(--space-4);
+    font-weight: 400;
+}
+
+.pagination a:nth-child(even) {
+   background: #080E1A;
+   color: #fff;
+}
+
+.table-instructions {
+    font-size: 0.9rem;
+    line-height: 1.5;
+    color: #444;
+    margin-bottom: 0.5rem; 
+}

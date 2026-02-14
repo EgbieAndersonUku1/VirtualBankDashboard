@@ -24,12 +24,13 @@ const disconnectConfirmaionPanel  = document.getElementById("wallet-disconnectio
 const amountInputField            = document.getElementById("account-card__amount");
 const bankCardSelectionTypes      = document.querySelectorAll(".account-card");
 const addFundsToBankPanel         = document.getElementById("bank-account-add-funds");
+const viewBankTransacionPanel     = document.getElementById("bank-account-view-transactions");
 
 
 const MAX_TRANSFER_AMOUNT = 1_000_000;
 let walletModalStep2Button;
 
-const excludeFields = new Set(["username",  "email", "wallet-disconnect-inputfield"]);
+const excludeFields = new Set(["username",  "email", "wallet-disconnect-inputfield", "from", "to", "transaction-type"]);
 const excludeTypes = new Set(["checkbox", "radio", "password", "email"]);
 
 
@@ -319,7 +320,9 @@ function handleDelegation(e) {
     handleBankFundInput(e);
     handleBankCardTypes(e);
     handleFundAccountBtn(e);
-    handleToggleAddFundsPanel(e)
+    handleToggleAddFundsPanel(e);
+    handleTableHightlight(e);
+    handleToggleViewBankTransactionPanel(e);
     
     
 
@@ -887,4 +890,73 @@ function openAddFundsPanel() {
  */
 function closeAddFundsPanel() {
     toggleElement({ element: addFundsToBankPanel, show: false }); // Hide the panel
+}
+
+
+
+/**
+ * Toggles highlighting on a table row when clicked.
+ *
+ * This function listens for clicks on table rows and toggles a CSS class
+ * to visually highlight the row. Rows with an `id` are ignored, as they
+ * may represent special rows (e.g., headers or totals).
+ *
+ * Note for this work there must a css selector in the css file called1 `highlight-row`
+ * otherwise no hightlight takes place.
+ *
+ * @param {MouseEvent} e - The click event object.
+ * @returns {void} - Does not return a value; applies/removes highlight as a side effect.
+ *
+ * Usage:
+ * document.querySelector("table").addEventListener("click", handleTableHighlight);
+ */
+function handleTableHightlight(e) {
+    const tableRow = e.target.closest("tr");
+    const cssSelector = "highlight-row";
+
+    if (!tableRow || tableRow.id) return;
+
+    tableRow.classList.toggle(cssSelector);
+
+    // Accessibility: announce selection state
+    const isSelected = tableRow.classList.contains(cssSelector);
+    tableRow.setAttribute("aria-selected", isSelected);
+   
+
+}
+
+
+/**
+ * Handles clicks on the view and close buttons for the bank transaction panel.
+ *
+ * If the user clicks the "view transaction" button or the "close transaction" button,
+ * this function toggles the visibility of the bank transaction panel. Clicks on any
+ * other part of the document are ignored.
+ *
+ * This function also supports clicks on child elements inside the buttons using `closest`.
+ *
+ * @param {MouseEvent} e - The click event object.
+ * @returns {void} - Does not return a value; toggles panel visibility as a side effect.
+ */
+function handleToggleViewBankTransactionPanel(e) {
+
+    const viewTransactionButtonId = "view-transaction-btn";
+    const closePanelId            = "close-transaction-panel";
+    
+    const clickedViewBtn  = e.target.closest(`#${viewTransactionButtonId}`);
+    const clickedCloseBtn = e.target.closest(`#${closePanelId}`);
+
+
+
+    if (!clickedViewBtn && !clickedCloseBtn) return;
+
+
+    if (e.target.id === viewTransactionButtonId) {
+         toggleElement({element: viewBankTransacionPanel});
+         return;
+    }
+   
+    toggleElement({element: viewBankTransacionPanel, show: false});
+
+
 }

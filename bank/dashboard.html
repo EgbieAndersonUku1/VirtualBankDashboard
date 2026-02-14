@@ -441,11 +441,16 @@
 
                                     <button class="action-btn primary" aria-label="Add funds to bank account"
                                         id="add-funds-bank">
+                                        <i class="fa-solid fa-plus-circle" aria-hidden="true"></i>
+                                        <span class="sr-only">Add Funds</span>
                                         Add funds
                                     </button>
 
-                                    <button class="action-btn secondary" aria-label="View bank account transactions">
-                                        Transactions
+                                    <button class="action-btn secondary" aria-label="View bank account transactions"
+                                        id="view-transaction-btn">
+                                        <i class="fa-solid fa-receipt" aria-hidden="true"></i>
+                                        <span class="sr-only">View Transactions</span>
+                                        View Transactions
                                     </button>
 
                                 </div>
@@ -904,6 +909,7 @@
                             </div>
                         </section>
 
+                        <!-- The wallet verification linkage -->
                         <section id="link-wallet-verifcation">
                             <div class="link-wallet-verification-form__container">
 
@@ -1438,6 +1444,216 @@
                     </div>
 
                 </section>
+
+                <!-- The modal that shows the bank transactions -->
+                <section id="bank-account-view-transactions" aria-labelledby="transactions-title">
+                    <div class="bank-account-transactions__head">
+
+                        <!-- TEMP: Navbar duplicated -->
+                        <nav class="dashboard__container__navbar flex flex-space-between"
+                            aria-label="Dashboard navigation">
+                            <div class="dashbaord__container__nav-head sidebar-brand">
+                                <i class="fa-solid fa-building-columns" aria-hidden="true"></i>
+                                <span class="sidebar-brand__name dashboard-nav-site-name">Virtual Bank</span>
+                            </div>
+
+                            <div class="dashboard__container__nav-body flex-grid two-column-grid">
+                                <div class="dashboard_container__amount">
+                                    <span class="bold">
+                                        <span class="currency">£</span>1,500
+                                    </span>
+                                </div>
+
+                                <div class="dashboard__profile" id="dashboard-profile">
+                                    <img src="/static/images/icons/profile.png" alt="Open profile menu"
+                                        class="dashboard-profile-img">
+
+                                    <div class="dashboard__container__dropdown-menu dropdown-menu"
+                                        id="dashboard__container__dropdown-menu" role="menu">
+                                        <ul>
+                                            <li class="flex-grid two-column-20_80_grid">
+                                                <span>
+                                                    <img src="/static/images/icons/profile.png" alt=""
+                                                        class="dashboard-profile-img">
+                                                </span>
+
+                                                <span class="flex-grid">
+                                                    <span class="bold">John Doe</span>
+                                                    <span class="lower-case">Johndoe@example.com</span>
+                                                </span>
+                                            </li>
+
+                                            <li role="menuitem">
+                                                <span><i class="fa-regular fa-user"></i></span>
+                                                <span>Account</span>
+                                            </li>
+
+                                            <li role="menuitem">
+                                                <span><i class="fa-solid fa-shield-halved"></i></span>
+                                                <span>Security</span>
+                                            </li>
+
+                                            <li role="menuitem">
+                                                <span><i class="fa-regular fa-circle-question"></i></span>
+                                                <span>Help & Support</span>
+                                            </li>
+
+                                            <li class="dashboard-logout" role="menuitem">
+                                                <span><i class="fa-solid fa-right-from-bracket"></i></span>
+                                                <span>Log out</span>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </nav>
+                    </div>
+
+                    <!-- The body -->
+                    <div class="bank-account-transactions__body p-24">
+
+                        <h1 id="transactions-title" class="capitalise header-7">
+                            View transactions
+                        </h1>
+
+                        <p class="text-muted">
+                            For chase account: IB VB-849500
+                        </p>
+
+                        <p id="table-instructions" class="table-instructions mt-4">
+                            Click a row once and move away to select it. Click it again to deselect.
+                        </p>
+
+                        <!-- The optional form -->
+                        <form action="" method="post" id="bank-transaction-form">
+
+                            <div class="bank-transaction-form-wrapper flex-grid three-column-grid">
+
+                                <!-- from field -->
+                                <div class="form-row flex-grid">
+                                    <label for="from">From</label>
+                                    <input type="date" name="from" id="from">
+                                </div>
+
+                                <!-- to field -->
+                                <div class="form-row flex-grid">
+                                    <label for="to">To</label>
+                                    <input type="date" name="to" id="to">
+                                </div>
+
+                                <!-- type field -->
+                                <div class="form-row flex-grid">
+                                    <label for="transaction-type">Types</label>
+                                    <select name="type" id="transaction-type" required>
+                                        <option value="all" disabled>All Types</option>
+                                        <option value="deposit" selected>Pay In (Deposits)</option>
+                                        <option value="transfer_out">Transfers Out</option>
+                                        <option value="transfer_in">Transfers In</option>
+                                        <option value="card_payment">Card Payments</option>
+                                        <option value="direct_debit">Direct Debits</option>
+                                        <option value="subscription">Subscriptions</option>
+                                        <option value="utility_payment">Utility Payments</option>
+                                        <option value="refund">Refunds</option>
+                                        <option value="atm_withdrawal">ATM Withdrawals</option>
+                                        <option value="fees">Fees &amp; Charges</option>
+                                        <option value="payment_received">Payments Received</option>
+                                    </select>
+                                </div>
+
+                            </div>
+
+                            <!-- filter button -->
+                            <div class="form-row flex flex-end">
+                                <button type="submit" id="bank-filter-btn">
+                                    Filter transactions
+                                </button>
+                            </div>
+
+                        </form>
+
+                        <!-- The table that displays the transaction form report -->
+                        <div id="transaction-report" class="mt-8">
+                            <table id="transaction-report-table" aria-describedby="table-instructions">
+                                <thead>
+                                    <tr id="row-header">
+                                        <th scope="col">Date</th>
+                                        <th scope="col">Description</th>
+                                        <th scope="col" class="align-right">Amount</th>
+                                    </tr>
+                                </thead>
+
+                                <tbody>
+                                    <tr>
+                                        <td>Today, 10:32</td>
+                                        <td>Payment - TARDIS time-travel seat booking</td>
+                                        <td class="align-right negative">-£719.56</td>
+                                    </tr>
+
+                                    <tr>
+                                        <td>11 February 2026</td>
+                                        <td>Pending</td>
+                                        <td class="align-right negative">-£500.00</td>
+                                    </tr>
+
+                                    <tr>
+                                        <td>25 December 2025</td>
+                                        <td>Interplanetary snack delivery subscription from Galifrey</td>
+                                        <td class="align-right negative">-£420.00</td>
+                                    </tr>
+
+                                    <tr>
+                                        <td>1st June 2025</td>
+                                        <td>Transfer Money</td>
+                                        <td class="align-right negative">-£110.00</td>
+                                    </tr>
+
+                                    <tr>
+                                        <td>22 Apr 2024</td>
+                                        <td>Utility Payment</td>
+                                        <td class="align-right negative">-£87.45</td>
+                                    </tr>
+
+                                    <tr>
+                                        <td>20 Apr 2024</td>
+                                        <td>Subscription – Streaming Service</td>
+                                        <td class="align-right negative">-£12.99</td>
+                                    </tr>
+
+                                    <tr>
+                                        <td>18 Apr 2024</td>
+                                        <td>Donation from Unit for saving the Earth from the Daleks</td>
+                                        <td class="align-right positive">£2,500.00</td>
+                                    </tr>
+
+                                    <tr>
+                                        <td>15 Apr 2024</td>
+                                        <td>Payment Received from River Song</td>
+                                        <td class="align-right positive">£350.00</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <div class="show flex flex-end">
+                                <small>Showing page 1 of 3</small>
+                            </div>
+
+                        </div>
+
+                        <a href="#" id="close-transaction-panel">
+                            <small class="capitalise">Close panel</small>
+                        </a>
+
+                        <!-- the pagination -->
+                        <div id="bank-account-transactions-pagination" class="pagination flex flex-end">
+
+                            <a href="#">1</a>
+                            <a href="#">2</a>
+                            <a href="#">3</a>
+                        </div>
+
+                    </div>
+                </section>
+
 
 
                 <!-- The footer section -->
