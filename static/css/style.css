@@ -68,12 +68,15 @@ body {
     background-repeat: no-repeat;
     min-height: 100vh;
     background: #f6f9fc;
+ 
 
 
 
 }
 
-
+html {
+    overflow: hidden;
+}
 /* All sides */
 .m-0 {
     margin: var(--space-0);
@@ -3256,6 +3259,7 @@ clicks the button
 #transaction-report table {
     width: 100%;
     
+    
 }
 
 
@@ -3280,8 +3284,11 @@ clicks the button
     column-gap: var(--space-16);
 }
 
+
 #transaction-report {
     font-size: 0.875rem; /* 14px */
+    overflow-y: auto;
+   
 }
 
 #transaction-report th,
@@ -3312,3 +3319,7 @@ clicks the button
     color: #444;
     margin-bottom: 0.5rem; 
 }
+
+
+
+
