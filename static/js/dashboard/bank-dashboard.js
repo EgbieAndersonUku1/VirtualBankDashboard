@@ -1,6 +1,8 @@
 import { sanitizeText } from "../utils.js";
 import { AlertUtils } from "../alerts.js";
 import { checkIfHTMLElement } from "../utils.js";
+import { cardImplementer, createCardDetails } from "../card/cardBuilder.js";
+
 
 
 const connectWalletModal          = document.getElementById("connect-wallet-modal");
@@ -25,7 +27,11 @@ const amountInputField            = document.getElementById("account-card__amoun
 const bankCardSelectionTypes      = document.querySelectorAll(".account-card");
 const addFundsToBankPanel         = document.getElementById("bank-account-add-funds");
 const viewBankTransacionPanel     = document.getElementById("bank-account-view-transactions");
+const fullCardDetailsContainer    = document.getElementById("full-card-details");
+const cardDetailsContainer        = document.getElementById("full-card-details-info");
 
+
+console.log(cardDetailsContainer)
 
 const MAX_TRANSFER_AMOUNT = 1_000_000;
 let walletModalStep2Button;
@@ -323,6 +329,7 @@ function handleDelegation(e) {
     handleToggleAddFundsPanel(e);
     handleTableHightlight(e);
     handleToggleViewBankTransactionPanel(e);
+    handleCardClick(e);
     
     
 
@@ -957,6 +964,59 @@ function handleToggleViewBankTransactionPanel(e) {
     }
    
     toggleElement({element: viewBankTransacionPanel, show: false});
+
+
+}
+
+
+
+function handleCardClick(e) {
+    viewFullCardDetails(e)
+}
+
+
+function viewFullCardDetails(e) {
+
+    const bankCard = "bank-card";
+
+    const bankCardElement = e.target.closest(`.${bankCard}`);
+
+    if (!bankCardElement) return;
+
+    const bankName = bankCardElement.querySelector(".card-head-info h3").textContent;
+    const amount   = bankCardElement.querySelector(".bank-card-amount").textContent;
+    const cardType = bankCardElement.querySelector(".card-type").textContent.trim();
+    const cardNumber = bankCardElement.querySelector(".card-number").textContent;
+    const cardName  =  bankCardElement.querySelector(".card-name").textContent;
+    const expiryDate = bankCardElement.querySelector(".card-expiry-date").textContent;
+ 
+    const [month, year] = expiryDate.split("Expiry date:")
+  
+    const cardDetails = {
+        cardId: bankCardElement.dataset.cardId,
+        bankName: bankName,
+        cardBrand: bankCardElement.dataset.cardBrand,
+        cardAmount: amount,
+        cardType: cardType,
+        cardNumber: cardNumber,
+        expiryMonth: month,
+        expiryYear: year,
+        cardName: cardName,
+        issueDate: bankCardElement.dataset.issued,
+        cardCreationDate: bankCardElement.dataset.creationDate,
+        cardCVC: bankCardElement.dataset.cvc,
+    }
+
+   const card = cardImplementer.createCardDiv(cardDetails);
+   cardImplementer.placeCardDivIn(fullCardDetailsContainer, card, true)
+
+   // Add the card details to the field
+ 
+   cardDetails.cardStatus   = bankCardElement.dataset.isActive;
+   cardDetails.cvc          = "***"
+   const cardDetailsElement = createCardDetails(cardDetails);
+
+   cardImplementer.placeCardDivIn(cardDetailsContainer, cardDetailsElement, true);
 
 
 }

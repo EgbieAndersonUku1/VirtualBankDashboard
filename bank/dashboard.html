@@ -514,7 +514,7 @@
                             <!-- my cards overview -->
                             <section id="bank-my-cards" class="mb-24" aria-labelledby="my-cards-heading">
                                 <div class="bank-my-cards__container ml-24 p-16">
-                                  
+
                                     <h2 id="my-cards-heading" class="header-7 capitalise mb-8">My credit cards overview
                                     </h2>
 
@@ -534,7 +534,9 @@
 
                                         <!-- Card 1 -->
                                         <div class="bank-card credit-visa-card" role="region"
-                                            aria-label="Atlas Bank Visa Credit Card, balance £100.00">
+                                            aria-label="Atlas Bank Visa Credit Card, balance £100.00"
+                                            data-card-id="card_92f3a1" data-issued="2026-02-11" data-is-active="true"
+                                            data-card-brand="visa" data-creation-date="2026-02-11" data-cvc="***">
                                             <div class="card-head">
                                                 <div class="card-head-info">
                                                     <h3>Atlas Bank</h3>
@@ -552,25 +554,27 @@
                                                 </div>
 
                                                 <div class="credit-transaction-type flex flex-end">
-                                                    <span>Credit card</span>
+                                                    <span class="card-type">Credit</span>
                                                 </div>
 
                                                 <div class="card-number flex flex-end">
-                                                    <span class="card-number">4434-9628-1011-1224</span>
+                                                    <span class="card-number">************1224</span>
                                                 </div>
                                             </div>
 
                                             <div class="card-footer flex flex-space-between">
                                                 <div class="card-name">Johnathan Doe</div>
                                                 <div class="card-expiry-date">
-                                                    <p>Expiry date: January 2029</p>
+                                                    Expiry date: January 2029
                                                 </div>
                                             </div>
                                         </div>
 
                                         <!-- Card 2 -->
-                                        <div class="bank-card credit-master-card" role="region"
-                                            aria-label="Atlas Bank Mastercard Credit Card, balance £7.26">
+                                        <div class="bank-card credit-mastercard-card" role="region"
+                                            aria-label="Atlas Bank Mastercard Credit Card, balance £7.26"
+                                            data-card-id="card_92f3a2" data-issued="2026-02-12" data-is-active="true"
+                                            data-card-brand="mastercard" data-creation-date="2026-02-11" data-cvc="***">
                                             <div class="card-head">
                                                 <div class="card-head-info">
                                                     <h3>Atlas Bank</h3>
@@ -589,11 +593,11 @@
                                                 </div>
 
                                                 <div class="credit-transaction-type flex flex-end">
-                                                    <span>Credit card</span>
+                                                    <span class="card-type">Credit</span>
                                                 </div>
 
                                                 <div class="card-number flex flex-end">
-                                                    <span class="card-number">2234-5678-1011-1224</span>
+                                                    <span class="card-number">************1224</span>
                                                 </div>
                                             </div>
 
@@ -607,7 +611,9 @@
 
                                         <!-- Card 3 -->
                                         <div class="bank-card credit-discover-card" role="region"
-                                            aria-label="Atlas Bank Discover Debit Card, balance £2.00">
+                                            aria-label="Atlas Bank Discover Debit Card, balance £2.00"
+                                            data-card-id="card_92f3a3" data-issued="2026-02-12" data-is-active="false"
+                                            data-card-brand="discover" data-creation-date="2026-02-11" data-cvc="***">
                                             <div class="card-head">
                                                 <div class="card-head-info">
                                                     <h3>Atlas Bank</h3>
@@ -625,11 +631,12 @@
                                                 </div>
 
                                                 <div class="credit-transaction-type flex flex-end">
-                                                    <span>Debit card</span>
+                                                    <span class="card-type">Credit</span>
                                                 </div>
 
                                                 <div class="card-number flex flex-end">
-                                                    <span class="card-number">1734-5978-1011-1224</span>
+                                                    <span class="card-number">***********1224</span>
+
                                                 </div>
                                             </div>
 
@@ -1789,6 +1796,27 @@
                         </div>
 
                     </div>
+                </section>
+
+
+                <!-- card modal -->
+                <section id="view-card-panel">
+
+                    <div class="view-card-panel__container p-48 center">
+
+                        <h2 class="capitalise light-bold">Card details</h2>
+
+                        <div id="full-card-details">
+                            Click on any card
+                        </div>
+
+                        <div id="full-card-details-info" class="text-align-left">
+
+                        </div>
+
+                    </div>
+
+
                 </section>
 
 

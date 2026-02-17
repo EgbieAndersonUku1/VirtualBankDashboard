@@ -381,6 +381,13 @@ img:hover {
     color: beige;
 }
 
+.active-text {
+    color: var(--green-600);
+}
+
+.deactivate-text {
+    color: var(--red);
+}
 
 /* utilities */
 
@@ -2320,6 +2327,7 @@ time {
     scale: var(0.9);
 }
 
+#view-card-panel,
 #bank-account-view-transactions,
 #bank-account-add-funds,
 #link-wallet-verifcation,
@@ -3213,6 +3221,8 @@ clicks the button
 }
 
 
+/* override it */
+#view-card-panel,
 #bank-account-add-funds {
     top: 0;
     width: 35%;
@@ -3381,7 +3391,7 @@ clicks the button
 
 }
 
-.credit-master-card {
+.credit-mastercard-card {
  background: linear-gradient(135deg, #2B0A0A, #7F1D1D, #EF4444);
 
 }
@@ -3392,4 +3402,27 @@ clicks the button
 
 .bank-my-card-info--note {
     font-size: 0.9rem;
+}
+
+
+
+#view-card-panel {
+
+    /* This will be set to none, using it as grid to see what's being created */
+    display: grid;
+    top: 0;
+    left: 0;
+   
+}
+
+
+#full-card-details {
+    text-align: initial;
+    margin-bottom: var(--space-8);
+   
+}
+
+#full-card-details .bank-card {
+  box-shadow: initial;
+  padding: var(--space-12);
 }
