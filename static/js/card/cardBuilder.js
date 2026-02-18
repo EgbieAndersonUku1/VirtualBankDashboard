@@ -295,8 +295,7 @@ export function createCardDetails(cardDetails) {
     { fieldName: "Card Brand", fieldValue: cardDetails.cardBrand },
     { fieldName: "Card Type", fieldValue: cardDetails.cardType },
     { fieldName: "CVC", fieldValue: cardDetails.cardCVC },
-    { fieldName: "Expiry Month", fieldValue: cardDetails.expiryMonth },
-    { fieldName: "Expiry Year", fieldValue: cardDetails.expiryYear },
+    { fieldName: "Expiry date", fieldValue: cardDetails.expiryYear },
     { fieldName: "Creation Date", fieldValue: cardDetails.cardCreationDate },
     { fieldName: "Issue Date", fieldValue: cardDetails.issueDate }
 ];
@@ -313,15 +312,30 @@ export function createCardDetails(cardDetails) {
 }
 
 
+/**
+ * Creates and appends a field row to a container.
+ *
+ * Output example:
+ *   Card Number: **** 1234
+ *
+ * @param {string} fieldName - Label for the field.
+ * @param {string} fieldDescription - Value/content of the field.
+ * @param {HTMLElement} divToAddTo - Container to append the field to.
+ */
 function createFieldElement(fieldName, fieldDescription, divToAddTo) {
     const pTag = document.createElement("p");
 
     const label = document.createElement("span");
-    label.className = "bold";
+    label.className = "field-label";
     label.textContent = fieldName;
 
- 
-    pTag.append(label, `: ${(fieldDescription)}`);
+    const description = document.createElement("span");
+    description.className = "field-value bold";
+    description.textContent = fieldDescription;
+
+    pTag.append(label, ": ", description);
+    if (!divToAddTo) return;
+
     divToAddTo.appendChild(pTag);
 }
 

@@ -2,10 +2,16 @@ import { logError } from "./logger.js";
 import { specialChars } from "./specialChars.js";
 
   
-export function checkIfHTMLElement(element, elementName = "Unknown") {
+export function checkIfHTMLElement(element, elementName = "Unknown", warn = false) {
     if (!(element instanceof HTMLElement || element instanceof DocumentFragment)) {
-        console.error(`Could not find the element: '${elementName}'. Ensure the selector is correct.`);
-        return false;
+
+        if (warn) {
+             console.warn(`Could not find the element: '${elementName}'. Ensure the selector is correct.`);
+        } else {
+            console.error(`Could not find the element: '${elementName}'. Ensure the selector is correct.`);
+        }
+         return false;
+       
     }
     return true;
 }
