@@ -381,6 +381,13 @@ img:hover {
     color: beige;
 }
 
+.active-text {
+    color: var(--green-600);
+}
+
+.deactivate-text {
+    color: var(--red);
+}
 
 /* utilities */
 
@@ -643,6 +650,7 @@ header {
     text-align: center;
 }
 
+.view-card-panel-button:hover,
 .bank-card:hover,
 .call-to-action__button:hover {
     transform: translateY(-4px);
@@ -1603,10 +1611,11 @@ label {
 }
 
 .choose-bank__card.is-selected {
+     /* Emerald 500 */
     border: 2px solid #10B981;
-    /* Emerald 500 */
+   
     background-color: #ECFDF5;
-    /* Soft green tint */
+  
     transform: translateY(-2px);
     box-shadow: 0 6px 16px rgba(16, 185, 129, 0.15);
 
@@ -2320,6 +2329,7 @@ time {
     scale: var(0.9);
 }
 
+#view-card-panel,
 #bank-account-view-transactions,
 #bank-account-add-funds,
 #link-wallet-verifcation,
@@ -2456,7 +2466,8 @@ time {
 
 }
 
-
+#view-card-panel.show,
+.view-card-panel-buttons.show,
 #dashboard__status.show,
 #wallet-disconnection-confirmation.show,
 #connect-with-wallet-id.show,
@@ -3213,6 +3224,8 @@ clicks the button
 }
 
 
+/* override it */
+#view-card-panel,
 #bank-account-add-funds {
     top: 0;
     width: 35%;
@@ -3342,7 +3355,7 @@ clicks the button
   0 25px 50px rgba(0,0,0,0.4),
   inset 0 0 30px rgba(56,189,248,0.15);
    color: #F5F5F5;
-
+   
 }
 
 .bank-card .card-head .card-head-info h3 {
@@ -3381,7 +3394,7 @@ clicks the button
 
 }
 
-.credit-master-card {
+.credit-mastercard-card {
  background: linear-gradient(135deg, #2B0A0A, #7F1D1D, #EF4444);
 
 }
@@ -3392,4 +3405,109 @@ clicks the button
 
 .bank-my-card-info--note {
     font-size: 0.9rem;
+}
+
+
+/* override certain elements in the card panel but still maintain must of the elements */
+#view-card-panel {
+    top: 0;
+    left: 0;
+    width: 25%;
+   
+}
+
+
+#full-card-details {
+    text-align: initial;
+    margin-bottom: var(--space-8);
+   
+}
+
+#full-card-details .bank-card {
+  box-shadow: initial;
+  padding: var(--space-12);
+}
+
+#full-card-details-info p + p {
+    margin-top: var(--space-4)
+}
+
+
+.bank-card.is-selected {
+  transform: scale(0.8);
+  background: var(--red);
+  transition: transform 0.4s linear;
+
+}
+
+.view-card-panel-buttons {
+    column-gap: 2px;
+    display: none;
+}
+
+.view-card-panel-button {
+    border: 1px solid lavender;
+    color: white;
+    font-weight: 500;
+    border-radius: 8px;
+    text-transform: capitalize;
+}
+
+#card-transfer-btn {
+    background: var(--blue-600);
+}
+
+#card-add-btn {
+    background: var(--green-600);
+}
+
+#card-freeze-btn {
+    background: var(--red);
+}
+
+#card-close-btn {
+   border: 1px solid black;
+   color: black;
+}
+
+
+
+#view-more-bank-card {
+    font-size: 0.85rem;
+    position: fixed;
+    top: 0;
+    right: 20px;
+    border: 1px solid;
+    background: black;
+    color: white;
+    width: 18%;
+    text-align: center;
+    padding: 4px 0;
+    cursor: pointer;
+    text-transform: capitalize;
+
+    /* hidden state */
+    transform: translateY(-120%);
+    transition: transform 0.3s ease-in-out;
+}
+
+
+#view-more-bank-card.show {
+     transform: translateY(0);
+}
+
+
+
+
+
+.field-label { opacity: 0.7; }
+.field-value { 
+    font-weight: 600; 
+    
+
+}
+
+.field-label,
+.field-value {
+    font-size: 0.96rem;
 }

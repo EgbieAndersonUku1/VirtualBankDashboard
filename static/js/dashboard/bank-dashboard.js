@@ -1,6 +1,8 @@
 import { sanitizeText } from "../utils.js";
 import { AlertUtils } from "../alerts.js";
 import { checkIfHTMLElement } from "../utils.js";
+import { cardImplementer, createCardDetails } from "../card/cardBuilder.js";
+
 
 
 const connectWalletModal          = document.getElementById("connect-wallet-modal");
@@ -25,6 +27,14 @@ const amountInputField            = document.getElementById("account-card__amoun
 const bankCardSelectionTypes      = document.querySelectorAll(".account-card");
 const addFundsToBankPanel         = document.getElementById("bank-account-add-funds");
 const viewBankTransacionPanel     = document.getElementById("bank-account-view-transactions");
+const fullCardDetailsContainer    = document.getElementById("full-card-details");
+const cardDetailsContainer        = document.getElementById("full-card-details-info");
+const bankCardButtons             = document.querySelector(".view-card-panel-buttons");
+const creditCardsNodeElements     = document.querySelectorAll(".bank-card");
+const viewExtraCardInfo           = document.getElementById("view-more-bank-card");
+const extraCardInfoPanel           = document.getElementById("view-card-panel");
+
+
 
 
 const MAX_TRANSFER_AMOUNT = 1_000_000;
@@ -57,6 +67,42 @@ dashboardProfileElement.addEventListener("click", handleDropDownMenu);
 dashboard.addEventListener("click", handleDelegation);
 walletAuthForm.addEventListener("submit", handleWalletAuthForm);
 amountInputField.addEventListener("keydown", handleEnter)
+
+
+
+// records which card was clicked
+const selectedCardStore = {
+    element: null,
+
+    /**
+     * Stores the selected card element.
+     * Only accepts a valid HTMLElement to prevent invalid state.
+     *
+     * @param {HTMLElement|null} cardElement - The card DOM element to store.
+     *                                           Pass null to clear selection.
+     */
+    set(cardElement) {
+
+        if (!checkIfHTMLElement(cardElement, "selectedCardStore", true)) return;
+        this.element = cardElement;
+    },
+
+    /**
+     * Returns the currently stored card element.
+     *
+     * @returns {HTMLElement|null} The selected card element or null if none is selected.
+     */
+    get() {
+        return this.element;
+    },
+
+    /**
+     * Clears the stored card selection.
+     */
+    clear() {
+        this.element = null;
+    }
+};
 
 
 
@@ -323,6 +369,10 @@ function handleDelegation(e) {
     handleToggleAddFundsPanel(e);
     handleTableHightlight(e);
     handleToggleViewBankTransactionPanel(e);
+    handleCardClick(e);
+    handleViewMoreInfoCardClick(e);
+    handleCloseViewFullCardDetails(e);
+    handleCardSelectionTimeout(e)
     
     
 
@@ -739,44 +789,19 @@ function handleBankCardTypes(e){
     const expectedAccountTypes = ["savings-account", "debit-cards", "wallet"]
 
     if(!expectedAccountTypes.includes(accountCard?.dataset.account)) return;
+    if (!checkIfHTMLElement(accountCard, "account card")) return;
 
-    deselectBankCardTypes(accountCard);
-    selectBankCardTypes(accountCard)
+    deselectAllElements(bankCardSelectionTypes, "active");
+    selectElement(accountCard, "active")
    
 }
 
 
-/**
- * Deselects all bank card types by removing the "active" class from each card element.
- * 
- * Note there must be an "active" class selector in the CSS style file. If it is called by
- * another name, that name must be passed to CSSelector variable
- * @param {HTMLElement} accountCard - The account card element to validate before deselecting others.
- */
-function deselectBankCardTypes(accountCard, cssSelectorElement = "active") {
-
-    if (!checkIfHTMLElement(accountCard, "account card")) return;
-
-    bankCardSelectionTypes.forEach((cardElement) => {
-        cardElement.classList.remove(cssSelectorElement);
-    })
-    
-}
 
 
-/**
- * Selects a specific bank card type by adding the "active" class (or custom CSS selector file) to it.
- * If a custom is used, it must be passed as a paramenter to the function
- * 
- * The function first validates that the provided element is a valid HTML element.
- * If valid, it adds the class defined in `cssSelectorElement` to visually indicate selection.
- * 
- * @param {HTMLElement} accountCard - The account card element to be selected.
- */
-function selectBankCardTypes(accountCard, cssSelectorElement="active") {
-    if (!checkIfHTMLElement(accountCard)) return;
-    accountCard.classList.add(cssSelectorElement)
-}
+
+
+
 
 
 
@@ -947,7 +972,6 @@ function handleToggleViewBankTransactionPanel(e) {
     const clickedCloseBtn = e.target.closest(`#${closePanelId}`);
 
 
-
     if (!clickedViewBtn && !clickedCloseBtn) return;
 
 
@@ -956,7 +980,209 @@ function handleToggleViewBankTransactionPanel(e) {
          return;
     }
    
+
     toggleElement({element: viewBankTransacionPanel, show: false});
 
 
+}
+
+
+function handleCardClick(e) {
+    processCardClicked(e)
+}
+
+
+function handleViewMoreInfoCardClick(e) {
+    const viewMoreButtonId = "view-more-bank-card";
+  
+    if (e.target.id !== viewMoreButtonId) return;
+    
+    toggleElement({element: extraCardInfoPanel, show: true});
+    viewFullCardDetails();
+}
+
+
+
+function processCardClicked(e) {
+    const bankCard = "bank-card";
+    const bankCardElement = e.target.closest(`.${bankCard}`);
+
+    if (!bankCardElement) return;
+    const cardVisibleSelector="is-selected";
+
+    deselectAllCards();
+    selectElement(bankCardElement, cardVisibleSelector)
+   
+    selectedCardStore.set(bankCardElement);
+    toggleElement({element: viewExtraCardInfo})
+}
+
+
+function deselectAllCards(cardVisibleSelector="is-selected") {
+    deselectAllElements(creditCardsNodeElements, cardVisibleSelector)
+}
+
+
+function viewFullCardDetails() {
+
+    const bankCardElement = selectedCardStore.get();
+
+    if (!bankCardElement) return;
+
+    toggleElement({element: viewExtraCardInfo, show: false})
+  
+   
+    const bankName   = bankCardElement.querySelector(".card-head-info h3").textContent;
+    const amount     = bankCardElement.querySelector(".bank-card-amount").textContent;
+    const cardType   = bankCardElement.querySelector(".card-type").textContent.trim();
+    const cardNumber = bankCardElement.querySelector(".card-number").textContent;
+    const cardName   =  bankCardElement.querySelector(".card-name").textContent;
+    const expiryDate = bankCardElement.querySelector(".card-expiry-date").textContent;
+    
+    const [month, year] = expiryDate.split("Expiry date: ")
+  
+    const cardDetails = {
+        cardId: bankCardElement.dataset.cardId,
+        bankName: bankName,
+        cardBrand: bankCardElement.dataset.cardBrand,
+        cardAmount: amount,
+        cardType: cardType,
+        cardNumber: cardNumber,
+        expiryMonth: month,
+        expiryYear: year,
+        cardName: cardName,
+        issueDate: bankCardElement.dataset.issued,
+        cardCreationDate: bankCardElement.dataset.creationDate,
+        cardCVC: bankCardElement.dataset.cvc,
+    }
+
+   const card = cardImplementer.createCardDiv(cardDetails);
+   cardImplementer.placeCardDivIn(fullCardDetailsContainer, card, true)
+
+   // Add the card details to the field
+ 
+   cardDetails.cardStatus   = bankCardElement.dataset.isActive;
+   cardDetails.cvc          = "***"
+   const cardDetailsElement = createCardDetails(cardDetails);
+
+   cardImplementer.placeCardDivIn(cardDetailsContainer, cardDetailsElement, true);
+
+   removeBankCardButtonsFromCardExtraView(false);
+
+}
+
+
+
+function handleCloseViewFullCardDetails(e) {
+    if (e.target.id !== "card-close-btn") return;
+
+    toggleElement({element: extraCardInfoPanel, show: false});
+    deselectAllCards();
+}
+
+
+
+function removeBankCardButtonsFromCardExtraView(remove=true) {
+
+    if (!bankCardButtons) return null;
+    toggleElement({element: bankCardButtons, show: !remove})
+}
+
+
+
+
+/**
+ * Removes a CSS class from all elements in a collection.
+ *
+ * Typically used to deselect or reset UI elements that were
+ * previously marked with a given class (e.g., removing a
+ * "selected" state from cards).
+ *
+ * @param {NodeList|Array<HTMLElement>} elements
+ * A collection of DOM elements, commonly returned by
+ * querySelectorAll().
+ *
+ * @param {string} cssClass
+ * The CSS class to remove from each element.
+ *
+ * @returns {void}
+ */
+function deselectAllElements(elements, cssClass) {
+
+    // Ensure the function receives a collection of elements that can be used by forEach loop
+    if (!elements || typeof elements.forEach !== "function") return;
+
+    if (typeof cssClass !== "string" || cssClass.length === 0) return;
+
+    elements.forEach((element) => {
+        element.classList.remove(cssClass);
+    });
+}
+
+
+
+/**
+ * Adds a CSS class to a DOM element to mark it as selected or active.
+ *
+ * Commonly used to visually highlight UI elements such as cards,
+ * buttons, or list items when they are selected by the user.
+ *
+ * @param {HTMLElement} elementToSelect
+ * The DOM element that should receive the CSS class.
+ *
+ * @param {string} [cssSelectorElement="active"]
+ * The CSS class to add to the element. Defaults to "active".
+ * 
+ * Note: 
+ * There must a CSS rule that determines how the element should be highlighted
+ * and that name should be passed to the function.
+ *
+ * @returns {void}
+ */
+function selectElement(elementToSelect, cssSelectorElement = "active") {
+    if (!checkIfHTMLElement(elementToSelect)) return;
+    elementToSelect.classList.add(cssSelectorElement);
+}
+
+
+
+/**
+ * handleCardSelectionTimeout
+ *
+ * Automatically deselects any selected card if the card details panel 
+ * ("view-card-panel") is not opened within a specified timeout.
+ *
+ * This function waits for 5 seconds (`MILLI_SECONDS`) and then:
+ *   1. Deselects all cards using `deselectAllCards()`.
+ *   2. Hides the "view more bank card" element using `toggleElement()`.
+ *
+ * The timeout is only applied if the extra card info panel is currently hidden.
+ *
+ * Usage:
+ * Call this function after a card is selected to ensure that a card does 
+ * not remain selected indefinitely without the user viewing its details.
+ *
+ * @function
+ * @returns {void} Does not return any value.
+ */
+
+function handleCardSelectionTimeout() {
+    const MILLI_SECONDS = 5000;
+
+ 
+    // Must query elements dynamically each time because their visibility can change
+    const viewExtraCardInfo  = document.getElementById("view-more-bank-card");
+    const extraCardInfoPanel = document.getElementById("view-card-panel");
+
+
+    const isSideCardPanelOpen  = getComputedStyle(extraCardInfoPanel).display;
+   
+    if (isSideCardPanelOpen === "none") {
+      
+        setTimeout(() => {
+            deselectAllCards();
+            toggleElement({element: viewExtraCardInfo, show: false})
+        }, MILLI_SECONDS)
+    }
+    
 }
