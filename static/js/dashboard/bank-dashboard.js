@@ -2,6 +2,7 @@ import { sanitizeText } from "../utils.js";
 import { AlertUtils } from "../alerts.js";
 import { checkIfHTMLElement } from "../utils.js";
 import { cardImplementer, createCardDetails } from "../card/cardBuilder.js";
+import { minimumCharactersToUse } from "../utils/password/textboxCharEnforcer.js";
 
 
 
@@ -34,16 +35,32 @@ let creditCardsNodeElements       = document.querySelectorAll(".bank-card");
 const viewExtraCardInfo           = document.getElementById("view-more-bank-card");
 const extraCardInfoPanel          = document.getElementById("view-card-panel");
 const cardTransferFormSection     = document.getElementById("bank-funds-transfer");
-const selectCardsContainer        = document.getElementById("bank-funds-transfer__select-cards-panel")
+const selectCardsContainer        = document.getElementById("bank-funds-transfer__select-cards-panel");
+
+const transferFormTextArea        = document.getElementById("bank-transfer-note");
 
 
-console.log(selectCardsContainer)
+
+console.log(transferFormTextArea)
 
 const MAX_TRANSFER_AMOUNT = 1_000_000;
 let walletModalStep2Button;
 
 const excludeFields = new Set(["username",  "email", "wallet-disconnect-inputfield", "transfer-type", "from", "to", "transaction-type"]);
-const excludeTypes = new Set(["checkbox", "radio", "password", "email"]);
+const excludeTypes = new Set(["checkbox", "radio", "password", "email", "textarea"]);
+
+
+// controls the number of characters the user can use in the textarea form for the transfer
+minimumCharactersToUse(transferFormTextArea, {
+    minCharClass: ".num-of-characters-remaining",
+    maxCharClass: ".num-of-characters-to-use",
+    minCharMessage: "Minimum characters to use: ",
+    maxCharMessage: "Number of characters remaining: ",
+    minCharsLimit: 50,
+    maxCharsLimit: 255,
+    disablePaste: false,
+})
+
 
 
 // Constants for wallet modal element IDs
@@ -988,6 +1005,7 @@ function handleToggleViewBankTransactionPanel(e) {
 
 
 function handleCardClick(e) {
+    console.log("This is being clicked")
     processCardClicked(e)
 }
 
@@ -1306,3 +1324,6 @@ function renderTransferCardSelectionMessage() {
 
     selectCardsContainer.append(message);
 }
+
+
+

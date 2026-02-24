@@ -410,6 +410,10 @@ img:hover {
 .text-align-left {
     text-align: left;
 }
+
+.text-align-right {
+    text-align: right;
+}
 /* 
  * Fixed positioning centring (not layout centring).
  * Used when the element must be removed from normal flow and
@@ -3577,3 +3581,24 @@ clicks the button
 #bank-funds-transfer__select-cards-panel .bank-card {
     box-shadow: unset;
 }
+
+
+
+/* textarea character count enforcer */
+
+  .light-red {
+    color: red;
+  }
+  
+  .black-color {
+    color: black;
+  }
+ 
+
+ .dark-green {
+    color: var(--dark-green); 
+  }
+
+  .character-usage-message {
+    font-size: 0.9rem;
+  }
