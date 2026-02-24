@@ -31,6 +31,7 @@
     --gradient-blue: linear-gradient(135deg, #0F4C81 0%, #1CB5E0 100%);
 
     --warning-color: #FFF8E1;
+    --accent: #38bdf8;;
 
 }
 
@@ -489,6 +490,10 @@ img:hover {
 
 .flex-space-between {
     justify-content: space-between;
+}
+
+.flex-column {
+    flex-direction: column;
 }
 
 .flex-end {
@@ -1420,6 +1425,9 @@ label {
     line-height: 1.5;
 }
 
+
+#bank-funds-transfer__select-cards-panel,
+#bank-funds-transfer,
 #bank-account-view-transactions,
 #wallet-registration-code-explained {
     z-index: 100000;
@@ -1434,6 +1442,8 @@ label {
         visibility 200ms ease;
 }
 
+#bank-funds-transfer__select-cards-panel.show,
+#bank-funds-transfer.show,
 #bank-account-view-transactions.show,
 #wallet-registration-code-explained.show {
     opacity: 1;
@@ -1443,6 +1453,8 @@ label {
     transform: translate(-50%, -50%);
 }
 
+#bank-funds-transfer__select-cards-panel.show,
+#bank-funds-transfer.show.show,
 #bank-account-view-transactions.show {
     transform: initial;
 }
@@ -3510,4 +3522,58 @@ clicks the button
 .field-label,
 .field-value {
     font-size: 0.96rem;
+}
+
+
+#bank-funds-transfer__select-cards-panel,
+#bank-funds-transfer {
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 30%;
+    background: white;
+    bottom: 0;
+    z-index: 10000;
+}
+
+
+
+
+#bank-funds-transfer__select-cards-panel {
+    right: 30%;
+    width: 24%;
+    margin-right: 2px;
+   
+    display: flex;
+    flex-direction: column;
+
+    /* box-shadow: var(--box-shadow-primary); */
+}
+
+#bank-funds-transfer__select-cards-panel .bank-card  {
+    height: 180px;
+
+}
+
+
+#bank-funds-transfer select {
+    width: 100%;
+}
+
+
+.transfer-logo {
+    position: relative;
+    height: 150px;
+    width: 200px;
+}
+
+
+.transfer-logo img {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+}
+
+#bank-funds-transfer__select-cards-panel .bank-card {
+    box-shadow: unset;
 }

@@ -30,17 +30,19 @@ const viewBankTransacionPanel     = document.getElementById("bank-account-view-t
 const fullCardDetailsContainer    = document.getElementById("full-card-details");
 const cardDetailsContainer        = document.getElementById("full-card-details-info");
 const bankCardButtons             = document.querySelector(".view-card-panel-buttons");
-const creditCardsNodeElements     = document.querySelectorAll(".bank-card");
+let creditCardsNodeElements       = document.querySelectorAll(".bank-card");
 const viewExtraCardInfo           = document.getElementById("view-more-bank-card");
-const extraCardInfoPanel           = document.getElementById("view-card-panel");
+const extraCardInfoPanel          = document.getElementById("view-card-panel");
+const cardTransferFormSection     = document.getElementById("bank-funds-transfer");
+const selectCardsContainer        = document.getElementById("bank-funds-transfer__select-cards-panel")
 
 
-
+console.log(selectCardsContainer)
 
 const MAX_TRANSFER_AMOUNT = 1_000_000;
 let walletModalStep2Button;
 
-const excludeFields = new Set(["username",  "email", "wallet-disconnect-inputfield", "from", "to", "transaction-type"]);
+const excludeFields = new Set(["username",  "email", "wallet-disconnect-inputfield", "transfer-type", "from", "to", "transaction-type"]);
 const excludeTypes = new Set(["checkbox", "radio", "password", "email"]);
 
 
@@ -65,6 +67,7 @@ const WalletWizardIds = {
 
 dashboardProfileElement.addEventListener("click", handleDropDownMenu);
 dashboard.addEventListener("click", handleDelegation);
+dashboard.addEventListener("change", handleDelegation)
 walletAuthForm.addEventListener("submit", handleWalletAuthForm);
 amountInputField.addEventListener("keydown", handleEnter)
 
@@ -371,8 +374,9 @@ function handleDelegation(e) {
     handleToggleViewBankTransactionPanel(e);
     handleCardClick(e);
     handleViewMoreInfoCardClick(e);
-    handleCloseViewFullCardDetails(e);
-    handleCardSelectionTimeout(e)
+    handleCardPanelButtons(e);
+    handleCardSelectionTimeout(e);
+    handleBankTransferFormFields(e);
     
     
 
@@ -517,7 +521,7 @@ function enableStep2Button() {
  * @param {Event} e Form submit event.
  */
 function handleManualFormSubmission(e) {
-    console.log("submit");
+  
     e.preventDefault();
 
     AlertUtils.showAlert({
@@ -801,10 +805,6 @@ function handleBankCardTypes(e){
 
 
 
-
-
-
-
 /**
  * Handles the "Add Funds" button click for transferring money to the user's bank account
  * when the add funds button is clicked. The functions shows a confirmation message
@@ -1019,6 +1019,7 @@ function processCardClicked(e) {
 
 
 function deselectAllCards(cardVisibleSelector="is-selected") {
+    console.log(creditCardsNodeElements)
     deselectAllElements(creditCardsNodeElements, cardVisibleSelector)
 }
 
@@ -1031,7 +1032,49 @@ function viewFullCardDetails() {
 
     toggleElement({element: viewExtraCardInfo, show: false})
   
-   
+   const cardDetails = getCardDetailsFromElement(bankCardElement);
+   const card        = cardImplementer.createCardDiv(cardDetails);
+
+   cardImplementer.placeCardDivIn(fullCardDetailsContainer, card, true)
+
+   // Add the card details to the field
+ 
+   cardDetails.cardStatus   = bankCardElement.dataset.isActive;
+   cardDetails.cvc          = "***"
+   const cardDetailsElement = createCardDetails(cardDetails);
+
+   cardImplementer.placeCardDivIn(cardDetailsContainer, cardDetailsElement, true);
+
+   removeBankCardButtonsFromCardExtraView(false);
+
+}
+
+
+
+/**
+ * @typedef {Object} CardDetails
+ * @property {string} cardId
+ * @property {string} bankName
+ * @property {string} cardBrand
+ * @property {string} cardAmount
+ * @property {string} cardType
+ * @property {string} cardNumber
+ * @property {string} expiryMonth
+ * @property {string} expiryYear
+ * @property {string} cardName
+ * @property {string} issueDate
+ * @property {string} cardCreationDate
+ * @property {string} cardCVC
+ */
+
+/**
+ * Extracts card details from a bank card DOM element.
+ *
+ * @param {HTMLElement} bankCardElement - The DOM element representing a bank card.
+ * @returns {CardDetails}
+ */
+function getCardDetailsFromElement(bankCardElement) {
+    
     const bankName   = bankCardElement.querySelector(".card-head-info h3").textContent;
     const amount     = bankCardElement.querySelector(".bank-card-amount").textContent;
     const cardType   = bankCardElement.querySelector(".card-type").textContent.trim();
@@ -1055,29 +1098,28 @@ function viewFullCardDetails() {
         cardCreationDate: bankCardElement.dataset.creationDate,
         cardCVC: bankCardElement.dataset.cvc,
     }
-
-   const card = cardImplementer.createCardDiv(cardDetails);
-   cardImplementer.placeCardDivIn(fullCardDetailsContainer, card, true)
-
-   // Add the card details to the field
- 
-   cardDetails.cardStatus   = bankCardElement.dataset.isActive;
-   cardDetails.cvc          = "***"
-   const cardDetailsElement = createCardDetails(cardDetails);
-
-   cardImplementer.placeCardDivIn(cardDetailsContainer, cardDetailsElement, true);
-
-   removeBankCardButtonsFromCardExtraView(false);
+    return cardDetails;
 
 }
 
 
 
-function handleCloseViewFullCardDetails(e) {
-    if (e.target.id !== "card-close-btn") return;
+function handleCardPanelButtons(e) {
 
-    toggleElement({element: extraCardInfoPanel, show: false});
-    deselectAllCards();
+  
+    switch(e.target.id) {
+        case  "card-close-btn":
+            toggleElement({element: extraCardInfoPanel, show: false});
+            deselectAllCards();
+            break;
+        
+        case "card-transfer-btn":
+            toggleElement({element: cardTransferFormSection});
+            break;
+    }
+  
+
+    
 }
 
 
@@ -1176,13 +1218,91 @@ function handleCardSelectionTimeout() {
 
 
     const isSideCardPanelOpen  = getComputedStyle(extraCardInfoPanel).display;
-   
+
+    let timeoutId;
+
+    if (timeoutId) {
+        clearTimeout(timeoutId);
+         timeoutId = null;
+        }
+
     if (isSideCardPanelOpen === "none") {
       
-        setTimeout(() => {
+        timeoutId = setTimeout(() => {
             deselectAllCards();
             toggleElement({element: viewExtraCardInfo, show: false})
-        }, MILLI_SECONDS)
+        }, MILLI_SECONDS);
+        return
     }
+
+ 
+}
+
+
+function handleBankTransferFormFields(e) {
+    if (!e.target.matches("#transfer-type")) return
     
+    const select = e.target;
+
+    const value = select.value;                 
+    const text = select.options[select.selectedIndex].text;
+
+    const selectValueText = "another-card";
+
+    if (value !== selectValueText) return;
+
+    toggleElement({element: selectCardsContainer})
+
+    const selectedCard = selectedCardStore.get();
+
+    if (!selectedCard) return none;
+
+    const cardBrand = selectedCard.dataset.cardBrand;
+
+    renderTransferCardSelectionMessage();
+
+    creditCardsNodeElements.forEach((card, index) => {
+    
+        if (card.dataset.cardBrand.toLowerCase() !== cardBrand.toLowerCase()) {
+
+        
+            const cardDetails = getCardDetailsFromElement(card);
+            const cardElement = cardImplementer.createCardDiv(cardDetails);
+            cardElement.classList.add("account-card")
+            cardElement.dataset.account = "debit-cards"
+
+            cardImplementer.placeCardDivIn(selectCardsContainer, cardElement, false)
+
+
+         
+        }
+    })
+
+
+}
+
+
+/**
+ * Renders the transfer card selection instruction message
+ * inside the select cards container.
+ *
+ * This function clears any existing content in the container
+ * and displays a message prompting the user to choose a card
+ * to transfer funds to.
+ *
+ * @returns {void}
+ */
+function renderTransferCardSelectionMessage() {
+
+    selectCardsContainer.innerHTML = "";
+
+    const message = document.createElement("p");
+    message.textContent = "Choose the card to transfer to";
+
+    message.classList.add("center", "header-8"); 
+    message.style.fontWeight = "500"
+    message.style.marginBottom = "24px"
+
+
+    selectCardsContainer.append(message);
 }
