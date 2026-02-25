@@ -1849,7 +1849,6 @@
                         </div>
                         <form action="" id="funds-transfer-form">
 
-
                                 <div class="form-row">
                                     <label for="transfer-type">Transfer source</label>
                                     <select name="transfer-type" id="transfer-type" required>
@@ -1862,19 +1861,25 @@
 
                                 <div class="form-row flex-grid">
                                     <label for="transfer-amount">Transfer Amount</label>
-                                    <input type="number" id="transfer-amount" step="0.01" min="0" value="0.00">
+                                    <input type="number" id="transfer-amount" step="0.01" min="0.01" value="0.00" required>
                                 </div>
 
                                 <div class="form-row">
-                                    <input type="hidden" name="card">
+                                    <input type="hidden" name="card" id="transfer-to-card-id">
                                 </div>
 
                                 <div class="form-row flex-grid">
                                     <label for="note">Note</label>
-                                    <textarea name="note" id="bank-transfer-note" rows="5" maxlength="250"></textarea>
+                                    <textarea name="note" id="bank-transfer-note" rows="5" maxlength="250" required></textarea>
                                       <p class="num-of-characters-remaining text-align-right character-usage-message">Minimum characters to use: 50</p>
                                     <p class="num-of-characters-to-use text-align-right character-usage-message">Number of characters remaining: 255</p>
                                     
+                                </div>
+
+
+                                <div class="form-row">
+                                    <input type="hidden" name="source-card" id="source-card">
+                                    <input type="hidden" name="transfer-to-card" id="transfer-to-card">
                                 </div>
 
                                 <div class="mt-8 mb-8">
@@ -1891,6 +1896,8 @@
 
                 <section id="bank-funds-transfer__select-cards-panel" class="p-48" role="dialog"
                     aria-labelledby="transfer-modal-title" aria-modal="true">
+
+                    <!-- the card will be generated dynamically -->
 
                 </section>
 

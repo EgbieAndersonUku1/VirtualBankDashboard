@@ -613,3 +613,60 @@ export function parseErrorMessage(errorMsg) {
     
 } 
 
+
+
+
+/**
+ * Removes a CSS class from all elements in a collection.
+ *
+ * Typically used to deselect or reset UI elements that were
+ * previously marked with a given class (e.g., removing a
+ * "selected" state from cards).
+ *
+ * @param {NodeList|Array<HTMLElement>} elements
+ * A collection of DOM elements, commonly returned by
+ * querySelectorAll().
+ *
+ * @param {string} cssClass
+ * The CSS class to remove from each element.
+ *
+ * @returns {void}
+ */
+export function deselectAllElements(elements, cssClass) {
+
+    // Ensure the function receives a collection of elements that can be used by forEach loop
+    if (!elements || typeof elements.forEach !== "function") return;
+
+    if (typeof cssClass !== "string" || cssClass.length === 0) return;
+
+    elements.forEach((element) => {
+        element.classList.remove(cssClass);
+    });
+}
+
+
+
+
+/**
+ * Adds a CSS class to a DOM element to mark it as selected or active.
+ *
+ * Commonly used to visually highlight UI elements such as cards,
+ * buttons, or list items when they are selected by the user.
+ *
+ * @param {HTMLElement} elementToSelect
+ * The DOM element that should receive the CSS class.
+ *
+ * @param {string} [cssSelectorElement="active"]
+ * The CSS class to add to the element. Defaults to "active".
+ * 
+ * Note: 
+ * There must a CSS rule that determines how the element should be highlighted
+ * and that name should be passed to the function.
+ *
+ * @returns {void}
+ */
+export function selectElement(elementToSelect, cssSelectorElement = "active") {
+    if (!checkIfHTMLElement(elementToSelect)) return;
+    elementToSelect.classList.add(cssSelectorElement);
+}
+

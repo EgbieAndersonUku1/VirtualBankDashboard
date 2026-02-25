@@ -1634,6 +1634,8 @@ label {
   
     transform: translateY(-2px);
     box-shadow: 0 6px 16px rgba(16, 185, 129, 0.15);
+   
+    
 
 }
 
@@ -1651,6 +1653,7 @@ label {
 
 
 
+#transfer-submit,
 .bank-btn-continue {
     background: var(--blue-600);
     color: white;
@@ -3453,6 +3456,8 @@ clicks the button
   transform: scale(0.8);
   background: var(--red);
   transition: transform 0.4s linear;
+  border: 2px solid var(--blue-600);
+
 
 }
 
@@ -3602,3 +3607,5 @@ clicks the button
   .character-usage-message {
     font-size: 0.9rem;
   }
+
+  

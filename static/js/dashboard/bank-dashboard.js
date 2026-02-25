@@ -3,7 +3,8 @@ import { AlertUtils } from "../alerts.js";
 import { checkIfHTMLElement } from "../utils.js";
 import { cardImplementer, createCardDetails } from "../card/cardBuilder.js";
 import { minimumCharactersToUse } from "../utils/password/textboxCharEnforcer.js";
-
+import { deselectAllElements, selectElement } from "../utils.js";
+import { warnError } from "../logger.js";
 
 
 const connectWalletModal          = document.getElementById("connect-wallet-modal");
@@ -32,6 +33,7 @@ const fullCardDetailsContainer    = document.getElementById("full-card-details")
 const cardDetailsContainer        = document.getElementById("full-card-details-info");
 const bankCardButtons             = document.querySelector(".view-card-panel-buttons");
 let creditCardsNodeElements       = document.querySelectorAll(".bank-card");
+
 const viewExtraCardInfo           = document.getElementById("view-more-bank-card");
 const extraCardInfoPanel          = document.getElementById("view-card-panel");
 const cardTransferFormSection     = document.getElementById("bank-funds-transfer");
@@ -40,13 +42,12 @@ const selectCardsContainer        = document.getElementById("bank-funds-transfer
 const transferFormTextArea        = document.getElementById("bank-transfer-note");
 
 
-
 console.log(transferFormTextArea)
 
 const MAX_TRANSFER_AMOUNT = 1_000_000;
 let walletModalStep2Button;
 
-const excludeFields = new Set(["username",  "email", "wallet-disconnect-inputfield", "transfer-type", "from", "to", "transaction-type"]);
+const excludeFields = new Set(["username",  "email", "wallet-disconnect-inputfield", "transfer-type", "from", "to", "transaction-type", "transfer-amount"]);
 const excludeTypes = new Set(["checkbox", "radio", "password", "email", "textarea"]);
 
 
@@ -58,7 +59,7 @@ minimumCharactersToUse(transferFormTextArea, {
     maxCharMessage: "Number of characters remaining: ",
     minCharsLimit: 50,
     maxCharsLimit: 255,
-    disablePaste: false,
+    disablePaste: true,
 })
 
 
@@ -1005,8 +1006,10 @@ function handleToggleViewBankTransactionPanel(e) {
 
 
 function handleCardClick(e) {
-    console.log("This is being clicked")
-    processCardClicked(e)
+    processCreditCardOverviewClick(e);
+    processSelectedCardClick(e);
+
+  
 }
 
 
@@ -1021,12 +1024,79 @@ function handleViewMoreInfoCardClick(e) {
 
 
 
-function processCardClicked(e) {
-    const bankCard = "bank-card";
-    const bankCardElement = e.target.closest(`.${bankCard}`);
+function processSelectedCardClick(e) {
+    const bankCardClass = "bank-card";
+    const cssSelector   = "is-selected"
 
-    if (!bankCardElement) return;
+    const targetCard = getSelectableCardElement(e, bankCardClass);
+   
+
+    if (targetCard === null) return;
+
+    // get the cards that the user can can choose from selection card window
+    const transferCreditCardElement  = document.querySelectorAll("#bank-funds-transfer__select-cards-panel .bank-transfer-card");
+
+    deselectAllCards(transferCreditCardElement, cssSelector);
+    selectElement(targetCard, cssSelector)
+
+  
+
+    const transferToHiddenValueField = document.getElementById("transfer-to-card-id");
+    const sourceCardHiddenValueField = document.getElementById("source-card");
+
+    if (!(transferToHiddenValueField && sourceCardHiddenValueField)) {
+        warnError("processSelectedCardClick", `one or more of the hidden values is empyty.  
+                                              transferToHiddenValueField = ${transferToHiddenValueField}  
+                                              sourceCardHiddenValueField  = ${sourceCardHiddenValueField}
+                                              `);
+
+        return;
+    }
+
+    // save the card ids to the hidden input field to be sent along with the fetch api
+    // tells the backend that the source card is transfering to the target card
+    sourceCardHiddenValueField.value = getCardDetailsFromElement(selectedCardStore.get()).cardId;
+    transferCreditCardElement.value  = getCardDetailsFromElement(targetCard).cardId
+
+}
+
+
+/**
+ * Returns the closest selectable card element from an event target.
+ *
+ * The element must:
+ * - Have the provided base card class
+ * - NOT contain the excluded class (if provided)
+ *
+ * @param {Event} event - The DOM event triggered by user interaction.
+ * @param {string} baseClass - The required card class (e.g., "bank-card").
+ * @param {string} [excludedClass] - Optional class that disqualifies the card.
+ * @returns {HTMLElement|null} The valid card element, or null if invalid.
+ */
+export function getSelectableCardElement(event, baseClass, excludedClass) {
+    const element = event.target.closest(`.${baseClass}`);
+    if (!element) return null;
+
+    if (excludedClass && element.classList.contains(excludedClass)) {
+        return null;
+    }
+
+    return element;
+}
+
+
+function processCreditCardOverviewClick(e) {
+
+    const bankCardClass = "bank-card";
+    const excludeClass  = "bank-transfer-card";
+   
+    const bankCardElement = getSelectableCardElement(e, bankCardClass, excludeClass); 
+
+    if (bankCardElement === null) return;
+    
     const cardVisibleSelector="is-selected";
+
+    console.log(bankCardElement)
 
     deselectAllCards();
     selectElement(bankCardElement, cardVisibleSelector)
@@ -1036,9 +1106,11 @@ function processCardClicked(e) {
 }
 
 
-function deselectAllCards(cardVisibleSelector="is-selected") {
-    console.log(creditCardsNodeElements)
-    deselectAllElements(creditCardsNodeElements, cardVisibleSelector)
+
+
+
+function deselectAllCards(cardsNodeElements=creditCardsNodeElements,  cardVisibleSelector="is-selected") {
+    deselectAllElements(cardsNodeElements, cardVisibleSelector)
 }
 
 
@@ -1053,14 +1125,15 @@ function viewFullCardDetails() {
    const cardDetails = getCardDetailsFromElement(bankCardElement);
    const card        = cardImplementer.createCardDiv(cardDetails);
 
+   // Add the card image to the side panel display view window
    cardImplementer.placeCardDivIn(fullCardDetailsContainer, card, true)
 
-   // Add the card details to the field
- 
+  
    cardDetails.cardStatus   = bankCardElement.dataset.isActive;
    cardDetails.cvc          = "***"
    const cardDetailsElement = createCardDetails(cardDetails);
 
+  // Add the card details to the side panel display view window
    cardImplementer.placeCardDivIn(cardDetailsContainer, cardDetailsElement, true);
 
    removeBankCardButtonsFromCardExtraView(false);
@@ -1093,12 +1166,12 @@ function viewFullCardDetails() {
  */
 function getCardDetailsFromElement(bankCardElement) {
     
-    const bankName   = bankCardElement.querySelector(".card-head-info h3").textContent;
-    const amount     = bankCardElement.querySelector(".bank-card-amount").textContent;
-    const cardType   = bankCardElement.querySelector(".card-type").textContent.trim();
-    const cardNumber = bankCardElement.querySelector(".card-number").textContent;
-    const cardName   =  bankCardElement.querySelector(".card-name").textContent;
-    const expiryDate = bankCardElement.querySelector(".card-expiry-date").textContent;
+    const bankName   = bankCardElement.querySelector(".card-head-info h3")?.textContent;
+    const amount     = bankCardElement.querySelector(".bank-card-amount")?.textContent;
+    const cardType   = bankCardElement.querySelector(".card-type")?.textContent.trim();
+    const cardNumber = bankCardElement.querySelector(".card-number")?.textContent;
+    const cardName   =  bankCardElement.querySelector(".card-name")?.textContent;
+    const expiryDate = bankCardElement.querySelector(".card-expiry-date")?.textContent;
     
     const [month, year] = expiryDate.split("Expiry date: ")
   
@@ -1148,61 +1221,6 @@ function removeBankCardButtonsFromCardExtraView(remove=true) {
     toggleElement({element: bankCardButtons, show: !remove})
 }
 
-
-
-
-/**
- * Removes a CSS class from all elements in a collection.
- *
- * Typically used to deselect or reset UI elements that were
- * previously marked with a given class (e.g., removing a
- * "selected" state from cards).
- *
- * @param {NodeList|Array<HTMLElement>} elements
- * A collection of DOM elements, commonly returned by
- * querySelectorAll().
- *
- * @param {string} cssClass
- * The CSS class to remove from each element.
- *
- * @returns {void}
- */
-function deselectAllElements(elements, cssClass) {
-
-    // Ensure the function receives a collection of elements that can be used by forEach loop
-    if (!elements || typeof elements.forEach !== "function") return;
-
-    if (typeof cssClass !== "string" || cssClass.length === 0) return;
-
-    elements.forEach((element) => {
-        element.classList.remove(cssClass);
-    });
-}
-
-
-
-/**
- * Adds a CSS class to a DOM element to mark it as selected or active.
- *
- * Commonly used to visually highlight UI elements such as cards,
- * buttons, or list items when they are selected by the user.
- *
- * @param {HTMLElement} elementToSelect
- * The DOM element that should receive the CSS class.
- *
- * @param {string} [cssSelectorElement="active"]
- * The CSS class to add to the element. Defaults to "active".
- * 
- * Note: 
- * There must a CSS rule that determines how the element should be highlighted
- * and that name should be passed to the function.
- *
- * @returns {void}
- */
-function selectElement(elementToSelect, cssSelectorElement = "active") {
-    if (!checkIfHTMLElement(elementToSelect)) return;
-    elementToSelect.classList.add(cssSelectorElement);
-}
 
 
 
@@ -1279,16 +1297,20 @@ function handleBankTransferFormFields(e) {
 
     renderTransferCardSelectionMessage();
 
-    creditCardsNodeElements.forEach((card, index) => {
+    creditCardsNodeElements.forEach((card) => {
     
         if (card.dataset.cardBrand.toLowerCase() !== cardBrand.toLowerCase()) {
 
         
             const cardDetails = getCardDetailsFromElement(card);
-            const cardElement = cardImplementer.createCardDiv(cardDetails);
-            cardElement.classList.add("account-card")
-            cardElement.dataset.account = "debit-cards"
 
+            const cardElement = cardImplementer.createCardDiv(cardDetails);
+            cardElement.classList.add("account-card", "bank-transfer-card");
+            cardElement.dataset.account = "debit-cards";
+            cardElement.dataset.cardId = cardDetails.cardId;
+
+            
+            attachCardDetails(cardElement, cardDetails); 
             cardImplementer.placeCardDivIn(selectCardsContainer, cardElement, false)
 
 
@@ -1298,6 +1320,34 @@ function handleBankTransferFormFields(e) {
 
 
 }
+
+
+
+/**
+ * Attaches card metadata to a DOM card element using data attributes.
+ *
+ * This function mutates the provided `cardElement` by dynamically
+ * assigning all properties from the `cardDetails` object to the
+ * element's dataset.
+ *
+ * Each key in `cardDetails` becomes a corresponding `data-*` attribute.
+ *
+ * Example:
+ *   cardDetails.cardId → data-card-id
+ *   cardDetails.cardBrand → data-card-brand
+ *
+ * @param {HTMLElement} cardElement - The DOM element representing the card.
+ * @param {Object} cardDetails - An object containing the card's metadata.
+ * @returns {void}
+ */
+function attachCardDetails(cardElement, cardDetails) {
+    Object.entries(cardDetails).forEach(([key, value]) => {
+        if (value !== undefined && value !== null) {
+            cardElement.dataset[key] = value;
+        }
+    });
+}
+
 
 
 /**
