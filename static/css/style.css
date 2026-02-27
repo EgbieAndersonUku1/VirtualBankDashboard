@@ -1464,6 +1464,8 @@ label {
 }
 
 
+
+
 /* help icon */
 .fa-circle-question {
     cursor: pointer;
@@ -3364,7 +3366,7 @@ clicks the button
 }
 
 .bank-card {
-
+   position: relative;
    font-size: 0.75rem;
    padding: var(--space-8);
    cursor: pointer;
@@ -3447,9 +3449,7 @@ clicks the button
   padding: var(--space-12);
 }
 
-#full-card-details-info p + p {
-    margin-top: var(--space-4)
-}
+
 
 
 .bank-card.is-selected {
@@ -3609,3 +3609,38 @@ clicks the button
   }
 
   
+  
+.card-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(255, 0, 0, 0.5);
+    color: white;
+    font-weight: bold;
+    font-size: 1.2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    pointer-events: none;
+    z-index: 10;
+}
+
+.card-is-blocked {
+    background: red;
+    opacity: 0.6;
+}
+
+
+.card-not-blocked {
+    border:5px solid green;
+    
+}
+
+
+
+#bank-funds-transfer__select-cards-panel {
+    /* Mainly for the sweetalert, without this the sweetalert popup appears behind select card panel */
+    z-index: 1000;
+}

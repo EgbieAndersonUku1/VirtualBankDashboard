@@ -1032,11 +1032,13 @@ function processSelectedCardClick(e) {
    
 
     if (targetCard === null) return;
-
+    
     // get the cards that the user can can choose from selection card window
     const transferCreditCardElement  = document.querySelectorAll("#bank-funds-transfer__select-cards-panel .bank-transfer-card");
 
     deselectAllCards(transferCreditCardElement, cssSelector);
+
+
     selectElement(targetCard, cssSelector)
 
   
@@ -1056,7 +1058,7 @@ function processSelectedCardClick(e) {
     // save the card ids to the hidden input field to be sent along with the fetch api
     // tells the backend that the source card is transfering to the target card
     sourceCardHiddenValueField.value = getCardDetailsFromElement(selectedCardStore.get()).cardId;
-    transferCreditCardElement.value  = getCardDetailsFromElement(targetCard).cardId
+    transferCreditCardElement.value  = getCardDetailsFromElement(targetCard).cardId;
 
 }
 
@@ -1095,8 +1097,6 @@ function processCreditCardOverviewClick(e) {
     if (bankCardElement === null) return;
     
     const cardVisibleSelector="is-selected";
-
-    console.log(bankCardElement)
 
     deselectAllCards();
     selectElement(bankCardElement, cardVisibleSelector)
@@ -1188,6 +1188,7 @@ function getCardDetailsFromElement(bankCardElement) {
         issueDate: bankCardElement.dataset.issued,
         cardCreationDate: bankCardElement.dataset.creationDate,
         cardCVC: bankCardElement.dataset.cvc,
+        isActive: bankCardElement.dataset.isActive === "true" ? true : false,
     }
     return cardDetails;
 
@@ -1205,7 +1206,7 @@ function handleCardPanelButtons(e) {
             break;
         
         case "card-transfer-btn":
-            toggleElement({element: cardTransferFormSection});
+            handleSourceCardTransfer();
             break;
     }
   
@@ -1214,6 +1215,25 @@ function handleCardPanelButtons(e) {
 }
 
 
+
+function handleSourceCardTransfer() {
+  
+    const sourceCard = getCardDetailsFromElement(selectedCardStore.get());
+
+    if (!sourceCard.isActive) {
+        // console.log("This is being executed")
+            AlertUtils.showAlert({
+            title: "Card blocked",
+            text: "You cannot open the transfer window because this card is blocked.",
+            icon: "info",
+            confirmButtonText: "OK"
+        });
+        return;
+    }
+    toggleElement({element: cardTransferFormSection});
+    return; 
+
+}
 
 function removeBankCardButtonsFromCardExtraView(remove=true) {
 
@@ -1281,11 +1301,14 @@ function handleBankTransferFormFields(e) {
     const select = e.target;
 
     const value = select.value;                 
-    const text = select.options[select.selectedIndex].text;
-
+  
     const selectValueText = "another-card";
 
-    if (value !== selectValueText) return;
+    // hide the select card panel if another option is selected.
+    if (value !== selectValueText) {
+        toggleElement({element: selectCardsContainer, show: false})
+        return;
+    };
 
     toggleElement({element: selectCardsContainer})
 
@@ -1311,8 +1334,13 @@ function handleBankTransferFormFields(e) {
 
             
             attachCardDetails(cardElement, cardDetails); 
-            cardImplementer.placeCardDivIn(selectCardsContainer, cardElement, false)
 
+            if (cardDetails.isActive) {
+                cardImplementer.placeCardDivIn(selectCardsContainer, cardElement, false)
+
+            }
+
+          
 
          
         }
@@ -1364,11 +1392,9 @@ function renderTransferCardSelectionMessage() {
 
     selectCardsContainer.innerHTML = "";
 
-    const message = document.createElement("p");
-    message.textContent = "Choose the card to transfer to";
+    const message       = document.createElement("p");
+    message.textContent = "Choose a card to transfer to. Only active cards are shown.";
 
-    message.classList.add("center", "header-8"); 
-    message.style.fontWeight = "500"
     message.style.marginBottom = "24px"
 
 
