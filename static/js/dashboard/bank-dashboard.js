@@ -1,47 +1,79 @@
-import { sanitizeText } from "../utils.js";
+import { sanitizeText, formatCurrency, parseCurrency } from "../utils.js";
 import { AlertUtils } from "../alerts.js";
 import { checkIfHTMLElement } from "../utils.js";
 import { cardImplementer, createCardDetails } from "../card/cardBuilder.js";
+import { minimumCharactersToUse } from "../utils/password/textboxCharEnforcer.js";
+import { deselectAllElements, selectElement } from "../utils.js";
+import { warnError } from "../logger.js";
+import { parseFormData } from "../formUtils.js";
 
 
 
-const connectWalletModal          = document.getElementById("connect-wallet-modal");
-const connectWalletStepOne        = document.getElementById("connect-wallet-modal__step-one");
-const connectWalletStepThree      = document.getElementById("connect-wallet-modal__step-three");
-const connectWalletStepTwo        = document.getElementById("connect-wallet-modal__step-two");
-const dashboard                   = document.getElementById("dashboard");
-const dashboardProfileElement     = document.getElementById("dashboard-profile");
-const dropdownMenu                = document.getElementById("dashboard__container__dropdown-menu");
-const linkAccountForm             = document.getElementById("link-wallet-form");
-const progressElement             = document.getElementById("walletProgress");
-const progressValue               = document.getElementById("walletProgressValue");
-const walletAuthForm              = document.getElementById("connect-wallet-form");
-const walletAuthInputFieldPanel   = document.getElementById("connect-with-wallet-id");
-const walletManualForm            = document.getElementById("manually-verification-wallet-form");
-const walletManualFormSection     = document.getElementById("link-wallet-verifcation");
+const connectWalletModal = document.getElementById("connect-wallet-modal");
+const connectWalletStepOne = document.getElementById("connect-wallet-modal__step-one");
+const connectWalletStepThree = document.getElementById("connect-wallet-modal__step-three");
+const connectWalletStepTwo = document.getElementById("connect-wallet-modal__step-two");
+const dashboard = document.getElementById("dashboard");
+const dashboardProfileElement = document.getElementById("dashboard-profile");
+const dropdownMenu = document.getElementById("dashboard__container__dropdown-menu");
+const linkAccountForm = document.getElementById("link-wallet-form");
+const progressElement = document.getElementById("walletProgress");
+const progressValue = document.getElementById("walletProgressValue");
+const walletAuthForm = document.getElementById("connect-wallet-form");
+const walletAuthInputFieldPanel = document.getElementById("connect-with-wallet-id");
+const walletManualForm = document.getElementById("manually-verification-wallet-form");
+const walletManualFormSection = document.getElementById("link-wallet-verifcation");
 const walletOptionAuthInputFields = document.querySelectorAll("#connect-wallet-auth-id-wrapper input");
 const statusWalletDisconnectPanel = document.getElementById("dashboard__status")
 const disconnectInputFieldElement = document.getElementById("wallet-disconnect-inputfield");
-const disconnectConfirmaionPanel  = document.getElementById("wallet-disconnection-confirmation");
-const amountInputField            = document.getElementById("account-card__amount");
-const bankCardSelectionTypes      = document.querySelectorAll(".account-card");
-const addFundsToBankPanel         = document.getElementById("bank-account-add-funds");
-const viewBankTransacionPanel     = document.getElementById("bank-account-view-transactions");
-const fullCardDetailsContainer    = document.getElementById("full-card-details");
-const cardDetailsContainer        = document.getElementById("full-card-details-info");
-const bankCardButtons             = document.querySelector(".view-card-panel-buttons");
-const creditCardsNodeElements     = document.querySelectorAll(".bank-card");
-const viewExtraCardInfo           = document.getElementById("view-more-bank-card");
-const extraCardInfoPanel           = document.getElementById("view-card-panel");
+const disconnectConfirmaionPanel = document.getElementById("wallet-disconnection-confirmation");
+const amountInputField = document.getElementById("account-card__amount");
+const bankCardSelectionTypes = document.querySelectorAll(".account-card");
+const addFundsToBankPanel = document.getElementById("bank-account-add-funds");
+const viewBankTransacionPanel = document.getElementById("bank-account-view-transactions");
+const fullCardDetailsContainer = document.getElementById("full-card-details");
+const cardDetailsContainer = document.getElementById("full-card-details-info");
+const bankCardButtons = document.querySelector(".view-card-panel-buttons");
+let creditCardsNodeElements = document.querySelectorAll(".bank-card");
+
+const viewExtraCardInfo = document.getElementById("view-more-bank-card");
+const extraCardInfoPanel = document.getElementById("view-card-panel");
+const cardTransferFormSection = document.getElementById("bank-funds-transfer");
+const selectCardsContainer = document.getElementById("bank-funds-transfer__select-cards-panel");
+
+const transferFormTextArea = document.getElementById("bank-transfer-note");
+const fundsTransferForm = document.getElementById("funds-transfer-form")
+const askTransferConfirmationPanel = document.getElementById("bank-transfer-quick-confirmation");
+
+const sourceCardNumberElement = document.querySelector(".transfer-confirmation__source-account-value");
+const targetCardNumberElement = document.querySelector(".transfer-confirmation__target-account-value");
+const transferAmountElement = document.querySelector('.transfer-confirmation__summary-value');
+
+// hidden form values
 
 
 
+
+console.log(fundsTransferForm)
 
 const MAX_TRANSFER_AMOUNT = 1_000_000;
 let walletModalStep2Button;
 
-const excludeFields = new Set(["username",  "email", "wallet-disconnect-inputfield", "from", "to", "transaction-type"]);
-const excludeTypes = new Set(["checkbox", "radio", "password", "email"]);
+const excludeFields = new Set(["username", "email", "wallet-disconnect-inputfield", "transfer-type", "from", "to", "transaction-type", "transfer-amount"]);
+const excludeTypes = new Set(["checkbox", "radio", "password", "email", "textarea"]);
+
+
+// controls the number of characters the user can use in the textarea form for the transfer
+minimumCharactersToUse(transferFormTextArea, {
+    minCharClass: ".num-of-characters-remaining",
+    maxCharClass: ".num-of-characters-to-use",
+    minCharMessage: "Minimum characters to use: ",
+    maxCharMessage: "Number of characters remaining: ",
+    minCharsLimit: 50,
+    maxCharsLimit: 255,
+    disablePaste: true,
+})
+
 
 
 // Constants for wallet modal element IDs
@@ -65,8 +97,10 @@ const WalletWizardIds = {
 
 dashboardProfileElement.addEventListener("click", handleDropDownMenu);
 dashboard.addEventListener("click", handleDelegation);
+dashboard.addEventListener("change", handleDelegation)
 walletAuthForm.addEventListener("submit", handleWalletAuthForm);
-amountInputField.addEventListener("keydown", handleEnter)
+amountInputField.addEventListener("keydown", handleEnter);
+fundsTransferForm.addEventListener("submit", handleTransferForm)
 
 
 
@@ -122,7 +156,7 @@ function handleDropDownMenu(e) {
  * It also manages showing/hiding the modal and individual steps.
  */const WalletWizard = (() => {
 
-     // Cached DOM elements
+    // Cached DOM elements
 
     /** Hides the wallet authentication input panel. */
     function closeWalletAuthPanel() {
@@ -277,7 +311,7 @@ function handleDropDownMenu(e) {
                 return;
             }
 
-             switch (elementID) {
+            switch (elementID) {
                 case WalletWizardIds.CONNECT_BTN:
                     WalletWizard.goToStepOne();
                     break;
@@ -360,7 +394,7 @@ walletManualForm.addEventListener("submit", handleManualFormSubmission);
  * @param {Event} e Click or submit event.
  */
 function handleDelegation(e) {
-   
+
     WalletWizard.handleWalletConnectionSteps(e);
     handleStatusButtonClick(e);
     handleBankFundInput(e);
@@ -371,10 +405,13 @@ function handleDelegation(e) {
     handleToggleViewBankTransactionPanel(e);
     handleCardClick(e);
     handleViewMoreInfoCardClick(e);
-    handleCloseViewFullCardDetails(e);
-    handleCardSelectionTimeout(e)
-    
-    
+    handleCardPanelButtons(e);
+    handleCardSelectionTimeout(e);
+    handleBankTransferFormFields(e);
+    handleTransferConfirmationButtonClick(e);
+    handleTransferCancelConfirmationButtonClick(e)
+
+
 
 }
 
@@ -401,7 +438,7 @@ function setWalletProgress(percent) {
         if (innerProgressBar) {
             innerProgressBar.style.background = "#16A34A";
             showWalletAuthCompletionMsg();
-          
+
         }
     }
 }
@@ -477,11 +514,11 @@ async function handleWalletLinkFormSubmission(e) {
         cancelMessage: "Wallet linking cancelled."
     });
 
-   if (confirmed) {
-    WalletWizard.closeModal();
-   }
+    if (confirmed) {
+        WalletWizard.closeModal();
+    }
 
- 
+
 }
 
 
@@ -517,7 +554,7 @@ function enableStep2Button() {
  * @param {Event} e Form submit event.
  */
 function handleManualFormSubmission(e) {
-    console.log("submit");
+
     e.preventDefault();
 
     AlertUtils.showAlert({
@@ -548,7 +585,7 @@ function handleStatusButtonClick(e) {
  * @returns {Promise<void>}
  */
 async function handleDisconnecectionConfirmationButton() {
-    const expectedWord  = "disconnect";
+    const expectedWord = "disconnect";
 
     if (!disconnectInputFieldElement) return;
     if (disconnectInputFieldElement.value.length < expectedWord.length) return;
@@ -563,10 +600,10 @@ async function handleDisconnecectionConfirmationButton() {
         cancelMessage: "No action taken."
     });
 
-   if (confirmed) {
-    closeStatusPanels();
-    WalletWizard.closeModal();
-   }
+    if (confirmed) {
+        closeStatusPanels();
+        WalletWizard.closeModal();
+    }
 }
 
 /**
@@ -610,25 +647,25 @@ async function handleTestConnection() {
  * @returns {void}
  */
 function toggleStatusPanel(e) {
-   
+
     if (e.target.id === "disconnect-wallet-status") {
-         statusWalletDisconnectPanel.classList.add("show");
-         return;
+        statusWalletDisconnectPanel.classList.add("show");
+        return;
     }
 
     const buttonID = e.target.closest("button")?.id;
 
-    switch(buttonID) {
+    switch (buttonID) {
         case "disconnect-btn":
-           
-            toggleElement({element: disconnectConfirmaionPanel});
+
+            toggleElement({ element: disconnectConfirmaionPanel });
             disconnectInputFieldElement.focus()
             break;
         case "confirm-disconnect-btn":
             handleDisconnecectionConfirmationButton();
             break;
         case "cancel-disconnect-btn":
-            toggleElement({element: disconnectConfirmaionPanel, show: false});
+            toggleElement({ element: disconnectConfirmaionPanel, show: false });
             break;
         case "disconnection-modal-close-btn":
             closeConfirmationPanel();
@@ -653,8 +690,8 @@ function toggleStatusPanel(e) {
  * Closes all wallet-related status panels and clears input fields.
  * @returns {void}
  */
-function closeStatusPanels(){
-    toggleElement({element: statusWalletDisconnectPanel, show:false})
+function closeStatusPanels() {
+    toggleElement({ element: statusWalletDisconnectPanel, show: false })
     closeConfirmationPanel();
     clearDisconnectInputField();
 }
@@ -665,7 +702,7 @@ function closeStatusPanels(){
  * @returns {void}
  */
 function closeConfirmationPanel() {
-    toggleElement({element: disconnectConfirmaionPanel, show:false})
+    toggleElement({ element: disconnectConfirmaionPanel, show: false })
 }
 
 
@@ -674,7 +711,7 @@ function closeConfirmationPanel() {
  * @returns {void}
  */
 function clearDisconnectInputField() {
-     disconnectInputFieldElement.value = "";
+    disconnectInputFieldElement.value = "";
 }
 
 
@@ -701,10 +738,24 @@ function toggleElement({ element, cSSSelector = "show", show = true }) {
 
 
 
-
+/**
+ * Handles clicks on the plus and minus buttons for the bank fund input.
+ *
+ * This function:
+ * 1. Checks the ID of the clicked element.
+ * 2. If the "plus" button is clicked, increments the amount input field by 1 (default).
+ * 3. If the "minus" button is clicked, decrements the amount input field by 1.
+ *
+ * @param {MouseEvent} e - The click event triggered on the plus or minus button.
+ *
+ * @example
+ * // Attach this handler to the plus and minus buttons
+ * plusButton.addEventListener('click', handleBankFundInput);
+ * minusButton.addEventListener('click', handleBankFundInput);
+ */
 function handleBankFundInput(e) {
 
-    switch(e.target.id) {
+    switch (e.target.id) {
         case "plus":
             adjustCurrencyInput(amountInputField);
             break;
@@ -713,8 +764,9 @@ function handleBankFundInput(e) {
             break;
 
     }
-    
+
 }
+
 
 
 
@@ -735,16 +787,16 @@ function handleBankFundInput(e) {
  * stepCurrencyInput(input, 1);   // Increase by £0.01
  * stepCurrencyInput(input, -1);  // Decrease by £0.01
  */
-function adjustCurrencyInput(amountInputField, deltaPennies = 1, maxAmount=1_000_000, minAmount=0) {
-   
+function adjustCurrencyInput(amountInputField, deltaPennies = 1, maxAmount = 1_000_000, minAmount = 0) {
+
     const current = Number(amountInputField.value) || 0;
-   
+
     const pennies = Math.round(current * 100);
     const newAmount = (pennies + deltaPennies) / 100;
 
 
     if (newAmount > maxAmount || newAmount < minAmount) return;
-    
+
     amountInputField.value = newAmount.toFixed(2);
 }
 
@@ -765,7 +817,7 @@ function handleEnter(e) {
     const minAmount = 0;
 
     let value = Number(amountInputField.value) || 0;
-    value      = Math.min(Math.max(value, minAmount), maxAmount);
+    value = Math.min(Math.max(value, minAmount), maxAmount);
 
     amountInputField.value = value.toFixed(2);
 }
@@ -782,23 +834,19 @@ function handleEnter(e) {
  * 
  * @param {Event} e - The event triggered by user interaction (e.g., click).
  */
-function handleBankCardTypes(e){
+function handleBankCardTypes(e) {
     const accountCardSelector = ".account-card";
-    const accountCard         = e.target.closest(`${accountCardSelector}`);
+    const accountCard = e.target.closest(`${accountCardSelector}`);
 
     const expectedAccountTypes = ["savings-account", "debit-cards", "wallet"]
 
-    if(!expectedAccountTypes.includes(accountCard?.dataset.account)) return;
+    if (!expectedAccountTypes.includes(accountCard?.dataset.account)) return;
     if (!checkIfHTMLElement(accountCard, "account card")) return;
 
     deselectAllElements(bankCardSelectionTypes, "active");
     selectElement(accountCard, "active")
-   
+
 }
-
-
-
-
 
 
 
@@ -823,17 +871,17 @@ async function handleFundAccountBtn(e) {
     if (amount > MAX_TRANSFER_AMOUNT) {
         resetTransferAmountToDefault();
         AlertUtils.showAlert({
-        title: "Transfer amount too high",
-        text: `The amount you entered exceeds the maximum allowed transfer of £${MAX_TRANSFER_AMOUNT.toLocaleString()}. Please enter an amount up to £${MAX_TRANSFER_AMOUNT.toLocaleString()}.`,
-        icon: "warning",
-        confirmButtonText: "OK",
+            title: "Transfer amount too high",
+            text: `The amount you entered exceeds the maximum allowed transfer of £${MAX_TRANSFER_AMOUNT.toLocaleString()}. Please enter an amount up to £${MAX_TRANSFER_AMOUNT.toLocaleString()}.`,
+            icon: "warning",
+            confirmButtonText: "OK",
         });
 
-     
+
         return;
     }
 
-      const confirmed = await AlertUtils.showConfirmationAlert({
+    const confirmed = await AlertUtils.showConfirmationAlert({
         title: "Do you want to proceed?",
         text: `You about to transfer £${amount} to your bank account, do you want to proceed?`,
         confirmButtonText: "Transfer funds",
@@ -842,12 +890,12 @@ async function handleFundAccountBtn(e) {
         cancelMessage: "No action taken."
     });
 
-   if (confirmed) {
-       // This will be replaced with a fetch and at the momemnt it is simply a placeholder
+    if (confirmed) {
+        // This will be replaced with a fetch and at the momemnt it is simply a placeholder
         console.log("Funds have been transferred");
         clearAmountInputField();
-   }
-   
+    }
+
 }
 
 
@@ -880,7 +928,7 @@ function handleToggleAddFundsPanel(e) {
 
     // console.log(e.target.id)
     // console.log("I am here")
-    switch(e.target.id) {
+    switch (e.target.id) {
 
         case closeBtnId:
             closeAddFundsPanel();
@@ -901,7 +949,7 @@ function handleToggleAddFundsPanel(e) {
  */
 function openAddFundsPanel() {
     // console.log("open");
-    toggleElement({ element: addFundsToBankPanel }); 
+    toggleElement({ element: addFundsToBankPanel });
     amountInputField.focus(); // Focus input for convenience
 }
 
@@ -946,7 +994,7 @@ function handleTableHightlight(e) {
     // Accessibility: announce selection state
     const isSelected = tableRow.classList.contains(cssSelector);
     tableRow.setAttribute("aria-selected", isSelected);
-   
+
 
 }
 
@@ -966,9 +1014,9 @@ function handleTableHightlight(e) {
 function handleToggleViewBankTransactionPanel(e) {
 
     const viewTransactionButtonId = "view-transaction-btn";
-    const closePanelId            = "close-transaction-panel";
-    
-    const clickedViewBtn  = e.target.closest(`#${viewTransactionButtonId}`);
+    const closePanelId = "close-transaction-panel";
+
+    const clickedViewBtn = e.target.closest(`#${viewTransactionButtonId}`);
     const clickedCloseBtn = e.target.closest(`#${closePanelId}`);
 
 
@@ -976,71 +1024,305 @@ function handleToggleViewBankTransactionPanel(e) {
 
 
     if (e.target.id === viewTransactionButtonId) {
-         toggleElement({element: viewBankTransacionPanel});
-         return;
+        toggleElement({ element: viewBankTransacionPanel });
+        return;
     }
-   
 
-    toggleElement({element: viewBankTransacionPanel, show: false});
+
 
 
 }
 
-
+/**
+ * Handles a click on a card by delegating to the appropriate card click handlers.
+ *
+ * This function:
+ * 1. Processes clicks in the credit card overview panel.
+ * 2. Processes clicks in the transfer card selection panel.
+ *
+ * Essentially, what it does is it centralizes all card click logic by calling:
+ *  - `processCreditCardOverviewClick`
+ *  - `processSelectedCardClick`
+ *
+ * @param {MouseEvent} e - The click event triggered on a card element.
+ *
+ * @example
+ * // Attach this handler to the card container
+ * cardContainer.addEventListener('click', handleCardClick);
+ */
 function handleCardClick(e) {
-    processCardClicked(e)
+    processCreditCardOverviewClick(e);
+    processSelectedCardClick(e);
+
 }
 
 
+
+
+/**
+ * Handles the click event for the "View More Info" button on a bank card.
+ *
+ * This function:
+ * 1. Checks if the clicked element is the correct "View More Info" button.
+ *    - If not, exits early.
+ * 2. Shows the extra card info panel.
+ * 3. Displays the full details of the currently selected card.
+ *
+ * @param {MouseEvent} e - The click event triggered on the "View More Info" button.
+ *
+ * @example
+ * // Attach this handler to the "View More Info" button
+ * viewMoreButton.addEventListener('click', handleViewMoreInfoCardClick);
+ */
 function handleViewMoreInfoCardClick(e) {
     const viewMoreButtonId = "view-more-bank-card";
-  
+
     if (e.target.id !== viewMoreButtonId) return;
-    
-    toggleElement({element: extraCardInfoPanel, show: true});
+
+    toggleElement({ element: extraCardInfoPanel, show: true });
     viewFullCardDetails();
 }
 
 
 
-function processCardClicked(e) {
-    const bankCard = "bank-card";
-    const bankCardElement = e.target.closest(`.${bankCard}`);
 
-    if (!bankCardElement) return;
-    const cardVisibleSelector="is-selected";
+
+/**
+ * Handles a click on a card within the transfer card selection panel.
+ *
+ * This function:
+ * 1. Determines if the clicked element is a selectable bank card.
+ *    - If not, exits early.
+ * 2. Deselects all other selectable transfer cards and marks the clicked card as selected.
+ * 3. Updates hidden input fields with the source and target card IDs and the target card number,
+ *    to be used in the transfer submission.
+ *
+ * @param {MouseEvent} e - The click event triggered on a selectable card in the transfer panel.
+ *
+ * @example
+ * // Attach this handler to the card selection panel
+ * transferCardSelectionPanel.addEventListener('click', processSelectedCardClick);
+ */
+function processSelectedCardClick(e) {
+
+
+    const bankCardClass = "bank-card";
+    const cssSelector = "is-selected"
+    const targetCard = getSelectableCardElement(e, bankCardClass);
+
+
+    if (targetCard === null) return;
+
+    const transferToHiddenValueField = document.getElementById("transfer-to-card-id");
+    const sourceCardHiddenValueField = document.getElementById("source-card");
+    const targetCardHiddenNumberValueField = document.getElementById("transfer-to-card-number")
+
+
+    // console.log("I have been clicked")
+    // get the cards that the user can can choose from selection card window
+    const transferCreditCardElement = document.querySelectorAll("#bank-funds-transfer__select-cards-panel .bank-transfer-card");
+
+    deselectAllCards(transferCreditCardElement, cssSelector);
+    selectElement(targetCard, cssSelector)
+
+    if (!(transferToHiddenValueField && sourceCardHiddenValueField)) {
+        warnError("processSelectedCardClick", `one or more of the hidden field is empyty.  
+                                              transferToHiddenValueField = ${transferToHiddenValueField}  
+                                              sourceCardHiddenValueField  = ${sourceCardHiddenValueField}
+                                              `);
+
+        return;
+    }
+
+
+    // save the card ids to the hidden input field to be sent along with the fetch api
+    // tells the backend that the source card is transfering to the target card
+    sourceCardHiddenValueField.value = getCardDetailsFromElement(selectedCardStore.get()).cardId;
+
+    const targetCardDetails = getCardDetailsFromElement(targetCard);
+
+    if (Object.keys(targetCardDetails).length === 0) {
+
+        warnError("processSelectedCardClick", {
+            targetCardDetails: targetCardDetails
+        })
+        return;
+    }
+
+    transferToHiddenValueField.value = targetCardDetails.cardId;
+    targetCardHiddenNumberValueField.value = targetCardDetails.cardNumber;
+
+}
+
+
+
+
+/**
+ * Returns the closest selectable card element from an event target.
+ *
+ * The element must:
+ * - Have the provided base card class
+ * - NOT contain the excluded class (if provided)
+ * 
+ * @param {Event} event - The DOM event triggered by user interaction.
+ * @param {string} baseClass - The required card class (e.g., "bank-card").
+ * @param {string} [excludedClass] - Optional class that disqualifies the card.
+ * @returns {HTMLElement|null} The valid card element, or null if invalid.
+ */
+export function getSelectableCardElement(event, baseClass, excludedClass) {
+    const element = event.target.closest(`.${baseClass}`);
+    if (!element) return null;
+
+    if (excludedClass && element.classList.contains(excludedClass)) {
+        return null;
+    }
+
+    return element;
+}
+
+
+
+/**
+ * Handles a click on a credit card in the overview panel.
+ *
+ * This function:
+ * 1. Determines if the clicked element is a selectable bank card (excluding transfer cards).
+ *    - If not, exits early.
+ * 2. Deselects all currently selected cards.
+ * 3. Marks the clicked card as selected.
+ * 4. Updates the selected card store with the clicked card.
+ * 5. Shows the extra card info panel such as the details for the selected card.
+ *
+ * @param {MouseEvent} e - The click event triggered on the credit card overview panel.
+ *
+ * @example
+ * // Attach this handler to the credit card overview container
+ * creditCardOverviewContainer.addEventListener('click', processCreditCardOverviewClick);
+ */
+function processCreditCardOverviewClick(e) {
+
+    const bankCardClass = "bank-card";
+    const excludeClass = "bank-transfer-card";
+
+    const bankCardElement = getSelectableCardElement(e, bankCardClass, excludeClass);
+
+    if (bankCardElement === null) return;
+
+    const cardVisibleSelector = "is-selected";
 
     deselectAllCards();
     selectElement(bankCardElement, cardVisibleSelector)
-   
+
     selectedCardStore.set(bankCardElement);
-    toggleElement({element: viewExtraCardInfo})
+    toggleElement({ element: viewExtraCardInfo })
 }
 
 
-function deselectAllCards(cardVisibleSelector="is-selected") {
-    deselectAllElements(creditCardsNodeElements, cardVisibleSelector)
+
+
+/**
+ * Deselects all cards in the provided card elements list.
+ *
+ * This function is a wrapper around `deselectAllElements` and
+ * marks all cards as not selected by removing the specified visibility class.
+ *
+ * @param {HTMLElement[]} [cardsNodeElements=creditCardsNodeElements] - Array of card elements to deselect.
+ * @param {string} [cardVisibleSelector="is-selected"] - CSS class indicating a selected card.
+ *
+ * @example
+ * // Deselect all cards in the default credit card container
+ * deselectAllCards();
+ *
+ * // Deselect cards in a custom container
+ * deselectAllCards(customCardElements, "active-card");
+ */
+function deselectAllCards(cardsNodeElements = creditCardsNodeElements, cardVisibleSelector = "is-selected") {
+    deselectAllElements(cardsNodeElements, cardVisibleSelector)
 }
 
 
+
+
+
+
+/**
+ * Displays the full details of the currently selected card in the side panel.
+ *
+ * This function:
+ * 1. Retrieves the selected card from the store.
+ * 2. Hides any previously displayed extra card info view.
+ * 3. Creates a visual representation of the selected card and adds it to the full card details container.
+ * 4. Masks sensitive card data (e.g., CVC) before creating the detailed card info element.
+ * 5. Adds the detailed card info element to the side panel.
+ * 6. Ensures bank card buttons are visible in the extra card view.
+ *
+ * @returns {void} - Exits early if no card is currently selected.
+ *
+ * @example
+ * // Display the full details for the currently selected card
+ * viewFullCardDetails();
+ */
 function viewFullCardDetails() {
 
     const bankCardElement = selectedCardStore.get();
 
     if (!bankCardElement) return;
 
-    toggleElement({element: viewExtraCardInfo, show: false})
-  
-   
-    const bankName   = bankCardElement.querySelector(".card-head-info h3").textContent;
-    const amount     = bankCardElement.querySelector(".bank-card-amount").textContent;
-    const cardType   = bankCardElement.querySelector(".card-type").textContent.trim();
-    const cardNumber = bankCardElement.querySelector(".card-number").textContent;
-    const cardName   =  bankCardElement.querySelector(".card-name").textContent;
-    const expiryDate = bankCardElement.querySelector(".card-expiry-date").textContent;
-    
+    toggleElement({ element: viewExtraCardInfo, show: false })
+
+    const cardDetails = getCardDetailsFromElement(bankCardElement);
+    const card = cardImplementer.createCardDiv(cardDetails);
+
+    // Add the card image to the side panel display view window
+    cardImplementer.placeCardDivIn(fullCardDetailsContainer, card, true)
+
+
+    cardDetails.cardStatus = bankCardElement.dataset.isActive;
+    cardDetails.cvc = "***"
+    const cardDetailsElement = createCardDetails(cardDetails);
+
+    // Add the card details to the side panel display view window
+    cardImplementer.placeCardDivIn(cardDetailsContainer, cardDetailsElement, true);
+
+    removeBankCardButtonsFromCardExtraView(false);
+
+}
+
+
+
+/**
+ * @typedef {Object} CardDetails
+ * @property {string} cardId
+ * @property {string} bankName
+ * @property {string} cardBrand
+ * @property {string} cardAmount
+ * @property {string} cardType
+ * @property {string} cardNumber
+ * @property {string} expiryMonth
+ * @property {string} expiryYear
+ * @property {string} cardName
+ * @property {string} issueDate
+ * @property {string} cardCreationDate
+ * @property {string} cardCVC
+ */
+
+/**
+ * Extracts card details from a bank card DOM element.
+ *
+ * @param {HTMLElement} bankCardElement - The DOM element representing a bank card.
+ * @returns {CardDetails}
+ */
+function getCardDetailsFromElement(bankCardElement) {
+
+    const bankName = bankCardElement.querySelector(".card-head-info h3")?.textContent;
+    const amount = bankCardElement.querySelector(".bank-card-amount")?.textContent;
+    const cardType = bankCardElement.querySelector(".card-type")?.textContent.trim();
+    const cardNumber = bankCardElement.querySelector(".card-number")?.textContent;
+    const cardName = bankCardElement.querySelector(".card-name")?.textContent;
+    const expiryDate = bankCardElement.querySelector(".card-expiry-date")?.textContent;
+
     const [month, year] = expiryDate.split("Expiry date: ")
-  
+
     const cardDetails = {
         cardId: bankCardElement.dataset.cardId,
         bankName: bankName,
@@ -1054,95 +1336,107 @@ function viewFullCardDetails() {
         issueDate: bankCardElement.dataset.issued,
         cardCreationDate: bankCardElement.dataset.creationDate,
         cardCVC: bankCardElement.dataset.cvc,
+        isActive: bankCardElement.dataset.isActive === "true" ? true : false,
     }
-
-   const card = cardImplementer.createCardDiv(cardDetails);
-   cardImplementer.placeCardDivIn(fullCardDetailsContainer, card, true)
-
-   // Add the card details to the field
- 
-   cardDetails.cardStatus   = bankCardElement.dataset.isActive;
-   cardDetails.cvc          = "***"
-   const cardDetailsElement = createCardDetails(cardDetails);
-
-   cardImplementer.placeCardDivIn(cardDetailsContainer, cardDetailsElement, true);
-
-   removeBankCardButtonsFromCardExtraView(false);
+    return cardDetails;
 
 }
 
 
 
-function handleCloseViewFullCardDetails(e) {
-    if (e.target.id !== "card-close-btn") return;
 
-    toggleElement({element: extraCardInfoPanel, show: false});
-    deselectAllCards();
+/**
+ * Handles clicks on buttons within a card panel.
+ *
+ * Depending on which button was clicked:
+ * 1. "card-close-btn":
+ *    - Hides the extra card info panel.
+ *    - Deselects all cards.
+ *    - Closes all related transfer panels.
+ * 2. "card-transfer-btn":
+ *    - Initiates the transfer process for the selected source card.
+ *
+ * @param {MouseEvent} e - The click event triggered by the user on a card panel button.
+ *
+ * @example
+ * // Attach this handler to the card panel container
+ * cardPanelContainer.addEventListener('click', handleCardPanelButtons);
+ */
+function handleCardPanelButtons(e) {
+
+
+    switch (e.target.id) {
+        case "card-close-btn":
+            toggleElement({ element: extraCardInfoPanel, show: false });
+            deselectAllCards();
+            closeAllRelatedTransferPanels()
+            break;
+
+        case "card-transfer-btn":
+            handleSourceCardTransfer();
+            break;
+    }
 }
 
 
 
-function removeBankCardButtonsFromCardExtraView(remove=true) {
+/**
+ * Handles the opening of the transfer form for the selected source card.
+ *
+ * This function:
+ * 1. Retrieves details of the currently selected source card.
+ * 2. Checks if the card is active:
+ *    - If the card is blocked, displays an alert and prevents opening the transfer form.
+ *    - If the card is active, toggles the visibility of the transfer form section.
+ *
+ * @returns {void} - Returns early if the source card is blocked.
+ *
+ * @example
+ * // Open the transfer form for the selected source card
+ * handleSourceCardTransfer();
+ */
+function handleSourceCardTransfer() {
+
+    const sourceCard = getCardDetailsFromElement(selectedCardStore.get());
+
+    if (!sourceCard.isActive) {
+        // console.log("This is being executed")
+        AlertUtils.showAlert({
+            title: "Card blocked",
+            text: "You cannot open the transfer window because this card is blocked.",
+            icon: "info",
+            confirmButtonText: "OK"
+        });
+        return;
+    }
+    toggleElement({ element: cardTransferFormSection });
+    return;
+
+}
+
+
+
+
+/**
+ * Shows or hides bank card buttons in the extra card view.
+ *
+ * @param {boolean} [remove=true] - If true, hides the buttons; if false, shows them.
+ *
+ * @returns {null} - Returns null if the button container does not exist.
+ *
+ * @example
+ * // Hide bank card buttons
+ * removeBankCardButtonsFromCardExtraView();
+ *
+ * // Show bank card buttons
+ * removeBankCardButtonsFromCardExtraView(false);
+ */
+function removeBankCardButtonsFromCardExtraView(remove = true) {
 
     if (!bankCardButtons) return null;
-    toggleElement({element: bankCardButtons, show: !remove})
+    toggleElement({ element: bankCardButtons, show: !remove })
 }
 
-
-
-
-/**
- * Removes a CSS class from all elements in a collection.
- *
- * Typically used to deselect or reset UI elements that were
- * previously marked with a given class (e.g., removing a
- * "selected" state from cards).
- *
- * @param {NodeList|Array<HTMLElement>} elements
- * A collection of DOM elements, commonly returned by
- * querySelectorAll().
- *
- * @param {string} cssClass
- * The CSS class to remove from each element.
- *
- * @returns {void}
- */
-function deselectAllElements(elements, cssClass) {
-
-    // Ensure the function receives a collection of elements that can be used by forEach loop
-    if (!elements || typeof elements.forEach !== "function") return;
-
-    if (typeof cssClass !== "string" || cssClass.length === 0) return;
-
-    elements.forEach((element) => {
-        element.classList.remove(cssClass);
-    });
-}
-
-
-
-/**
- * Adds a CSS class to a DOM element to mark it as selected or active.
- *
- * Commonly used to visually highlight UI elements such as cards,
- * buttons, or list items when they are selected by the user.
- *
- * @param {HTMLElement} elementToSelect
- * The DOM element that should receive the CSS class.
- *
- * @param {string} [cssSelectorElement="active"]
- * The CSS class to add to the element. Defaults to "active".
- * 
- * Note: 
- * There must a CSS rule that determines how the element should be highlighted
- * and that name should be passed to the function.
- *
- * @returns {void}
- */
-function selectElement(elementToSelect, cssSelectorElement = "active") {
-    if (!checkIfHTMLElement(elementToSelect)) return;
-    elementToSelect.classList.add(cssSelectorElement);
-}
 
 
 
@@ -1169,20 +1463,523 @@ function selectElement(elementToSelect, cssSelectorElement = "active") {
 function handleCardSelectionTimeout() {
     const MILLI_SECONDS = 5000;
 
- 
+
     // Must query elements dynamically each time because their visibility can change
-    const viewExtraCardInfo  = document.getElementById("view-more-bank-card");
+    const viewExtraCardInfo = document.getElementById("view-more-bank-card");
     const extraCardInfoPanel = document.getElementById("view-card-panel");
 
 
-    const isSideCardPanelOpen  = getComputedStyle(extraCardInfoPanel).display;
-   
-    if (isSideCardPanelOpen === "none") {
-      
-        setTimeout(() => {
-            deselectAllCards();
-            toggleElement({element: viewExtraCardInfo, show: false})
-        }, MILLI_SECONDS)
+    const isSideCardPanelOpen = getComputedStyle(extraCardInfoPanel).display;
+
+    let timeoutId;
+
+    if (timeoutId) {
+        clearTimeout(timeoutId);
+        timeoutId = null;
     }
-    
+
+    if (isSideCardPanelOpen === "none") {
+
+        timeoutId = setTimeout(() => {
+            deselectAllCards();
+            toggleElement({ element: viewExtraCardInfo, show: false })
+        }, MILLI_SECONDS);
+        return
+    }
+
+
+}
+
+
+
+/**
+ * Handles changes to the transfer type select field in the transfer form.
+ *
+ * This function:
+ * 1. Checks if the changed element is the transfer type selector; if not, exits early.
+ * 2. If the selected value is not "another-card":
+ *    - Hides the card selection panel.
+ *    - Hides the transfer amount confirmation panel.
+ *    - Resets the transfer form.
+ * 3. If the selected value is "another-card":
+ *    - Shows the card selection panel.
+ *    - Retrieves the currently selected card from the store.
+ *    - Renders a message prompting the user to select a transfer card.
+ *    - Loops through the cards and displays only cards that haven't been blocked:
+ *
+ * @param {Event} e - The change event triggered on the transfer type select field.
+ *
+ * @example
+ * // Attach this handler to the transfer type selector
+ * transferTypeSelect.addEventListener('change', handleBankTransferFormFields);
+ */
+function handleBankTransferFormFields(e) {
+    if (!e.target.matches("#transfer-type")) return
+
+    const select = e.target;
+
+    const value = select.value;
+
+    const selectValueText = "another-card";
+
+    // hide the select card panel if another option is selected.
+    if (value !== selectValueText) {
+        toggleElement({ element: selectCardsContainer, show: false });
+        handleTransferAmountConfirmation(false);
+        fundsTransferForm.reset();
+
+        return;
+    };
+
+    toggleElement({ element: selectCardsContainer })
+
+    const selectedCard = selectedCardStore.get();
+
+    if (!selectedCard) return none;
+
+    const cardBrand = selectedCard.dataset.cardBrand;
+
+    renderTransferCardSelectionMessage();
+
+    creditCardsNodeElements.forEach((card) => {
+
+        if (card.dataset.cardBrand.toLowerCase() !== cardBrand.toLowerCase()) {
+
+            const cardDetails = getCardDetailsFromElement(card);
+            const cardElement = cardImplementer.createCardDiv(cardDetails);
+
+            cardElement.classList.add("account-card", "bank-transfer-card");
+            cardElement.dataset.account = "debit-cards";
+            cardElement.dataset.cardId = cardDetails.cardId;
+
+            attachCardDetails(cardElement, cardDetails);
+
+            if (cardDetails.isActive) {
+                cardImplementer.placeCardDivIn(selectCardsContainer, cardElement, false)
+            }
+
+        }
+    })
+
+
+}
+
+
+
+/**
+ * Attaches card metadata to a DOM card element using data attributes.
+ *
+ * This function mutates the provided `cardElement` by dynamically
+ * assigning all properties from the `cardDetails` object to the
+ * element's dataset.
+ *
+ * Each key in `cardDetails` becomes a corresponding `data-*` attribute.
+ *
+ * Example:
+ *   cardDetails.cardId → data-card-id
+ *   cardDetails.cardBrand → data-card-brand
+ *
+ * @param {HTMLElement} cardElement - The DOM element representing the card.
+ * @param {Object} cardDetails - An object containing the card's metadata.
+ * @returns {void}
+ */
+function attachCardDetails(cardElement, cardDetails) {
+    Object.entries(cardDetails).forEach(([key, value]) => {
+        if (value !== undefined && value !== null) {
+            cardElement.dataset[key] = value;
+        }
+    });
+}
+
+
+
+/**
+ * Renders the transfer card selection instruction message
+ * inside the select cards container.
+ *
+ * This function clears any existing content in the container
+ * and displays a message prompting the user to choose a card
+ * to transfer funds to.
+ *
+ * @returns {void}
+ */
+function renderTransferCardSelectionMessage() {
+
+    selectCardsContainer.innerHTML = "";
+
+    const message = document.createElement("p");
+    message.textContent = "Choose a card to transfer to. Only active cards are shown.";
+
+    message.style.marginBottom = "24px"
+
+
+    selectCardsContainer.append(message);
+}
+
+
+
+/**
+ * Handles the submission of the transfer form.
+ *
+ * This function:
+ * 1. Extracts source and target card IDs from hidden input fields.
+ * 2. Validates the card selection using `assertTransferSelection`.
+ *    - If validation fails, the function exits early.
+ * 2. Shows the transfer amount confirmation panel.
+ * 2. Updates the confirmation panel with the current transfer details.
+ *
+ * @param {Event} e - The form submission event.
+ *
+ * @example
+ * // Attach this handler to the transfer form
+ * fundsTransferForm.addEventListener('submit', handleTransferForm);
+ */
+function handleTransferForm(e) {
+    e.preventDefault();
+
+    const hiddenInputFieldSelector = ".transfer-hidden-field";
+    const hiddenInputValue = Array.from(document.querySelectorAll(hiddenInputFieldSelector));
+
+    const [sourceCardId, targetCardId] = extractSourceAndCardIdFromHiddenField(hiddenInputValue);
+
+    const resp = assertTransferSelection({ sourceCardId: sourceCardId, targetCardId: targetCardId })
+
+    if (!resp) return;
+
+    const hasFunds = assertSourceCardHasFunds();
+    if (!hasFunds) return;
+
+    handleTransferAmountConfirmation();
+    updateConfirmationPanel(getTransferFormObject(fundsTransferForm))
+
+}
+
+
+/**
+ * 
+ * Checks if the source card (card dong the transferring) 
+ * has a valid balance 
+ * 
+ * */
+function assertSourceCardHasFunds() {
+    let sourceCard = selectedCardStore.get();
+    if (!sourceCard) return;
+
+    sourceCard = getCardDetailsFromElement(sourceCard)
+    const amount = parseCurrency(sourceCard.cardAmount);
+
+    if (isNaN(amount) || amount <= 0) {
+        AlertUtils.showAlert({
+            title: "Invalid balance",
+            text: "The card balance is insufficient and a transfer cannot be inititated.",
+            icon: "error",
+            confirmButtonText: "OK",
+        });
+        return false;
+    }
+    return true;
+}
+
+
+/**
+ * Returns an object containing only the required fields from the transfer form.
+ *
+ * @param {HTMLFormElement} transferForm - The funds transfer form element.
+ * @returns {Object} An object with the "transfer-amount" and "note" fields.
+ *
+ * @example
+ * const formObject = getTransferFormObject(fundsTransferForm);
+ * // formObject = { "transfer-amount": "100", "note": "Payment for invoice #123" }
+ */
+function getTransferFormObject(transferForm) {
+    const requiredFields = ["transfer-amount", "note"];
+    return parseFormData(new FormData(transferForm), requiredFields);
+}
+
+
+
+
+/**
+ * Validates that both a source and a target card have been selected for a transfer.
+ *
+ * This function performs two checks:
+ * 1. Ensures that both `sourceCardId` and `targetCardId` are provided.
+ *    - If either is missing, an alert is shown and a warning is logged.
+ * 2. Ensures that the source and target cards are not the same.
+ *    - If they are the same, it means a target card was never selected in the panel, and 
+ * an alert is shown and a warning is logged.
+ *
+ * @param {Object} params - The parameters object.
+ * @param {string|number} params.sourceCardId - The ID of the source card.
+ * @param {string|number} params.targetCardId - The ID of the target card.
+ * @param {string} [params.context="assertTransferSelection"] - Optional context for logging warnings.
+ *
+ * @returns {boolean} - Returns `true` if the transfer selection is valid; otherwise, `false`.
+ *
+ * @example
+ * const isValid = assertTransferSelection({
+ *   sourceCardId: selectedSourceCardId,
+ *   targetCardId: selectedTargetCardId
+ * });
+ * if (isValid) {
+ *   // Proceed with transfer
+ * }
+ */
+function assertTransferSelection({
+    sourceCardId,
+    targetCardId,
+    context = "assertTransferSelection"
+}) {
+
+
+    if (!sourceCardId || !targetCardId) {
+        AlertUtils.showAlert({
+            title: "Unable to continue",
+            text: "Please select a source card and a target card to complete the transfer.",
+            icon: "error",
+            confirmButtonText: "OK"
+        });
+
+        warnError(context, {
+            code: "TRANSFER_MISSING_CARD",
+            sourceCardId,
+            targetCardId
+        });
+
+        return false;
+    }
+
+    // If the Source card id equals the target card id, it means that the target card was never selected
+    if (sourceCardId === targetCardId) {
+        AlertUtils.showAlert({
+            title: "Invalid transfer",
+            text: "Please select a target card to complete the transfer.",
+            icon: "error",
+            confirmButtonText: "OK"
+        });
+
+        warnError(context, {
+            code: "TRANSFER_SAME_CARD",
+            cardId: sourceCardId
+        });
+
+        return false;
+    }
+
+    return true;
+}
+
+
+
+/**
+ * Extracts the source and target card IDs from a collection of hidden input elements.
+ *
+ * Expects an array-like object (e.g. NodeList or Array) where:
+ * - index 0 contains the source card input
+ * - index 1 contains the target card input
+ *
+ * If the input is missing, invalid, or contains fewer than two elements,
+ * the function safely returns [null, null].
+ *
+ * @param {Array|NodeList} hiddenInputValue
+ *     A collection of hidden input elements containing card IDs.
+ *
+ * @returns {[string|null, string|null]}
+ *     A tuple containing:
+ *     - sourceCardId
+ *     - targetCardId
+ */
+function extractSourceAndCardIdFromHiddenField(hiddenInputValue) {
+
+    console.log(hiddenInputValue)
+    const EXPECTED_RETURN_VALUE = 2;
+    if (!hiddenInputValue || hiddenInputValue.length < EXPECTED_RETURN_VALUE) {
+        return [null, null];
+    }
+
+    return [
+        hiddenInputValue[0].value ?? null,
+        hiddenInputValue[1].value ?? null
+    ];
+}
+
+
+
+
+
+/**
+ * Shows or hides the transfer amount confirmation panel.
+ *
+ * @param {boolean} [show=true] - If true, displays the confirmation panel; 
+ *                                 if false, hides it.
+ *
+ * @example
+ * // Show the confirmation panel
+ * handleTransferAmountConfirmation(true);
+ *
+ * // Hide the confirmation panel
+ * handleTransferAmountConfirmation(false);
+ */
+function handleTransferAmountConfirmation(show = true) {
+    toggleElement({ element: askTransferConfirmationPanel, show: show })
+
+}
+
+
+
+
+
+/**
+ * Updates the transfer confirmation panel with the current transfer details.
+ *
+ * This function populates the confirmation panel UI with:
+ *  - The source card number (from the selected card)
+ *  - The target card number (from a hidden input field)
+ *  - The transfer amount (formatted as currency)
+ *
+ * If any of the required elements (`sourceCardNumberElement`, `targetCardNumberElement`, `transferAmountElement`)
+ * are missing, it logs a warning and exits early.
+ *
+ * @param {Object} formData - An object containing transfer details.
+ * @param {string|number} formData.transferAmount - The amount to transfer.
+ *
+ * @example
+ * const formData = getTransferFormObject(fundsTransferForm);
+ * updateConfirmationPanel(formData);
+ */
+function updateConfirmationPanel(formData) {
+
+    const targetCardHiddenValue = document.getElementById("transfer-to-card-number")
+
+
+    if (!(sourceCardNumberElement && targetCardNumberElement && transferAmountElement)) {
+        warnError("updateConfirmationPanel", {
+            sourceCardNumberElement: sourceCardNumberElement,
+            targetCardNumberElement: targetCardNumberElement,
+            transferAmountElement: transferAmountElement,
+        })
+        return;
+    }
+
+    sourceCardNumberElement.textContent = getCardDetailsFromElement(selectedCardStore.get()).cardNumber;
+    targetCardNumberElement.textContent = targetCardHiddenValue && targetCardHiddenValue !== undefined ? targetCardHiddenValue.value : null;
+    transferAmountElement.textContent = formatCurrency(formData.transferAmount)
+
+}
+
+
+
+/**
+ * Handles the click event for the transfer cancellation button within the confrimation panel.
+ *
+ * When the user clicks the cancel button:
+ * 1. Verifies that the clicked element is the correct cancel button.
+ * 2. Closes all related transfer panels to reset the UI.
+ *
+ * @param {MouseEvent} e - The click event triggered by the user.
+ *
+ * @example
+ * // Attach this handler to the transfer cancel button
+ * transferCancelButton.addEventListener('click', handleTransferCancelConfirmationButtonClick);
+ */
+function handleTransferCancelConfirmationButtonClick(e) {
+    const buttonId = "transfer-confirmation-cancel-btn";
+
+    if (e.target.id !== buttonId) {
+        return;
+    }
+
+    closeAllRelatedTransferPanels();
+}
+
+
+
+
+/**
+ * Handles the click event for the transfer confirmation button.
+ *
+ * When the user clicks the confirmation button:
+ * 1. Displays a confirmation alert to verify if the user wants to proceed with the transfer.
+ * 2. If confirmed:
+ *    - Retrieves the transfer form data (amount and note) using `getTransferFormObject`.
+ *    - Sends the data to the backend (currently simulated with console.log).
+ *    - Closes all related transfer panels to reset the UI.
+ * 3. If cancelled, no action is taken.
+ *
+ * @param {MouseEvent} e - The click event triggered by the user.
+ *
+ * @example
+ * // Attach this handler to the transfer confirmation button
+ * transferConfirmationButton.addEventListener('click', handleTransferConfirmationButtonClick);
+ */
+async function handleTransferConfirmationButtonClick(e) {
+
+    const buttonId = "transfer-confirmation-confirm-btn";
+
+    if (e.target.id !== buttonId) {
+        return;
+    }
+
+    const confirmed = await AlertUtils.showConfirmationAlert({
+        title: "Transfer process",
+        text: "Are you sure you want to proceed with the transfer?",
+        icon: "info",
+        cancelMessage: "No action was taken",
+        confirmButtonText: "Yes, proceed!",
+        messageToDisplayOnSuccess: "Your transfer was successfully",
+        denyButtonText: "Cancel transfer!"
+    })
+
+    if (confirmed) {
+        // simulation - The console log will be replaced by a real fetch API but for now it is a console.log
+
+        const formData = getTransferFormObject(fundsTransferForm);
+
+        console.log(`fetch data sent to the backend note=${formData.note} and amount amount=${formData.transferAmount}`);
+        closeAllRelatedTransferPanels();
+        return;
+
+    }
+
+
+}
+
+
+
+
+
+
+
+/**
+ * Closes all panels and sections related to the funds transfer workflow
+ * and resets associated UI elements to their default state.
+ *
+ * This function hides:
+ *  - Bank transaction view panel
+ *  - Extra card info panel
+ *  - Extra card info view
+ *  - Card transfer form section
+ *  - Card selection container
+ *
+ * It also:
+ *  - Removes bank card buttons from the extra card view
+ *  - Resets transfer amount confirmation state
+ *
+ * Use this function when cancelling or completing a transfer
+ * to ensure all related UI elements are properly closed and reset.
+ *
+ * @example
+ * // Close all transfer panels when the user cancels a transfer
+ * closeAllRelatedTransferPanels();
+ */
+function closeAllRelatedTransferPanels() {
+    toggleElement({ element: viewBankTransacionPanel, show: false });
+    toggleElement({ element: extraCardInfoPanel, show: false });
+    toggleElement({ element: viewExtraCardInfo, show: false })
+    toggleElement({ element: cardTransferFormSection, show: false });
+    toggleElement({ element: selectCardsContainer, show: false });
+
+    removeBankCardButtonsFromCardExtraView();
+    handleTransferAmountConfirmation(false)
+
 }

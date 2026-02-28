@@ -1,4 +1,4 @@
-import { logError } from "./logger.js";
+import { logError, warnError } from "./logger.js";
 import { specialChars } from "./specialChars.js";
 
   
@@ -613,3 +613,110 @@ export function parseErrorMessage(errorMsg) {
     
 } 
 
+
+
+
+/**
+ * Removes a CSS class from all elements in a collection.
+ *
+ * Typically used to deselect or reset UI elements that were
+ * previously marked with a given class (e.g., removing a
+ * "selected" state from cards).
+ *
+ * @param {NodeList|Array<HTMLElement>} elements
+ * A collection of DOM elements, commonly returned by
+ * querySelectorAll().
+ *
+ * @param {string} cssClass
+ * The CSS class to remove from each element.
+ *
+ * @returns {void}
+ */
+export function deselectAllElements(elements, cssClass) {
+
+    // Ensure the function receives a collection of elements that can be used by forEach loop
+    if (!elements || typeof elements.forEach !== "function") return;
+
+    if (typeof cssClass !== "string" || cssClass.length === 0) return;
+
+    elements.forEach((element) => {
+        element.classList.remove(cssClass);
+    });
+}
+
+
+
+
+/**
+ * Adds a CSS class to a DOM element to mark it as selected or active.
+ *
+ * Commonly used to visually highlight UI elements such as cards,
+ * buttons, or list items when they are selected by the user.
+ *
+ * @param {HTMLElement} elementToSelect
+ * The DOM element that should receive the CSS class.
+ *
+ * @param {string} [cssSelectorElement="active"]
+ * The CSS class to add to the element. Defaults to "active".
+ * 
+ * Note: 
+ * There must a CSS rule that determines how the element should be highlighted
+ * and that name should be passed to the function.
+ *
+ * @returns {void}
+ */
+export function selectElement(elementToSelect, cssSelectorElement = "active") {
+    if (!checkIfHTMLElement(elementToSelect)) return;
+    elementToSelect.classList.add(cssSelectorElement);
+}
+
+
+
+/**
+ * Parses a currency-formatted string and returns its numeric value.
+ *
+ * This function removes common currency symbols (e.g. £, $, €),
+ * whitespace (including non-breaking spaces), and thousands separators.
+ * It supports decimal values and negative amounts expressed either with
+ * a leading minus sign (e.g. "-£100") or parentheses (e.g. "(£100)").
+ *
+ * @param {string} value - The currency string to parse (e.g. "£1,234.56").
+ * @returns {number} The numeric representation of the currency value.
+ *                   Returns NaN if the value cannot be parsed. 
+ *                   Doesn't return 0 because 0 has the errors
+ *
+ * @example
+ * parseCurrency("£1,234.56") // 1234.56
+ * parseCurrency("(€99.99)")  // -99.99
+ * parseCurrency("-$100")     // -100
+ * parseCurrency("-$100??????????")     // -100
+ */
+export function parseCurrency(currency) {
+
+    if (typeof currency !== "string") {
+        warnError("parseCurrency",  {
+            currency: currency,
+            type: typeof currency,
+            error: "Must be a string"
+        })
+        return NaN;
+    }
+
+    const cleanedValues  = [];
+    let isNegative       = false;
+  
+    for (let char of currency) {
+      
+        if (!isNaN(char) && char !== " " || char === "." ) {
+            cleanedValues.push(char)
+        }
+        if (char === "-") {
+          isNegative = true;
+        }
+    }
+
+    if (cleanedValues.length === 0) return NaN;
+  
+    const cleanedNumbers = parseFloat(cleanedValues.join(""))
+    return isNegative ? cleanedNumbers * -1 : cleanedNumbers;
+}

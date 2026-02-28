@@ -587,7 +587,7 @@
                                             <div class="card-head">
                                                 <div class="card-head-info">
                                                     <h3>Atlas Bank</h3>
-                                                    <p class="bank-card-amount">£7.26</p>
+                                                    <p class="bank-card-amount">£0.00</p>
                                                 </div>
 
                                                 <div class="card-type-logo flex flex-end">
@@ -606,7 +606,7 @@
                                                 </div>
 
                                                 <div class="card-number flex flex-end">
-                                                    <span class="card-number">************1224</span>
+                                                    <span class="card-number">************3336</span>
                                                 </div>
                                             </div>
 
@@ -644,7 +644,7 @@
                                                 </div>
 
                                                 <div class="card-number flex flex-end">
-                                                    <span class="card-number">***********1224</span>
+                                                    <span class="card-number">***********9991</span>
 
                                                 </div>
                                             </div>
@@ -1840,6 +1840,178 @@
 
                 </button>
 
+                <section id="bank-funds-transfer">
+                    <div class="bank-funds-transfer__container flex-grid p-48">
+
+                        <h1 class="center header-5">Funds Transfer</h1>
+                        <div class="transfer-logo center">
+                            <img src="/static/images/icons/income-transfer.png" alt="transfer">
+                        </div>
+                        <form id="funds-transfer-form" method="post">
+
+                            <div class="form-row">
+                                <label for="transfer-type">Transfer source</label>
+                                <select name="transfer-type" id="transfer-type" required>
+                                    <option value="" disabled selected>Select source</option>
+                                    <option value="bank">Bank</option>
+                                    <option value="wallet">Wallet</option>
+                                    <option value="another-card">Another card</option>
+                                </select>
+                            </div>
+
+                            <div class="form-row flex-grid">
+                                <label for="transfer-amount">Transfer Amount</label>
+                                <input type="number" id="transfer-amount" step="0.01" min="0.01" value="0.00"
+                                    name="transfer-amount" required>
+                            </div>
+
+                            <div class="form-row">
+
+                            </div>
+
+                            <div class="form-row flex-grid">
+                                <label for="note">Note</label>
+                                <textarea name="note" id="bank-transfer-note" rows="5" maxlength="250" name="note"
+                                    required></textarea>
+                                <p class="num-of-characters-remaining text-align-right character-usage-message">Minimum
+                                    characters to use: 50</p>
+                                <p class="num-of-characters-to-use text-align-right character-usage-message">Number of
+                                    characters remaining: 255</p>
+
+                            </div>
+
+
+
+
+                            <div class="form-row">
+                                <input type="hidden" id="source-card" class="transfer-hidden-field">
+                                <input type="hidden" id="transfer-to-card-id" class="transfer-hidden-field">
+                                <input type="hidden" id="transfer-to-card-number" class="transfer-hidden-field">
+                            </div>
+
+                            <div class="mt-8 mb-8">
+                                <button type="submit" class="btn-large" id="transfer-submit">
+                                    Transfer
+                                </button>
+                            </div>
+
+
+                        </form>
+
+                    </div>
+                </section>
+
+                <section id="bank-funds-transfer__select-cards-panel" class="p-48" role="dialog"
+                    aria-labelledby="transfer-modal-title" aria-modal="true">
+
+                    <!-- the card will be generated dynamically -->
+
+                </section>
+
+
+                <!-- The transfer confirmation modal -->
+
+                <section id="bank-transfer-quick-confirmation" class="transfer-confirmation" role="dialog"
+                    aria-modal="true" aria-labelledby="transfer-confirmation-title"
+                    aria-describedby="transfer-confirmation-description">
+
+                     <!-- Modal Header -->
+                    <div class="flex flex-space-between pl-48 pt-8 pb-4 pr-24 modal-top">
+                        <h3 id="connect-wallet-title" class="capitalise pt-8 pb-8">Confirm Transfer</h3>
+                        <button aria-label="Close modal" class="modal-close-btn" id="connect-modal-close-btn">
+                            ✕
+                        </button>
+                    </div>
+
+                    <!-- transfer container confirmation -->
+                    <!-- Modal Body -->
+                    <div class="transfer-confirmation__body p-48">
+
+                        <!-- Transfer Accounts -->
+                        <div class="transfer-confirmation__accounts flex flex-space-between">
+
+                            <div class="transfer-confirmation__account transfer-confirmation__account--from">
+                                <h3 class="transfer-confirmation__account-title">
+                                    Source account
+                                </h3>
+                                <p class="transfer-confirmation__source-account-value">
+                                    Card ending in 1234
+                                </p>
+                            </div>
+
+                            <div class="transfer-confirmation__account transfer-confirmation__account--to">
+                                <h3 class="transfer-confirmation__account-title">
+                                    Target account
+                                </h3>
+                                <p class="transfer-confirmation__target-account-value">
+                                    Account ending in 1234
+                                </p>
+                            </div>
+
+                        </div>
+
+                        <!-- Transfer Summary -->
+                        <div class="transfer-confirmation__summary mt-24 mb-24" aria-labelledby="transfer-summary-title">
+                            <h3 id="transfer-summary-title" class="transfer-confirmation__summary-title">
+                                Transfer summary
+                            </h3>
+
+                            <dl class="transfer-confirmation__summary-list mt-8">
+
+                                <div class="transfer-confirmation__summary-row flex flex-space-between">
+                                    <dt class="transfer-confirmation__summary-label">
+                                        Transfer amount
+                                    </dt>
+                                    <dd class="transfer-confirmation__summary-value">
+                                        £2,000
+                                    </dd>
+                                </div>
+
+                                <div class="transfer-confirmation__summary-row flex flex-space-between">
+                                    <dt class="transfer-confirmation__summary-label">
+                                        Estimated arrival
+                                    </dt>
+                                    <dd class="transfer-confirmation__summary-value">
+                                        Immediately
+                                    </dd>
+                                </div>
+
+                                <div class="transfer-confirmation__summary-row flex flex-space-between">
+                                    <dt class="transfer-confirmation__summary-label">
+                                        Transaction fee
+                                    </dt>
+                                    <dd class="transfer-confirmation__summary-value">
+                                        £0.00
+                                    </dd>
+                                </div>
+
+                            </dl>
+                        </div>
+
+                        <!-- Info Message -->
+                        <p id="transfer-confirmation-description" class="transfer-confirmation__info deactivate-text">
+                            Transfers may be delayed or returned due to network issues or account status.
+                        </p>
+                        
+                        <hr class="dividor">
+                        <!-- Actions -->
+                        <div class="transfer-confirmation__actions flex flex-end mt-8">
+                            <button type="button" class="transfer-confirmation__btn transfer-confirmation__btn--cancel btn-large"
+                                id="transfer-confirmation-cancel-btn">
+                                Close all
+                            </button>
+
+                            <button type="button" class="transfer-confirmation__btn transfer-confirmation__btn--confirm btn-large"
+                                id="transfer-confirmation-confirm-btn">
+                                Confirm transfer
+                            </button>
+                        </div>
+
+                    </div>
+
+
+
+                </section>
 
 
 

@@ -113,8 +113,8 @@ export function createSingleCreateCard(cardDetails) {
     cardOverlay.id = `card_${cardDetails.id}`;
     cardDiv.appendChild(cardOverlay);
 
-  
-    if (cardDetails.isCardBlocked) applyCardBlockStatus(cardDiv, cardDetails);
+   
+    if (!cardDetails.isActive) applyCardBlockStatus(cardDiv, cardDetails);
 
     return cardDiv;
 }
@@ -236,7 +236,7 @@ function createImageElementBasedOnCardType(cardDetails) {
  * @param {HTMLElement} cardDiv - Card container element.
  * @param {Object} cardDetails - Card data.
  */
-export function applyCardBlockStatus(cardDiv, cardDetails) {
+function applyCardBlockStatus(cardDiv, cardDetails) {
     if (!checkIfHTMLElement(cardDiv, "Card div element")) return;
 
     const overlayId = `card_${cardDetails.id}`;
@@ -297,7 +297,8 @@ export function createCardDetails(cardDetails) {
     { fieldName: "CVC", fieldValue: cardDetails.cardCVC },
     { fieldName: "Expiry date", fieldValue: cardDetails.expiryYear },
     { fieldName: "Creation Date", fieldValue: cardDetails.cardCreationDate },
-    { fieldName: "Issue Date", fieldValue: cardDetails.issueDate }
+    { fieldName: "Issue Date", fieldValue: cardDetails.issueDate },
+    { fieldName: "Is card active", fieldValue: cardDetails.isActive}
 ];
 
 

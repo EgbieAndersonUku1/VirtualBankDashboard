@@ -31,6 +31,7 @@
     --gradient-blue: linear-gradient(135deg, #0F4C81 0%, #1CB5E0 100%);
 
     --warning-color: #FFF8E1;
+    --accent: #38bdf8;;
 
 }
 
@@ -409,6 +410,10 @@ img:hover {
 .text-align-left {
     text-align: left;
 }
+
+.text-align-right {
+    text-align: right;
+}
 /* 
  * Fixed positioning centring (not layout centring).
  * Used when the element must be removed from normal flow and
@@ -489,6 +494,10 @@ img:hover {
 
 .flex-space-between {
     justify-content: space-between;
+}
+
+.flex-column {
+    flex-direction: column;
 }
 
 .flex-end {
@@ -1420,6 +1429,10 @@ label {
     line-height: 1.5;
 }
 
+
+#bank-transfer-quick-confirmation,
+#bank-funds-transfer__select-cards-panel,
+#bank-funds-transfer,
 #bank-account-view-transactions,
 #wallet-registration-code-explained {
     z-index: 100000;
@@ -1434,6 +1447,10 @@ label {
         visibility 200ms ease;
 }
 
+
+#bank-transfer-quick-confirmation.show,
+#bank-funds-transfer__select-cards-panel.show,
+#bank-funds-transfer.show,
 #bank-account-view-transactions.show,
 #wallet-registration-code-explained.show {
     opacity: 1;
@@ -1443,9 +1460,15 @@ label {
     transform: translate(-50%, -50%);
 }
 
+
+#bank-transfer-quick-confirmation.show,
+#bank-funds-transfer__select-cards-panel.show,
+#bank-funds-transfer.show.show,
 #bank-account-view-transactions.show {
     transform: initial;
 }
+
+
 
 
 /* help icon */
@@ -1618,6 +1641,8 @@ label {
   
     transform: translateY(-2px);
     box-shadow: 0 6px 16px rgba(16, 185, 129, 0.15);
+   
+    
 
 }
 
@@ -1635,6 +1660,7 @@ label {
 
 
 
+#transfer-submit,
 .bank-btn-continue {
     background: var(--blue-600);
     color: white;
@@ -3345,7 +3371,7 @@ clicks the button
 }
 
 .bank-card {
-
+   position: relative;
    font-size: 0.75rem;
    padding: var(--space-8);
    cursor: pointer;
@@ -3428,15 +3454,15 @@ clicks the button
   padding: var(--space-12);
 }
 
-#full-card-details-info p + p {
-    margin-top: var(--space-4)
-}
+
 
 
 .bank-card.is-selected {
   transform: scale(0.8);
   background: var(--red);
   transition: transform 0.4s linear;
+  border: 2px solid var(--blue-600);
+
 
 }
 
@@ -3510,4 +3536,195 @@ clicks the button
 .field-label,
 .field-value {
     font-size: 0.96rem;
+}
+
+
+#bank-funds-transfer__select-cards-panel,
+#bank-funds-transfer {
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 30%;
+    background: white;
+    bottom: 0;
+    z-index: 10000;
+}
+
+
+
+
+#bank-funds-transfer__select-cards-panel {
+    right: 30%;
+    width: 24%;
+    margin-right: 2px;
+   
+    display: flex;
+    flex-direction: column;
+
+    /* box-shadow: var(--box-shadow-primary); */
+}
+
+#bank-funds-transfer__select-cards-panel .bank-card  {
+    height: 180px;
+
+}
+
+
+#bank-funds-transfer select {
+    width: 100%;
+}
+
+
+.transfer-logo {
+    position: relative;
+    height: 150px;
+    width: 200px;
+}
+
+
+.transfer-logo img {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+}
+
+#bank-funds-transfer__select-cards-panel .bank-card {
+    box-shadow: unset;
+}
+
+
+
+/* textarea character count enforcer */
+
+  .light-red {
+    color: red;
+  }
+  
+  .black-color {
+    color: black;
+  }
+ 
+
+ .dark-green {
+    color: var(--dark-green); 
+  }
+
+  .character-usage-message {
+    font-size: 0.9rem;
+  }
+
+  
+  
+.card-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(255, 0, 0, 0.5);
+    color: white;
+    font-weight: bold;
+    font-size: 1.2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    pointer-events: none;
+    z-index: 10;
+}
+
+.card-is-blocked {
+    background: red;
+    opacity: 0.6;
+}
+
+
+.card-not-blocked {
+    border:5px solid green;
+    
+}
+
+
+
+#bank-funds-transfer__select-cards-panel {
+    /* Mainly for the sweetalert, without this the sweetalert popup appears behind select card panel */
+    z-index: 1000;
+}
+
+
+
+
+#bank-transfer-quick-confirmation {
+    position: fixed;
+    top: 0;
+    left: 25%;
+    background: white;
+    box-shadow: var(--box-shadow-primary);
+    z-index: 10000;
+    width: 45%;
+    cursor: pointer;
+    border-radius: 4%;
+   
+   
+}
+
+
+.transfer-confirmation__summary-list div {
+    border: 1px solid lavender;
+    padding-left: var(--space-8);
+    padding-right: var(--space-8);
+    padding-top: var(--space-8);
+    padding-bottom: var(--space-8);
+    background: #fff;
+ 
+
+}
+
+.transfer-confirmation__summary-list div:hover {
+  background: ghostwhite;
+
+}
+
+.transfer-confirmation__accounts {
+    border: 2px solid lavender;
+    padding: var(--space-8);
+}
+
+
+.transfer-confirmation__summary-list dd {
+    font-weight: 700;
+}
+
+
+#bank-transfer-quick-confirmation h3 {
+    font-size: 1rem;
+    text-transform: capitalize;
+  
+}
+
+.transfer-confirmation__actions {
+    column-gap: var(--space-8);
+  
+}
+
+.transfer-confirmation__actions button {
+    text-transform: capitalize;
+}
+
+
+.transfer-confirmation__btn--confirm {
+    background: var(--blue-600);
+    color: white;
+}
+
+
+
+
+#transfer-confirmation-description {
+    font-size: 0.9rem;
+}
+
+
+/* Override the SweetAlert and make sure it always on top of all the other elements */
+.swal2-container {
+    z-index: 1000000;
 }

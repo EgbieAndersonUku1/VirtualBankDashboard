@@ -15,11 +15,18 @@ import { logError } from "./logger.js";
  *   - requiredFields is not a non-empty array.
  *   - A required field is missing or its value is empty.
  * 
- * @example
- * const formData = new FormData();
- * formData.append("first_name", "Alice");
- * formData.append("email", "alice@example.com");
- * formData.append("mobile", "1234567890");
+ * @example`
+ * 
+ * <form id="profileForm">
+ *      <input type="text" name="first_name">
+ *      <input type="email" name="email">
+ *      <input type="tel" name="mobile">
+ *  </form>
+ * 
+ * const formElement = document.getElementById("profileForm")
+ * 
+ * const formData = new FormData(profileForm);
+ *
  * 
  * const requiredFields = ["first_name", "email", "mobile"];
  * const parsedData = parseFormData(formData, requiredFields);
@@ -187,6 +194,9 @@ export const profileCache = {
             return null;
         }
       
-        return false; // No update needed if data hasn't changed
+        return false; 
     }
 };
+
+
+
