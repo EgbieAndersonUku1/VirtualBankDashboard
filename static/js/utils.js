@@ -1,4 +1,4 @@
-import { logError } from "./logger.js";
+import { logError, warnError } from "./logger.js";
 import { specialChars } from "./specialChars.js";
 
   
@@ -670,3 +670,53 @@ export function selectElement(elementToSelect, cssSelectorElement = "active") {
     elementToSelect.classList.add(cssSelectorElement);
 }
 
+
+
+/**
+ * Parses a currency-formatted string and returns its numeric value.
+ *
+ * This function removes common currency symbols (e.g. £, $, €),
+ * whitespace (including non-breaking spaces), and thousands separators.
+ * It supports decimal values and negative amounts expressed either with
+ * a leading minus sign (e.g. "-£100") or parentheses (e.g. "(£100)").
+ *
+ * @param {string} value - The currency string to parse (e.g. "£1,234.56").
+ * @returns {number} The numeric representation of the currency value.
+ *                   Returns NaN if the value cannot be parsed. 
+ *                   Doesn't return 0 because 0 has the errors
+ *
+ * @example
+ * parseCurrency("£1,234.56") // 1234.56
+ * parseCurrency("(€99.99)")  // -99.99
+ * parseCurrency("-$100")     // -100
+ * parseCurrency("-$100??????????")     // -100
+ */
+export function parseCurrency(currency) {
+
+    if (typeof currency !== "string") {
+        warnError("parseCurrency",  {
+            currency: currency,
+            type: typeof currency,
+            error: "Must be a string"
+        })
+        return NaN;
+    }
+
+    const cleanedValues  = [];
+    let isNegative       = false;
+  
+    for (let char of currency) {
+      
+        if (!isNaN(char) && char !== " " || char === "." ) {
+            cleanedValues.push(char)
+        }
+        if (char === "-") {
+          isNegative = true;
+        }
+    }
+
+    if (cleanedValues.length === 0) return NaN;
+  
+    const cleanedNumbers = parseFloat(cleanedValues.join(""))
+    return isNegative ? cleanedNumbers * -1 : cleanedNumbers;
+}

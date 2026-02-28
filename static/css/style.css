@@ -1430,6 +1430,7 @@ label {
 }
 
 
+#bank-transfer-quick-confirmation,
 #bank-funds-transfer__select-cards-panel,
 #bank-funds-transfer,
 #bank-account-view-transactions,
@@ -1446,6 +1447,8 @@ label {
         visibility 200ms ease;
 }
 
+
+#bank-transfer-quick-confirmation.show,
 #bank-funds-transfer__select-cards-panel.show,
 #bank-funds-transfer.show,
 #bank-account-view-transactions.show,
@@ -1457,6 +1460,8 @@ label {
     transform: translate(-50%, -50%);
 }
 
+
+#bank-transfer-quick-confirmation.show,
 #bank-funds-transfer__select-cards-panel.show,
 #bank-funds-transfer.show.show,
 #bank-account-view-transactions.show {
@@ -3643,4 +3648,83 @@ clicks the button
 #bank-funds-transfer__select-cards-panel {
     /* Mainly for the sweetalert, without this the sweetalert popup appears behind select card panel */
     z-index: 1000;
+}
+
+
+
+
+#bank-transfer-quick-confirmation {
+    position: fixed;
+    top: 0;
+    left: 25%;
+    background: white;
+    box-shadow: var(--box-shadow-primary);
+    z-index: 10000;
+    width: 45%;
+    cursor: pointer;
+    border-radius: 4%;
+   
+   
+}
+
+
+.transfer-confirmation__summary-list div {
+    border: 1px solid lavender;
+    padding-left: var(--space-8);
+    padding-right: var(--space-8);
+    padding-top: var(--space-8);
+    padding-bottom: var(--space-8);
+    background: #fff;
+ 
+
+}
+
+.transfer-confirmation__summary-list div:hover {
+  background: ghostwhite;
+
+}
+
+.transfer-confirmation__accounts {
+    border: 2px solid lavender;
+    padding: var(--space-8);
+}
+
+
+.transfer-confirmation__summary-list dd {
+    font-weight: 700;
+}
+
+
+#bank-transfer-quick-confirmation h3 {
+    font-size: 1rem;
+    text-transform: capitalize;
+  
+}
+
+.transfer-confirmation__actions {
+    column-gap: var(--space-8);
+  
+}
+
+.transfer-confirmation__actions button {
+    text-transform: capitalize;
+}
+
+
+.transfer-confirmation__btn--confirm {
+    background: var(--blue-600);
+    color: white;
+}
+
+
+
+
+#transfer-confirmation-description {
+    font-size: 0.9rem;
+}
+
+
+/* Override the SweetAlert and make sure it always on top of all the other elements */
+.swal2-container {
+    z-index: 1000000;
 }
