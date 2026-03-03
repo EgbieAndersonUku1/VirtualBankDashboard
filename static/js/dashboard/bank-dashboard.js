@@ -1,11 +1,10 @@
-import { sanitizeText, formatCurrency, parseCurrency } from "../utils.js";
+import { sanitizeText, formatCurrency, parseCurrency, checkIfHTMLElement, deselectAllElements, selectElement, toTitle  } from "../utils.js";
 import { AlertUtils } from "../alerts.js";
-import { checkIfHTMLElement } from "../utils.js";
 import { cardImplementer, createCardDetails } from "../card/cardBuilder.js";
 import { minimumCharactersToUse } from "../utils/password/textboxCharEnforcer.js";
-import { deselectAllElements, selectElement } from "../utils.js";
 import { warnError } from "../logger.js";
 import { parseFormData } from "../formUtils.js";
+
 
 
 
@@ -53,13 +52,11 @@ const transferAmountElement = document.querySelector('.transfer-confirmation__su
 
 
 
-
-console.log(fundsTransferForm)
-
 const MAX_TRANSFER_AMOUNT = 1_000_000;
 let walletModalStep2Button;
 
-const excludeFields = new Set(["username", "email", "wallet-disconnect-inputfield", "transfer-type", "from", "to", "transaction-type", "transfer-amount"]);
+const excludeFields = new Set(["username", "email", "wallet-disconnect-inputfield", 
+                             "transfer-type", "from", "to", "transaction-type", "transfer-amount"]);
 const excludeTypes = new Set(["checkbox", "radio", "password", "email", "textarea"]);
 
 
@@ -94,13 +91,94 @@ const WalletWizardIds = {
 
 
 // TODO add one time checker here for one time static element check
-
 dashboardProfileElement.addEventListener("click", handleDropDownMenu);
 dashboard.addEventListener("click", handleDelegation);
 dashboard.addEventListener("change", handleDelegation)
 walletAuthForm.addEventListener("submit", handleWalletAuthForm);
 amountInputField.addEventListener("keydown", handleEnter);
 fundsTransferForm.addEventListener("submit", handleTransferForm)
+
+
+
+
+// records the select option for the select form,
+// so that can be displayed in the confirmation
+// modal panel.
+const transferFormSelectOption = {
+
+    optionSelection: null,
+
+    /**
+     * Stores the selected option for the form  e.g wallet or bank
+     * Only accepts a valid HTMLElement to prevent invalid state.
+     */
+    set(selection) {
+        this.optionSelection = selection
+    },
+
+    
+    /**
+     * Returns the selected option e.g "wallet" or "bank"
+     */
+    getSelection() {
+
+        return  this.optionSelection ? toTitle(this.optionSelection): null;
+    },
+
+    
+    /**
+     * Clears the option for the selection
+     */
+    clear() {
+        this.optionSelection = null;
+    }
+}
+
+
+
+/**
+ * Manages the open/closed state of the card selection panel.
+ *
+ * This object is used to track whether the card selection panel
+ * is currently open, allowing the application to handle user
+ * interactions appropriately (e.g., ensuring a target card is
+ * selected before confirming a transfer).
+ */
+const cardSelectionPanelState = {
+
+    /** Whether the card selection panel is open (true) or closed (false). */
+    isOpen: false,
+
+    /**
+     * Sets the panel state to open or closed.
+     *
+     * @param {boolean} open - True to open the panel, false to close. Defaults to false.
+     * @throws {Error} If `open` is not a boolean.
+     */
+    set(open = false) {
+        if (typeof open !== "boolean") {
+            throw new Error(`Expected boolean but received ${typeof open}: ${open}`);
+        }
+        this.isOpen = open;
+    },
+
+    /**
+     * Returns whether the panel is currently open.
+     *
+     * @returns {boolean} True if open, false if closed.
+     */
+    isPanelOpen() {
+        return this.isOpen;
+    },
+
+    /**
+     * Resets the panel state to closed.
+     */
+    clear() {
+        this.isOpen = false;
+    }
+
+};
 
 
 
@@ -407,7 +485,7 @@ function handleDelegation(e) {
     handleViewMoreInfoCardClick(e);
     handleCardPanelButtons(e);
     handleCardSelectionTimeout(e);
-    handleBankTransferFormFields(e);
+    handleBankTransferSelectFormOptions(e);
     handleTransferConfirmationButtonClick(e);
     handleTransferCancelConfirmationButtonClick(e)
 
@@ -1028,6 +1106,11 @@ function handleToggleViewBankTransactionPanel(e) {
         return;
     }
 
+    if (closePanelId) {
+    
+        toggleElement({ element: viewBankTransacionPanel, show: false });
+    }
+
 
 
 
@@ -1461,7 +1544,7 @@ function removeBankCardButtonsFromCardExtraView(remove = true) {
  */
 
 function handleCardSelectionTimeout() {
-    const MILLI_SECONDS = 5000;
+    const MILLI_SECONDS = 10000;
 
 
     // Must query elements dynamically each time because their visibility can change
@@ -1511,31 +1594,53 @@ function handleCardSelectionTimeout() {
  *
  * @example
  * // Attach this handler to the transfer type selector
- * transferTypeSelect.addEventListener('change', handleBankTransferFormFields);
+ * transferTypeSelect.addEventListener('change', handleBankTransferSelectFormOptions);
  */
-function handleBankTransferFormFields(e) {
+function handleBankTransferSelectFormOptions(e) {
     if (!e.target.matches("#transfer-type")) return
 
-    const select = e.target;
 
+    const select = e.target;
     const value = select.value;
 
-    const selectValueText = "another-card";
 
     // hide the select card panel if another option is selected.
-    if (value !== selectValueText) {
-        toggleElement({ element: selectCardsContainer, show: false });
-        handleTransferAmountConfirmation(false);
-        fundsTransferForm.reset();
 
-        return;
-    };
+    switch(value) {
+        case "another-card":
+            handleAnotherCardSelectTransferFormOption();
+            cardSelectionPanelState.set(true);
+            break;
+        case "wallet":
+            closeSelectCardTransferSidePanel();
+            cardSelectionPanelState.clear();
+            transferFormSelectOption.set("Wallet");
+            break;
+        case "bank":
+             closeSelectCardTransferSidePanel();
+             cardSelectionPanelState.clear();
+             transferFormSelectOption.set("bank");
+             break
 
-    toggleElement({ element: selectCardsContainer })
+    }
+
+   
+  
+}
+
+
+function closeSelectCardTransferSidePanel() {
+    toggleElement({ element: selectCardsContainer, show: false });
+    handleTransferAmountConfirmation(false);
+   
+}
+
+function handleAnotherCardSelectTransferFormOption() {
+      toggleElement({ element: selectCardsContainer })
 
     const selectedCard = selectedCardStore.get();
 
-    if (!selectedCard) return none;
+    if (!selectedCard) return;
 
     const cardBrand = selectedCard.dataset.cardBrand;
 
@@ -1554,7 +1659,7 @@ function handleBankTransferFormFields(e) {
 
             attachCardDetails(cardElement, cardDetails);
 
-            if (cardDetails.isActive) {
+            if (cardDetails.isActive && getCardDetailsFromElement(selectedCardStore.get()).cardId !== cardDetails.cardId) {
                 cardImplementer.placeCardDivIn(selectCardsContainer, cardElement, false)
             }
 
@@ -1563,8 +1668,6 @@ function handleBankTransferFormFields(e) {
 
 
 }
-
-
 
 /**
  * Attaches card metadata to a DOM card element using data attributes.
@@ -1635,22 +1738,30 @@ function renderTransferCardSelectionMessage() {
  * fundsTransferForm.addEventListener('submit', handleTransferForm);
  */
 function handleTransferForm(e) {
-    e.preventDefault();
+    e.preventDefault(); 
 
-    const hiddenInputFieldSelector = ".transfer-hidden-field";
-    const hiddenInputValue = Array.from(document.querySelectorAll(hiddenInputFieldSelector));
+    // console.log("I am in the transfer form")
 
-    const [sourceCardId, targetCardId] = extractSourceAndCardIdFromHiddenField(hiddenInputValue);
+    if (cardSelectionPanelState.isPanelOpen()) {
 
-    const resp = assertTransferSelection({ sourceCardId: sourceCardId, targetCardId: targetCardId })
+        const hiddenInputFieldSelector = ".transfer-hidden-field";
+        const hiddenInputValue = Array.from(document.querySelectorAll(hiddenInputFieldSelector));
 
-    if (!resp) return;
+        const [sourceCardId, targetCardId] = extractSourceAndCardIdFromHiddenField(hiddenInputValue);
+
+        const resp = assertTransferSelection({ sourceCardId: sourceCardId, targetCardId: targetCardId })
+
+        if (!resp) return;
+    
+    }
 
     const hasFunds = assertSourceCardHasFunds();
     if (!hasFunds) return;
 
+
     handleTransferAmountConfirmation();
-    updateConfirmationPanel(getTransferFormObject(fundsTransferForm))
+    const recipientAccount = getRecipientAccountType()
+    updateConfirmationPanel(getTransferFormObject(fundsTransferForm), recipientAccount);
 
 }
 
@@ -1731,7 +1842,10 @@ function assertTransferSelection({
     context = "assertTransferSelection"
 }) {
 
-
+    console.log( {
+        sourceCardId: sourceCardId,
+        targetCardId: targetCardId
+    })
     if (!sourceCardId || !targetCardId) {
         AlertUtils.showAlert({
             title: "Unable to continue",
@@ -1791,7 +1905,6 @@ function assertTransferSelection({
  */
 function extractSourceAndCardIdFromHiddenField(hiddenInputValue) {
 
-    console.log(hiddenInputValue)
     const EXPECTED_RETURN_VALUE = 2;
     if (!hiddenInputValue || hiddenInputValue.length < EXPECTED_RETURN_VALUE) {
         return [null, null];
@@ -1827,43 +1940,74 @@ function handleTransferAmountConfirmation(show = true) {
 
 
 
+/**
+ * Resolves the recipient account for the current transfer.
+ *
+ * If a recipient type is selected from the transfer form that is used excluding "another-card".
+ *  The options are "another-card", "wallet" or "bank" that value is returned.
+ * 
+ * However, If "bank" or "wallet" wasn't selected the recipient type becomes (null), 
+ * and the function falls back to the "another-card" as the selection picked
+ *
+ *
+ * @returns {string|null} The resolved recipient account identifier,
+ * or null if none can be determined.
+ */
+function getRecipientAccountType() {
+
+    const recipientType = transferFormSelectOption.getSelection();
+    let transferToAccount;
+
+    if (recipientType === null) {
+
+        const targetCardHiddenValue = document.getElementById("transfer-to-card-number")
+
+        if (!(sourceCardNumberElement && targetCardNumberElement && transferAmountElement)) {
+
+            warnError("updateConfirmationPanel", {
+                sourceCardNumberElement: sourceCardNumberElement,
+                targetCardNumberElement: targetCardNumberElement,
+                transferAmountElement: transferAmountElement,
+            })
+            return;
+         }
+
+         transferToAccount = targetCardHiddenValue && targetCardHiddenValue !== undefined ? targetCardHiddenValue.value : null
+    } else {
+        transferToAccount = recipientType;
+    }
+    return transferToAccount
+}
 
 
 /**
- * Updates the transfer confirmation panel with the current transfer details.
+ * Renders the transfer confirmation panel.
  *
- * This function populates the confirmation panel UI with:
- *  - The source card number (from the selected card)
- *  - The target card number (from a hidden input field)
- *  - The transfer amount (formatted as currency)
+ * Displays the selected source card, recipient type,
+ * and formatted transfer amount.
  *
- * If any of the required elements (`sourceCardNumberElement`, `targetCardNumberElement`, `transferAmountElement`)
- * are missing, it logs a warning and exits early.
- *
- * @param {Object} formData - An object containing transfer details.
- * @param {string|number} formData.transferAmount - The amount to transfer.
- *
- * @example
- * const formData = getTransferFormObject(fundsTransferForm);
- * updateConfirmationPanel(formData);
+ * @param {Object} formData
+ * @param {string|number} formData.transferAmount
+ * @param {string} recipientType
  */
-function updateConfirmationPanel(formData) {
+function updateConfirmationPanel(formData, recipientType) {
 
-    const targetCardHiddenValue = document.getElementById("transfer-to-card-number")
-
-
-    if (!(sourceCardNumberElement && targetCardNumberElement && transferAmountElement)) {
+  
+    // If recipient account is nulll it means that the user has selected "bank" or "wallet" from the select transfer form
+    if (recipientType === null || typeof recipientType !== "string")  {
         warnError("updateConfirmationPanel", {
-            sourceCardNumberElement: sourceCardNumberElement,
-            targetCardNumberElement: targetCardNumberElement,
-            transferAmountElement: transferAmountElement,
+            recipientType: recipientType,
+            type: typeof recipientType,
+            expected: "Expected a string value",
+            
         })
         return;
-    }
+      
+    } 
 
     sourceCardNumberElement.textContent = getCardDetailsFromElement(selectedCardStore.get()).cardNumber;
-    targetCardNumberElement.textContent = targetCardHiddenValue && targetCardHiddenValue !== undefined ? targetCardHiddenValue.value : null;
-    transferAmountElement.textContent = formatCurrency(formData.transferAmount)
+    targetCardNumberElement.textContent = recipientType;
+    transferAmountElement.textContent   = formatCurrency(formData.transferAmount)
 
 }
 
@@ -1934,7 +2078,6 @@ async function handleTransferConfirmationButtonClick(e) {
         // simulation - The console log will be replaced by a real fetch API but for now it is a console.log
 
         const formData = getTransferFormObject(fundsTransferForm);
-
         console.log(`fetch data sent to the backend note=${formData.note} and amount amount=${formData.transferAmount}`);
         closeAllRelatedTransferPanels();
         return;
@@ -1960,6 +2103,7 @@ async function handleTransferConfirmationButtonClick(e) {
  *  - Extra card info view
  *  - Card transfer form section
  *  - Card selection container
+ *  - Deselects all cards
  *
  * It also:
  *  - Removes bank card buttons from the extra card view
@@ -1981,5 +2125,12 @@ function closeAllRelatedTransferPanels() {
 
     removeBankCardButtonsFromCardExtraView();
     handleTransferAmountConfirmation(false)
+    deselectAllCards();
+    resetTransferForm();
+    cardSelectionPanelState.clear();
+}
 
+
+function resetTransferForm() {
+    fundsTransferForm.reset()
 }
