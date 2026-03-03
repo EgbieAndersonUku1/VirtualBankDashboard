@@ -683,7 +683,7 @@ export function selectElement(elementToSelect, cssSelectorElement = "active") {
  * @param {string} value - The currency string to parse (e.g. "£1,234.56").
  * @returns {number} The numeric representation of the currency value.
  *                   Returns NaN if the value cannot be parsed. 
- *                   Doesn't return 0 because 0 has the errors
+ *                   Doesn't return 0 because 0 hides the errors
  *
  * @example
  * parseCurrency("£1,234.56") // 1234.56
@@ -710,7 +710,7 @@ export function parseCurrency(currency) {
         if (!isNaN(char) && char !== " " || char === "." ) {
             cleanedValues.push(char)
         }
-        if (char === "-") {
+        if (char === "-" && !isNegative) {
           isNegative = true;
         }
     }
