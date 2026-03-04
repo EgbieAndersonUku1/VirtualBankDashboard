@@ -529,7 +529,8 @@
                                     <h3 class="mt-16 mb-4">Note</h3>
                                     <p>
                                         Select a card to view extra information. If a card is selected and the
-                                        <span class="light-bold">view card details</span> button is not clicked within 10
+                                        <span class="light-bold">view card details</span> button is not clicked within
+                                        10
                                         seconds,
                                         the card will automatically be deselected.
                                     </p>
@@ -1853,7 +1854,7 @@
                                 <label for="transfer-type">Transfer source</label>
                                 <select name="transfer-type" id="transfer-type" required>
                                     <option value="" disabled selected>Select source</option>
-                                    <option value="bank" >Bank</option>
+                                    <option value="bank">Bank</option>
                                     <option value="wallet">Wallet</option>
                                     <option value="another-card">Another card</option>
                                 </select>
@@ -1863,24 +1864,19 @@
                                 <label for="transfer-amount">Transfer Amount</label>
                                 <input type="number" id="transfer-amount" step="0.01" min="0.01" value="0.00"
                                     name="transfer-amount" required>
+                                <small class="helper-text">
+                                    Minimum amount is 0.01.
+                                </small>
                             </div>
 
-                            <div class="form-row">
-
-                            </div>
 
                             <div class="form-row flex-grid">
                                 <label for="note">Note</label>
-                                <textarea name="note" id="bank-transfer-note" rows="5" maxlength="250" name="note"
-                                    required></textarea>
-                                <p class="num-of-characters-remaining text-align-right character-usage-message">Minimum
-                                    characters to use: 50</p>
-                                <p class="num-of-characters-to-use text-align-right character-usage-message">Number of
-                                    characters remaining: 255</p>
+                                <textarea name="note" id="bank-transfer-note" rows="5" maxlength="250" name="note" required></textarea>
+                                <p class="num-of-characters-remaining text-align-right character-usage-message">Minimum characters to use: 50</p>
+                                <p class="num-of-characters-to-use text-align-right character-usage-message">Number of characters remaining: 255</p>
 
                             </div>
-
-
 
 
                             <div class="form-row">
@@ -1915,7 +1911,7 @@
                     aria-modal="true" aria-labelledby="transfer-confirmation-title"
                     aria-describedby="transfer-confirmation-description">
 
-                     <!-- Modal Header -->
+                    <!-- Modal Header -->
                     <div class="flex flex-space-between pl-48 pt-8 pb-4 pr-24 modal-top">
                         <h3 id="connect-wallet-title" class="capitalise pt-8 pb-8">Confirm Transfer</h3>
                         <button aria-label="Close modal" class="modal-close-btn" id="connect-modal-close-btn">
@@ -1951,7 +1947,8 @@
                         </div>
 
                         <!-- Transfer Summary -->
-                        <div class="transfer-confirmation__summary mt-24 mb-24" aria-labelledby="transfer-summary-title">
+                        <div class="transfer-confirmation__summary mt-24 mb-24"
+                            aria-labelledby="transfer-summary-title">
                             <h3 id="transfer-summary-title" class="transfer-confirmation__summary-title">
                                 Transfer summary
                             </h3>
@@ -1992,16 +1989,18 @@
                         <p id="transfer-confirmation-description" class="transfer-confirmation__info deactivate-text">
                             Transfers may be delayed or returned due to network issues or account status.
                         </p>
-                        
+
                         <hr class="dividor">
                         <!-- Actions -->
                         <div class="transfer-confirmation__actions flex flex-end mt-8">
-                            <button type="button" class="transfer-confirmation__btn transfer-confirmation__btn--cancel btn-large"
+                            <button type="button"
+                                class="transfer-confirmation__btn transfer-confirmation__btn--cancel btn-large"
                                 id="transfer-confirmation-cancel-btn">
                                 Close all
                             </button>
 
-                            <button type="button" class="transfer-confirmation__btn transfer-confirmation__btn--confirm btn-large"
+                            <button type="button"
+                                class="transfer-confirmation__btn transfer-confirmation__btn--confirm btn-large"
                                 id="transfer-confirmation-confirm-btn">
                                 Confirm transfer
                             </button>
@@ -2014,6 +2013,84 @@
                 </section>
 
 
+                <!-- Add funds -->
+                <section id="add-funds" aria-labelledby="add-funds-title">
+
+                    <div class="add-funds__container">
+
+                        <header class="center">
+                            <h1 id="add-funds-title">Add Funds</h1>
+                        </header>
+
+                        <div class="container-logo center">
+                            <img src="/static/images/icons/funding-img.png"
+                                alt="Illustration representing adding funds to an account" width="160" height="160">
+                        </div>
+
+                        <form action="" id="add-funds-form" class="p-48">
+
+                            <div>
+                                <span class="sr-only">Funding details</span>
+
+                                <!-- Source Selection -->
+                                <div class="form-row flex-grid">
+                                    <label for="select-source" class="light-bold">Fund from*</label>
+
+                                    <select name="select-source" id="select-source" required
+                                        aria-describedby="primary-card-info" required>
+                                        <option value="" disabled selected>Select a source*</option>
+                                        <option value="bank">Bank Account</option>
+                                        <option value="wallet">Wallet</option>
+                                        <option value="primary">Primary Card</option>
+                                    </select>
+
+                                    <!-- Contextual helper (hidden by default via CSS/JS) -->
+                                    <small id="primary-card-info" class="helper-text hidden" aria-live="polite">
+                                        Uses your default card set in Settings.
+                                    </small>
+                                </div>
+
+                                <!-- Amount -->
+                                <div class="form-row flex-grid">
+                                    <label for="fund-amount" class="light-bold">Amount*</label>
+
+                                    <input type="number" id="fund-amount" name="fund-amount" step="0.01" min="0.01"
+                                        inputmode="decimal" placeholder="0.00" required aria-describedby="amount-help">
+
+                                    <small id="amount-help" class="helper-text">
+                                        Minimum amount is 0.01.
+                                    </small>
+                                </div>
+
+                                <!-- Note -->
+                                <div class="form-row flex-grid">
+                                    <label for="note" class="light-bold">Note*</label>
+                                    <textarea name="note" id="add-funds-note" rows="5" maxlength="250" name="note"
+                                        required></textarea>
+                                    <p class="num-of-characters-remaining text-align-right character-usage-message">
+                                        Minimum
+                                        characters to use: 50</p>
+                                    <p class="num-of-characters-to-use text-align-right character-usage-message">Number
+                                        of
+                                        characters remaining: 255</p>
+
+                                </div>
+
+                              
+
+                            </div>
+
+                            <!-- Submit -->
+                            <div class="button mt-16 mb-16">
+                                <button type="submit" class="btn-large">
+                                    Add Funds
+                                </button>
+                            </div>
+
+                        </form>
+
+                    </div>
+                </section>
 
                 <!-- The footer section -->
                 <footer>

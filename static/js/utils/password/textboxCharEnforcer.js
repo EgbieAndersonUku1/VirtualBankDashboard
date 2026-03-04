@@ -69,6 +69,13 @@
  * 
  * 
  */
+
+
+// Todo finish the cache, so it can handle different text areas
+const textAreaContainer = {
+   
+};
+
 export function minimumCharactersToUse(textAreaElement, params) {
     if (!textAreaElement || !(textAreaElement instanceof HTMLTextAreaElement)) {
         console.error("Error: Invalid textarea element provided.");
@@ -130,18 +137,29 @@ function handleCharacterCountEvent(e, params) {
  * @param {string} message - The message to display..
  */
 function handleCharCount(e, limit, classSelector, message) {
+
+    if (!e || !e.target) return;
+
+    const textAreaElement = e.target;
+
+    const charsUsed = textAreaElement.value.length;
+    const charsRemaining = limit - charsUsed;
+
+    // Scope search to the textarea's immediate parent container
+
+    if (!textAreaContainer.cache) {
+         textAreaContainer.cache = textAreaElement.parentElement;
+
+         console.log("The textarea container is called once")
+    }
    
-    if (e && e.target) {
-         const charsUsed = e.target.value.length;
-         const charsRemaining = limit - charsUsed;
-         const outputElement = document.querySelector(classSelector);
-         updateTextString(outputElement, charsRemaining, limit, message)
-    } 
-   
-   
+
+    if (!textAreaContainer.cache) return;
+
+    const outputElement = textAreaContainer.cache.querySelector(classSelector);
+
+    updateTextString(outputElement, charsRemaining, limit, message);
 }
-
-
 
 /**
  * Updates the text content and styles of the string element.
@@ -152,6 +170,7 @@ function handleCharCount(e, limit, classSelector, message) {
  */
 function updateTextString(stringElement, charsRemaining, limit, msg) {
     const EMPTY_VALUE = 0;
+
     if (!stringElement || !(stringElement instanceof HTMLElement)) {
         throw new Error("The stringElement is either empty or is not a HTML element")
     }
@@ -167,6 +186,7 @@ function updateTextString(stringElement, charsRemaining, limit, msg) {
             stringElement.classList.add("black-color");
             break;
         case charsRemaining < EMPTY_VALUE:
+
             stringElement.classList.add("dark-green");
             break;
         case charsRemaining < limit:

@@ -43,34 +43,40 @@ const selectCardsContainer = document.getElementById("bank-funds-transfer__selec
 const transferFormTextArea = document.getElementById("bank-transfer-note");
 const fundsTransferForm = document.getElementById("funds-transfer-form")
 const askTransferConfirmationPanel = document.getElementById("bank-transfer-quick-confirmation");
-
+const fundsFormTextArea = document.getElementById("add-funds-note");
 const sourceCardNumberElement = document.querySelector(".transfer-confirmation__source-account-value");
 const targetCardNumberElement = document.querySelector(".transfer-confirmation__target-account-value");
 const transferAmountElement = document.querySelector('.transfer-confirmation__summary-value');
 
+
+
 // hidden form values
-
-
-
 const MAX_TRANSFER_AMOUNT = 1_000_000;
 let walletModalStep2Button;
 
-const excludeFields = new Set(["username", "email", "wallet-disconnect-inputfield", 
-                             "transfer-type", "from", "to", "transaction-type", "transfer-amount"]);
+const excludeFields = new Set(["username", "email", "wallet-disconnect-inputfield",
+                             "transfer-type", "from", "to", "transaction-type", "transfer-amount", "fund-amount", "select-source"]);
 const excludeTypes = new Set(["checkbox", "radio", "password", "email", "textarea"]);
 
 
-// controls the number of characters the user can use in the textarea form for the transfer
-minimumCharactersToUse(transferFormTextArea, {
-    minCharClass: ".num-of-characters-remaining",
-    maxCharClass: ".num-of-characters-to-use",
-    minCharMessage: "Minimum characters to use: ",
-    maxCharMessage: "Number of characters remaining: ",
-    minCharsLimit: 50,
-    maxCharsLimit: 255,
-    disablePaste: true,
+// // controls the number of characters the user can use in the textarea form for the transfer
+[transferFormTextArea, fundsFormTextArea].forEach((textArea) => {
+    console.log(textArea)
+    minimumCharactersToUse(textArea, {
+        minCharClass: ".num-of-characters-remaining",
+        maxCharClass: ".num-of-characters-to-use",
+        minCharMessage: "Minimum characters to use: ",
+        maxCharMessage: "Number of characters remaining: ",
+        minCharsLimit: 50,
+        maxCharsLimit: 255,
+        disablePaste: true,
 })
 
+})
+
+
+
+// controls the number of characters the user can use in the textarea form for the funds area
 
 
 // Constants for wallet modal element IDs
@@ -332,8 +338,17 @@ function handleDropDownMenu(e) {
          * Handles deletion navigation in auth input fields.
          * @param {KeyboardEvent} e Key event.
          */
-        handleBackspaceOrDelete(e) {
-            if (e.key === "Backspace" || e.key === "Delete") {
+        handleBackspaceOrDelete(e, excludeFields) {
+            let foundId = false;
+
+            if (Array.isArray(excludeFields)) {
+                excludeFields.forEach((id) => {
+                    if (e.target.id === id) {
+                        foundId = true;
+                    }
+                })
+            }
+            if ((e.key === "Backspace" || e.key === "Delete") && !foundId) {
                 this.handleWalletConnectAuthInputFields(e, true);
             }
         },
@@ -454,7 +469,8 @@ dashboard.addEventListener("input", (e) => {
 });
 
 dashboard.addEventListener("keydown", (e) => {
-    WalletWizard.handleBackspaceOrDelete(e);
+    const excludeFieldIds = ["add-funds-note", "bank-transfer-note"]
+    WalletWizard.handleBackspaceOrDelete(e, excludeFieldIds);
 });
 
 
@@ -2134,3 +2150,8 @@ function closeAllRelatedTransferPanels() {
 function resetTransferForm() {
     fundsTransferForm.reset()
 }
+
+
+
+
+

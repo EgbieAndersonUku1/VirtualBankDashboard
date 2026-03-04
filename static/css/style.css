@@ -3606,7 +3606,7 @@ clicks the button
  
 
  .dark-green {
-    color: var(--dark-green); 
+    color: var(--green-600); 
   }
 
   .character-usage-message {
@@ -3728,3 +3728,27 @@ clicks the button
 .swal2-container {
     z-index: 1000000;
 }
+
+
+#add-funds {
+    position: fixed;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    width: 75%;
+    box-shadow: var(--box-shadow-primary);
+    background: white;
+    overflow-y: scroll;
+    overflow-x: hidden;
+}
+
+#add-funds-form {
+    width: 60%;
+    margin: auto;
+}
+
+.container-logo img {
+    height: 200px;
+    width: 300px;
+}
+
