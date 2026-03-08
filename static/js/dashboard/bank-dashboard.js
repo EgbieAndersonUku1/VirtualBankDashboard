@@ -1,11 +1,17 @@
-import { handleBankFundInput, handleBankCardTypes, handleFundAccountBtn, handleToggleAddFundsPanel } from "./bank-panel/bank-account__add-funds.js";
+import { handleBankFundInput, 
+         handleBankCardTypes,
+         handleFundAccountBtn,
+         handleToggleAddFundsPanel } from "./bank-panel/bank-account__add-funds.js";
 import { handleToggleViewBankTransactionPanel } from "./bank-panel/bank-account_view-transactions.js";
+import { WalletWizard } from "./my-wallet-panel/connect-wallet.js";
+import { config } from "./config.js";
 
-const dashboard = document.getElementById("dashboard");
 
-// TODO add one time checker here for one time static element check
+const dashboard = config.DASHBOARD_ELEMENT; // shared element
+
+
 dashboard.addEventListener("click", handleDelegation);
-dashboard.addEventListener("change", handleDelegation)
+dashboard.addEventListener("change", handleDelegation);
 
 
 
@@ -22,15 +28,11 @@ function handleDelegation(event) {
     handleToggleAddFundsPanel(event);
 
     // handles view transactions for the bank account panel
-    handleToggleViewBankTransactionPanel(event)
+    handleToggleViewBankTransactionPanel(event);
+
+    // handles the my wallet panel
+    WalletWizard.handleWalletConnectionSteps(event);
+
 
 
 }
-
-
-
-
-
-
-
-

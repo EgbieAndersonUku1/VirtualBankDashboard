@@ -91,7 +91,7 @@ function handleEnter(event) {
  * plusButton.addEventListener('click', handleBankFundInput);
  * minusButton.addEventListener('click', handleBankFundInput);
  */
-export function handleBankFundInput(e) {
+export function handleBankFundInput(event) {
 
     switch (event.target.id) {
         case "plus":
