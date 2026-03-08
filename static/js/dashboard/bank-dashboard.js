@@ -30,7 +30,7 @@ function handleDelegation(event) {
     // handles view transactions for the bank account panel
     handleToggleViewBankTransactionPanel(event);
 
-    // handles the my wallet panel
+    // handles the my wallet panel connection
     WalletWizard.handleWalletConnectionSteps(event);
 
 
