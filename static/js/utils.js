@@ -720,3 +720,26 @@ export function parseCurrency(currency) {
     const cleanedNumbers = parseFloat(cleanedValues.join(""))
     return isNegative ? cleanedNumbers * -1 : cleanedNumbers;
 }
+
+
+
+/**
+ * Toggles the visibility of a DOM element.
+ * @param {Object} options - Options object.
+ * @param {HTMLElement} options.element - The element to toggle.
+ * @param {cSSSelector} - The selector for the element
+ * @param {boolean} options.show - Whether to show (true) or hide (false) the element.
+ * @returns {void}
+ */
+
+export function toggleElement({ element, cSSSelector = "show", show = true }) {
+    if (!checkIfHTMLElement(element, "Unknown"));
+
+    if (show) {
+        element.classList.add(cSSSelector);
+        return;
+    }
+
+    element.classList.remove(cSSSelector);
+}
+
