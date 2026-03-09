@@ -5,6 +5,7 @@ import { handleBankFundInput,
 import { handleToggleViewBankTransactionPanel } from "./bank-panel/bank-account_view-transactions.js";
 import { WalletWizard } from "./my-wallet-panel/connect-wallet.js";
 import { config } from "./config.js";
+import { handleStatusButtonClick } from "./my-wallet-panel/status.js";
 
 
 const dashboard = config.DASHBOARD_ELEMENT; // shared element
@@ -32,6 +33,9 @@ function handleDelegation(event) {
 
     // handles the my wallet panel connection
     WalletWizard.handleWalletConnectionSteps(event);
+
+    // handle the status button when clicked for my wallet panel
+    handleStatusButtonClick(event);
 
 
 

@@ -7,7 +7,7 @@ if (!checkIfHTMLElement("dashboard", {
     dashboardElement: dashboard,
     extraInfo: "Expected a dashboard element",
     error: "Invalid element type"
-}, )) {
+}, true)) {
 
 }
 

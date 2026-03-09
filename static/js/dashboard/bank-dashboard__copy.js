@@ -1,4 +1,4 @@
-// A copy of the bank-dashboard.js to use as clean up is done since the main functions in the file no longer exists.
+
 
 import { sanitizeText, formatCurrency, parseCurrency, checkIfHTMLElement, deselectAllElements, selectElement, toTitle  } from "../utils.js";
 import { AlertUtils } from "../alerts.js";
@@ -49,8 +49,7 @@ const fundsFormTextArea = document.getElementById("add-funds-note");
 const sourceCardNumberElement = document.querySelector(".transfer-confirmation__source-account-value");
 const targetCardNumberElement = document.querySelector(".transfer-confirmation__target-account-value");
 const transferAmountElement = document.querySelector('.transfer-confirmation__summary-value');
-const addFundsdPanel      = document.getElementById("add-funds");
-const addFundsForm        = document.getElementById("add-funds-form");
+
 
 
 // hidden form values
@@ -105,8 +104,8 @@ dashboard.addEventListener("click", handleDelegation);
 dashboard.addEventListener("change", handleDelegation)
 walletAuthForm.addEventListener("submit", handleWalletAuthForm);
 amountInputField.addEventListener("keydown", handleEnter);
-fundsTransferForm.addEventListener("submit", handleTransferForm);
-addFundsForm.addEventListener("submit", handleAddFundForm)
+fundsTransferForm.addEventListener("submit", handleTransferForm)
+
 
 
 
@@ -494,20 +493,19 @@ function handleDelegation(e) {
 
     WalletWizard.handleWalletConnectionSteps(e);
     handleStatusButtonClick(e);
-    handleBankFundInput(e);
-    handleBankCardTypes(e);
-    handleFundAccountBtn(e);
-    handleToggleAddFundsPanel(e);
-    handleTableHightlight(e);
-    handleToggleViewBankTransactionPanel(e);
-    handleCardClick(e);
-    handleViewMoreInfoCardClick(e);
-    handleCardPanelButtons(e);
-    handleCardSelectionTimeout(e);
-    handleBankTransferSelectFormOptions(e);
-    handleTransferConfirmationButtonClick(e);
-    handleTransferCancelConfirmationButtonClick(e);
-    handleAddFunds(e)
+    // handleBankFundInput(e);
+    // handleBankCardTypes(e);
+    // handleFundAccountBtn(e);
+    // handleToggleAddFundsPanel(e);
+    // handleTableHightlight(e);
+    // handleToggleViewBankTransactionPanel(e);
+    // handleCardClick(e);
+    // handleViewMoreInfoCardClick(e);
+    // handleCardPanelButtons(e);
+    // handleCardSelectionTimeout(e);
+    // handleBankTransferSelectFormOptions(e);
+    // handleTransferConfirmationButtonClick(e);
+    // handleTransferCancelConfirmationButtonClick(e)
 
 
 
@@ -737,6 +735,7 @@ async function handleTestConnection() {
         cancelMessage: "No changes were made."
     });
 }
+
 
 /**
  * Toggles visibility of various status and confirmation panels
@@ -1781,8 +1780,7 @@ function handleTransferForm(e) {
 
     handleTransferAmountConfirmation();
     const recipientAccount = getRecipientAccountType()
-    const requiredFields   =  ["transfer-amount", "note"];
-    updateConfirmationPanel(getTransferFormObject(fundsTransferForm, requiredFields), recipientAccount);
+    updateConfirmationPanel(getTransferFormObject(fundsTransferForm), recipientAccount);
 
 }
 
@@ -1823,19 +1821,8 @@ function assertSourceCardHasFunds() {
  * const formObject = getTransferFormObject(fundsTransferForm);
  * // formObject = { "transfer-amount": "100", "note": "Payment for invoice #123" }
  */
-function getTransferFormObject(transferForm, requiredFields) {
-
-    if (!Array.isArray(requiredFields)) {
-        warnError("getTransferFormObject", {
-            expectedField: "Expected an array",
-            receivedField: typeof requiredFields,
-            default: "An empty array will be used []",
-            
-        })
-      return;
-
-    }
-    
+function getTransferFormObject(transferForm) {
+    const requiredFields = ["transfer-amount", "note"];
     return parseFormData(new FormData(transferForm), requiredFields);
 }
 
@@ -2168,64 +2155,6 @@ function resetTransferForm() {
 }
 
 
-function handleAddFunds(e) {
-    console.log(e.target.id)
-    const addFundBtnId = "card-add-btn";
-    if (e.target.id !== addFundBtnId) return;
 
-    toggleElement({element: addFundsdPanel  })
-    // console.log(e.target.id)
-}
-
-
-
-
-
-/**
- * Handles the submission of the transfer form.
- *
- * This function:
- * 1. Extracts source and target card IDs from hidden input fields.
- * 2. Validates the card selection using `assertTransferSelection`.
- *    - If validation fails, the function exits early.
- * 2. Shows the transfer amount confirmation panel.
- * 2. Updates the confirmation panel with the current transfer details.
- *
- * @param {Event} e - The form submission event.
- *
- * @example
- * // Attach this handler to the transfer form
- * fundsTransferForm.addEventListener('submit', handleTransferForm);
- */
-async function handleAddFundForm(e) {
-    e.preventDefault(); 
-    const requiredFields = ["select-source", "fund-amount", "note"]
-    const formData = getTransferFormObject(addFundsForm, requiredFields);
-
-    const confirm = await AlertUtils.showConfirmationAlert({
-        title: "Fund card",
-        text: `You about to fund ${formatCurrency(formData.fundAmount)} to your card. Do you want to continue?`,
-        icon: "info",
-        messageToDisplayOnSuccess: "Funds updated",
-        cancelMessage: "No action taken",
-        confirmButtonText: "Fund",
-        denyButtonText: "Don't fund!"
-    })
-   
-    if (!confirm) return;
-
-    // A fetch will be used used here but for now we simulate it by using a console.log
-    console.log("You card has been funded");
-
-    handleAddFundsToCardSuccess();
-   
-}
-
-
-
-function handleAddFundsToCardSuccess() {
-    toggleElement({element: addFundsdPanel, show: false});
-    addFundsForm.reset();   
-}
 
 
