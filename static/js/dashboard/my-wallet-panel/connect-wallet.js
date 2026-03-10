@@ -428,7 +428,7 @@ async function handleWalletLinkFormSubmission(event) {
         text: "This will securely link your wallet so funds can move between accounts.",
         confirmButtonText: "Link account",
         messageToDisplayOnSuccess: "The accounts have been linked",
-        denyButtonText: "Cancel",
+        denyButtonText: "Don't link!",
         cancelMessage: "Wallet linking cancelled."
     });
 

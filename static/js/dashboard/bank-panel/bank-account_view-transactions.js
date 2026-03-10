@@ -54,8 +54,10 @@ const buttonCache = {
  */
 export function handleToggleViewBankTransactionPanel(event) {
 
+
     const viewTransactionButtonId = "view-transaction-btn";
-    const closePanelId            = "close-transaction-panel";
+    const closePanelId = "close-transaction-panel";
+
 
     if (buttonCache.view === null && buttonCache.close === null) {
     
@@ -64,7 +66,10 @@ export function handleToggleViewBankTransactionPanel(event) {
           buttonCache.close = event.target.closest(`#${closePanelId}`);
     }
   
-    if (!buttonCache.view && !buttonCache.close) return;
+    if (!buttonCache.view && !buttonCache.close) {
+        console.log("View transaction button and close transaction button are not applicable exisiting");
+        return;
+    };
 
     if (event.target.id === viewTransactionButtonId) {
         toggleElement({ element: viewBankTransacionPanel });

@@ -6,7 +6,8 @@ import { handleToggleViewBankTransactionPanel } from "./bank-panel/bank-account_
 import { WalletWizard } from "./my-wallet-panel/connect-wallet.js";
 import { config } from "./config.js";
 import { handleStatusButtonClick } from "./my-wallet-panel/status.js";
-
+import { handleCardClick } from "./credit-card-overview/card-overview.js";
+import { handleViewMoreInfoCardClick } from "./credit-card-overview/card-view.js";
 
 const dashboard = config.DASHBOARD_ELEMENT; // shared element
 
@@ -37,6 +38,10 @@ function handleDelegation(event) {
     // handle the status button when clicked for my wallet panel
     handleStatusButtonClick(event);
 
+    // handles the clicking of the card, and the view more link in the card overview
+    handleCardClick(event);
+    handleViewMoreInfoCardClick(event);
 
 
 }
+

@@ -32,12 +32,28 @@
 // -----------------------------------------------------------------------------
 
 import { AlertUtils } from "../../alerts.js";
+import { warnError } from "../../logger.js";
 import { toggleElement } from "../../utils.js";
 import { WalletWizard } from "./connect-wallet.js";
 
 const statusWalletDisconnectPanel = document.getElementById("dashboard__status");
 const disconnectConfirmaionPanel = document.getElementById("wallet-disconnection-confirmation");
 const disconnectInputFieldElement = document.getElementById("wallet-disconnect-inputfield");
+
+
+
+
+const BUTTON_MAP = {
+    DISCONNECT_BTN: "disconnect-btn",
+    CONFIRM_DISCONNECT_BTN: "confirm-disconnect-btn",
+    CANCEL_DISCONNECT_BTN: "cancel-disconnect-btn",
+    DISCONNECTION_MODAL_CLOSE_BTN: "disconnection-modal-close-btn",
+    DASHBOARD_STATUS_MODAL_CLOSE_BTN: "dashboard-status-modal-close-btn",
+    REFRESH_CONNECTION_BTN: "refresh-connection-btn",
+    TEST_CONNECTION_BTN: "test-connection-btn",
+    CONNECT_MODAL_CLOSE_BTN: "connect-modal-close-btn",
+    WALLET_STATUS: "disconnect-wallet-status",
+};
 
 
 
@@ -49,7 +65,7 @@ const disconnectInputFieldElement = document.getElementById("wallet-disconnect-i
  */
 export function handleStatusButtonClick(event) {
 
-     if (event.target.id === "disconnect-wallet-status") {
+     if (event.target.id === BUTTON_MAP.WALLET_STATUS) {
         statusWalletDisconnectPanel.classList.add("show");
         return;
     }
@@ -57,36 +73,40 @@ export function handleStatusButtonClick(event) {
     const buttonID = event.target.closest("button")?.id;
     
     switch (buttonID) {
-        case "disconnect-btn":
-
+        case BUTTON_MAP.DISCONNECT_BTN:
             toggleElement({ element: disconnectConfirmaionPanel });
-            disconnectInputFieldElement.focus()
+            disconnectInputFieldElement.focus();
             break;
-        case "confirm-disconnect-btn":
+
+        case BUTTON_MAP.CONFIRM_DISCONNECT_BTN:
             handleDisconnecectionConfirmationButton();
             break;
-        case "cancel-disconnect-btn":
+
+        case BUTTON_MAP.CANCEL_DISCONNECT_BTN:
             toggleElement({ element: disconnectConfirmaionPanel, show: false });
             break;
-        case "disconnection-modal-close-btn":
+
+        case BUTTON_MAP.DISCONNECTION_MODAL_CLOSE_BTN:
             closeConfirmationPanel();
             break;
-        case "dashboard-status-modal-close-btn":
+
+        case BUTTON_MAP.DASHBOARD_STATUS_MODAL_CLOSE_BTN:
             closeStatusPanels();
             break;
-        case "refresh-connection-btn":
+
+        case BUTTON_MAP.REFRESH_CONNECTION_BTN:
             handleRefreshConnection();
             break;
-        case "test-connection-btn":
+
+        case BUTTON_MAP.TEST_CONNECTION_BTN:
             handleTestConnection();
             break;
-        case "connect-modal-close-btn":
+
+        case BUTTON_MAP.CONNECT_MODAL_CLOSE_BTN:
             WalletWizard.closeModal();
             break;
-    }
+        } 
 }
-
-
 
 
 
@@ -136,6 +156,7 @@ async function handleDisconnecectionConfirmationButton() {
     const confirmed = await AlertUtils.showConfirmationAlert({
         title: "Are you sure you want to disconnect wallet?",
         text: "This action will disconnect your wallet from your bank, and stop all information.",
+        icon: "warning",
         confirmButtonText: "Disconnect wallet",
         messageToDisplayOnSuccess: "The wallet has been disconnected",
         denyButtonText: "Cancel Disconnect",
@@ -160,9 +181,10 @@ async function handleTestConnection() {
     const confirmed = await AlertUtils.showConfirmationAlert({
         title: "Test wallet connection?",
         text: "This will test if your wallet connection is working properly.",
+        icon: "info",
         confirmButtonText: "Run test",
         messageToDisplayOnSuccess: "Wallet connection is working!",
-        denyButtonText: "Cancel",
+        denyButtonText: "Cancel test",
         cancelMessage: "No changes were made."
     });
 }
@@ -180,9 +202,10 @@ async function handleRefreshConnection() {
     const confirmed = await AlertUtils.showConfirmationAlert({
         title: "Refresh wallet connection?",
         text: "This will refresh your current wallet connection.",
+        icon: "warning",
         confirmButtonText: "Refresh connection",
         messageToDisplayOnSuccess: "Wallet connection refreshed successfully.",
-        denyButtonText: "Cancel",
+        denyButtonText: "Cancel refresh",
         cancelMessage: "No changes were made."
     });
 }

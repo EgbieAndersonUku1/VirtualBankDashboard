@@ -55,6 +55,7 @@ export const specialChars = {
     '™': true,
     '°': true,
     '±': true,
+    '__':true,
     '§': true,
     '¶': true,
     '¢': true,

@@ -1,6 +1,7 @@
 import { getLocalStorage, setLocalStorage } from "./db.js";
 import { compareTwoObjects } from "./utils.js";
 import { logError } from "./logger.js";
+import { convertSnakeCaseToCamelCase } from "./utils.js";
 
 /**
  * Parses FormData and extracts required fields, converting keys to camelCase.
@@ -56,7 +57,7 @@ export function parseFormData(formData, requiredFields = []) {
             throw new Error(`Missing or empty required field: ${field}`);
         }
         
-        const camelCaseField = field.toLowerCase().replace(/[-_](.)/g, (_, char) => char.toUpperCase());
+        const camelCaseField = convertSnakeCaseToCamelCase(field)
         result[camelCaseField] = value;
     }
 

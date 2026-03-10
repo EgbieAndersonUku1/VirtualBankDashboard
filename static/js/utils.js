@@ -1,6 +1,7 @@
 import { logError, warnError } from "./logger.js";
 import { specialChars } from "./specialChars.js";
 
+
   
 export function checkIfHTMLElement(element, elementName = "Unknown", warn = false) {
     if (!(element instanceof HTMLElement || element instanceof DocumentFragment)) {
@@ -743,3 +744,60 @@ export function toggleElement({ element, cSSSelector = "show", show = true }) {
     element.classList.remove(cSSSelector);
 }
 
+
+
+
+/**
+ * Converts a snake_case or kebab-case string to camelCase.
+ *
+ * The function normalises the input by converting it to lowercase,
+ * then transforms any character following an underscore (_) or hyphen (-)
+ * into its uppercase equivalent.
+ *
+ * The input is first sanitised using `sanitizeText`, which removes
+ * invalid characters (e.g., #, ?) while keeping valid separators
+ * like "_" and "-" for predictable camelCase conversion. This prevents
+ * weird cases like "some#Username"
+ *
+ * Examples:
+ * "user_name" -> "userName"
+ * "user-name" -> "userName"
+ * "USER_NAME" -> "userName"
+ * "user#name" -> "userName" (invalid character removed)
+ *
+ * @param {string} value - The string to convert.
+ * @returns {string} The camelCase formatted string.
+ * @throws {Error} Throws an error if the provided value is not a string.
+ * @dependencies
+ *    -  sanitizeText
+ */
+export function convertSnakeCaseToCamelCase(value) {
+
+    const valueType = typeof value;
+
+    if (valueType !== "string") {
+        throw new Error(
+            `The value must be a string. Expected a string but got type = ${valueType} value = ${value}`
+        );
+    }
+
+    const includeChars = ["-", "_"];
+
+    // Sanitize the input: removes invalid characters but keeps "_" and "-" as separators
+    const cleanedValue = sanitizeText(value, false, true, includeChars);
+
+    const camelCaseWord = cleanedValue
+        .trim()
+        .toLowerCase()
+        .split(/[-_\s]+/)
+        .map((word, index) =>
+            index === 0
+                ? word
+                : word[0].toUpperCase() + word.slice(1)
+        )
+        .join("");
+
+    if (!camelCaseWord) return "";
+
+    return camelCaseWord[0].toLowerCase() + camelCaseWord.slice(1);
+}
