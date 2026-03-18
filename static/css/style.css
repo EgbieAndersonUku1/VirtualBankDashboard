@@ -29,6 +29,9 @@
     --box-shadow-secondary: box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
     --box-shadow-tietary: rgba(0, 0, 0, 0.12) 0px 1px 3px, rgba(0, 0, 0, 0.24) 0px 1px 2px;
     --gradient-blue: linear-gradient(135deg, #0F4C81 0%, #1CB5E0 100%);
+  
+    --amber-500: #f59e0b;
+
 
     --warning-color: #FFF8E1;
     --accent: #38bdf8;;
@@ -240,6 +243,11 @@ html {
     padding-top: var(--space-16);
 }
 
+
+.pt-24 {
+    padding-top: var(--space-24);
+}
+
 /* Right */
 .pr-8 {
     padding-right: var(--space-8);
@@ -351,7 +359,7 @@ img:hover {
     color: #6B7280;
     font-size: 0.875rem;
     line-height: 1.4;
-    display: block;
+    /* display: block; */
     margin-top: 0.25rem;
 }
 
@@ -3013,8 +3021,9 @@ time {
 }
 
 
-.bank-amount span {
-    font-size: 2rem;
+.credit-card .bank-amount span {
+    font-size: 1.3rem;
+    display: block;
 }
 
 
@@ -3727,4 +3736,120 @@ clicks the button
 /* Override the SweetAlert and make sure it always on top of all the other elements */
 .swal2-container {
     z-index: 1000000;
+}
+
+
+.credit-card-info {
+    background: #ffff;
+}
+
+
+#my-cards {
+    margin: var(--space-16);
+    border: 3px solid lavender;
+}
+
+
+#my-cards .my_cards__container .card .bank-card {
+    box-shadow: none;
+}
+
+.credit-card-quick-view .bank-amount {
+    padding-right: var(--space-16);
+   
+}
+
+.credit-card-quick-view span {
+    padding-right: var(--space-12);
+    font-weight: 500;
+    font-size: 0.9rem;
+    border-right: 1px solid black;
+    padding-left: var(--space-12);
+}
+
+.credit-card-quick-view span:last-child {
+    border-right: none;
+}
+
+.credit-card-quick-view span:first-child {
+   padding-left: 0;
+}
+
+
+.credit-card-info__head h2 {
+    font-weight: 400;
+}
+
+
+
+.credit-card-setting-info {
+    border: 1px solid;
+    background: lavender;
+    font-size: 0.85rem;
+    padding-top: 12px;
+    padding-bottom: 12px;
+}
+
+.manage-card button {
+    width: 25%;
+    padding: var(--space-4);
+    margin-top: var(--space-8);
+    margin-bottom: var(--space-8);
+}
+
+/* manage card buttons */
+
+/* view transactions */
+.manage-card button:first-child {
+    background: var(--blue-600);
+    color: white;
+}
+
+/* freeze card (warning - reversible action) */
+.manage-card button:nth-child(2) {
+    background: var(--amber-500);
+    color: white;
+}
+
+/* remove card (destructive action) */
+.manage-card button:nth-child(3) {
+    background: var(--red);
+    color: white;
+}
+
+.manage-card button {
+    text-transform: capitalize;
+    color: white;
+    transition: transform 0.15s ease, box-shadow 0.15s ease, opacity 0.15s ease;
+}
+
+
+/* hover effect */
+.manage-card button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+    opacity: 0.95;
+}
+
+/* click effect */
+.manage-card button:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.order-card-visual {
+    background: #f5f7fa;
+    border: 2px dashed #d1d5db;
+
+}
+
+.add-card-icon {
+    font-size: 2rem;
+    font-weight: bold;
+    color: var(--blue-600);
+}
+
+.add-card:hover {
+    cursor: pointer;
+    transform: translateY(-2px);
 }
