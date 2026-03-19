@@ -3853,3 +3853,24 @@ clicks the button
     cursor: pointer;
     transform: translateY(-2px);
 }
+
+.credit-card-inputfields select {
+    width: 100%;
+}
+
+
+
+#card-transaction-limit-form {
+    width: 90%;
+    margin-left: var(--space-24);
+    margin-bottom: var(--space-24);
+    border: 3px solid lavender;
+    background: white;
+    padding: var(--space-48);
+}
+ 
+.form-card-header {
+    padding-top: var(--space-48);
+    font-weight: 600;
+    text-transform: capitalize;
+}
