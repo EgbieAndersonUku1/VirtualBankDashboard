@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/static/css/style.css">
+    <link rel="shortcut icon" href="/static/images/virtual-bank-logo.png" type="image/x-icon">
+    <link rel="stylesheet" href="/static/vendor/fontawesome/css/all.min.css">
+    <title>Transfer money</title>
+</head>
+
+<body>
+
+
+    <main>
+
+        <section id="dashboard" aria-label="User dashboard">
+
+            <div class="dashboard__container">
+
+                <!-- Sidebar navigation -->
+                <nav class="dashboard__container__sidebar" aria-label="Primary dashboard navigation">
+
+                    <div class="sidebar-brand">
+                        <i class="fa-solid fa-building-columns" aria-hidden="true"></i>
+                        <span class="sidebar-brand__name">Virtual Bank</span>
+                    </div>
+                    <ul class="sidebar-nav">
+
+
+                        <li class="sidebar-nav__item">
+                            <a href="dashboard.html" class="sidebar-nav__link" aria-current="page">
+                                <span class="sidebar-nav__icon" aria-hidden="true">
+                                    <i class="fa-regular fa-house"></i>
+                                </span>
+                                <span class="sidebar-nav__label">Dashboard</span>
+                            </a>
+                        </li>
+
+                        <li class="sidebar-nav__item">
+                            <a href="#" class="sidebar-nav__link">
+                                <span class="sidebar-nav__icon" aria-hidden="true">
+                                    <i class="fa-solid fa-wallet"></i>
+                                </span>
+                                <span class="sidebar-nav__label">My Wallet</span>
+                            </a>
+                        </li>
+
+                        <li class="sidebar-nav__item">
+                            <a href="#" class="sidebar-nav__link">
+                                <span class="sidebar-nav__icon" aria-hidden="true">
+                                    <i class="fa-solid fa-money-bill-transfer"></i>
+                                </span>
+                                <span class="sidebar-nav__label">Money Transfer</span>
+                            </a>
+                        </li>
+
+                        <li class="sidebar-nav__item">
+                            <a href="#" class="sidebar-nav__link">
+                                <span class="sidebar-nav__icon" aria-hidden="true">
+                                    <i class="fa-solid fa-credit-card"></i>
+                                </span>
+                                <span class="sidebar-nav__label">Manage Credit Cards</span>
+                            </a>
+                        </li>
+
+                        <li class="sidebar-nav__item">
+                            <a href="#" class="sidebar-nav__link">
+                                <span class="sidebar-nav__icon" aria-hidden="true">
+                                    <i class="fa-solid fa-money-bill-transfer"></i>
+                                </span>
+                                <span class="sidebar-nav__label">Link funding source</span>
+                            </a>
+                        </li>
+
+                        <li class="sidebar-nav__item">
+                            <a href="#" class="sidebar-nav__link">
+                                <span class="sidebar-nav__icon" aria-hidden="true">
+                                    <i class="fa-solid fa-eye"></i>
+                                </span>
+                                <span class="sidebar-nav__label">Insights</span>
+                            </a>
+                        </li>
+
+                        <li class="sidebar-nav__item">
+                            <a href="#" class="sidebar-nav__link">
+                                <span class="sidebar-nav__icon" aria-hidden="true">
+                                    <i class="fa-solid fa-gear"></i>
+                                </span>
+                                <span class="sidebar-nav__label">Settings</span>
+                            </a>
+                        </li>
+
+                        <li class="sidebar-nav__item">
+                            <a href="#" class="sidebar-nav__link">
+                                <span class="sidebar-nav__icon" aria-hidden="true">
+                                    <i class="fa-solid fa-shield-halved"></i>
+                                </span>
+                                <span class="sidebar-nav__label">Security</span>
+                            </a>
+                        </li>
+                    </ul>
+
+
+
+                    <!-- Latest login info -->
+                    <section id="latest-login" aria-labelledby="latest-login-heading">
+                        <div class="flex-grid two-column-20_80_grid">
+                            <span aria-hidden="true">
+                                <i class="fa-solid fa-right-to-bracket"></i>
+                            </span>
+
+                            <div id="latest-login__details">
+                                <h2 id="latest-login-heading" class="capitalise header-9">
+                                    Last login
+                                </h2>
+                                <time datetime="2026-01-29T20:32">Today at 20:32</time>
+                            </div>
+                        </div>
+
+                        <hr class="dividor" aria-hidden="true">
+
+                        <p id="latest-login__note">
+                            Add two-factor authentication recovery codes to your account so you
+                            never lose access.
+                        </p>
+
+                        <div class="btns centre mt-24">
+                            <a href="#" class="btn-large manage-security-btn" aria-describedby="latest-login__note">
+                                Manage security
+                                <span aria-hidden="true"> &gt; </span>
+                            </a>
+                        </div>
+                    </section>
+
+                    <!-- Logout -->
+                    <nav class="logout" aria-label="Account actions">
+                        <ul class="sidebar-nav">
+                            <li class="sidebar-nav__item">
+                                <a href="#" class="sidebar-nav__link" id="logout-dashboard-link">
+                                    <span class="sidebar-nav__icon" aria-hidden="true">
+                                        <i class="fa-solid fa-right-from-bracket"></i>
+                                    </span>
+                                    <span class="sidebar-nav__label">Log out</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </nav>
+
+                </nav>
+
+                <!-- Main content -->
+                <section class="dashboard__container__main" tabindex="-1">
+
+                    <nav class="dashboard__container__navbar flex flex-space-between">
+                        <div class="dashbaord__container__nav-head sidebar-brand">
+                            <i class="fa-solid fa-building-columns" aria-hidden="true"></i>
+                            <span class="sidebar-brand__name dashboard-nav-site-name">Virtual Bank</span>
+                        </div>
+
+                        <div class="dashboard__container__nav-body flex-grid three-column-grid">
+                            <div class="dashboard_container__amount">
+                                <span class="bold"><span class="currency">£</span>1,500</span>
+                            </div>
+
+                            <div class="dashboard__profile" id="dashboard-profile">
+                                <img src="/static/images/icons/profile.png" alt="" class="dashboard-profile-img">
+
+                                <div class="dashboard__container__dropdown-menu dropdown-menu"
+                                    id="dashboard__container__dropdown-menu">
+                                    <ul>
+                                        <li class="flex-grid two-column-20_80_grid">
+                                            <span>
+                                                <img src="/static/images/icons/profile.png" alt=""
+                                                    class="dashboard-profile-img">
+                                            </span>
+
+                                            <span class="flex-grid">
+                                                <span class="bold">John Doe</span>
+                                                <span class="lower-case">Johndoe@example.com</span>
+                                            </span>
+                                        </li>
+
+                                        <li>
+                                            <span><i class="fa-regular fa-user"></i></span><span>Account</span>
+                                        </li>
+                                        <li>
+                                            <span><i class="fa-solid fa-shield-halved"></i></span><span>Security</span>
+                                        </li>
+                                        <li>
+                                            <span><i class="fa-regular fa-circle-question"></i></span><span>Help &
+                                                Support</span>
+                                        </li>
+
+                                        <li class="dashboard-logout">
+                                            <span><i class="fa-solid fa-right-from-bracket"></i></span><span>Log
+                                                out</span>
+                                        </li>
+                                    </ul>
+                                </div>
+
+                            </div>
+
+                            <div class="dashboard__container__notification-bell">
+                                <div class="notifications">
+                                    <img src="/static/images/icons/notification_smartphone_icon.png" alt=""
+                                        class="dashboard-notification-bell-img">
+                                </div>
+
+
+                            </div>
+
+
+                        </div>
+
+
+                    </nav>
+
+
+                    <!-- transfer money -->
+
+
+
+                    <section id="transfer-money">
+                        <div class="transfer-money__container">
+                            <h1 class="header-7">Transfer</h1>
+
+
+                            <section id="" aria-labelledby="credit-cards-heading">
+
+                                <div class="tabs flex">
+                                    <div class="tab transfer-money">
+                                        <a href="#">Transfer money</a>
+                                    </div>
+
+                                    <div class="tab request-money">
+                                        <a href="#">Request money</a>
+                                    </div>
+                                </div>
+
+
+                            </section>
+
+                            <form action="" id="bank=tranafer-to-form" class="flex-grid">
+                                <div class="form-group flex-grid ">
+                                    <label for="transfer-from">Transfer from</label>
+                                    <select name="bank-transfer-form" id="bank-transfer-form">
+                                        <option value="" disabled selected>Select the transfer source</option>
+                                        <option value="wallet"> Wallet - Available £1000</option>
+                                        <option value="bank">Bank - Available (£1,2500.00)</option>
+                                    </select>
+
+                                    <div class="buttons flex-grid two-column-grid">
+                                        <div class="transfer internal-transfer">
+                                            Internal transfer
+                                        </div>
+                                        <div class="transfer external-transfer">
+                                            External transfer
+                                        </div>
+                                    </div>
+
+                                    <div class="recipient flex-grid">
+                                        <label for="recipient">Recipient</label>
+                                        <select name="recipient" id="recipient" required>
+                                            <option value="" disabled selected>Select the recipient</option>
+                                            <option value="add-recipient">Add recipient</option>
+
+                                        </select>
+                                    </div>
+                                </div>
+
+                            </form>
+                        </div>
+                    </section>
+
+
+
+                </section>
+
+
+                <section id="add-recipient-modal" aria-labelledby="find-account-heading"
+                    aria-describedby="account-description">
+
+                    <div class="add-recipient__container">
+
+                        <h1 id="find-account-heading" class="mt-16 capitalise">Find recipient</h1>
+
+                        <p id="account-description">
+                            Enter the details of the recipient you want to transfer money to.
+                        </p>
+
+                        <form>
+
+                            <div class="form-row mt-24">
+                                <label for="first-name">First name</label>
+                                <input type="text" name="first_name" id="first-name">
+                            </div>
+
+                            <div class="form-row">
+                                <label for="surname">Surname</label>
+                                <input type="text" name="surname" id="surname">
+                            </div>
+
+                            <fieldset class="form-row">
+                                <legend>Sort code</legend>
+
+                                <div class="flex-grid six-column-grid sortcode-fields">
+                                    <input type="text" name="sortcode_1" id="sortcode_1" maxlength="1"
+                                        aria-label="Sort code digit 1">
+                                    <input type="text" name="sortcode_2" id="sortcode_2" maxlength="1"
+                                        aria-label="Sort code digit 2">
+                                    <input type="text" name="sortcode_3" id="sortcode_3" maxlength="1"
+                                        aria-label="Sort code digit 3">
+                                    <input type="text" name="sortcode_4" id="sortcode_4" maxlength="1"
+                                        aria-label="Sort code digit 4">
+                                    <input type="text" name="sortcode_5" id="sortcode_5" maxlength="1"
+                                        aria-label="Sort code digit 5">
+                                    <input type="text" name="sortcode_6" id="sortcode_6" maxlength="1"
+                                        aria-label="Sort code digit 6">
+                                </div>
+
+                            </fieldset>
+
+                            <fieldset class="form-row">
+                                <legend>Account number</legend>
+
+                                <div class="flex-grid six-column-grid account-fields">
+                                    <input type="text" name="account_1" id="account_1" maxlength="1"
+                                        aria-label="Account number digit 1">
+                                    <input type="text" name="account_2" id="account_2" maxlength="1"
+                                        aria-label="Account number digit 2">
+                                    <input type="text" name="account_3" id="account_3" maxlength="1"
+                                        aria-label="Account number digit 3">
+                                    <input type="text" name="account_4" id="account_4" maxlength="1"
+                                        aria-label="Account number digit 4">
+                                    <input type="text" name="account_5" id="account_5" maxlength="1"
+                                        aria-label="Account number digit 5">
+                                    <input type="text" name="account_6" id="account_6" maxlength="1"
+                                        aria-label="Account number digit 6">
+                                    <input type="text" name="account_7" id="account_7" maxlength="1"
+                                        aria-label="Account number digit 7">
+                                    <input type="text" name="account_8" id="account_8" maxlength="1"
+                                        aria-label="Account number digit 8">
+                                </div>
+
+                            </fieldset>
+
+                            <div class="button">
+                                <button class="btn-large green-bg white-text capitalise">
+                                    Find recipient
+                                </button>
+                            </div>
+
+                            <small>
+                                If the account exists, you can proceed with the transfer.
+                            </small>
+
+                        </form>
+
+                    </div>
+                </section>
+
+
+                <!-- The footer section -->
+                <footer>
+
+                    <div class="footer__container">
+
+                        <div class="footer__header">
+                            <img src="/static/images/virtual-wallet-logo.png" alt="The virtual logo"
+                                class="footer-logo">
+
+                        </div>
+
+
+                        <div class="flex-grid five-column-grid" id="footer-sections">
+
+                            <!-- About us column -->
+                            <div class="col flex-grid" id="about-us">
+                                <h1 class="footer-head pb-16">About us</h1>
+                                <a href="#" class="footer-link">Our company</a>
+                                <a href="#" class="footer-link">Careers</a>
+                                <a href="#" class="footer-link">Security</a>
+                                <a href="#" class="footer-link">Investor relations</a>
+
+                            </div>
+
+                            <!-- services column -->
+                            <div class="col flex-grid" id="services">
+                                <h1 class="footer-head pb-16">services</h1>
+                                <a href="#" class="footer-link">Online banking</a>
+                                <a href="#" class="footer-link">Mobile app</a>
+                                <a href="#" class="footer-link">Credit app</a>
+                                <a href="#" class="footer-link">Loans and mortgages</a>
+                            </div>
+
+                            <!-- support column -->
+                            <div class="col flex-grid" id="support">
+                                <h1 class="footer-head pb-16">support</h1>
+                                <a href="#" class="footer-link">FAQs</a>
+                                <a href="#" class="footer-link">Help Center</a>
+                                <a href="#" class="footer-link">Contact us</a>
+                                <a href="#" class="footer-link">Live chat</a>
+                            </div>
+
+                            <div class="col flex-grid" id="resources">
+                                <h1 class="footer-head pb-16">resources</h1>
+                                <a href="#" class="footer-link">Financial Education</a>
+                                <a href="#" class="footer-link">Blog</a>
+                                <a href="#" class="footer-link">News and Insight</a>
+                                <a href="#" class="footer-link">Calculators</a>
+                            </div>
+
+                            <div class="col" id="download-app">
+                                <h1 class="footer-head">Download our app</h1>
+
+                                <div id="apps" class="flex-grid two-column-grid">
+                                    <img src="/static/images/footer-icons/appStore.svg" alt="" class="footer-icon">
+                                    <img src="/static/images/footer-icons/googlePlay.svg" alt="" class="footer-icon">
+                                </div>
+
+
+                            </div>
+                        </div>
+
+                        <div class="socials copyright flex-grid two-column-grid pb-24">
+
+                            <div class="socials four-column-grid">
+                                <a href="#"><img src="/static/images/icons/facebook.svg" alt="facebook"
+                                        class="social-icon"></a>
+                                <a href="#"><img src="/static/images/icons/instagram.svg" alt="facebook"
+                                        class="social-icon"></a>
+
+                            </div>
+
+                            <div class="copyright four-column-grid">
+                                <a href="#" class="copyright-link"><span class="copyright-date">@2026 </span>Virtual
+                                    bank. All
+                                    rights reserved</a>
+                                <a href="#" class="copyright-link footer-link">Privacy policy</a>
+                                <a href="#" class="copyright-link footer-link">Terms of use</a>
+
+                            </div>
+                        </div>
+
+                    </div>
+
+                </footer>
+
+
+
+            </div>
+
+        </section>
+
+    </main>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.12.2/dist/sweetalert2.all.min.js"></script>
+    <script src="/static/js/dashboard/bank-dashboard.js" type="module"></script>
+</body>
+
+</html>

@@ -3874,3 +3874,98 @@ clicks the button
     font-weight: 600;
     text-transform: capitalize;
 }
+
+
+.order-card {
+    margin-top: var(--space-4);
+}
+
+
+
+/* transfer card */
+.transfer-money {
+    border-right:  2px solid lavender;
+}
+
+.tab {
+   padding-top: var(--space-16);
+   padding-bottom: var(--space-16);
+    color: black;
+    text-transform: capitalize;
+}
+
+.tab a {
+    color: black;
+}
+
+.tabs {
+    background: white;
+}
+
+
+#transfer-money {
+    border: 1px solid lavender;
+    margin: var(--space-32);
+    padding: 32px;
+    background: white;
+    width: 80%;
+}
+
+
+
+#add-recipient-modal {
+    border: 1px solid lavender;
+    padding: 64px;
+    position: absolute;
+    top: 0;
+    left: 35%;
+    width: 35%;
+    background: white;
+    border-radius: 4px;
+    z-index: 10000;
+}
+
+
+.account-fields input,
+.sortcode-fields input {
+  text-align: center;
+  align-items: center;
+  display: flex;
+  justify-content: center;
+ 
+}
+
+
+.sortcode-fields .account {
+  margin-right: var(--space-12);
+  text-align: center;
+  align-items: center;
+  display: flex;
+  justify-content: center;
+ 
+}
+
+.sortcode-fields,
+.account-fields {
+     column-gap: var(--space-8);
+}
+
+
+.account-fields {
+    display: grid;
+    grid-template-columns: repeat(8, 1fr);
+    grid-template-rows: auto;
+}
+
+
+.add-recipient__container div {
+    margin-bottom: var(--space-24);
+}
+
+
+.add-recipient__container .form-row legend,
+.add-recipient__container .form-row label {
+    font-weight: 600;
+    padding-bottom: var(--space-8);
+    text-transform: capitalize;
+}
