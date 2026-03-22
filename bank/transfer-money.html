@@ -48,7 +48,7 @@
                         </li>
 
                         <li class="sidebar-nav__item">
-                            <a href="#" class="sidebar-nav__link">
+                            <a href="transfer-money.html" class="sidebar-nav__link">
                                 <span class="sidebar-nav__icon" aria-hidden="true">
                                     <i class="fa-solid fa-money-bill-transfer"></i>
                                 </span>
@@ -224,13 +224,14 @@
 
                     <section id="transfer-money">
                         <div class="transfer-money__container">
-                            <h1 class="header-7">Transfer</h1>
-
+                            <h1 class="header-7">Transfer/Request funds</h1>
+                            <p class="mt-4 mb-24">Click on the tab to select transfer or request funds from a recipient
+                            </p>
 
                             <section id="" aria-labelledby="credit-cards-heading">
 
                                 <div class="tabs flex">
-                                    <div class="tab transfer-money">
+                                    <div class="tab transfer-money active">
                                         <a href="#">Transfer money</a>
                                     </div>
 
@@ -242,35 +243,120 @@
 
                             </section>
 
-                            <form action="" id="bank=tranafer-to-form" class="flex-grid">
+                            <form action="" id="bank-tranafer-to-form" class="flex-grid">
                                 <div class="form-group flex-grid ">
-                                    <label for="transfer-from">Transfer from</label>
-                                    <select name="bank-transfer-form" id="bank-transfer-form">
+                                    <label for="bank-transfer-selection">Transfer from *</label>
+                                    <select name="bank-transfer-form" id="bank-transfer-selection" required>
                                         <option value="" disabled selected>Select the transfer source</option>
                                         <option value="wallet"> Wallet - Available £1000</option>
                                         <option value="bank">Bank - Available (£1,2500.00)</option>
                                     </select>
 
-                                    <div class="buttons flex-grid two-column-grid">
-                                        <div class="transfer internal-transfer">
-                                            Internal transfer
-                                        </div>
-                                        <div class="transfer external-transfer">
-                                            External transfer
-                                        </div>
-                                    </div>
+                                    <label for="bank-transfer-type">Transfer type *</label>
+                                    <select name="bank-transfer-form" id="bank-transfer-type" required>
+                                        <option value="" disabled selected>Select the transfer type</option>
+                                        <option value="internal-transfer">Internal transfer (instant and free)</option>
+                                        <option value="bank">External (Fee: £2.00)</option>
+                                    </select>
+
 
                                     <div class="recipient flex-grid">
-                                        <label for="recipient">Recipient</label>
+                                        <label for="recipient">Recipient *</label>
                                         <select name="recipient" id="recipient" required>
                                             <option value="" disabled selected>Select the recipient</option>
                                             <option value="add-recipient">Add recipient</option>
 
                                         </select>
                                     </div>
+
+
+                                    <!-- shows up if the user is found -->
+                                    <div class="flex-grid two-column-20_80_grid recipient-user" id="transfer-to-user">
+
+                                        <div class="profile-icon center">
+                                            <i class="fa-solid fa-user"></i>
+                                        </div>
+
+                                        <div class="verified-user">
+                                            <span id="verified-user-name capitalise">John Doe</span>
+                                            <span class="verified-icon">
+                                                <i class="fa-solid fa-circle-check"></i>
+                                                Verifed user
+                                            </span>
+                                        </div>
+
+                                    </div>
+
+                                    <div class="amount flex-grid">
+                                        <label for="amount">Amount * <small>(Minimum amount to transfer is 0.01)</small>
+                                        </label>
+                                        <input type="number" name="amount" id="amount" step="0.01" value="0.01"
+                                            min="0.01" max="1000000000">
+                                        <div class="flex-grid two-column-grid">
+                                            <div class="flex-row">
+                                                <small><span class="light-bold" id="transfer-fee-label">Transfer fee:
+                                                    </span> <span>0.00</span></small>
+                                            </div>
+
+                                            <div class="flex-row">
+                                                <small>
+                                                    <span class="light-bold" id="transfer-fee-total-label">Total:
+                                                    </span>
+                                                    <span class="transfer-total">0.00</span>
+                                                </small>
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+                                    <div class="flex-row mt-16 mb-16">
+
+                                        <input type="checkbox" name="save_recipient"
+                                            id="save-recipient-for-future-transfers">
+
+                                        <!-- the recipient name will be replaced with real name once the backend is built e.g Save Johnny for future transfer -->
+                                        <label for="save-recipient-for-future-transfers">
+                                            Save this recipient for future transfers
+                                        </label>
+
+                                    </div>
+
+                                    <div class="form-row flex-grid">
+                                        <label for="note">Note</label>
+                                        <textarea name="note" id="transfer-recipient-note" rows="3" maxlength="250"
+                                            name="note" required>
+                                </textarea>
+                                        <p class="num-of-characters-remaining text-align-right character-usage-message">
+                                            Minimum
+                                            characters to use: 50</p>
+                                        <p class="num-of-characters-to-use text-align-right character-usage-message">
+                                            Number of
+                                            characters remaining: 255</p>
+
+                                    </div>
+
+                                </div>
+
+
+                                <div class="daily-limit-container flex flex-space-between mt-48">
+                                    <div class="daily-limit-info pt-8 pl-8">
+                                        <span>Daily Transfer Limit </span><span id="daily-transfer-limit"
+                                            class="light-bold">£5000</span> |
+                                        <span>Remaining limit </span><span id="daily-transfer-limit"
+                                            class="light-bold">£2000</span>
+                                    </div>
+
+                                    <div class="buttons">
+                                        <button type="button">Cancel</button>
+                                        <button type="submit" class="blue-bg white-text capitalise">Review
+                                            Transfer</button>
+                                    </div>
                                 </div>
 
                             </form>
+
+
+
                         </div>
                     </section>
 
@@ -301,6 +387,9 @@
                                 <label for="surname">Surname</label>
                                 <input type="text" name="surname" id="surname">
                             </div>
+
+
+
 
                             <fieldset class="form-row">
                                 <legend>Sort code</legend>
@@ -357,6 +446,8 @@
                             </small>
 
                         </form>
+
+
 
                     </div>
                 </section>

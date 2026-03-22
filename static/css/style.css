@@ -261,6 +261,10 @@ html {
     padding-right: var(--space-48);
 }
 
+.pl-4 {
+    padding-left: var(--space-4);
+}
+
 .pl-8 {
     padding-left: var(--space-8);
 }
@@ -272,6 +276,7 @@ html {
 .pl-24 {
     padding-left: var(--space-24);
 }
+
 
 .pl-48 {
     padding-left: var(--space-48);
@@ -1437,7 +1442,7 @@ label {
     line-height: 1.5;
 }
 
-
+#add-recipient-modal,
 #bank-transfer-quick-confirmation,
 #bank-funds-transfer__select-cards-panel,
 #bank-funds-transfer,
@@ -1456,6 +1461,7 @@ label {
 }
 
 
+#add-recipient-modal.show,
 #bank-transfer-quick-confirmation.show,
 #bank-funds-transfer__select-cards-panel.show,
 #bank-funds-transfer.show,
@@ -3900,15 +3906,31 @@ clicks the button
 
 .tabs {
     background: white;
+    border: 3px solid lavender;
+}
+
+.tabs .tab {
+    
+    padding: var(--space-8);
+    font-size: 0.85rem;
 }
 
 
+.tabs .active {
+    background: var(--blue-600);
+   
+}
+
+.tabs .active a {
+    color: white;
+}
+
 #transfer-money {
     border: 1px solid lavender;
-    margin: var(--space-32);
+    margin: var(--space-48);
     padding: 32px;
     background: white;
-    width: 80%;
+    width: 60%;
 }
 
 
@@ -3968,4 +3990,64 @@ clicks the button
     font-weight: 600;
     padding-bottom: var(--space-8);
     text-transform: capitalize;
+}
+
+
+.recipient-user  {
+    border: 4px solid lavender;
+    margin-top: 8px;
+    border-radius: 8px;
+}
+
+.recipient-user .profile-icon {
+    border-left: 2px solid lavender;
+}
+
+.recipient-user .profile-icon {
+    border-right: 2px solid black;
+ 
+}
+
+.recipient-user .verified-user {
+    padding-left: var(--space-8);
+    font-size: 0.95rem;
+   
+}
+
+.recipient-user .profile-icon,
+.recipient-user .verified-user {
+   padding-top: var(--space-4);
+    padding-bottom: var(--space-4);
+}
+
+
+.recipient-user .verified-user .verified-icon {
+    color: var(--green-600);
+}
+
+.daily-limit-container {
+    border: 1px solid lavender;
+    background: ghostwhite;
+    padding-top: var(--space-12);
+    padding-bottom: var(--space-12);
+}
+
+.daily-limit-container .buttons button {
+    border-radius: initial;
+    border: 1px solid black;
+    padding-left: var(--space-24);
+    padding-right: var(--space-24);
+    padding-top: var(--space-8);
+    padding-bottom: var(--space-8);
+
+}
+
+.daily-limit-info span {
+    font-size: 0.85rem;
+   
+}
+
+#bank-tranafer-to-form label {
+    font-weight: 500;
+   
 }
