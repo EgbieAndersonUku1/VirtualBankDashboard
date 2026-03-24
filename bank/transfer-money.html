@@ -15,7 +15,7 @@
 
     <main>
 
-        <section id="dashboard" aria-label="User dashboard">
+        <section id="dashboard-transfer" aria-label="User dashboard transfer">
 
             <div class="dashboard__container">
 
@@ -223,6 +223,7 @@
 
 
                     <section id="transfer-money">
+                        
                         <div class="transfer-money__container">
                             <h1 class="header-7">Transfer/Request funds</h1>
                             <p class="mt-4 mb-24">Click on the tab to select transfer or request funds from a recipient
@@ -262,7 +263,7 @@
 
                                     <div class="recipient flex-grid">
                                         <label for="recipient">Recipient *</label>
-                                        <select name="recipient" id="recipient" required>
+                                        <select name="recipient" id="recipient" required data-recipient="true">
                                             <option value="" disabled selected>Select the recipient</option>
                                             <option value="add-recipient">Add recipient</option>
 
@@ -277,11 +278,11 @@
                                             <i class="fa-solid fa-user"></i>
                                         </div>
 
-                                        <div class="verified-user">
-                                            <span id="verified-user-name capitalise">John Doe</span>
+                                        <div class="verified-user flex-grid">
+                                            <span id="verified-user-name"></span>
                                             <span class="verified-icon">
                                                 <i class="fa-solid fa-circle-check"></i>
-                                                Verifed user
+                                                Recipient Verified
                                             </span>
                                         </div>
 
@@ -291,7 +292,7 @@
                                         <label for="amount">Amount * <small>(Minimum amount to transfer is 0.01)</small>
                                         </label>
                                         <input type="number" name="amount" id="amount" step="0.01" value="0.01"
-                                            min="0.01" max="1000000000">
+                                            min="0.01" max="1000000000" required>
                                         <div class="flex-grid two-column-grid">
                                             <div class="flex-row">
                                                 <small><span class="light-bold" id="transfer-fee-label">Transfer fee:
@@ -315,17 +316,17 @@
                                             id="save-recipient-for-future-transfers">
 
                                         <!-- the recipient name will be replaced with real name once the backend is built e.g Save Johnny for future transfer -->
-                                        <label for="save-recipient-for-future-transfers">
+                                        <span id="save-recipient-for-future-transfers">
                                             Save this recipient for future transfers
-                                        </label>
+                                        </span>
 
                                     </div>
 
-                                    <div class="form-row flex-grid">
+                                    <div class=" flex-grid">
                                         <label for="note">Note</label>
-                                        <textarea name="note" id="transfer-recipient-note" rows="3" maxlength="250"
-                                            name="note" required>
-                                </textarea>
+                                      
+
+                                         <textarea name="note" id="transfer-recipient-note" rows="3" maxlength="250" required></textarea>
                                         <p class="num-of-characters-remaining text-align-right character-usage-message">
                                             Minimum
                                             characters to use: 50</p>
@@ -365,30 +366,33 @@
                 </section>
 
 
-                <section id="add-recipient-modal" aria-labelledby="find-account-heading"
-                    aria-describedby="account-description">
+                <section id="add-recipient-section" aria-labelledby="find-account-heading" aria-describedby="find recipient">
+                     <div class="flex flex-space-between pl-24 pt-8 pb-4 pr-24 modal-top flex-end">
+                            <button aria-label="Close modal" class="modal-close-btn p-4" id="find-recipient-close-btn">
+                                ✕
+                            </button>
+                        </div>
+                   
 
                     <div class="add-recipient__container">
+                         <div class="spinner" id="add-recipient__spinner"></div>
+                        <h1 id="find-account-heading" class="mt-16 capitalise header-7">Find recipient</h1>
 
-                        <h1 id="find-account-heading" class="mt-16 capitalise">Find recipient</h1>
-
-                        <p id="account-description">
+                        <p id="account-description" class="mt-8">
                             Enter the details of the recipient you want to transfer money to.
                         </p>
-
-                        <form>
+                        
+                        <form id="find-recipient-form" method="post">
 
                             <div class="form-row mt-24">
                                 <label for="first-name">First name</label>
-                                <input type="text" name="first_name" id="first-name">
+                                <input type="text" name="first_name" id="first-name" maxlength="30" required>
                             </div>
 
                             <div class="form-row">
                                 <label for="surname">Surname</label>
-                                <input type="text" name="surname" id="surname">
+                                <input type="text" name="surname" id="surname" maxlength="30" required>
                             </div>
-
-
 
 
                             <fieldset class="form-row">
@@ -396,17 +400,17 @@
 
                                 <div class="flex-grid six-column-grid sortcode-fields">
                                     <input type="text" name="sortcode_1" id="sortcode_1" maxlength="1"
-                                        aria-label="Sort code digit 1">
+                                        aria-label="Sort code digit 1" required>
                                     <input type="text" name="sortcode_2" id="sortcode_2" maxlength="1"
-                                        aria-label="Sort code digit 2">
+                                        aria-label="Sort code digit 2" required>
                                     <input type="text" name="sortcode_3" id="sortcode_3" maxlength="1"
-                                        aria-label="Sort code digit 3">
+                                        aria-label="Sort code digit 3" required>
                                     <input type="text" name="sortcode_4" id="sortcode_4" maxlength="1"
-                                        aria-label="Sort code digit 4">
+                                        aria-label="Sort code digit 4" required>
                                     <input type="text" name="sortcode_5" id="sortcode_5" maxlength="1"
-                                        aria-label="Sort code digit 5">
+                                        aria-label="Sort code digit 5" required>
                                     <input type="text" name="sortcode_6" id="sortcode_6" maxlength="1"
-                                        aria-label="Sort code digit 6">
+                                        aria-label="Sort code digit 6" required>
                                 </div>
 
                             </fieldset>
@@ -415,22 +419,22 @@
                                 <legend>Account number</legend>
 
                                 <div class="flex-grid six-column-grid account-fields">
-                                    <input type="text" name="account_1" id="account_1" maxlength="1"
-                                        aria-label="Account number digit 1">
-                                    <input type="text" name="account_2" id="account_2" maxlength="1"
-                                        aria-label="Account number digit 2">
-                                    <input type="text" name="account_3" id="account_3" maxlength="1"
-                                        aria-label="Account number digit 3">
-                                    <input type="text" name="account_4" id="account_4" maxlength="1"
-                                        aria-label="Account number digit 4">
-                                    <input type="text" name="account_5" id="account_5" maxlength="1"
-                                        aria-label="Account number digit 5">
-                                    <input type="text" name="account_6" id="account_6" maxlength="1"
-                                        aria-label="Account number digit 6">
-                                    <input type="text" name="account_7" id="account_7" maxlength="1"
-                                        aria-label="Account number digit 7">
-                                    <input type="text" name="account_8" id="account_8" maxlength="1"
-                                        aria-label="Account number digit 8">
+                                    <input type="text" name="account_digit_1" id="account_1" maxlength="1"
+                                        aria-label="Account number digit 1" required>
+                                    <input type="text" name="account_digit_2" id="account_2" maxlength="1"
+                                        aria-label="Account number digit 2" required>
+                                    <input type="text" name="account_digit_3" id="account_3" maxlength="1"
+                                        aria-label="Account number digit 3" required>
+                                    <input type="text" name="account_digit_4" id="account_4" maxlength="1"
+                                        aria-label="Account number digit 4" required>
+                                    <input type="text" name="account_digit_5" id="account_5" maxlength="1"
+                                        aria-label="Account number digit 5" required>
+                                    <input type="text" name="account_digit_6" id="account_6" maxlength="1"
+                                        aria-label="Account number digit 6" required>
+                                    <input type="text" name="account_digit_7" id="account_7" maxlength="1"
+                                        aria-label="Account number digit 7" required>
+                                    <input type="text" name="account_digit_8" id="account_8" maxlength="1"
+                                        aria-label="Account number digit 8" required>
                                 </div>
 
                             </fieldset>
@@ -547,7 +551,7 @@
 
     </main>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.12.2/dist/sweetalert2.all.min.js"></script>
-    <script src="/static/js/dashboard/bank-dashboard.js" type="module"></script>
+    <script src="/static/js/dashboard/money-transfer.js" type="module"></script>
 </body>
 
 </html>

@@ -1442,7 +1442,7 @@ label {
     line-height: 1.5;
 }
 
-#add-recipient-modal,
+#add-recipient-section,
 #bank-transfer-quick-confirmation,
 #bank-funds-transfer__select-cards-panel,
 #bank-funds-transfer,
@@ -1461,7 +1461,7 @@ label {
 }
 
 
-#add-recipient-modal.show,
+#add-recipient-section.show,
 #bank-transfer-quick-confirmation.show,
 #bank-funds-transfer__select-cards-panel.show,
 #bank-funds-transfer.show,
@@ -1475,6 +1475,7 @@ label {
 }
 
 
+#add-recipient-section.show,
 #bank-transfer-quick-confirmation.show,
 #bank-funds-transfer__select-cards-panel.show,
 #bank-funds-transfer.show.show,
@@ -3935,16 +3936,17 @@ clicks the button
 
 
 
-#add-recipient-modal {
-    border: 1px solid lavender;
-    padding: 64px;
+#add-recipient-section {
+    border: 3px solid lavender;
+    padding: var(--space-32);
     position: absolute;
     top: 0;
     left: 35%;
-    width: 35%;
+    width: 30%;
     background: white;
     border-radius: 4px;
     z-index: 10000;
+    box-shadow: var(--box-shadow-primary);
 }
 
 
@@ -3954,6 +3956,7 @@ clicks the button
   align-items: center;
   display: flex;
   justify-content: center;
+  font-weight: bold;
  
 }
 
@@ -3979,6 +3982,9 @@ clicks the button
     grid-template-rows: auto;
 }
 
+.add-recipient__container {
+    position: relative;
+}
 
 .add-recipient__container div {
     margin-bottom: var(--space-24);
@@ -3994,7 +4000,7 @@ clicks the button
 
 
 .recipient-user  {
-    border: 4px solid lavender;
+    border: 2px solid lavender;
     margin-top: 8px;
     border-radius: 8px;
 }
@@ -4014,10 +4020,15 @@ clicks the button
    
 }
 
-.recipient-user .profile-icon,
+.recipient-user .profile-icon {
+    padding-top: var(--space-4);
+    background-color: #ecfdf5;
+}
+
 .recipient-user .verified-user {
    padding-top: var(--space-4);
     padding-bottom: var(--space-4);
+    background-color: #ecfdf5;
 }
 
 
@@ -4050,4 +4061,43 @@ clicks the button
 #bank-tranafer-to-form label {
     font-weight: 500;
    
+}
+
+
+#transfer-to-user {
+    display: none;
+}
+
+#transfer-to-user.show {
+    display: grid;
+}
+
+
+
+.spinner {
+  width: 40px;
+  height: 40px;
+  border: 4px solid #e5e5e5;
+  border-top: 4px solid #333;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+#add-recipient__spinner {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    background: lavender;
+    transform: translateX(50);
+    display: none;
+}
+
+#add-recipient__spinner.show {
+    display: block;
 }
