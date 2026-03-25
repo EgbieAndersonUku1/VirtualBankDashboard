@@ -364,7 +364,6 @@ img:hover {
     color: #6B7280;
     font-size: 0.875rem;
     line-height: 1.4;
-    /* display: block; */
     margin-top: 0.25rem;
 }
 
@@ -1339,6 +1338,7 @@ textarea {
 }
 
 
+
 #wallet-register-form .form-group input[type="text"],
 #wallet-register-form .form-group input[type="password"],
 #walet-register-form .form-group .flex-row input[type="email"] {
@@ -1347,6 +1347,7 @@ textarea {
 
 }
 
+input[type="datetime-local"],
 input[type="text"],
 input[type="password"],
 input[type="email"] {
@@ -4021,7 +4022,7 @@ clicks the button
 }
 
 .recipient-user .profile-icon {
-    padding-top: var(--space-4);
+    padding-top: var(--space-12);
     background-color: #ecfdf5;
 }
 
@@ -4057,10 +4058,11 @@ clicks the button
     font-size: 0.85rem;
    
 }
-
 #bank-tranafer-to-form label {
-    font-weight: 500;
-   
+    display: block;
+    margin-top: var(--space-8);
+    font-weight: 400;
+    color: #4B5563;
 }
 
 
@@ -4101,3 +4103,32 @@ clicks the button
 #add-recipient__spinner.show {
     display: block;
 }
+
+
+.schedule-option {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.schedule-option:has(input:checked) {
+    border-color: #2563eb;
+    background: #eff6ff;
+}
+
+.schedule-option small {
+    font-weight: 400;
+    font-style: italic;
+    color: #6B7280;
+    line-height: 1.4;
+}
+
+.schedule-option:hover {
+    border-color: black;
+}
+
+

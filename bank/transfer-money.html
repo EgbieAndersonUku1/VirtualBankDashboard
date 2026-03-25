@@ -57,7 +57,7 @@
                         </li>
 
                         <li class="sidebar-nav__item">
-                            <a href="#" class="sidebar-nav__link">
+                            <a href="manage-credit-cards.html" class="sidebar-nav__link">
                                 <span class="sidebar-nav__icon" aria-hidden="true">
                                     <i class="fa-solid fa-credit-card"></i>
                                 </span>
@@ -223,7 +223,7 @@
 
 
                     <section id="transfer-money">
-                        
+
                         <div class="transfer-money__container">
                             <h1 class="header-7">Transfer/Request funds</h1>
                             <p class="mt-4 mb-24">Click on the tab to select transfer or request funds from a recipient
@@ -247,14 +247,14 @@
                             <form action="" id="bank-tranafer-to-form" class="flex-grid">
                                 <div class="form-group flex-grid ">
                                     <label for="bank-transfer-selection">Transfer from *</label>
-                                    <select name="bank-transfer-form" id="bank-transfer-selection" required>
+                                    <select name="bank-transfer-selection" id="bank-transfer-selection" required>
                                         <option value="" disabled selected>Select the transfer source</option>
                                         <option value="wallet"> Wallet - Available £1000</option>
                                         <option value="bank">Bank - Available (£1,2500.00)</option>
                                     </select>
 
                                     <label for="bank-transfer-type">Transfer type *</label>
-                                    <select name="bank-transfer-form" id="bank-transfer-type" required>
+                                    <select name="bank-transfer-type" id="bank-transfer-type" required>
                                         <option value="" disabled selected>Select the transfer type</option>
                                         <option value="internal-transfer">Internal transfer (instant and free)</option>
                                         <option value="bank">External (Fee: £2.00)</option>
@@ -310,23 +310,27 @@
 
                                     </div>
 
-                                    <div class="flex-row mt-16 mb-16">
 
-                                        <input type="checkbox" name="save_recipient"
-                                            id="save-recipient-for-future-transfers">
+                                    <label for="bank-transfer-when">Payment time *</label>
+                                    <select name="bank-transfer-form" id="bank-transfer-schedule" required data-transfer-type="true">
+                                        <option value="" disabled selected>Select the transfer date</option>
+                                        <option value="immediately">Send now</option>
+                                        <option value="future_date">Schedule for later</option>
+                                    </select>
 
-                                        <!-- the recipient name will be replaced with real name once the backend is built e.g Save Johnny for future transfer -->
-                                        <span id="save-recipient-for-future-transfers">
-                                            Save this recipient for future transfers
-                                        </span>
-
-                                    </div>
+                                 <div id="future-schedule-date" class="mt-12 hide">
+                                    <input 
+                                        type="datetime-local" 
+                                        name="future-schedule-date" 
+                                        id="future-schedule-date-input">
+                                </div>
 
                                     <div class=" flex-grid">
                                         <label for="note">Note</label>
-                                      
 
-                                         <textarea name="note" id="transfer-recipient-note" rows="3" maxlength="250" required></textarea>
+
+                                        <textarea name="note" id="transfer-recipient-note" rows="3" maxlength="250"
+                                            required></textarea>
                                         <p class="num-of-characters-remaining text-align-right character-usage-message">
                                             Minimum
                                             characters to use: 50</p>
@@ -337,6 +341,76 @@
                                     </div>
 
                                 </div>
+
+                                
+                                <hr class="dividor mt-24">
+                                <div class="schedule mt-24">
+
+                                    <fieldset class="schedule-group">
+                                        <legend class="header-7 bold">Recurring transfer</legend>
+
+                                        <p class="text-muted">
+                                            Choose how often this payment should repeat.
+                                        </p>
+
+                                        <div class="schedule-options">
+
+                                            <label class="schedule-option">
+                                                <input type="radio" name="schedule" value="none" checked>
+                                                <span>None</span>
+                                            </label>
+
+                                            <label class="schedule-option">
+                                                <input type="radio" name="schedule" value="daily">
+                                                <span>Daily</span>
+                                                 <small>(Everyday)</small>
+                                            </label>
+
+                                            <label class="schedule-option">
+                                                <input type="radio" name="schedule" value="weekly">
+                                                <span>Weekly</span>
+                                                 <small>(Every 7 days)</small>
+                                            </label>
+
+                                            <label class="schedule-option">
+                                                <input type="radio" name="schedule" value="biweekly">
+                                                <span>Fortnightly</span>
+                                                <small>(Every 14 days)</small>
+
+                                            </label>
+
+                                            <label class="schedule-option">
+                                                <input type="radio" name="schedule" value="monthly">
+                                                <span>Monthly</span>
+                                                 <small>(The end of every given month)</small>
+                                            </label>
+
+                                        </div>
+
+                                    </fieldset>
+
+                                </div>
+
+
+                                <hr class="dividor">
+                                <div class="flex-row mt-16 mb-16">
+
+                                    <h2 class="header-7">Future save</h2>
+
+                                    <!-- <p class="text-muted">
+            Choose how often this payment should repeat.
+        </p> -->
+
+                                    <input type="checkbox" name="save_recipient"
+                                        id="save-recipient-for-future-transfers">
+
+                                    <!-- the recipient name will be replaced with real name once the backend is built e.g Save Johnny for future transfer -->
+                                    <span id="save-recipient-for-future-transfers">
+                                        Save this recipient for future transfers
+                                    </span>
+
+                                </div>
+
 
 
                                 <div class="daily-limit-container flex flex-space-between mt-48">
@@ -358,6 +432,7 @@
 
 
 
+
                         </div>
                     </section>
 
@@ -366,22 +441,23 @@
                 </section>
 
 
-                <section id="add-recipient-section" aria-labelledby="find-account-heading" aria-describedby="find recipient">
-                     <div class="flex flex-space-between pl-24 pt-8 pb-4 pr-24 modal-top flex-end">
-                            <button aria-label="Close modal" class="modal-close-btn p-4" id="find-recipient-close-btn">
-                                ✕
-                            </button>
-                        </div>
-                   
+                <section id="add-recipient-section" aria-labelledby="find-account-heading"
+                    aria-describedby="find recipient">
+                    <div class="flex flex-space-between pl-24 pt-8 pb-4 pr-24 modal-top flex-end">
+                        <button aria-label="Close modal" class="modal-close-btn p-4" id="find-recipient-close-btn">
+                            ✕
+                        </button>
+                    </div>
+
 
                     <div class="add-recipient__container">
-                         <div class="spinner" id="add-recipient__spinner"></div>
+                        <div class="spinner" id="add-recipient__spinner"></div>
                         <h1 id="find-account-heading" class="mt-16 capitalise header-7">Find recipient</h1>
 
                         <p id="account-description" class="mt-8">
                             Enter the details of the recipient you want to transfer money to.
                         </p>
-                        
+
                         <form id="find-recipient-form" method="post">
 
                             <div class="form-row mt-24">
