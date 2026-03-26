@@ -289,9 +289,9 @@
                                     </div>
 
                                     <div class="amount flex-grid">
-                                        <label for="amount">Amount * <small>(Minimum amount to transfer is 0.01)</small>
+                                        <label for="amount">Amount * <small class="text-muted">(Minimum amount to transfer is 0.01)</small>
                                         </label>
-                                        <input type="number" name="amount" id="amount" step="0.01" value="0.01"
+                                        <input type="number" name="amount" id="amount" step="0.01" value="0.00"
                                             min="0.01" max="1000000000" required>
                                         <div class="flex-grid two-column-grid">
                                             <div class="flex-row">
@@ -303,7 +303,7 @@
                                                 <small>
                                                     <span class="light-bold" id="transfer-fee-total-label">Total:
                                                     </span>
-                                                    <span class="transfer-total">0.00</span>
+                                                    <span class="transfer-total" id="transfer-total">0.00</span>
                                                 </small>
                                             </div>
                                         </div>
@@ -329,7 +329,7 @@
                                         <label for="note">Note</label>
 
 
-                                        <textarea name="note" id="transfer-recipient-note" rows="3" maxlength="250"
+                                        <textarea name="note" id="transfer-recipient-note" rows="5" maxlength="250"
                                             required></textarea>
                                         <p class="num-of-characters-remaining text-align-right character-usage-message">
                                             Minimum

@@ -1,7 +1,8 @@
-import { selectElement, toggleSpinner, toTitle } from "../utils.js";
+import { selectElement, toggleSpinner, toTitle, formatCurrency } from "../utils.js";
 import { warnError } from "../logger.js";
 import { parseFormData } from "../formUtils.js";
 import { AlertUtils } from "../alerts.js";
+import { minimumCharactersToUse } from "../utils/password/textboxCharEnforcer.js";
 
 
 const transferSection  = document.getElementById("dashboard-transfer");
@@ -13,7 +14,10 @@ const futureScheduleDateContainer = document.getElementById("future-schedule-dat
 const addRecipientSpinner = document.getElementById("add-recipient__spinner");
 const verifiedUserPanel   = document.getElementById("transfer-to-user");
 const verifiedUserName    = document.getElementById("verified-user-name")
-const scheduleDateTimeInputField = document.getElementById("future-schedule-date-input")
+const scheduleDateTimeInputField = document.getElementById("future-schedule-date-input");
+const transferTotal = document.getElementById("transfer-total")
+const amountInputField = document.getElementById("amount")
+const noteTextArea = document.getElementById("transfer-recipient-note")
 
 
 // todo add one time check if static elements abovie exists before calling them in functions
@@ -22,14 +26,33 @@ transferSection.addEventListener("click", handleDelegation);
 recipientSelects.addEventListener("change", handleRecipientSelection);
 transferSchedule.addEventListener("change", handleTransferScheduleSelection)
 findRecipientForm.addEventListener("submit", handleFindRecipientFormSubmission)
+amountInputField.addEventListener("input", handleUpdateTotalTransferFee)
+
+console.log(noteTextArea);
+
+minimumCharactersToUse(noteTextArea, {
+    minCharClass: ".num-of-characters-remaining",
+    maxCharClass: ".num-of-characters-to-use",
+    minCharMessage: "Minimum characters to use: ",
+    maxCharMessage: "Number of characters remaining: ",
+    minCharsLimit:50,
+    maxCharsLimit: 255,
+    disablePaste: true,
+})
+
+
 
 
 function handleDelegation(e) {
  
     handleRecipientSelectionClose(e);
-   
+    handleUpdateTotalTransferFee(e);
    
 }
+
+
+
+
 
 
 function handleTransferScheduleSelection(e) {
@@ -54,9 +77,16 @@ function handleTransferScheduleSelection(e) {
 
 function handleRecipientSelection(e) {
     if (e.target.dataset.recipient !== "true") return;
-
     toggleFindRecipient()
 }
+
+
+
+function handleUpdateTotalTransferFee(e) {
+    if (e.target.id !== "amount") return;
+    transferTotal.textContent =  formatCurrency(e.target.value);
+}
+
 
 
 

@@ -3994,7 +3994,7 @@ clicks the button
 
 .add-recipient__container .form-row legend,
 .add-recipient__container .form-row label {
-    font-weight: 600;
+    font-weight: 400;
     padding-bottom: var(--space-8);
     text-transform: capitalize;
 }
@@ -4061,7 +4061,7 @@ clicks the button
 #bank-tranafer-to-form label {
     display: block;
     margin-top: var(--space-8);
-    font-weight: 400;
+    font-weight: 500;
     color: #4B5563;
 }
 
@@ -4132,3 +4132,17 @@ clicks the button
 }
 
 
+#bank-tranafer-to-form  select,
+#bank-tranafer-to-form textarea,
+#bank-tranafer-to-form  input[type="number"] {
+     box-shadow: none;
+    outline: none;
+    border: 2px solid #e5e7eb;
+}
+
+
+#bank-tranafer-to-form input:focus,
+#bank-tranafer-to-form select:focus,
+#bank-tranafer-to-form textarea:focus {
+    border-color: #2563eb;
+}
