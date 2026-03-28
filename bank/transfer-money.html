@@ -244,20 +244,20 @@
 
                             </section>
 
-                            <form action="" id="bank-tranafer-to-form" class="flex-grid">
+                            <form action="" id="bank-tranafer-to-form" class="flex-grid" method="post">
                                 <div class="form-group flex-grid ">
                                     <label for="bank-transfer-selection">Transfer from *</label>
                                     <select name="bank-transfer-selection" id="bank-transfer-selection" required>
                                         <option value="" disabled selected>Select the transfer source</option>
-                                        <option value="wallet"> Wallet - Available £1000</option>
-                                        <option value="bank">Bank - Available (£1,2500.00)</option>
+                                        <option value="wallet" data-account-amount="1000" data-account-type="wallet"> Wallet - Available £1000</option>
+                                        <option value="bank" data-account-amount="1500" data-account-type="bank">Bank - Available (£1,500.00)</option>
                                     </select>
 
                                     <label for="bank-transfer-type">Transfer type *</label>
-                                    <select name="bank-transfer-type" id="bank-transfer-type" required>
+                                    <select name="bank-transfer-type" id="bank-transfer-type" required data-external-transfer-fee="2.00">
                                         <option value="" disabled selected>Select the transfer type</option>
                                         <option value="internal-transfer">Internal transfer (instant and free)</option>
-                                        <option value="bank">External (Fee: £2.00)</option>
+                                        <option value="external-transfer">External (Fee: £2.00)</option>
                                     </select>
 
 
@@ -293,17 +293,24 @@
                                         </label>
                                         <input type="number" name="amount" id="amount" step="0.01" value="0.00"
                                             min="0.01" max="1000000000" required>
-                                        <div class="flex-grid two-column-grid">
+                                        <div class="flex-grid three-column-grid">
                                             <div class="flex-row">
                                                 <small><span class="light-bold" id="transfer-fee-label">Transfer fee:
-                                                    </span> <span>0.00</span></small>
+                                                    </span> <span id="transfer-fee-span">0.00</span></small>
                                             </div>
 
                                             <div class="flex-row">
                                                 <small>
-                                                    <span class="light-bold" id="transfer-fee-total-label">Total:
+                                                    <span class="light-bold" id="transfer-fee-total-label">Amount to transfer:
                                                     </span>
                                                     <span class="transfer-total" id="transfer-total">0.00</span>
+                                                </small>
+                                            </div>
+
+                                            <div class="flex-row">
+                                                <small>
+                                                    <span class="light-bold" id="transfer-account-label"> </span>
+                                                    <span class="transfer-account-amount dark-green" id="transfer-account-amount"></span>
                                                 </small>
                                             </div>
                                         </div>
@@ -326,7 +333,7 @@
                                 </div>
 
                                     <div class=" flex-grid">
-                                        <label for="note">Note</label>
+                                        <label for="note">Note *</label>
 
 
                                         <textarea name="note" id="transfer-recipient-note" rows="5" maxlength="250"
@@ -397,15 +404,12 @@
 
                                     <h2 class="header-7">Future save</h2>
 
-                                    <!-- <p class="text-muted">
-            Choose how often this payment should repeat.
-        </p> -->
-
+   
                                     <input type="checkbox" name="save_recipient"
-                                        id="save-recipient-for-future-transfers">
+                                        id="save-recipient-for-future-transfer">
 
                                     <!-- the recipient name will be replaced with real name once the backend is built e.g Save Johnny for future transfer -->
-                                    <span id="save-recipient-for-future-transfers">
+                                    <span id="save-recipient-label" class="text-muted">
                                         Save this recipient for future transfers
                                     </span>
 
@@ -421,7 +425,7 @@
                                             class="light-bold">£2000</span>
                                     </div>
 
-                                    <div class="buttons">
+                                    <div class="buttons" id="find-recipient-buttons">
                                         <button type="button">Cancel</button>
                                         <button type="submit" class="blue-bg white-text capitalise">Review
                                             Transfer</button>
@@ -474,7 +478,7 @@
                             <fieldset class="form-row">
                                 <legend>Sort code</legend>
 
-                                <div class="flex-grid six-column-grid sortcode-fields">
+                                <div class="flex-grid six-column-grid sortcode-fields recipient-account">
                                     <input type="text" name="sortcode_1" id="sortcode_1" maxlength="1"
                                         aria-label="Sort code digit 1" required>
                                     <input type="text" name="sortcode_2" id="sortcode_2" maxlength="1"
@@ -494,7 +498,7 @@
                             <fieldset class="form-row">
                                 <legend>Account number</legend>
 
-                                <div class="flex-grid six-column-grid account-fields">
+                                <div class="flex-grid six-column-grid account-fields recipient-account">
                                     <input type="text" name="account_digit_1" id="account_1" maxlength="1"
                                         aria-label="Account number digit 1" required>
                                     <input type="text" name="account_digit_2" id="account_2" maxlength="1"

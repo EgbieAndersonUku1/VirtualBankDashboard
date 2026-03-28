@@ -4146,3 +4146,17 @@ clicks the button
 #bank-tranafer-to-form textarea:focus {
     border-color: #2563eb;
 }
+
+.flash {
+    color: var(--green-600);
+    font-weight: bold;
+}
+
+
+#transfer-account-amount.can-transfer {
+    color: var(--green-600);
+}
+
+#transfer-account-amount.cannot-transfer {
+    color: red;
+}

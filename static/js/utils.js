@@ -1,24 +1,24 @@
 import { logError, warnError } from "./logger.js";
 import { specialChars } from "./specialChars.js";
 
-  
+
 export function checkIfHTMLElement(element, elementName = "Unknown", warn = false) {
     if (!(element instanceof HTMLElement || element instanceof DocumentFragment)) {
 
         if (warn) {
-             console.warn(`Could not find the element: '${elementName}'. Ensure the selector is correct.`);
+            console.warn(`Could not find the element: '${elementName}'. Ensure the selector is correct.`);
         } else {
             console.error(`Could not find the element: '${elementName}'. Ensure the selector is correct.`);
         }
-         return false;
-       
+        return false;
+
     }
     return true;
 }
 
 
 
-export function generateRandomID(maxDigit=10000000) {
+export function generateRandomID(maxDigit = 10000000) {
     if (maxDigit <= 0) {
         throw Error(`The max digit cannot be less or equal to 0. Expected a number higher than 0 but got ${maxDigit}`)
     }
@@ -34,16 +34,16 @@ export function generateRandomID(maxDigit=10000000) {
  * @param {boolean} [show=true] - A boolean indicating whether to show or hide the spinner.
  *                               If `true`, the spinner is shown; if `false`, it is hidden.
  */
-export function toggleSpinner(spinnerElement, show=true, hideScroller=false) {
+export function toggleSpinner(spinnerElement, show = true, hideScroller = false) {
     if (!checkIfHTMLElement(spinnerElement)) {
         console.error("Missing spinner element");
     }
-    spinnerElement.style.display = show ? "block"  : "none";
+    spinnerElement.style.display = show ? "block" : "none";
 
     if (hideScroller) {
         toggleScrolling(show);
     }
-   
+
 }
 
 
@@ -56,11 +56,11 @@ export function toggleSpinner(spinnerElement, show=true, hideScroller=false) {
  * @param {HTMLElement} spinnerElement - The spinner element to display.
  * @param {number} [timeToDisplay=500] - The duration (in milliseconds) to display the spinner. Defaults to 500ms.
  */
-export function showSpinnerFor(spinnerElement, timeToDisplay = 500, hideToggle=false) {
-    toggleSpinner(spinnerElement); 
+export function showSpinnerFor(spinnerElement, timeToDisplay = 500, hideToggle = false) {
+    toggleSpinner(spinnerElement);
 
     setTimeout(() => {
-        toggleSpinner(spinnerElement, false, hideToggle);  
+        toggleSpinner(spinnerElement, false, hideToggle);
     }, timeToDisplay);
 }
 
@@ -74,11 +74,11 @@ export function findByIndex(id, items) {
     if (!Array.isArray(items)) {
         throw new Error(`Expected an array, but got ${typeof items}`);
     }
-    
+
     if (id === undefined || id === null) {
         throw new Error(`Invalid id: ${id}`);
     }
-    
+
     return items.findIndex((item) => item?.id === id);
 }
 
@@ -123,15 +123,15 @@ export function sanitizeText(text, onlyNumbers = false, onlyChars = false, inclu
     }
 
     if (typeof onlyChars !== "boolean" && typeof onlyNumbers !== "boolean") {
-         throw new Error(`Parameters onlyNumbers and onlyChars must be boolean but got: onlyNumbers - ${typeof onlyNumbers } and onlyChar - ${typeof onlyChars}`);    
+        throw new Error(`Parameters onlyNumbers and onlyChars must be boolean but got: onlyNumbers - ${typeof onlyNumbers} and onlyChar - ${typeof onlyChars}`);
     }
 
     if (onlyNumbers && onlyChars) {
-        throw new Error(`onlyNumbers and onlyChars cannot both be true. onlyNumbers - ${onlyNumbers } and onlyChar - ${onlyChars}`);    
+        throw new Error(`onlyNumbers and onlyChars cannot both be true. onlyNumbers - ${onlyNumbers} and onlyChar - ${onlyChars}`);
     }
 
     const INCLUDE_CHARS_ARRAY_LENGTH = includeChars.length;
- 
+
 
     if (INCLUDE_CHARS_ARRAY_LENGTH > 0) {
         const invalidChar = includeChars.find(char => !specialChars[char]);
@@ -141,7 +141,7 @@ export function sanitizeText(text, onlyNumbers = false, onlyChars = false, inclu
     }
 
     if (onlyNumbers) {
-        return text.replace(/\D+/g, ""); 
+        return text.replace(/\D+/g, "");
     }
 
     if (onlyChars) {
@@ -150,11 +150,11 @@ export function sanitizeText(text, onlyNumbers = false, onlyChars = false, inclu
                 return includeChars.includes(match) ? match : '';  // Keep if allowed, otherwise remove
             });
         }
-     
+
         return text.replace(/[^A-Za-z]/g, '');
     }
 
-    return text ? text.split("-").join("") : ''; 
+    return text ? text.split("-").join("") : '';
 }
 
 
@@ -186,11 +186,11 @@ export function sanitizeText(text, onlyNumbers = false, onlyChars = false, inclu
  * formatUKMobileNumber("08971067479255");  // Throws Error: Number must start with '07'.
  */
 export function formatUKMobileNumber(number) {
-    
-    const cleanedNumber  = cleanUKMobileNumber(number);
-    const prefix         = cleanedNumber.slice(1, 5);
+
+    const cleanedNumber = cleanUKMobileNumber(number);
+    const prefix = cleanedNumber.slice(1, 5);
     const exchangeNumber = cleanedNumber.slice(5);
-  
+
     const formattedMobileNumber = `+44 (${prefix}) ${exchangeNumber}`;
     return formattedMobileNumber;
 }
@@ -234,26 +234,26 @@ export function formatUKMobileNumber(number) {
  * cleanUKMobileNumber("08971067479255") -> throws Error Valid length but starts with `08` UK mobile numbers start with "07"
  */
 export function cleanUKMobileNumber(mobileNumber) {
-    
+
     // Replace various UK prefixes with '0' and handle cases like +44 (0)7 or 0044
-   const digitsOnly                 = sanitizeText(mobileNumber, true).replace(/^(?:\+44|44|0044)0?/, "0");
-   const VALID_UK_MOBILE_NUM_LENGTH = 11;
+    const digitsOnly = sanitizeText(mobileNumber, true).replace(/^(?:\+44|44|0044)0?/, "0");
+    const VALID_UK_MOBILE_NUM_LENGTH = 11;
 
-   if (!digitsOnly.startsWith("0")) {
-       throw new Error("The number is invalid because it doesn't start with a 0");
-   }
-
-   if (digitsOnly.length != VALID_UK_MOBILE_NUM_LENGTH ){
-       throw new Error(`This not a valid UK mobile number. Expected 11 digits got ${digitsOnly.length} `);
-       
-   }
-
-   if (!digitsOnly.startsWith("07")) {
-    const START_INDEX = 0;
-    const END_INDEX   = 2;
-    throw new Error(`UK mobile numbers always start with a "07". Expected a prefix of "07" but got ${digitsOnly.slice(START_INDEX, END_INDEX)}`);
+    if (!digitsOnly.startsWith("0")) {
+        throw new Error("The number is invalid because it doesn't start with a 0");
     }
-   return digitsOnly;
+
+    if (digitsOnly.length != VALID_UK_MOBILE_NUM_LENGTH) {
+        throw new Error(`This not a valid UK mobile number. Expected 11 digits got ${digitsOnly.length} `);
+
+    }
+
+    if (!digitsOnly.startsWith("07")) {
+        const START_INDEX = 0;
+        const END_INDEX = 2;
+        throw new Error(`UK mobile numbers always start with a "07". Expected a prefix of "07" but got ${digitsOnly.slice(START_INDEX, END_INDEX)}`);
+    }
+    return digitsOnly;
 }
 
 
@@ -356,7 +356,7 @@ export function compareTwoObjects(object1, object2) {
  * }
  */
 export function excludeKey(obj, key) {
-  
+
     if (typeof obj !== 'object' || obj === null) {
         throw new TypeError('Expected an object or array');
     }
@@ -375,7 +375,7 @@ export function excludeKey(obj, key) {
 
 
 export function checkNumber(value) {
-    const numberValue = parseFloat(value);  
+    const numberValue = parseFloat(value);
 
     return {
         isNumber: !isNaN(numberValue) && isFinite(numberValue),
@@ -398,8 +398,8 @@ export function getCombinedCode(a, b) {
 }
 
 
-export function dimBackground(dimBackgroundElement, dim=false) {
-    dimBackgroundElement.style.display  = dim ? "block" : "none";
+export function dimBackground(dimBackgroundElement, dim = false) {
+    dimBackgroundElement.style.display = dim ? "block" : "none";
 };
 
 
@@ -416,8 +416,8 @@ export function dimBackground(dimBackgroundElement, dim=false) {
  * @param {number} lengthPerDash - The number of characters between dashes (default: 5).
  * @param {boolean} digitsOnly - If true, removes all non-numeric characters (default: false).
  */
-export function applyDashToInput(e, lengthPerDash=5, digitsOnly=false, charsOnly=false) {
-  
+export function applyDashToInput(e, lengthPerDash = 5, digitsOnly = false, charsOnly = false) {
+
     const value = e.target.value.trim();
 
     if (!value) return;
@@ -425,24 +425,24 @@ export function applyDashToInput(e, lengthPerDash=5, digitsOnly=false, charsOnly
         console.error(`The lengthPerDash must be integer. Expected an integer but got ${typeof lengthPerDash}`);
     };
 
-    let santizeValue   = sanitizeText(value, digitsOnly, charsOnly);
-    let formattedText  = [];
+    let santizeValue = sanitizeText(value, digitsOnly, charsOnly);
+    let formattedText = [];
 
 
-    for (let i=0; i < santizeValue.length; i++) {
+    for (let i = 0; i < santizeValue.length; i++) {
 
         const fieldValue = santizeValue[i];
-    
-        if (i > 0 && i % lengthPerDash === 0 ) {
+
+        if (i > 0 && i % lengthPerDash === 0) {
             formattedText.push(concatenateWithDelimiter("-", fieldValue));
         } else {
             formattedText.push(fieldValue);
-            
+
         }
     }
 
-   e.target.value = formattedText.join("");
-   
+    e.target.value = formattedText.join("");
+
 };
 
 
@@ -480,8 +480,8 @@ export function concatenateWithDelimiter(first, second, delimiter = "") {
  *                            an error is raised
  * @param {number} - Returns the input value
  */
-export function handleInputFieldValueLength({e, maximumLength=10, convertToFloat=false, returnInputValue=false}) {
- 
+export function handleInputFieldValueLength({ e, maximumLength = 10, convertToFloat = false, returnInputValue = false }) {
+
     if (!e.target || typeof e.target.value !== "string") {
         return;
     }
@@ -512,7 +512,7 @@ export function handleInputFieldValueLength({e, maximumLength=10, convertToFloat
     if (returnInputValue) {
         return trimmedValue;
     }
-    
+
 }
 
 
@@ -541,12 +541,12 @@ export function maskCreditCardNo(creditCardNo) {
         throw new Error("Invalid credit card number");
     }
 
-    const CREDIT_CARD_LENGTH      = sanitizeText(creditCardNo, true).length;
-    const MIN_CREDIT_CARD_LENGTH  = 12;
-    const MAX_CREDIT_CARD_LENGTH  = 19;
-  
-    
-    if (CREDIT_CARD_LENGTH < MIN_CREDIT_CARD_LENGTH ) {
+    const CREDIT_CARD_LENGTH = sanitizeText(creditCardNo, true).length;
+    const MIN_CREDIT_CARD_LENGTH = 12;
+    const MAX_CREDIT_CARD_LENGTH = 19;
+
+
+    if (CREDIT_CARD_LENGTH < MIN_CREDIT_CARD_LENGTH) {
         throw new Error(`The credit card is invalid because it contains non-numeric values. Credit card no: ${creditCardNo}`);
     };
 
@@ -554,8 +554,8 @@ export function maskCreditCardNo(creditCardNo) {
         throw new Error("Credit card length must be: Visa, Mastercard, Discover: 16, American Express: 15, Diners Club: 14, Maestro: 12 to 19");
     }
 
-    const numberToMask   = CREDIT_CARD_LENGTH - 4;
-    const maskedNumber   = "*".repeat(numberToMask);
+    const numberToMask = CREDIT_CARD_LENGTH - 4;
+    const maskedNumber = "*".repeat(numberToMask);
     const lastFourDigits = creditCardNo.slice(-4);
 
     return concatenateWithDelimiter(maskedNumber, lastFourDigits);
@@ -581,18 +581,18 @@ export function maskCreditCardNo(creditCardNo) {
  * 
  * @see https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number/toLocaleString
  */
-export function formatCurrency(amount, locale='en-GB', currency='GBP') {
+export function formatCurrency(amount, locale = 'en-GB', currency = 'GBP') {
     const parsedAmount = typeof amount === "string" ? parseFloat(amount) : amount;
 
     if (isNaN(parsedAmount)) {
-      throw new Error(`Invalid amount: ${amount}`);
+        throw new Error(`Invalid amount: ${amount}`);
     }
 
     return parsedAmount.toLocaleString(locale, {
-      style: 'currency',
-      currency,
-      minimumFractionDigits: 2,
-      maximumFractionDigits: 2,
+        style: 'currency',
+        currency,
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2,
     });
 }
 
@@ -600,18 +600,18 @@ export function formatCurrency(amount, locale='en-GB', currency='GBP') {
 export function parseErrorMessage(errorMsg) {
     if (typeof errorMsg !== "string") return null;
 
-    const [titleRaw, textRaw] =  errorMsg.split(":");
+    const [titleRaw, textRaw] = errorMsg.split(":");
 
     if (titleRaw === undefined || textRaw === undefined) {
-        return {title: "Oops, something went wrong", text: ""};
+        return { title: "Oops, something went wrong", text: "" };
     }
 
-    const title  = titleRaw.trim();
-    const text   = textRaw.trim();
+    const title = titleRaw.trim();
+    const text = textRaw.trim();
 
-    return {title, text}
-    
-} 
+    return { title, text }
+
+}
 
 
 
@@ -694,7 +694,7 @@ export function selectElement(elementToSelect, cssSelectorElement = "active") {
 export function parseCurrency(currency) {
 
     if (typeof currency !== "string") {
-        warnError("parseCurrency",  {
+        warnError("parseCurrency", {
             currency: currency,
             type: typeof currency,
             error: "Must be a string"
@@ -702,21 +702,71 @@ export function parseCurrency(currency) {
         return NaN;
     }
 
-    const cleanedValues  = [];
-    let isNegative       = false;
-  
+    const cleanedValues = [];
+    let isNegative = false;
+
     for (let char of currency) {
-      
-        if (!isNaN(char) && char !== " " || char === "." ) {
+
+        if (!isNaN(char) && char !== " " || char === ".") {
             cleanedValues.push(char)
         }
         if (char === "-" && !isNegative) {
-          isNegative = true;
+            isNegative = true;
         }
     }
 
     if (cleanedValues.length === 0) return NaN;
-  
+
     const cleanedNumbers = parseFloat(cleanedValues.join(""))
     return isNegative ? cleanedNumbers * -1 : cleanedNumbers;
+}
+
+
+
+/**
+ * Enables auto-focus and navigation behaviour for a group of input elements.
+ *
+ * Behaviour:
+ * - Automatically moves focus to the next input when a character is entered.
+ * - Moves focus to the previous input when Backspace is pressed on an empty input.
+ * - Optionally restricts input values to numeric characters only.
+ *
+ * Common use cases: OTP fields, account numbers, sort codes, PINs.
+ *
+ * @param {NodeList|HTMLElement[]} inputElements
+ *   Collection of DOM input elements (NodeList or array).
+ *
+ * @param {boolean} [onlyNumbers=true]
+ *   If true, input values are sanitised to allow only numeric characters.
+ */
+export function enableAutoFocusNavigation(inputElements, onlyNumbers = true) {
+
+    if (!(inputElements instanceof NodeList) && !Array.isArray(inputElements)) {
+        warnError("autoFocusInputFields", {
+            expected: "NodeList or array of DOM elements",
+            received: inputElements,
+        });
+        return;
+    }
+    inputElements.forEach((input) => {
+
+        input.addEventListener("input", (e) => {
+
+            if (onlyNumbers) {
+                e.target.value = sanitizeText(e.target.value, true);
+            }
+
+            // Normal typing behaviour
+            if (e.target.value.length === 1) {
+                e.target.nextElementSibling?.focus();
+            }
+        });
+
+        input.addEventListener("keydown", (e) => {
+            if (e.key === "Backspace" && !e.target.value) {
+                e.target.previousElementSibling?.focus();
+            }
+        });
+
+    });
 }

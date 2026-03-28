@@ -1,35 +1,119 @@
-import { selectElement, toggleSpinner, toTitle, formatCurrency } from "../utils.js";
+import { selectElement, toggleSpinner, toTitle, formatCurrency, enableAutoFocusNavigation } from "../utils.js";
 import { warnError } from "../logger.js";
 import { parseFormData } from "../formUtils.js";
 import { AlertUtils } from "../alerts.js";
 import { minimumCharactersToUse } from "../utils/password/textboxCharEnforcer.js";
 
+// ---------------------------
+// Transfer Form Elements
+// ---------------------------
 
-const transferSection  = document.getElementById("dashboard-transfer");
-const recipientSelects = document.getElementById("recipient")
-const addRecipient     = document.getElementById("add-recipient-section")
-const findRecipientForm    =  document.getElementById("find-recipient-form");
-const transferSchedule    = document.getElementById("bank-transfer-schedule");
-const futureScheduleDateContainer = document.getElementById("future-schedule-date");
-const addRecipientSpinner = document.getElementById("add-recipient__spinner");
-const verifiedUserPanel   = document.getElementById("transfer-to-user");
-const verifiedUserName    = document.getElementById("verified-user-name")
-const scheduleDateTimeInputField = document.getElementById("future-schedule-date-input");
-const transferTotal = document.getElementById("transfer-total")
-const amountInputField = document.getElementById("amount")
-const noteTextArea = document.getElementById("transfer-recipient-note")
+// ----- Containers / Sections -----
+const transferSection                = document.getElementById("dashboard-transfer");
+const addRecipient                    = document.getElementById("add-recipient-section");
+const futureScheduleDateContainer     = document.getElementById("future-schedule-date");
+const verifiedUserPanel               = document.getElementById("transfer-to-user");
 
+// ----- Forms / Inputs -----
+const findRecipientForm               = document.getElementById("find-recipient-form");
+const scheduleDateTimeInputField      = document.getElementById("future-schedule-date-input");
+const amountInputField                = document.getElementById("amount");
+const noteTextArea                    = document.getElementById("transfer-recipient-note");
+const accountInputs                   = document.querySelectorAll(".recipient-account input");
+const bankTransferForm                = document.getElementById("bank-tranafer-to-form");
+
+// ----- Select Elements -----
+const recipientSelects                = document.getElementById("recipient");
+const transferSchedule                = document.getElementById("bank-transfer-schedule");
+const bankTransfersSelectsOptions     = document.getElementById("bank-transfer-type");
+const transferFromSelectOption        = document.getElementById("bank-transfer-selection");
+
+// ----- Display / Feedback Elements -----
+const transferTotal                   = document.getElementById("transfer-total");
+const transferFeeSpan                 = document.getElementById("transfer-fee-span");
+const verifiedUserName                = document.getElementById("verified-user-name");
+
+// ----- Buttons / Spinners -----
+const addRecipientSpinner             = document.getElementById("add-recipient__spinner");
+const findRecipientBtns               = document.getElementById("find-recipient-buttons");
+
+
+const transferringAccountNameSpan = document.getElementById("transfer-account-label");
+const transferringAccountAmountSpan = document.getElementById("transfer-account-amount")
 
 // todo add one time check if static elements abovie exists before calling them in functions
 
 transferSection.addEventListener("click", handleDelegation);
+
+// select recipient e.g "add recipient"
 recipientSelects.addEventListener("change", handleRecipientSelection);
+
+// select bank type internal vs external
+bankTransfersSelectsOptions.addEventListener("change", handleExternalTransferFee);
+
+// select schedule e.g send now vs send later
 transferSchedule.addEventListener("change", handleTransferScheduleSelection)
-findRecipientForm.addEventListener("submit", handleFindRecipientFormSubmission)
-amountInputField.addEventListener("input", handleUpdateTotalTransferFee)
 
-console.log(noteTextArea);
+// select the account that is being transferred from e.g wallet or bank
+transferFromSelectOption.addEventListener("change", handleTransactionAccountBalanceDetails)
 
+
+amountInputField.addEventListener("input", handleUpdateTotalTransferFee);
+
+
+// handle form submits
+findRecipientForm.addEventListener("submit", handleFindRecipientFormSubmission);
+bankTransferForm.addEventListener("submit", handleBankTransferSubmission);
+
+
+
+
+
+const MAX_TRANSFER_AMOUNT = 1_000_000_000;
+
+// Manages the state and button visibility of the "Find Recipient" panel.
+// Prevents users from bypassing the workflow by manually hiding the panel in the inspector.
+const findRecipientPanel = {
+    // Tracks whether the panel is currently open
+    panelIsOpen: false,
+
+    /**
+     * Returns true if the panel is open, false otherwise.
+     * @returns {boolean}
+     */
+    isOpen() {
+        return this.panelIsOpen === true;
+    },
+
+    /**
+     * Sets the panel's open state.
+     * @param {boolean} value - true to open the panel, false to close it.
+     */
+    setOpen(value) {
+        this.panelIsOpen = value;
+    },
+
+    /**
+     * Hides the Find Recipient buttons by adding the 'hide' class.
+     * Usually called when the panel is open to enforce proper workflow.
+     */
+    hideButtons() {
+        findRecipientBtns.classList.add("hide");
+    },
+
+    /**
+     * Shows the Find Recipient buttons by removing the 'hide' class.
+     * Usually called when the panel is closed or workflow allows interaction.
+     */
+    showButtons() {
+        findRecipientBtns.classList.remove("hide");
+    }
+};
+
+
+
+
+// Displays the number of characters used or remaining in the text area
 minimumCharactersToUse(noteTextArea, {
     minCharClass: ".num-of-characters-remaining",
     maxCharClass: ".num-of-characters-to-use",
@@ -42,103 +126,15 @@ minimumCharactersToUse(noteTextArea, {
 
 
 
+// ---------------------------
+// Transfer Handlers
+// ---------------------------
 
 function handleDelegation(e) {
- 
     handleRecipientSelectionClose(e);
     handleUpdateTotalTransferFee(e);
    
 }
-
-
-
-
-
-
-function handleTransferScheduleSelection(e) {
- 
-   if (e.target.dataset.transferType !== "true") return;
-
-   const selectValue = e.target.value;
-   const SCHEDULE_FOR_LATER = "future_date"
-
-   if (selectValue === SCHEDULE_FOR_LATER) {
-        //  console.log("I am here")
-        scheduleDateTimeInputField.required = true;
-        futureScheduleDateContainer.classList.remove("hide");
-        return;
-   } 
-
-    scheduleDateTimeInputField.required = false;
-   futureScheduleDateContainer.classList.add("hide")
-  
-}
-
-
-function handleRecipientSelection(e) {
-    if (e.target.dataset.recipient !== "true") return;
-    toggleFindRecipient()
-}
-
-
-
-function handleUpdateTotalTransferFee(e) {
-    if (e.target.id !== "amount") return;
-    transferTotal.textContent =  formatCurrency(e.target.value);
-}
-
-
-
-
-
-/**
- * Toggle the "Find Recipient" modal in the transfer form.
- *
- * When `show` is true, the modal appears, allowing the user to enter recipient details.
- * When `show` is false, the modal hides. The recipient select field can optionally 
- * reset to its default state depending on user interaction.
- *
- * @param {boolean} show - Whether to display the modal. Defaults to true.
- * @param {boolean} resetSelectOption - Determines if the recipient select field should be reset 
- *                                      when hiding the modal. Defaults to true.
- *
- * Behaviour:
- *   - true: Clears the select field when the modal is closed. Use when the user cancels 
- *           the action to start fresh.
- *   - false: Preserves the current selection. Use when the user has already interacted 
- *            with the field and the selection should be maintained.
- *
- * @returns {void}
- */
-function toggleFindRecipient(show = true, resetSelectOption = true) {
-    const booleanType = typeof show;
-
-    if (booleanType !== "boolean") {
-        warnError("toggleFindRecipient", {
-            type: booleanType,
-            msg: "Expected a boolean",
-            received: `Received a value of ${show}`
-
-        })
-        return;
-    }
-  
-
-    if (show) {
-        selectElement(addRecipient, "show");
-        return;
-    }
-   
-    addRecipient.classList.remove("show");
-
-    if (resetSelectOption) {
-         recipientSelects.value = "";
-    }
-   
-}
-
-
-
 
 
 /**
@@ -153,10 +149,376 @@ function toggleFindRecipient(show = true, resetSelectOption = true) {
  */
 function handleRecipientSelectionClose(e) {
     if (e.target.id !== "find-recipient-close-btn") return;
+
     toggleFindRecipient(false)
 
 }
 
+
+
+/**
+ * Updates the displayed total transfer fee and enforces transfer limits
+ * whenever the transfer amount input changes.
+ *
+ * This function does the following".
+ *   1. Ensures the entered amount does not exceed `MAX_TRANSFER_AMOUNT`.
+ *   2. Updates the UI element `transferTotal` with the formatted amount.
+ *
+ * @param {Event} e - The input event triggered on the transfer amount field.
+ * @returns {void} - Does not return a value.
+ *
+ * @example
+ * const amountInput = document.getElementById("amount");
+ * amountInput.addEventListener("input", handleUpdateTotalTransferFee);
+ */
+
+function handleUpdateTotalTransferFee(e) {
+    if (e.target.id !== "amount") return;
+    
+    const amount  = e.target.value;
+
+    if (amount > MAX_TRANSFER_AMOUNT) {
+        e.target.value = MAX_TRANSFER_AMOUNT;
+    }
+
+  
+    if (amount) {
+        transferTotal.textContent =  formatCurrency(amount);
+        transferTotal.classList.add("flash");
+
+        const transferringAccountDetails = getSelectedAccountDetails(transferFromSelectOption);
+
+        
+        updateAccountTransferDetails(transferringAccountDetails.accountType, transferringAccountDetails.accountAmount, amount)
+    
+    }
+ 
+}
+
+
+
+
+/**
+ * Handles the selection of a transfer schedule type and updates the UI accordingly.
+ *
+ * This function listens for a user interaction on elements with 
+ * `data-transfer-type="true"`. If the user selects the "Schedule for Later" option,
+ * it makes the future date input required and shows the corresponding date container.
+ * Otherwise, it hides the container and removes the required constraint.
+ *
+ * @param {Event} e - The event triggered by the user selecting a transfer schedule option.
+ * @returns {void} - Does not return a value.
+ *
+ * @example
+ * const scheduleOptions = document.querySelectorAll(".transfer-schedule");
+ * scheduleOptions.forEach(element => element.addEventListener("change", handleTransferScheduleSelection));
+ */
+function handleTransferScheduleSelection(e) {
+ 
+   if (e.target.dataset.transferType !== "true") return;
+
+   const selectValue = e.target.value;
+   const SCHEDULE_FOR_LATER = "future_date"
+
+   if (selectValue === SCHEDULE_FOR_LATER) {
+        scheduleDateTimeInputField.required = true;
+        futureScheduleDateContainer.classList.remove("hide");
+        return;
+   } 
+
+   scheduleDateTimeInputField.required = false;
+   futureScheduleDateContainer.classList.add("hide")
+  
+}
+
+
+/**
+ * Handles the add recipient option when it is selected from the select option.
+ *
+ * This function listens for events on elements that have `data-recipient="true"`.
+ * When triggered, it calls `toggleFindRecipient()` to open or close the recipient search interface.
+ *
+ * @param {Event} e - The event triggered by user interaction (e.g., click).
+ * @returns {void} - Does not return a value.
+ *
+ */
+function handleRecipientSelection(e) {
+    if (e.target.dataset.recipient !== "true") return;
+    toggleFindRecipient()
+}
+
+
+
+/**
+ * Updates the displayed transfer fee when the user selects an external transfer option.
+ *
+ * This function listens for a change event on the select element with ID "bank-transfer-type".
+ * If the user selects the "external-transfer" option, it retrieves the fee from the 
+ * selected option's dataset and updates the `transferFeeSpan` element
+ * 
+ * Note it only works if there is a *data-* attribrute in select value
+ *
+ * @param {Event} e - The change event triggered by the transfer type select element.
+ * @returns {void} - Does not return a value.
+ *
+ * @example
+ * const transferTypeSelect = document.getElementById("bank-transfer-type");
+ * transferTypeSelect.addEventListener("change", handleExternalTransferFee);
+ */
+function handleExternalTransferFee(e) {
+
+    if (e.target.id !== "bank-transfer-type") return;
+
+    const selectValue = e.target.value;
+    const EXPECTED_VALUE = "external-transfer";
+    const DEFAULT_FEE = formatCurrency("0")
+    
+    if (selectValue === EXPECTED_VALUE) {
+        const fee = e.target.dataset.externalTransferFee;
+        transferFeeSpan.textContent = formatCurrency(fee);
+        transferFeeSpan.classList.add("deactivate-text")
+        return;
+    }
+
+    transferFeeSpan.classList.remove("deactivate-text")
+    transferFeeSpan.textContent = DEFAULT_FEE;
+}
+
+
+
+/**
+ * Updates the displayed account name and balance when the user selects an account
+ * from the transfer account dropdown.
+ *
+ * This function listens for a change event on the select element with ID "bank-transfer-selection".
+ * When triggered, it retrieves the selected account's details using `getSelectedAccountDetails`,
+ * then updates the UI spans to show the account type (formatted as a title) and the account balance
+ * (formatted as currency).
+ *
+ * @param {Event} e - The change event from the select element.
+ * @returns {void} - Does not return anything.
+ *
+ * @example
+ * const selectElement = document.getElementById("bank-transfer-selection");
+ * selectElement.addEventListener("change", handleTransactionAccountBalanceDetails);
+ */
+function handleTransactionAccountBalanceDetails(e) {
+    const EXPECTED_ID = "bank-transfer-selection";
+    
+    if (e.target.id !== EXPECTED_ID) return;
+
+    const accountDetails  = getSelectedAccountDetails(e.target);
+    if (!accountDetails) {
+        warnError("handleTransactionAccountBalanceDetails", {
+            errorMsg: "Not found",
+            accountDetailsReceivedValue: accountDetails,
+        })
+        return;
+    }
+    transferringAccountNameSpan.textContent  = `${toTitle(accountDetails.accountType)}`;
+
+    // console.log(accountDetails);
+    // console.log(accountDetails.accountAmount)
+    // console.log("I am here")
+    updateAccountTransferDetails(accountDetails.accountType, accountDetails.accountAmount, amountInputField.value)
+
+}
+
+
+
+/**
+ * Handles the submission of the "Find Recipient" form.
+ 
+ * @param {Event} e - The submit event triggered by the form.
+ *
+ * @returns {void}
+ */
+function handleFindRecipientFormSubmission(e) {
+    e.preventDefault();
+    const MILL_SECONDS = 1000;
+    const parsedFormData = getParseFormData();
+    const accountDetails = getAccountDetailsFromData(parsedFormData)
+    
+    toggleSpinner(addRecipientSpinner, true, true)
+    setTimeout(() => {
+    toggleSpinner(addRecipientSpinner, false, true)
+          const isAccountNumberCorrect = isAccountDetailsCorrect(accountDetails);
+
+        //    console.log(isAccountNumberCorrect)
+            // Simulated response for testing.
+            // When the backend is built it will verify the account via fetch.
+            if (isAccountNumberCorrect) {
+                AlertUtils.showAlert({
+                    title: "Account recipient found",
+                    text: "The recipient account was found. You can proceed with the transfer.",
+                    icon: "success",
+                    confirmButtonText: "OK"
+                })
+                toggleFindRecipient(false, false);
+                showVerifiedUser(parsedFormData.firstName, parsedFormData.surname);
+
+                return
+            } else {
+                AlertUtils.showAlert({
+                    title: "Account recipient not found",
+                    text: "No matching account was found. For this simulation the sort code must start with the digits 400.",
+                    icon: "error",
+                    confirmButtonText: "OK"
+                })
+            }
+    }, MILL_SECONDS)
+    
+
+}
+
+
+/**
+ * Handles the submission of the "bank transfer" form.
+ 
+ * @param {Event} e - The submit event triggered by the form.
+ *
+ * @returns {void}
+ */
+async function handleBankTransferSubmission(e) {
+    e.preventDefault();
+
+    const accountDetails = getSelectedAccountDetails(transferFromSelectOption);
+    const amount         = amountInputField.value;
+    const confirmed = await AlertUtils.showConfirmationAlert({
+        title: "Confirm Transfer",
+        text: `You about to transfer ${formatCurrency(amount)} to your ${accountDetails.accountType} account. Do you want to proceed?`,
+        icon: "info",
+        cancelMessage: "No action taken",
+        messageToDisplayOnSuccess: `Transfer successful`,
+        confirmButtonText: "Transfer funds!",
+        denyButtonText: "Don't transfer!"
+    })
+
+
+    // when the backend is buit the form data will be submitted to the backend via fetch but for now we simply reset the form.
+    if (confirmed) {
+        bankTransferForm.reset();
+        verifiedUserName.classList.remove("show");
+    }
+
+}
+
+
+
+// ---------------------------
+// helper functions utilities
+// ---------------------------
+
+
+/**
+ * Updates the account name and available balance in the UI based on a transfer 
+ * for the current account e.g bank or wallet.
+ *
+ * This function calculates the updated account balance after a transfer 
+ * and updates the relevant UI elements to reflect the new state. 
+ * It also validates the input parameters and logs a warning if any are invalid.
+ *
+ * @param {string} accountType - The type of the account (e.g., "wallet", "bank").
+ * @param {number} currentAccountAmount - The current available balance of the account.
+ * @param {number} newAmount - The amount the user intends to transfer.
+ * @returns {void} - Updates the UI elements directly and does not return a value.
+ *
+ * @example
+ * updateAccountTransferDetails("wallet", 1000, 200);
+ */
+function updateAccountTransferDetails(accountType, currentAccountAmount, newAmount) {
+   
+    if (typeof accountType !== "string" && typeof amount !== "number" && typeof currentAccountAmount !== "number") {
+        warnError("updateTransferDetails", {
+            error: "One or more of the parameters is invalid",
+            accountType: typeof accountType,
+            accountTypeValue: accountType,
+            amountType: typeof amount,
+            amountValue: amount,
+            currentAccountAmountType: typeof currentAccountAmount,
+            currentAccountAmountValue: currentAccountAmount,
+            expected: "Account type must be a string, the new amount and the correct account must be a number or a float"
+        });
+        return;
+    }
+
+    transferringAccountNameSpan.textContent = toTitle(accountType);
+
+    const updatedAmount = currentAccountAmount - newAmount;
+    
+    if (updatedAmount < 0 ) {
+        transferringAccountAmountSpan.classList.remove("can-transfer")
+        transferringAccountAmountSpan.classList.add("cannot-transfer")
+    } else {
+         transferringAccountAmountSpan.classList.add("can-transfer");
+         transferringAccountAmountSpan.classList.remove("cannot-transfer")
+    }
+
+    if (newAmount) {
+        transferringAccountAmountSpan.textContent = formatCurrency(updatedAmount)
+
+    }
+ 
+}
+
+
+
+/**
+ * Toggle the "Find Recipient" modal in the transfer form.
+ *
+ * When `show` is true, the modal appears, allowing the user to enter recipient details.
+ * When `show` is false, the modal hides. The recipient select field can optionally 
+ * reset to its default state depending on user interaction.
+ *
+ * @param {boolean} show - Whether to display the modal. Defaults to true.
+ * @param {boolean} resetSelectOption - Determines if the recipient select field should be reset 
+ *                                      when hiding the modal. Defaults to true.
+ * @param {string} cSSelectorName - The selector for opening or closing the panel
+ *
+ * Behaviour:
+ *   - true: Clears the select field when the modal is closed. Use when the user cancels 
+ *           the action to start fresh.
+ *   - false: Preserves the current selection. Use when the user has already interacted 
+ *            with the field and the selection should be maintained.
+ *
+ * @returns {void}
+ */
+function toggleFindRecipient(show = true, resetSelectOption = true, cSSelectorName="show") {
+    const booleanType = typeof show;
+
+    if (booleanType !== "boolean") {
+        warnError("toggleFindRecipient", {
+            type: booleanType,
+            msg: "Expected a boolean",
+            received: `Received a value of ${show}`
+
+        })
+        return;
+    }
+  
+
+    if (show) {
+        selectElement(addRecipient, cSSelectorName);
+
+        enableAutoFocusNavigation(accountInputs);
+        findRecipientPanel.setOpen(true);
+        if (findRecipientPanel.isOpen()) {
+            findRecipientPanel.hideButtons()
+        }
+        return;
+    }
+   
+    addRecipient.classList.remove(cSSelectorName);
+    findRecipientPanel.setOpen(false);
+   
+    if (!findRecipientPanel.isOpen()) {
+        findRecipientPanel.showButtons();
+    }
+    if (resetSelectOption) {
+         recipientSelects.value = "";
+    }
+   
+}
 
 
 
@@ -260,55 +622,6 @@ function getAccountDetailsFromData(data){
 
 
 
-
-/**
- * Handles the submission of the "Find Recipient" form.
- 
- * @param {Event} e - The submit event triggered by the form.
- *
- * @returns {void}
- */
-function handleFindRecipientFormSubmission(e) {
-    e.preventDefault();
-    const MILL_SECONDS = 1000;
-    const parsedFormData = getParseFormData();
-    const accountDetails = getAccountDetailsFromData(parsedFormData)
-    
-    toggleSpinner(addRecipientSpinner, true, true)
-    setTimeout(() => {
-         toggleSpinner(addRecipientSpinner, false, true)
-          const isAccountNumberCorrect = isAccountDetailsCorrect(accountDetails);
-
-        //    console.log(isAccountNumberCorrect)
-            // Simulated response for testing.
-            // When the backend is built it will verify the account via fetch.
-            if (isAccountNumberCorrect) {
-                AlertUtils.showAlert({
-                    title: "Account recipient found",
-                    text: "The recipient account was found. You can proceed with the transfer.",
-                    icon: "success",
-                    confirmButtonText: "OK"
-                })
-                toggleFindRecipient(false, false);
-                showVerifiedUser(parsedFormData.firstName, parsedFormData.surname)
-                return
-            } else {
-                AlertUtils.showAlert({
-                    title: "Account recipient not found",
-                    text: "No matching account was found. For this simulation the sort code must start with the digits 400.",
-                    icon: "error",
-                    confirmButtonText: "OK"
-                })
-            }
-    }, MILL_SECONDS)
-    
-
-}
-
-
-
-
-
 /**
  * Verifies whether the given account details are valid.
  *
@@ -333,7 +646,7 @@ function isAccountDetailsCorrect(accountDetails) {
         return;
     }
 
-    console.log(accountDetails);
+  
 
     // for now we simulate the authentication respoonse. Later the actually authentication response data will come from the backend
     const isSortCodeValid = accountDetails.sortCode.startsWith("400");
@@ -342,8 +655,6 @@ function isAccountDetailsCorrect(accountDetails) {
 
 
 };
-
-
 
 
 
@@ -366,8 +677,6 @@ function isAccountDetailsCorrect(accountDetails) {
  *   // Verified user panel displays: "Doctor Who"
  */
 function showVerifiedUser(firstName, surname) {
-    // console.log(firstName);
-    // console.log(surname)
     if (!(firstName && surname)) return;
 
     if (typeof firstName !== "string" && typeof surname !== "string") {
@@ -384,4 +693,33 @@ function showVerifiedUser(firstName, surname) {
     selectElement(verifiedUserPanel, "show");
     verifiedUserName.textContent = `${toTitle(firstName)} ${toTitle(surname)}`
     
+}
+
+
+
+
+// ---------------------------
+// Get / Extract Utilities
+// ---------------------------
+
+/**
+ * Retrieves account details from the currently selected option of a select element.
+ *
+ * This function reads the dataset attributes from the selected <option>
+ * and returns the account information as an object.
+ *
+ * Expected data attributes on the option element:
+ * - data-account-amount
+ * - data-account-type
+ *
+ * @param {HTMLSelectElement} selectElement - The select element containing account options.
+ * @returns {{accountAmount: string, accountType: string} | null} 
+ * Returns an object with account details, or null if no option is selected.
+ */
+function getSelectedAccountDetails(selectElement) {
+    const option = selectElement.selectedOptions[0];
+    if (!option) return null;
+
+    const { accountAmount, accountType } = option.dataset;
+    return { accountAmount, accountType };
 }
