@@ -364,7 +364,6 @@ img:hover {
     color: #6B7280;
     font-size: 0.875rem;
     line-height: 1.4;
-    /* display: block; */
     margin-top: 0.25rem;
 }
 
@@ -1339,6 +1338,7 @@ textarea {
 }
 
 
+
 #wallet-register-form .form-group input[type="text"],
 #wallet-register-form .form-group input[type="password"],
 #walet-register-form .form-group .flex-row input[type="email"] {
@@ -1347,6 +1347,7 @@ textarea {
 
 }
 
+input[type="datetime-local"],
 input[type="text"],
 input[type="password"],
 input[type="email"] {
@@ -1442,7 +1443,7 @@ label {
     line-height: 1.5;
 }
 
-#add-recipient-modal,
+#add-recipient-section,
 #bank-transfer-quick-confirmation,
 #bank-funds-transfer__select-cards-panel,
 #bank-funds-transfer,
@@ -1461,7 +1462,7 @@ label {
 }
 
 
-#add-recipient-modal.show,
+#add-recipient-section.show,
 #bank-transfer-quick-confirmation.show,
 #bank-funds-transfer__select-cards-panel.show,
 #bank-funds-transfer.show,
@@ -1475,6 +1476,7 @@ label {
 }
 
 
+#add-recipient-section.show,
 #bank-transfer-quick-confirmation.show,
 #bank-funds-transfer__select-cards-panel.show,
 #bank-funds-transfer.show.show,
@@ -3935,16 +3937,17 @@ clicks the button
 
 
 
-#add-recipient-modal {
-    border: 1px solid lavender;
-    padding: 64px;
+#add-recipient-section {
+    border: 3px solid lavender;
+    padding: var(--space-32);
     position: absolute;
     top: 0;
     left: 35%;
-    width: 35%;
+    width: 30%;
     background: white;
     border-radius: 4px;
     z-index: 10000;
+    box-shadow: var(--box-shadow-primary);
 }
 
 
@@ -3954,6 +3957,7 @@ clicks the button
   align-items: center;
   display: flex;
   justify-content: center;
+  font-weight: bold;
  
 }
 
@@ -3979,6 +3983,9 @@ clicks the button
     grid-template-rows: auto;
 }
 
+.add-recipient__container {
+    position: relative;
+}
 
 .add-recipient__container div {
     margin-bottom: var(--space-24);
@@ -3987,14 +3994,14 @@ clicks the button
 
 .add-recipient__container .form-row legend,
 .add-recipient__container .form-row label {
-    font-weight: 600;
+    font-weight: 400;
     padding-bottom: var(--space-8);
     text-transform: capitalize;
 }
 
 
 .recipient-user  {
-    border: 4px solid lavender;
+    border: 2px solid lavender;
     margin-top: 8px;
     border-radius: 8px;
 }
@@ -4014,10 +4021,15 @@ clicks the button
    
 }
 
-.recipient-user .profile-icon,
+.recipient-user .profile-icon {
+    padding-top: var(--space-12);
+    background-color: #ecfdf5;
+}
+
 .recipient-user .verified-user {
    padding-top: var(--space-4);
     padding-bottom: var(--space-4);
+    background-color: #ecfdf5;
 }
 
 
@@ -4046,8 +4058,105 @@ clicks the button
     font-size: 0.85rem;
    
 }
-
 #bank-tranafer-to-form label {
+    display: block;
+    margin-top: var(--space-8);
     font-weight: 500;
-   
+    color: #4B5563;
+}
+
+
+#transfer-to-user {
+    display: none;
+}
+
+#transfer-to-user.show {
+    display: grid;
+}
+
+
+
+.spinner {
+  width: 40px;
+  height: 40px;
+  border: 4px solid #e5e5e5;
+  border-top: 4px solid #333;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+#add-recipient__spinner {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    background: lavender;
+    transform: translateX(50);
+    display: none;
+}
+
+#add-recipient__spinner.show {
+    display: block;
+}
+
+
+.schedule-option {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.schedule-option:has(input:checked) {
+    border-color: #2563eb;
+    background: #eff6ff;
+}
+
+.schedule-option small {
+    font-weight: 400;
+    font-style: italic;
+    color: #6B7280;
+    line-height: 1.4;
+}
+
+.schedule-option:hover {
+    border-color: black;
+}
+
+
+#bank-tranafer-to-form  select,
+#bank-tranafer-to-form textarea,
+#bank-tranafer-to-form  input[type="number"] {
+     box-shadow: none;
+    outline: none;
+    border: 2px solid #e5e7eb;
+}
+
+
+#bank-tranafer-to-form input:focus,
+#bank-tranafer-to-form select:focus,
+#bank-tranafer-to-form textarea:focus {
+    border-color: #2563eb;
+}
+
+.flash {
+    color: var(--green-600);
+    font-weight: bold;
+}
+
+
+#transfer-account-amount.can-transfer {
+    color: var(--green-600);
+}
+
+#transfer-account-amount.cannot-transfer {
+    color: red;
 }
