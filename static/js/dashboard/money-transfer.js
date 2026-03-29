@@ -19,8 +19,9 @@ const findRecipientForm               = document.getElementById("find-recipient-
 const scheduleDateTimeInputField      = document.getElementById("future-schedule-date-input");
 const amountInputField                = document.getElementById("amount");
 const noteTextArea                    = document.getElementById("transfer-recipient-note");
+const requestTextArea                 = document.getElementById("request-note");
 const accountInputs                   = document.querySelectorAll(".recipient-account input");
-const bankTransferForm                = document.getElementById("bank-tranafer-to-form");
+const bankTransferForm                = document.getElementById("bank-transfer-to-form");
 
 // ----- Select Elements -----
 const recipientSelects                = document.getElementById("recipient");
@@ -113,16 +114,26 @@ const findRecipientPanel = {
 
 
 
-// Displays the number of characters used or remaining in the text area
-minimumCharactersToUse(noteTextArea, {
+// Displays the number of characters used or remaining in the text area for the transfer and request text area form
+
+const textAreaConfig = {
     minCharClass: ".num-of-characters-remaining",
     maxCharClass: ".num-of-characters-to-use",
     minCharMessage: "Minimum characters to use: ",
     maxCharMessage: "Number of characters remaining: ",
-    minCharsLimit:50,
+    minCharsLimit: 50,
     maxCharsLimit: 255,
     disablePaste: true,
-})
+};
+
+
+[noteTextArea, requestTextArea].forEach((textAreaElement) => {
+    minimumCharactersToUse(textAreaElement, textAreaConfig);
+});
+
+
+
+
 
 
 
@@ -186,9 +197,7 @@ function handleUpdateTotalTransferFee(e) {
         transferTotal.textContent =  formatCurrency(amount);
         transferTotal.classList.add("flash");
 
-        const transferringAccountDetails = getSelectedAccountDetails(transferFromSelectOption);
-
-        
+        const transferringAccountDetails = getSelectedAccountDetails(transferFromSelectOption);        
         updateAccountTransferDetails(transferringAccountDetails.accountType, transferringAccountDetails.accountAmount, amount)
     
     }
@@ -442,7 +451,7 @@ function updateAccountTransferDetails(accountType, currentAccountAmount, newAmou
         return;
     }
 
-    transferringAccountNameSpan.textContent = toTitle(accountType);
+    transferringAccountNameSpan.textContent = `${toTitle(accountType)} :`;
 
     const updatedAmount = currentAccountAmount - newAmount;
     

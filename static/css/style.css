@@ -4058,11 +4058,16 @@ clicks the button
     font-size: 0.85rem;
    
 }
-#bank-tranafer-to-form label {
+
+#bank-transfer-to-form label {
     display: block;
     margin-top: var(--space-8);
     font-weight: 500;
     color: #4B5563;
+}
+
+#bank-transfer-to-form {
+    display: none;
 }
 
 
@@ -4132,18 +4137,18 @@ clicks the button
 }
 
 
-#bank-tranafer-to-form  select,
-#bank-tranafer-to-form textarea,
-#bank-tranafer-to-form  input[type="number"] {
+#bank-transfer-to-form select,
+#bank-transfer-to-form textarea,
+#bank-transfer-to-form input[type="number"] {
      box-shadow: none;
     outline: none;
     border: 2px solid #e5e7eb;
 }
 
 
-#bank-tranafer-to-form input:focus,
-#bank-tranafer-to-form select:focus,
-#bank-tranafer-to-form textarea:focus {
+#bank-transfer-to-form input:focus,
+#bank-transfer-to-form select:focus,
+#bank-transfer-to-form textarea:focus {
     border-color: #2563eb;
 }
 
@@ -4159,4 +4164,12 @@ clicks the button
 
 #transfer-account-amount.cannot-transfer {
     color: red;
+}
+
+
+
+#request-funds-btn {
+    background: var(--blue-600);
+    padding: var(--space-16);
+    border-radius: 0;
 }

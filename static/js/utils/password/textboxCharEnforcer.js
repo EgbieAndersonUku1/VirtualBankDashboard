@@ -107,7 +107,7 @@ export function minimumCharactersToUse(textAreaElement, params) {
         disableTextAreaBoxPaste(textAreaElement);
     }
 
-    textAreaElement.addEventListener("input", (e) => handleCharacterCountEvent(e, params));
+    textAreaElement.addEventListener("input", (e) => handleCharacterCountEvent(e, params, textAreaElement));
    
 }
 
@@ -117,9 +117,10 @@ export function minimumCharactersToUse(textAreaElement, params) {
  * @param {Event} e - The event object.
  * @param {object} params - Object containing various parameters for character limits and messages.
  */
-function handleCharacterCountEvent(e, params) {
-    handleCharCount(e, params.minCharsLimit, params.minCharClass, params.minCharMessage);
-    handleCharCount(e, params.maxCharsLimit, params.maxCharClass, params.maxCharMessage);
+function handleCharacterCountEvent(e, params, textAreaElement) {
+    // console.log(textAreaElement)
+    handleCharCount(e, params.minCharsLimit, params.minCharClass, params.minCharMessage, textAreaElement);
+    handleCharCount(e, params.maxCharsLimit, params.maxCharClass, params.maxCharMessage, textAreaElement);
 }
 
 /**
@@ -129,12 +130,15 @@ function handleCharacterCountEvent(e, params) {
  * @param {string} classSelector - CSS selector for the output element.
  * @param {string} message - The message to display..
  */
-function handleCharCount(e, limit, classSelector, message) {
+function handleCharCount(e, limit, classSelector, message, textAreaElement) {
    
     if (e && e.target) {
          const charsUsed = e.target.value.length;
          const charsRemaining = limit - charsUsed;
-         const outputElement = document.querySelector(classSelector);
+
+         const parent        = textAreaElement.parentNode;
+         const outputElement = parent.querySelector(classSelector);
+        
          updateTextString(outputElement, charsRemaining, limit, message)
     } 
    

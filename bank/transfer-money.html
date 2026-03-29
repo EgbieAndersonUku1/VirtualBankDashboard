@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="/static/css/style.css">
     <link rel="shortcut icon" href="/static/images/virtual-bank-logo.png" type="image/x-icon">
     <link rel="stylesheet" href="/static/vendor/fontawesome/css/all.min.css">
-    <title>Transfer money</title>
+    <title>Transfer or request money</title>
 </head>
 
 <body>
@@ -232,11 +232,11 @@
                             <section id="" aria-labelledby="credit-cards-heading">
 
                                 <div class="tabs flex">
-                                    <div class="tab transfer-money active">
+                                    <div class="tab transfer-money">
                                         <a href="#">Transfer money</a>
                                     </div>
 
-                                    <div class="tab request-money">
+                                    <div class="tab request-money active">
                                         <a href="#">Request money</a>
                                     </div>
                                 </div>
@@ -244,7 +244,8 @@
 
                             </section>
 
-                            <form action="" id="bank-tranafer-to-form" class="flex-grid" method="post">
+                            <!-- bank transfer form -->
+                            <form action="" id="bank-transfer-to-form" class="flex-grid" method="post">
                                 <div class="form-group flex-grid ">
                                     <label for="bank-transfer-selection">Transfer from *</label>
                                     <select name="bank-transfer-selection" id="bank-transfer-selection" required>
@@ -307,7 +308,7 @@
                                                 </small>
                                             </div>
 
-                                            <div class="flex-row">
+                                            <div class="flex-row flex flex-end">
                                                 <small>
                                                     <span class="light-bold" id="transfer-account-label"> </span>
                                                     <span class="transfer-account-amount dark-green" id="transfer-account-amount"></span>
@@ -332,7 +333,7 @@
                                         id="future-schedule-date-input">
                                 </div>
 
-                                    <div class=" flex-grid">
+                                    <div class="flex-grid text-area-wrapper">
                                         <label for="note">Note *</label>
 
 
@@ -435,7 +436,36 @@
                             </form>
 
 
+                            <!-- bank request form -->
+                             <form action="" method="post" id="bank-request-form" class="flex-grid">
 
+                                <div class="button">
+                                    <button type="button" class="btn-large mt-8 mb-8 white-text blue-bg">Find recipient</button>
+                                </div>
+
+                                <div class="flex-grid text-area-wrapper">
+
+                                        <label for="note">Request funds *</label>
+
+
+                                        <textarea name="note" id="request-note" rows="5" maxlength="250" required></textarea>
+
+                                        <p class="num-of-characters-remaining text-align-right character-usage-message">
+                                            Minimum
+                                            characters to use: 50
+                                        </p>
+
+                                        <p class="num-of-characters-to-use text-align-right character-usage-message">
+                                            Number of
+                                            characters remaining: 255
+                                        </p>
+
+                                </div>
+
+                                <div class="flex flex-end mt-16">
+                                    <button type="submit" class="white-text" id="request-funds-btn">request funds</button>
+                                </div>
+                             </form>
 
                         </div>
                     </section>
@@ -459,7 +489,7 @@
                         <h1 id="find-account-heading" class="mt-16 capitalise header-7">Find recipient</h1>
 
                         <p id="account-description" class="mt-8">
-                            Enter the details of the recipient you want to transfer money to.
+                            Enter the details of the recipient you want to find.
                         </p>
 
                         <form id="find-recipient-form" method="post">
