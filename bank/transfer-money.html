@@ -229,16 +229,18 @@
                             <p class="mt-4 mb-24">Click on the tab to select transfer or request funds from a recipient
                             </p>
 
-                            <section id="" aria-labelledby="credit-cards-heading">
+                            <section id="tabs-section" aria-labelledby="transfer/request heading">
 
                                 <div class="tabs flex">
-                                    <div class="tab transfer-money">
-                                        <a href="#">Transfer money</a>
-                                    </div>
+                                                                        
+                                     <a class="tab-link tab capitalise active" data-action="transfer-money">
+                                       Transfer money
+                                    </a>
 
-                                    <div class="tab request-money active">
-                                        <a href="#">Request money</a>
-                                    </div>
+                                    <a class="tab-link tab white-text capitalise" data-action="request-money">
+                                        request money
+                                    </a>
+                                    
                                 </div>
 
 
@@ -250,12 +252,15 @@
                                     <label for="bank-transfer-selection">Transfer from *</label>
                                     <select name="bank-transfer-selection" id="bank-transfer-selection" required>
                                         <option value="" disabled selected>Select the transfer source</option>
-                                        <option value="wallet" data-account-amount="1000" data-account-type="wallet"> Wallet - Available £1000</option>
-                                        <option value="bank" data-account-amount="1500" data-account-type="bank">Bank - Available (£1,500.00)</option>
+                                        <option value="wallet" data-account-amount="1000" data-account-type="wallet">
+                                            Wallet - Available £1000</option>
+                                        <option value="bank" data-account-amount="1500" data-account-type="bank">Bank -
+                                            Available (£1,500.00)</option>
                                     </select>
 
                                     <label for="bank-transfer-type">Transfer type *</label>
-                                    <select name="bank-transfer-type" id="bank-transfer-type" required data-external-transfer-fee="2.00">
+                                    <select name="bank-transfer-type" id="bank-transfer-type" required
+                                        data-external-transfer-fee="2.00">
                                         <option value="" disabled selected>Select the transfer type</option>
                                         <option value="internal-transfer">Internal transfer (instant and free)</option>
                                         <option value="external-transfer">External (Fee: £2.00)</option>
@@ -290,7 +295,8 @@
                                     </div>
 
                                     <div class="amount flex-grid">
-                                        <label for="amount">Amount * <small class="text-muted">(Minimum amount to transfer is 0.01)</small>
+                                        <label for="amount">Amount * <small class="text-muted">(Minimum amount to
+                                                transfer is 0.01)</small>
                                         </label>
                                         <input type="number" name="amount" id="amount" step="0.01" value="0.00"
                                             min="0.01" max="1000000000" required>
@@ -302,7 +308,8 @@
 
                                             <div class="flex-row">
                                                 <small>
-                                                    <span class="light-bold" id="transfer-fee-total-label">Amount to transfer:
+                                                    <span class="light-bold" id="transfer-fee-total-label">Amount to
+                                                        transfer:
                                                     </span>
                                                     <span class="transfer-total" id="transfer-total">0.00</span>
                                                 </small>
@@ -311,7 +318,8 @@
                                             <div class="flex-row flex flex-end">
                                                 <small>
                                                     <span class="light-bold" id="transfer-account-label"> </span>
-                                                    <span class="transfer-account-amount dark-green" id="transfer-account-amount"></span>
+                                                    <span class="transfer-account-amount dark-green"
+                                                        id="transfer-account-amount"></span>
                                                 </small>
                                             </div>
                                         </div>
@@ -320,18 +328,17 @@
 
 
                                     <label for="bank-transfer-when">Payment time *</label>
-                                    <select name="bank-transfer-form" id="bank-transfer-schedule" required data-transfer-type="true">
+                                    <select name="bank-transfer-form" id="bank-transfer-schedule" required
+                                        data-transfer-type="true">
                                         <option value="" disabled selected>Select the transfer date</option>
                                         <option value="immediately">Send now</option>
                                         <option value="future_date">Schedule for later</option>
                                     </select>
 
-                                 <div id="future-schedule-date" class="mt-12 hide">
-                                    <input 
-                                        type="datetime-local" 
-                                        name="future-schedule-date" 
-                                        id="future-schedule-date-input">
-                                </div>
+                                    <div id="future-schedule-date" class="mt-12 hide">
+                                        <input type="datetime-local" name="future-schedule-date"
+                                            id="future-schedule-date-input">
+                                    </div>
 
                                     <div class="flex-grid text-area-wrapper">
                                         <label for="note">Note *</label>
@@ -350,7 +357,7 @@
 
                                 </div>
 
-                                
+
                                 <hr class="dividor mt-24">
                                 <div class="schedule mt-24">
 
@@ -371,13 +378,13 @@
                                             <label class="schedule-option">
                                                 <input type="radio" name="schedule" value="daily">
                                                 <span>Daily</span>
-                                                 <small>(Everyday)</small>
+                                                <small>(Everyday)</small>
                                             </label>
 
                                             <label class="schedule-option">
                                                 <input type="radio" name="schedule" value="weekly">
                                                 <span>Weekly</span>
-                                                 <small>(Every 7 days)</small>
+                                                <small>(Every 7 days)</small>
                                             </label>
 
                                             <label class="schedule-option">
@@ -390,7 +397,7 @@
                                             <label class="schedule-option">
                                                 <input type="radio" name="schedule" value="monthly">
                                                 <span>Monthly</span>
-                                                 <small>(The end of every given month)</small>
+                                                <small>(The end of every given month)</small>
                                             </label>
 
                                         </div>
@@ -405,7 +412,7 @@
 
                                     <h2 class="header-7">Future save</h2>
 
-   
+
                                     <input type="checkbox" name="save_recipient"
                                         id="save-recipient-for-future-transfer">
 
@@ -437,35 +444,105 @@
 
 
                             <!-- bank request form -->
-                             <form action="" method="post" id="bank-request-form" class="flex-grid">
+                            <form action="" method="post" id="bank-request-form" class="flex-grid">
 
-                                <div class="button">
-                                    <button type="button" class="btn-large mt-8 mb-8 white-text blue-bg">Find recipient</button>
+
+                                <div class="account-wrapper">
+
+                                    <h4 class="mt-24">Account details</h4>
+                                    <hr class="dividor mb-16">
+
+                                     <div class="form-row mt-24">
+                                        <label for="first-name" class="mt-8">Recipient name</label>
+                                        <input type="text" name="name" id="name" maxlength="30" required>
+                                    </div>
+                                    
+                                    
+                                    <fieldset class="form-row mt-24">
+
+                                        <legend>Sort code *</legend>
+
+                                        <div class="flex-grid six-column-grid sortcode-fields request-recipient-account">
+                                            <input type="text" name="sortcode_1" id="request_recipient_sortcode_1"
+                                                maxlength="1" aria-label="Sort code digit 1" required>
+
+                                            <input type="text" name="sortcode_2" id="request_recipient_sortcode_2"
+                                                maxlength="1" aria-label="Sort code digit 2" required>
+
+                                            <input type="text" name="sortcode_3" id="request_recipient_sortcode_3"
+                                                maxlength="1" aria-label="Sort code digit 3" required>
+
+                                            <input type="text" name="sortcode_4" id="request_recipient_sortcode_4"
+                                                maxlength="1" aria-label="Sort code digit 4" required>
+
+                                            <input type="text" name="sortcode_5" id="request_recipient_sortcode_5"
+                                                maxlength="1" aria-label="Sort code digit 5" required>
+
+                                            <input type="text" name="sortcode_6" id="request_recipient_sortcode_6"
+                                                maxlength="1" aria-label="Sort code digit 6" required>
+                                        </div>
+                                    </fieldset>
+
+
+                                    <fieldset class="form-row">
+                                        <legend class="mt-8">Account number *</legend>
+
+                                        <div class="flex-grid six-column-grid account-fields request-recipient-account">
+                                            <input type="text" name="account_digit_1" id="request_recipient_account_1"
+                                                maxlength="1" aria-label="Account number digit 1" required>
+
+                                            <input type="text" name="account_digit_2" id="request_recipient_account_2"
+                                                maxlength="1" aria-label="Account number digit 2" required>
+
+                                            <input type="text" name="account_digit_3" id="request_recipient_account_3"
+                                                maxlength="1" aria-label="Account number digit 3" required>
+
+                                            <input type="text" name="account_digit_4" id="request_recipient_account_4"
+                                                maxlength="1" aria-label="Account number digit 4" required>
+
+                                            <input type="text" name="account_digit_5" id="request_recipient_account_5"
+                                                maxlength="1" aria-label="Account number digit 5" required>
+
+                                            <input type="text" name="account_digit_6" id="request_recipient_account_6"
+                                                maxlength="1" aria-label="Account number digit 6" required>
+
+                                            <input type="text" name="account_digit_7" id="request_recipient_account_7"
+                                                maxlength="1" aria-label="Account number digit 7" required>
+
+                                            <input type="text" name="account_digit_8" id="request_recipient_account_8"
+                                                maxlength="1" aria-label="Account number digit 8" required>
+                                        </div>
+                                    </fieldset>
                                 </div>
 
-                                <div class="flex-grid text-area-wrapper">
+                                <hr class="dividor mt-8">
 
-                                        <label for="note">Request funds *</label>
+                                <div class="flex-grid text-area-wrapper mt-24">
+
+                                    <label for="note">Request funds *</label>
 
 
-                                        <textarea name="note" id="request-note" rows="5" maxlength="250" required></textarea>
+                                    <textarea name="note" id="request-note" rows="5" maxlength="250"
+                                        required 
+                                        placeholder="Hey, I just wanted to remind you that you still owe me money for dinner last week..."></textarea>
 
-                                        <p class="num-of-characters-remaining text-align-right character-usage-message">
-                                            Minimum
-                                            characters to use: 50
-                                        </p>
+                                    <p class="num-of-characters-remaining text-align-right character-usage-message">
+                                        Minimum
+                                        characters to use: 50
+                                    </p>
 
-                                        <p class="num-of-characters-to-use text-align-right character-usage-message">
-                                            Number of
-                                            characters remaining: 255
-                                        </p>
+                                    <p class="num-of-characters-to-use text-align-right character-usage-message">
+                                        Number of
+                                        characters remaining: 255
+                                    </p>
 
                                 </div>
 
                                 <div class="flex flex-end mt-16">
-                                    <button type="submit" class="white-text" id="request-funds-btn">request funds</button>
+                                    <button type="submit" class="white-text" id="request-funds-btn">request
+                                        funds</button>
                                 </div>
-                             </form>
+                            </form>
 
                         </div>
                     </section>
@@ -489,7 +566,7 @@
                         <h1 id="find-account-heading" class="mt-16 capitalise header-7">Find recipient</h1>
 
                         <p id="account-description" class="mt-8">
-                            Enter the details of the recipient you want to find.
+                            Enter the details of the recipient you want to transfer to.
                         </p>
 
                         <form id="find-recipient-form" method="post">

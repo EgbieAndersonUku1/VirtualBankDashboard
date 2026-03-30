@@ -20,8 +20,10 @@ const scheduleDateTimeInputField      = document.getElementById("future-schedule
 const amountInputField                = document.getElementById("amount");
 const noteTextArea                    = document.getElementById("transfer-recipient-note");
 const requestTextArea                 = document.getElementById("request-note");
-const accountInputs                   = document.querySelectorAll(".recipient-account input");
+const recipientAccountInputs          = document.querySelectorAll(".recipient-account input");
+const requestRecipientAccountInputs   = document.querySelectorAll(".request-recipient-account input")
 const bankTransferForm                = document.getElementById("bank-transfer-to-form");
+const bankRequestForm                 = document.getElementById("bank-request-form");
 
 // ----- Select Elements -----
 const recipientSelects                = document.getElementById("recipient");
@@ -34,13 +36,19 @@ const transferTotal                   = document.getElementById("transfer-total"
 const transferFeeSpan                 = document.getElementById("transfer-fee-span");
 const verifiedUserName                = document.getElementById("verified-user-name");
 
+
 // ----- Buttons / Spinners -----
 const addRecipientSpinner             = document.getElementById("add-recipient__spinner");
 const findRecipientBtns               = document.getElementById("find-recipient-buttons");
 
 
-const transferringAccountNameSpan = document.getElementById("transfer-account-label");
-const transferringAccountAmountSpan = document.getElementById("transfer-account-amount")
+// ----- transfer amount/labels -----
+const transferringAccountNameSpan     = document.getElementById("transfer-account-label");
+const transferringAccountAmountSpan   = document.getElementById("transfer-account-amount")
+
+// ----- tabs -----
+const tabLinks                       = document.querySelectorAll(".tab-link");
+
 
 // todo add one time check if static elements abovie exists before calling them in functions
 
@@ -65,7 +73,13 @@ amountInputField.addEventListener("input", handleUpdateTotalTransferFee);
 // handle form submits
 findRecipientForm.addEventListener("submit", handleFindRecipientFormSubmission);
 bankTransferForm.addEventListener("submit", handleBankTransferSubmission);
+bankRequestForm.addEventListener("submit", handleBankRequestSubmission);
 
+
+document.addEventListener("DOMContentLoaded", ()=> {
+    // When the page loads for the transfer/request money we want the transfer tab form elements to be shown
+    selectElement(bankTransferForm, "show")
+})
 
 
 
@@ -136,6 +150,9 @@ const textAreaConfig = {
 
 
 
+enableAutoFocusNavigation(requestRecipientAccountInputs);
+
+
 
 // ---------------------------
 // Transfer Handlers
@@ -144,6 +161,8 @@ const textAreaConfig = {
 function handleDelegation(e) {
     handleRecipientSelectionClose(e);
     handleUpdateTotalTransferFee(e);
+      handleTabs(e);
+  
    
 }
 
@@ -345,17 +364,39 @@ function handleTransactionAccountBalanceDetails(e) {
 function handleFindRecipientFormSubmission(e) {
     e.preventDefault();
     const MILL_SECONDS = 1000;
-    const parsedFormData = getParseFormData();
+
+    const requiredFields = [
+           "first_name",
+           "surname",
+           "sortcode_1",
+           "sortcode_2",
+           "sortcode_3",
+           "sortcode_4",
+           "sortcode_5",
+           "sortcode_6",
+           "account_digit_1",
+           "account_digit_2",
+           "account_digit_3",
+           "account_digit_4",
+           "account_digit_5",
+           "account_digit_6",
+           "account_digit_7",
+           "account_digit_8",
+        
+        ];
+    const parsedFormData = getParseFormData(findRecipientForm, requiredFields);
     const accountDetails = getAccountDetailsFromData(parsedFormData)
     
     toggleSpinner(addRecipientSpinner, true, true)
     setTimeout(() => {
-    toggleSpinner(addRecipientSpinner, false, true)
+    toggleSpinner(addRecipientSpinner, false, true);
+
+          // When the backend is built it will verify the account via fetch.
           const isAccountNumberCorrect = isAccountDetailsCorrect(accountDetails);
 
-        //    console.log(isAccountNumberCorrect)
+            //  console.log(isAccountNumberCorrect)
             // Simulated response for testing.
-            // When the backend is built it will verify the account via fetch.
+           
             if (isAccountNumberCorrect) {
                 AlertUtils.showAlert({
                     title: "Account recipient found",
@@ -411,6 +452,120 @@ async function handleBankTransferSubmission(e) {
     }
 
 }
+
+
+/**
+ * Handles the submission of the "Request fund" form.
+ 
+ * @param {Event} e - The submit event triggered by the form.
+ *
+ * @returns {void}
+ */
+async function handleBankRequestSubmission(e) {
+    e.preventDefault();
+
+    const requiredFields = [
+           "name",
+           "sortcode_1",
+           "sortcode_2",
+           "sortcode_3",
+           "sortcode_4",
+           "sortcode_5",
+           "sortcode_6",
+           "account_digit_1",
+           "account_digit_2",
+           "account_digit_3",
+           "account_digit_4",
+           "account_digit_5",
+           "account_digit_6",
+           "account_digit_7",
+           "account_digit_8",
+        
+        ];
+
+    const parsedFormData = getParseFormData(bankRequestForm, requiredFields);
+    const accountDetails = getAccountDetailsFromData(parsedFormData);
+  
+    if (typeof accountDetails !== "object") {
+        warnError("handleBankRequestSubmission", {
+            data: accountDetails,
+            dataType: typeof accountDetails,
+            expected: "Expected an object containing account details"
+            
+        })
+        return;
+    }
+
+    
+    // Before the confirmation block, the account details will be sent via fetch to verify if it is exists.
+    // if doesn't exists then an appropriate alert message informing the user that the account doesn't exists
+    // will be displayed to the user. But for now since they is no backend we simple proceed with confirm alert block
+
+    const confirm = await AlertUtils.showConfirmationAlert({
+        title: "Confirm account request information",
+        text: `You are about to request money from account ${accountDetails.sortCode} ••••${accountDetails.accountNumber.slice(-4)}. Do you want to proceed?`,
+        icon: "info",
+        confirmButtonText: "Request funds",
+        denyButtonText: "Cancel fund Request!", 
+        messageToDisplayOnSuccess: "Your request has been sent..."
+    })
+
+    if (confirm) {
+        bankRequestForm.reset()
+        return;
+    }
+
+}
+
+
+
+
+
+
+/**
+ * Handles tab navigation for the bank transfer interface.
+ *
+ * This function listens for click events on tab elements and determines
+ * whether the clicked element is a valid tab. If so, it updates the UI
+ * by highlighting the selected tab and displaying the corresponding form.
+ *
+ * Supported tabs:
+ * - "transfer-money" → Displays the bank transfer form.
+ * - "request-money"  → Displays the bank request form.
+ *
+ *
+ * @param {MouseEvent} e - The click event triggered on the tab container.
+ */
+function handleTabs(e) {
+
+    const link = e.target.closest("a");
+    if (link === null) return;
+    if (!link.classList.contains("tab")) return;
+
+    const action       = link.dataset.action;
+    const TRANSFER_TAB = "transfer-money";
+    const REQUEST_TAB  = "request-money";
+    const cssSelector  = "show";
+   
+    deselectAllTabs();
+    highlightTab(link)
+  
+    hideTransferAndRequestForms();
+
+    switch(action) {
+        case TRANSFER_TAB:
+            bankTransferForm.classList.add(cssSelector);
+            bankRequestForm.classList.remove(cssSelector)
+            break;
+        case REQUEST_TAB:
+            bankTransferForm.classList.remove(cssSelector);
+            bankRequestForm.classList.add(cssSelector)
+            break;
+    }
+       
+
+}
+
 
 
 
@@ -509,7 +664,7 @@ function toggleFindRecipient(show = true, resetSelectOption = true, cSSelectorNa
     if (show) {
         selectElement(addRecipient, cSSelectorName);
 
-        enableAutoFocusNavigation(accountInputs);
+        enableAutoFocusNavigation(recipientAccountInputs);
         findRecipientPanel.setOpen(true);
         if (findRecipientPanel.isOpen()) {
             findRecipientPanel.hideButtons()
@@ -549,27 +704,9 @@ function toggleFindRecipient(show = true, resetSelectOption = true, cSSelectorNa
  *
  * Note: Ensure `findRecipientForm` is correctly selected in the DOM before calling.
  */
-function getParseFormData() {
-      const formData = new FormData(findRecipientForm);
-        const requiredFields = [
-           "first_name",
-           "surname",
-           "sortcode_1",
-           "sortcode_2",
-           "sortcode_3",
-           "sortcode_4",
-           "sortcode_5",
-           "sortcode_6",
-           "account_digit_1",
-           "account_digit_2",
-           "account_digit_3",
-           "account_digit_4",
-           "account_digit_5",
-           "account_digit_6",
-           "account_digit_7",
-           "account_digit_8",
-        
-        ];
+function getParseFormData(formElement, requiredFields) {
+      const formData = new FormData(formElement);
+       
     
         const parsedFormData = parseFormData(formData, requiredFields);
         return parsedFormData;
@@ -703,6 +840,49 @@ function showVerifiedUser(firstName, surname) {
     verifiedUserName.textContent = `${toTitle(firstName)} ${toTitle(surname)}`
     
 }
+
+
+
+/**
+ * Removes the active state from all tab links.
+ *
+ * This is typically called before activating a new tab to ensure that
+ * only one tab appears highlighted at a time.
+ *
+ * @param {string} [cssSelector="active"] - The CSS class representing
+ * the active/selected tab state.
+ */
+function deselectAllTabs(cssSelector="active") {
+    tabLinks.forEach((link) => {
+        link.classList.remove(cssSelector);
+    })
+
+}
+
+
+/**
+ * Applies the active state to a specific tab element.
+ *
+ * @param {HTMLElement} tab - The tab element that should be highlighted.
+ * @param {string} [cssSelector="active"] - The CSS class used to indicate
+ * the active/selected state.
+ */
+function highlightTab(tab, cssSelector="active") {
+    tab.classList.add(cssSelector);
+
+}
+
+
+/**
+ * Hides both the transfer and request forms.
+ * This is typically used before activating the form associated with the selected tab.
+ */
+function hideTransferAndRequestForms() {
+    bankTransferForm.classList.remove("show");
+    bankRequestForm.classList.remove("show")
+}
+
+
 
 
 

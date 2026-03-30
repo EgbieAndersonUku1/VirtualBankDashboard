@@ -72,7 +72,7 @@ body {
     background-repeat: no-repeat;
     min-height: 100vh;
     background: #f6f9fc;
- 
+   
 
 
 
@@ -1443,6 +1443,7 @@ label {
     line-height: 1.5;
 }
 
+
 #add-recipient-section,
 #bank-transfer-quick-confirmation,
 #bank-funds-transfer__select-cards-panel,
@@ -1462,6 +1463,7 @@ label {
 }
 
 
+
 #add-recipient-section.show,
 #bank-transfer-quick-confirmation.show,
 #bank-funds-transfer__select-cards-panel.show,
@@ -1476,6 +1478,9 @@ label {
 }
 
 
+/* resets the transfor:translate(-50%, 50%), Without this anything that shows up will 
+take up 50 to left and 50 up 
+*/
 #add-recipient-section.show,
 #bank-transfer-quick-confirmation.show,
 #bank-funds-transfer__select-cards-panel.show,
@@ -3610,6 +3615,11 @@ clicks the button
 }
 
 
+/* card transaction limit */
+#card-transactions-limit {
+    width: 70%;
+}
+
 
 /* textarea character count enforcer */
 
@@ -3920,6 +3930,8 @@ clicks the button
 
 .tabs .active {
     background: var(--blue-600);
+    color: white;
+    font-weight: 500;
    
 }
 
@@ -4027,7 +4039,7 @@ clicks the button
 }
 
 .recipient-user .verified-user {
-   padding-top: var(--space-4);
+    padding-top: var(--space-4);
     padding-bottom: var(--space-4);
     background-color: #ecfdf5;
 }
@@ -4066,9 +4078,6 @@ clicks the button
     color: #4B5563;
 }
 
-#bank-transfer-to-form {
-    display: none;
-}
 
 
 #transfer-to-user {
@@ -4172,4 +4181,25 @@ clicks the button
     background: var(--blue-600);
     padding: var(--space-16);
     border-radius: 0;
+}
+
+#request-verified-user {
+    border: 1px solid lavender;
+    padding-top: 4px;
+    padding-bottom: 4px;
+    background: ghostwhite;
+}
+
+#request-verified-user .verified-icon {
+    color: var(--green-600);
+}
+
+#bank-request-form.show,
+#bank-transfer-to-form.show {
+    display: grid;
+}
+
+#bank-request-form,
+#bank-transfer-to-form {
+    display: none;
 }
