@@ -67,6 +67,7 @@ export function showSpinnerFor(spinnerElement, timeToDisplay = 500, hideToggle =
 
 export function toggleScrolling(disable) {
     document.body.style.overflow = disable ? "hidden" : "auto";
+    document.body.style.overflowX = "hidden";
 }
 
 
