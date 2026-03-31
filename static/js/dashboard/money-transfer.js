@@ -9,10 +9,13 @@ import { minimumCharactersToUse } from "../utils/password/textboxCharEnforcer.js
 // ---------------------------
 
 // ----- Containers / Sections -----
-const transferSection                = document.getElementById("dashboard-transfer");
+const transferSection                 = document.getElementById("dashboard-transfer");
 const addRecipient                    = document.getElementById("add-recipient-section");
 const futureScheduleDateContainer     = document.getElementById("future-schedule-date");
 const verifiedUserPanel               = document.getElementById("transfer-to-user");
+const pinPanel                        = document.getElementById("add-pin");
+const pinImg                          = document.getElementById("pin-lock-img");
+
 
 // ----- Forms / Inputs -----
 const findRecipientForm               = document.getElementById("find-recipient-form");
@@ -24,6 +27,9 @@ const recipientAccountInputs          = document.querySelectorAll(".recipient-ac
 const requestRecipientAccountInputs   = document.querySelectorAll(".request-recipient-account input")
 const bankTransferForm                = document.getElementById("bank-transfer-to-form");
 const bankRequestForm                 = document.getElementById("bank-request-form");
+const pinForm                         = document.getElementById("add-pin-form");
+const firstPinInputField              = document.getElementById("pin_1");
+
 
 // ----- Select Elements -----
 const recipientSelects                = document.getElementById("recipient");
@@ -40,6 +46,7 @@ const verifiedUserName                = document.getElementById("verified-user-n
 // ----- Buttons / Spinners -----
 const addRecipientSpinner             = document.getElementById("add-recipient__spinner");
 const findRecipientBtns               = document.getElementById("find-recipient-buttons");
+const pinSpinner                      = document.getElementById("add-pin__spinner");
 
 
 // ----- transfer amount/labels -----
@@ -74,6 +81,8 @@ amountInputField.addEventListener("input", handleUpdateTotalTransferFee);
 findRecipientForm.addEventListener("submit", handleFindRecipientFormSubmission);
 bankTransferForm.addEventListener("submit", handleBankTransferSubmission);
 bankRequestForm.addEventListener("submit", handleBankRequestSubmission);
+pinForm.addEventListener("submit", handlePinFormSubmission)
+
 
 
 document.addEventListener("DOMContentLoaded", ()=> {
@@ -439,7 +448,7 @@ async function handleBankTransferSubmission(e) {
         text: `You about to transfer ${formatCurrency(amount)} to your ${accountDetails.accountType} account. Do you want to proceed?`,
         icon: "info",
         cancelMessage: "No action taken",
-        messageToDisplayOnSuccess: `Transfer successful`,
+        messageToDisplayOnSuccess: "Please enter your pin to begin transfer",
         confirmButtonText: "Transfer funds!",
         denyButtonText: "Don't transfer!"
     })
@@ -447,8 +456,9 @@ async function handleBankTransferSubmission(e) {
 
     // when the backend is buit the form data will be submitted to the backend via fetch but for now we simply reset the form.
     if (confirmed) {
-        bankTransferForm.reset();
-        verifiedUserName.classList.remove("show");
+        // bankTransferForm.reset();
+        // verifiedUserName.classList.remove("show");
+        togglePinPanel()
     }
 
 }
@@ -565,6 +575,71 @@ function handleTabs(e) {
        
 
 }
+
+
+async function handlePinFormSubmission(e) {
+    e.preventDefault();
+    const requiredFields = [
+        "pin_1",
+        "pin_2",
+        "pin_3",
+        "pin_4",
+        "pin_5",
+        "pin_6",
+    ]
+    const parsedData   = getParseFormData(pinForm, requiredFields);
+    const pinString    = getPinData(parsedData);
+    const MILL_SECONDS = 2000;
+  
+    toggleSpinner(pinSpinner, true, false);
+
+    setTimeout(() => {
+          const response = validatePinAPI(pinString);
+          if (response.success) {
+               
+                unlockPinImg();
+                toggleSpinner(pinSpinner, false);
+
+              AlertUtils.showAlert({
+                title: "Pin verified",
+                text: "Your transfer has been completed successfully.",
+                icon: "success",
+                confirmButtonText: "OK"
+            })
+
+                pinPanel.classList.remove("show");
+
+                // since no backend is built yet we simply just clear the form
+                // however, when the backend is built the bank form transfer details we be submitted
+                // to the back end via fetch but for now simply clear the form
+                bankTransferForm.reset();
+             
+
+          } else {
+           AlertUtils.showAlert({
+                    title: "Incorrect PIN",
+                    text: "The backend hasn't been built yet. Until it built, The correct PIN for testing/simulating is 123456.",
+                    icon: "error",
+                    confirmButtonText: "OK"
+                })
+                 toggleSpinner(pinSpinner, false);
+
+          }
+      
+    }, MILL_SECONDS)
+   
+
+  
+
+    console.log(pinString)  
+   
+}
+
+
+function unlockPinImg() {
+   pinImg.src = "../static/images/icons/unlocked.svg";
+}
+
 
 
 
@@ -885,6 +960,61 @@ function hideTransferAndRequestForms() {
 
 
 
+/**
+ * Takes the form pin data object and extracts the pin into 
+ * a pin string.
+ * 
+ * @param {*} data : The pin data
+ * @returns 
+ */
+function getPinData(data) {
+    if (typeof data !== "object") return;
+
+    const pin = [];
+
+    for (const [key, value] of Object.entries(data)) {
+        pin.push(value)
+    }
+
+    if (pin.length === 0) return;
+
+
+    return pin.join("");
+
+}
+
+
+/**
+ * validatePinAPI
+ *
+ * Simulates a backend API request for validating a user's PIN.
+ *
+ * This is a temporary mock implementation used during frontend development
+ * while the real backend endpoint is not yet available.
+ *
+ * The function intentionally returns a Promise and introduces an artificial
+ * delay so the UI behaves exactly as it would with a real network request.
+ *
+ * Once the backend is implemented, this function should be replaced with
+ * an actual API call (e.g. using fetch or axios).
+ *
+ * @param {string} pin - The PIN entered by the user.
+ * @returns {Promise<{ success: boolean }>} Resolves with an object indicating
+ * whether the PIN is valid.
+ */
+function validatePinAPI(pin) {
+
+    const FAKE_EXPECTED_PIN = "123456"
+
+    // Temporary validation logic
+    // This will be replaced with a real backend response once the API exists
+     if (pin === FAKE_EXPECTED_PIN) {
+        return ({ success: true })
+     }
+     return ({ success: false })
+           
+
+}
 
 
 // ---------------------------
@@ -911,4 +1041,50 @@ function getSelectedAccountDetails(selectElement) {
 
     const { accountAmount, accountType } = option.dataset;
     return { accountAmount, accountType };
+}
+
+
+
+
+/**
+ * togglePinPanel
+ *
+ * Shows or hides the PIN input panel and optionally applies a CSS class.
+ * 
+ * This function also focuses the first PIN input field when showing the panel.
+ * If the panel is inside a modal or initially hidden, it uses requestAnimationFrame
+ * to ensure the element is visible before focusing. HTML 'autofocus' does NOT
+ * work in hidden elements.
+ *
+ * @param {boolean} [show=true] - Whether to show (true) or hide (false) the PIN panel.
+ * @param {string} [cssSelector="show"] - The CSS class to add/remove for visibility.
+ *
+ * @example
+ * // Show the PIN panel and focus the first input
+ * togglePinPanel(true);
+ *
+ * // Hide the PIN panel
+ * togglePinPanel(false);
+ */
+function togglePinPanel(show=true, cssSelector="show") {
+
+    if (typeof show !== "boolean" && typeof cssSelector !== "string") {
+        warnError("togglePinPanel", {
+            showType: typeof show,
+            cssSelectorType: typeof cssSelector,
+            cssSelector: cssSelector,
+            show: show,
+            expected: "Expected 'show' to be a boolean and cssSelector to be string"
+        });
+        return;
+    }
+    if (show) {
+       
+        selectElement(pinPanel, cssSelector);
+        firstPinInputField.focus();
+      
+        return;
+    } 
+
+    pinPanel.classList.remove(cssSelector)
 }

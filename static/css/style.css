@@ -1443,7 +1443,7 @@ label {
     line-height: 1.5;
 }
 
-
+#add-pin,
 #add-recipient-section,
 #bank-transfer-quick-confirmation,
 #bank-funds-transfer__select-cards-panel,
@@ -1464,6 +1464,7 @@ label {
 
 
 
+#add-pin.show,
 #add-recipient-section.show,
 #bank-transfer-quick-confirmation.show,
 #bank-funds-transfer__select-cards-panel.show,
@@ -1481,6 +1482,7 @@ label {
 /* resets the transfor:translate(-50%, 50%), Without this anything that shows up will 
 take up 50 to left and 50 up 
 */
+#add-pin.show,
 #add-recipient-section.show,
 #bank-transfer-quick-confirmation.show,
 #bank-funds-transfer__select-cards-panel.show,
@@ -4105,6 +4107,7 @@ clicks the button
   }
 }
 
+#add-pin__spinner,
 #add-recipient__spinner {
     position: absolute;
     top: 50%;
@@ -4114,6 +4117,7 @@ clicks the button
     display: none;
 }
 
+#add-pin__spinner.show,
 #add-recipient__spinner.show {
     display: block;
 }
@@ -4202,4 +4206,26 @@ clicks the button
 #bank-request-form,
 #bank-transfer-to-form {
     display: none;
+}
+
+
+
+
+/* the pin elements */
+#add-pin {
+    position: absolute;
+    top: 60px;
+    left: 30%;
+    border: 1px solid lavender;
+    width: 40%;
+    box-shadow: var(--box-shadow-primary);
+    background: white;
+}
+
+.add-pin__container {
+    padding: 96px;
+}
+.add-pin__container img {
+    height: 60px;
+    width: 60px;
 }
