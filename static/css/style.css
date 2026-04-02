@@ -4289,3 +4289,20 @@ clicks the button
     margin-right: 48px;
     padding-left: var(--space-8);
 }
+
+
+.section-subtitle {
+  color: #6b7280;
+  font-size: 0.95rem;
+  margin-top: 6px;
+}
+
+.admin-card .body,
+.admin-card .body p  {
+    text-align: center;
+}
+
+.admin-card .body p  {
+    font-size: 0.95rem;
+    text-align: center;
+}
