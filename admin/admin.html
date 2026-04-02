@@ -1,0 +1,628 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/static/css/style.css">
+    <link rel="shortcut icon" href="/static/images/virtual-bank-logo.png" type="image/x-icon">
+    <link rel="stylesheet" href="/static/vendor/fontawesome/css/all.min.css">
+    <title>Admin</title>
+</head>
+
+<body>
+
+
+    <main>
+
+        <section id="admin-dashboard" aria-label="admin dashboard">
+
+            <div class="dashboard__container">
+
+                <!-- Sidebar navigation -->
+                <nav class="dashboard__container__sidebar" aria-label="Primary dashboard navigation">
+
+                    <div class="sidebar-brand">
+                        <i class="fa-solid fa-building-columns" aria-hidden="true"></i>
+                        <span class="sidebar-brand__name">Virtual Bank</span>
+                    </div>
+                    <ul class="sidebar-nav">
+
+
+                        <li class="sidebar-nav__item">
+                            <a href="../bank/dashboard.html" class="sidebar-nav__link" aria-current="page">
+                                <span class="sidebar-nav__icon" aria-hidden="true">
+                                    <i class="fa-regular fa-house"></i>
+                                </span>
+                                <span class="sidebar-nav__label">Dashboard</span>
+                            </a>
+                        </li>
+
+                        <li class="sidebar-nav__item">
+                            <a href="#" class="sidebar-nav__link">
+                                <span class="sidebar-nav__icon" aria-hidden="true">
+                                    <i class="fa-solid fa-wallet"></i>
+                                </span>
+                                <span class="sidebar-nav__label">My Wallet</span>
+                            </a>
+                        </li>
+
+                        <li class="sidebar-nav__item">
+                            <a href="../bank/transfer-money.html" class="sidebar-nav__link">
+                                <span class="sidebar-nav__icon" aria-hidden="true">
+                                    <i class="fa-solid fa-money-bill-transfer"></i>
+                                </span>
+                                <span class="sidebar-nav__label">Money Transfer</span>
+                            </a>
+                        </li>
+
+                        <li class="sidebar-nav__item">
+                            <a href="../bank/manage-credit-cards.html" class="sidebar-nav__link">
+                                <span class="sidebar-nav__icon" aria-hidden="true">
+                                    <i class="fa-solid fa-credit-card"></i>
+                                </span>
+                                <span class="sidebar-nav__label">Manage Credit Cards</span>
+                            </a>
+                        </li>
+
+
+                        <li class="sidebar-nav__item">
+                            <a href="admin.html" class="sidebar-nav__link">
+                                <span class="sidebar-nav__icon" aria-hidden="true">
+                                    <i class="fa-solid fa-eye"></i>
+                                </span>
+                                <span class="sidebar-nav__label">Admin</span>
+                            </a>
+                        </li>
+
+                        <li class="sidebar-nav__item">
+                            <a href="#" class="sidebar-nav__link">
+                                <span class="sidebar-nav__icon" aria-hidden="true">
+                                    <i class="fa-solid fa-gear"></i>
+                                </span>
+                                <span class="sidebar-nav__label">Settings</span>
+                            </a>
+                        </li>
+
+                        <li class="sidebar-nav__item">
+                            <a href="#" class="sidebar-nav__link">
+                                <span class="sidebar-nav__icon" aria-hidden="true">
+                                    <i class="fa-solid fa-shield-halved"></i>
+                                </span>
+                                <span class="sidebar-nav__label">Security</span>
+                            </a>
+                        </li>
+                    </ul>
+
+
+
+                    <!-- Latest login info -->
+                    <section id="latest-login" aria-labelledby="latest-login-heading">
+                        <div class="flex-grid two-column-20_80_grid">
+                            <span aria-hidden="true">
+                                <i class="fa-solid fa-right-to-bracket"></i>
+                            </span>
+
+                            <div id="latest-login__details">
+                                <h2 id="latest-login-heading" class="capitalise header-9">
+                                    Last login
+                                </h2>
+                                <time datetime="2026-01-29T20:32">Today at 20:32</time>
+                            </div>
+                        </div>
+
+                        <hr class="dividor" aria-hidden="true">
+
+                        <p id="latest-login__note">
+                            Add two-factor authentication recovery codes to your account so you
+                            never lose access.
+                        </p>
+
+                        <div class="btns centre mt-24">
+                            <a href="#" class="btn-large manage-security-btn" aria-describedby="latest-login__note">
+                                Manage security
+                                <span aria-hidden="true"> &gt; </span>
+                            </a>
+                        </div>
+                    </section>
+
+                    <!-- Logout -->
+                    <nav class="logout" aria-label="Account actions">
+                        <ul class="sidebar-nav">
+                            <li class="sidebar-nav__item">
+                                <a href="#" class="sidebar-nav__link" id="logout-dashboard-link">
+                                    <span class="sidebar-nav__icon" aria-hidden="true">
+                                        <i class="fa-solid fa-right-from-bracket"></i>
+                                    </span>
+                                    <span class="sidebar-nav__label">Log out</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </nav>
+
+                </nav>
+
+                <!-- Main content -->
+                <section class="dashboard__container__main" tabindex="-1">
+
+                    <nav class="dashboard__container__navbar flex flex-space-between">
+                        <div class="dashbaord__container__nav-head sidebar-brand">
+                            <i class="fa-solid fa-building-columns" aria-hidden="true"></i>
+                            <span class="sidebar-brand__name dashboard-nav-site-name">Virtual Bank</span>
+                        </div>
+
+                        <div class="dashboard__container__nav-body flex-grid three-column-grid">
+                            <div class="dashboard_container__amount">
+                                <span class="bold"><span class="currency">£</span>1,500</span>
+                            </div>
+
+                            <div class="dashboard__profile" id="dashboard-profile">
+                                <img src="/static/images/icons/profile.png" alt="" class="dashboard-profile-img">
+
+                                <div class="dashboard__container__dropdown-menu dropdown-menu"
+                                    id="dashboard__container__dropdown-menu">
+                                    <ul>
+                                        <li class="flex-grid two-column-20_80_grid">
+                                            <span>
+                                                <img src="/static/images/icons/profile.png" alt=""
+                                                    class="dashboard-profile-img">
+                                            </span>
+
+                                            <span class="flex-grid">
+                                                <span class="bold">John Doe</span>
+                                                <span class="lower-case">Johndoe@example.com</span>
+                                            </span>
+                                        </li>
+
+                                        <li>
+                                            <span><i class="fa-regular fa-user"></i></span><span>Account</span>
+                                        </li>
+                                        <li>
+                                            <span><i class="fa-solid fa-shield-halved"></i></span><span>Security</span>
+                                        </li>
+                                        <li>
+                                            <span><i class="fa-regular fa-circle-question"></i></span><span>Help &
+                                                Support</span>
+                                        </li>
+
+                                        <li class="dashboard-logout">
+                                            <span><i class="fa-solid fa-right-from-bracket"></i></span><span>Log
+                                                out</span>
+                                        </li>
+                                    </ul>
+                                </div>
+
+                            </div>
+
+                            <div class="dashboard__container__notification-bell">
+                                <div class="notifications">
+                                    <img src="/static/images/icons/notification_smartphone_icon.png" alt=""
+                                        class="dashboard-notification-bell-img">
+                                </div>
+
+
+                            </div>
+
+
+                        </div>
+
+
+                    </nav>
+
+
+                    <!-- admin panel -->
+                    <section id="admin-panel">
+                        <div class="admin-panel__container">
+
+                            <p class="mb-24 mt-24 admin-message">You are seeing this page because your are either an
+                                admin or a superuser</p>
+                            <!-- core admin -->
+                            <h1 class="capitalise">Core Admin Tools</h1>
+                            <p class="section-subtitle">Essential tools for managing users, monitoring activity, and
+                                investigating platform
+                                behaviour.</p>
+
+
+                            <div class="cards flex-grid three-column-grid admin-cards">
+
+                                <div class="card admin-card">
+                                    <div class="head center">
+                                        <img src="../static/images/card-icons/admin_fraud.png" alt="" srcset=""
+                                            class="admin-card-icon">
+                                    </div>
+
+                                    <div class="body">
+                                        <h1 class="capitalize">Fraud Monitoring</h1>
+                                        <p>
+                                            Detect and investigate suspicious transactions and account activity
+                                        </p>
+                                    </div>
+                                </div>
+
+                                <div class="card admin-card">
+                                    <div class="head center">
+                                        <img src="../static/images/card-icons/admin_risk-analysis.png" alt="" srcset=""
+                                            class="admin-card-icon">
+                                    </div>
+
+                                    <div class="body">
+                                        <h1 class="capitalize">Risk Scoring</h1>
+                                        <p>
+                                            Analyse transactions with automated risk sorting algorithms
+                                        </p>
+                                    </div>
+                                </div>
+
+                                <div class="card admin-card">
+                                    <div class="head center">
+                                        <img src="../static/images/card-icons/admin_user-management.png" alt=""
+                                            srcset="" class="admin-card-icon">
+                                    </div>
+
+                                    <div class="body">
+                                        <h1 class="capitalize">User Management</h1>
+                                        <p>Oversee user accounts, roles, and permissions effortlessly.</p>
+                                    </div>
+                                </div>
+
+                                <div class="card admin-card">
+                                    <div class="head center">
+                                        <img src="../static/images/card-icons/admin_kyc_verifications.png" alt=""
+                                            srcset="" class="admin-card-icon">
+                                    </div>
+
+                                    <div class="body">
+                                        <h1 class="capitalize">KYC Verifications</h1>
+                                        <p>
+                                            Verify customer identities and ensure regulatory compliance.
+                                        </p>
+                                    </div>
+                                </div>
+
+                                <div class="card admin-card">
+                                    <div class="head center">
+                                        <img src="../static/images/card-icons/admin_transactions.png" alt="" srcset=""
+                                            class="admin-card-icon">
+                                    </div>
+
+                                    <div class="body">
+                                        <h1 class="capitalize">Transaction Monitoring</h1>
+                                        <p>
+                                            Track and review all account transactions in real time.
+                                        </p>
+                                    </div>
+                                </div>
+
+
+
+
+
+
+
+
+                            </div>
+
+
+
+                            <!-- financial operations -->
+                            <h1 class="capitalise">Financial Operations</h1>
+                            <p class="section-subtitle">Manage transactions, funding sources, and financial controls
+                                across the platform.</p>
+                            <div class="cards flex-grid three-column-grid admin-cards">
+
+                                <div class="card admin-card">
+                                    <div class="head center">
+                                        <img src="../static/images/card-icons/admin__funding.png" alt="" srcset=""
+                                            class="admin-card-icon">
+                                    </div>
+
+                                    <div class="body">
+                                        <h1 class="capitalize">Funding Sources</h1>
+                                        <p>
+                                            Manage and monitor the external funding methods connected to user accounts.
+                                        </p>
+                                    </div>
+                                </div>
+
+                                <div class="card admin-card">
+                                    <div class="head center">
+                                        <img src="../static/images/card-icons/admin__payment-process.png" alt=""
+                                            srcset="" class="admin-card-icon">
+                                    </div>
+
+                                    <div class="body">
+                                        <h1 class="capitalize">Payment Processing</h1>
+                                        <p>
+                                            Monitor and manage the processing of transfers, payments, and transaction
+                                            flows.
+                                        </p>
+                                    </div>
+
+                                </div>
+
+
+
+                                <div class="card admin-card">
+                                    <div class="head center">
+                                        <img src="../static/images/card-icons/admin_kyc_verifications.png" alt=""
+                                            srcset="" class="admin-card-icon">
+                                    </div>
+
+                                    <div class="body">
+                                        <h1 class="capitalize">Account Restrictions</h1>
+                                        <p>
+                                            Control account restrictions including freezes, transfer limits, and access
+                                            blocks.
+                                        </p>
+                                    </div>
+
+                                </div>
+
+                                <div class="card admin-card">
+                                    <div class="head center">
+                                        <img src="../static/images/card-icons/admin__compliance.png" alt="" srcset=""
+                                            class="admin-card-icon">
+                                    </div>
+
+                                    <div class="body">
+                                        <h1 class="capitalize">Compliance Monitoring</h1>
+                                        <p>
+                                            Track compliance checks and identify transactions that may breach regulatory
+                                            policies.
+                                        </p>
+                                    </div>
+                                </div>
+
+
+
+
+
+
+
+
+                            </div>
+
+
+                            <!-- platform operations -->
+                            <h1 class="capitalise">Platform Operations</h1>
+                            <p class="section-subtitle">Monitor system performance, infrastructure health, and
+                                operational alerts.</p>
+                            <div class="cards flex-grid three-column-grid admin-cards">
+
+                                <div class="card admin-card">
+                                    <div class="head center">
+                                        <img src="../static/images/card-icons/admin__system-check.png" alt="" srcset=""
+                                            class="admin-card-icon">
+                                    </div>
+
+                                    <div class="body">
+                                        <h1 class="capitalize">System Health</h1>
+                                        <p>
+                                            Monitor the status and performance of core platform services and
+                                            infrastructure.
+                                        </p>
+                                    </div>
+                                </div>
+
+                                <div class="card admin-card">
+                                    <div class="head center">
+                                        <img src="../static/images/card-icons/admin__system-alert.png" alt="" srcset=""
+                                            class="admin-card-icon">
+                                    </div>
+
+                                    <div class="body">
+                                        <h1 class="capitalize">System Alerts</h1>
+                                        <p>
+                                            View and manage alerts triggered by system events, failures, or unusual
+                                            activity.
+                                        </p>
+                                    </div>
+                                </div>
+
+                                <div class="card admin-card">
+                                    <div class="head center">
+                                        <img src="../static/images/card-icons/admin_audit.png" alt="" srcset=""
+                                            class="admin-card-icon">
+                                    </div>
+
+                                    <div class="body">
+                                        <h1 class="capitalize">Audit Logs</h1>
+                                        <p>
+                                            Access a complete history of platform events and administrative changes.
+                                        </p>
+                                    </div>
+                                </div>
+
+                                <div class="card admin-card">
+                                    <div class="head center">
+                                        <img src="../static/images/card-icons/admin__platform.png" alt="" srcset=""
+                                            class="admin-card-icon">
+                                    </div>
+
+
+                                    <div class="body">
+                                        <h1 class="capitalize">Platform Analytics</h1>
+                                        <p>
+                                            Analyse platform performance, user activity, and transaction trends.
+                                        </p>
+                                    </div>
+                                </div>
+
+
+
+
+
+                            </div>
+
+
+                            <!-- security and access -->
+                            <h1 class="capitalise">Security & Access</h1>
+                            <p class="section-subtitle">Control administrator permissions, access rights, and security
+                                events across the
+                                platform.</p>
+                            <div class="cards flex-grid three-column-grid admin-cards">
+
+                                <div class="card admin-card">
+                                    <div class="head center">
+                                        <img src="../static/images/card-icons/admin__roles.png" alt="" srcset=""
+                                            class="admin-card-icon">
+                                    </div>
+
+                                    <div class="body">
+                                        <h1 class="capitalize">Admin Roles</h1>
+                                        <p>
+                                            Define and manage administrative roles and permission levels across the
+                                            platform.
+
+                                        </p>
+                                    </div>
+                                </div>
+
+                                <div class="card admin-card">
+                                    <div class="head center">
+                                        <img src="../static/images/card-icons/admin__access-control.png" alt=""
+                                            srcset="" class="admin-card-icon">
+                                    </div>
+
+                                    <div class="body">
+                                        <h1 class="capitalize">Access Control</h1>
+                                        <p>
+                                            Manage access permissions to ensure only authorised administrators can use
+                                            sensitive tools.
+
+                                        </p>
+                                    </div>
+                                </div>
+
+                                <div class="card admin-card">
+                                    <div class="head center">
+                                        <img src="../static/images/card-icons/admin__security-events.png" alt=""
+                                            srcset="" class="admin-card-icon">
+                                    </div>
+
+                                    <div class="body">
+                                        <h1 class="capitalize">Security Events</h1>
+                                        <p>
+                                            Monitor and review security-related activity such as login attempts and
+                                            access changes.
+                                        </p>
+                                    </div>
+                                </div>
+
+
+
+
+
+
+                            </div>
+
+                        </div>
+                    </section>
+
+
+
+
+
+                </section>
+
+
+
+
+                <!-- The footer section -->
+                <footer>
+
+                    <div class="footer__container">
+
+                        <div class="footer__header">
+                            <img src="/static/images/virtual-wallet-logo.png" alt="The virtual logo"
+                                class="footer-logo">
+
+                        </div>
+
+
+                        <div class="flex-grid five-column-grid" id="footer-sections">
+
+                            <!-- About us column -->
+                            <div class="col flex-grid" id="about-us">
+                                <h1 class="footer-head pb-16">About us</h1>
+                                <a href="#" class="footer-link">Our company</a>
+                                <a href="#" class="footer-link">Careers</a>
+                                <a href="#" class="footer-link">Security</a>
+                                <a href="#" class="footer-link">Investor relations</a>
+
+                            </div>
+
+                            <!-- services column -->
+                            <div class="col flex-grid" id="services">
+                                <h1 class="footer-head pb-16">services</h1>
+                                <a href="#" class="footer-link">Online banking</a>
+                                <a href="#" class="footer-link">Mobile app</a>
+                                <a href="#" class="footer-link">Credit app</a>
+                                <a href="#" class="footer-link">Loans and mortgages</a>
+                            </div>
+
+                            <!-- support column -->
+                            <div class="col flex-grid" id="support">
+                                <h1 class="footer-head pb-16">support</h1>
+                                <a href="#" class="footer-link">FAQs</a>
+                                <a href="#" class="footer-link">Help Center</a>
+                                <a href="#" class="footer-link">Contact us</a>
+                                <a href="#" class="footer-link">Live chat</a>
+                            </div>
+
+                            <div class="col flex-grid" id="resources">
+                                <h1 class="footer-head pb-16">resources</h1>
+                                <a href="#" class="footer-link">Financial Education</a>
+                                <a href="#" class="footer-link">Blog</a>
+                                <a href="#" class="footer-link">News and Insight</a>
+                                <a href="#" class="footer-link">Calculators</a>
+                            </div>
+
+                            <div class="col" id="download-app">
+                                <h1 class="footer-head">Download our app</h1>
+
+                                <div id="apps" class="flex-grid two-column-grid">
+                                    <img src="/static/images/footer-icons/appStore.svg" alt="" class="footer-icon">
+                                    <img src="/static/images/footer-icons/googlePlay.svg" alt="" class="footer-icon">
+                                </div>
+
+
+                            </div>
+                        </div>
+
+                        <div class="socials copyright flex-grid two-column-grid pb-24">
+
+                            <div class="socials three-column-grid">
+                                <a href="#"><img src="/static/images/icons/facebook.svg" alt="facebook"
+                                        class="social-icon"></a>
+                                <a href="#"><img src="/static/images/icons/instagram.svg" alt="facebook"
+                                        class="social-icon"></a>
+
+                            </div>
+
+                            <div class="copyright three-column-grid">
+                                <a href="#" class="copyright-link"><span class="copyright-date">@2026 </span>Virtual
+                                    bank. All
+                                    rights reserved</a>
+                                <a href="#" class="copyright-link footer-link">Privacy policy</a>
+                                <a href="#" class="copyright-link footer-link">Terms of use</a>
+
+                            </div>
+                        </div>
+
+                    </div>
+
+                </footer>
+
+
+
+            </div>
+
+        </section>
+
+    </main>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.12.2/dist/sweetalert2.all.min.js"></script>
+    <script src="/static/js/dashboard/money-transfer.js" type="module"></script>
+</body>
+
+</html>

@@ -671,6 +671,7 @@ header {
     text-align: center;
 }
 
+.admin-cards .admin-card:hover,
 .view-card-panel-button:hover,
 .bank-card:hover,
 .call-to-action__button:hover {
@@ -4228,4 +4229,80 @@ clicks the button
 .add-pin__container img {
     height: 60px;
     width: 60px;
+}
+
+
+
+/* The admin panel */
+  /* the admin section */
+
+  .admin-cards {
+    /* column-gap: var(--space-16); */
+  
+    margin-left: var(--space-48);
+    margin-right: var(--space-48);
+    margin-bottom: var(--space-48);
+
+  }
+
+  .admin-panel__container h1 {
+    margin-left: var(--space-48);
+    margin-top: var(--space-24);
+    font-size: 1.4rem
+  }
+
+  .admin-panel__container p {
+     margin-left: var(--space-48);
+   
+  }
+
+
+  .admin-cards .admin-card {
+    border: 2px solid lavender;
+    margin-top: var(--space-12);
+    padding: var(--space-24);
+    background: white;
+  }
+
+
+  .admin-card h1 {
+    font-size: 1.2rem;
+    text-align: center;
+  }
+
+  .admin-card .body {
+    text-align: center;
+  }
+
+  .admin-card-icon {
+    height: 200px;
+    width: 200px;
+  }
+
+
+  .admin-message {
+    border: 1px solid lavender;
+    padding-top: 12px;
+    padding-bottom: 12px;
+    background: var(--blue-600);
+    color: white;
+    margin-right: 48px;
+    padding-left: var(--space-8);
+}
+
+
+.section-subtitle {
+  color: #6b7280;
+  font-size: 0.95rem;
+  margin-top: 6px;
+}
+
+.admin-card .body,
+.admin-card .body p  {
+    text-align: center;
+}
+
+.admin-card .body p  {
+    font-size: 0.95rem;
+    text-align: center;
 }
