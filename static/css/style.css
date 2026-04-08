@@ -2984,7 +2984,7 @@ time {
 
 .dashboard__container__main__wrapper {
     display: grid;
-    grid-template-columns: 75% 25%;
+    grid-template-columns: 80% 20%;
     grid-template-rows: auto;
     column-gap: var(--space-8);
 }
@@ -4324,4 +4324,37 @@ clicks the button
 
 .profile-img {
     height: 100px;
+}
+
+
+.account-settings__container {
+    border: 1px solid lavender;
+    padding: var(--space-16);
+    margin: var(--space-24);
+    background: ghostwhite;
+    box-shadow: var(--box-shadow-primary);
+}
+
+
+.profile__container {
+    padding: var(--space-24);
+    background: white;
+}
+
+
+
+.profile-stat-container  {
+    border-top: 2px solid lavender;
+    padding-top: var(--space-16);
+    padding-bottom: var(--space-16);
+}
+
+.profile-stat-container + .profile-stat-container {
+    border-top: 2px solid lavender;
+}
+
+
+.profile-label {
+    font-weight: 600;
+    text-transform: capitalize;
 }

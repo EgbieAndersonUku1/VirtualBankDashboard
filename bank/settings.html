@@ -208,10 +208,10 @@
 
                     </nav>
 
-             
 
 
-             
+
+
 
                     <hr class="dividor">
 
@@ -220,63 +220,155 @@
 
 
                         <section id="account-settings">
+
+                            <h1 class="ml-24 header-7">Account Settings</h1>
+
                             <div class="account-settings__container">
 
-                                <h1>Account Settings</h1>
+
 
                                 <!-- the tabs -->
-                                <article class="tabs flex-grid four-column-grid">
+                                <article class="tabs flex-grid five-column-grid">
                                     <div class="tab active">Profile</div>
+                                    <div class="tab">Verified documents</div>
                                     <div class="tab">Security</div>
                                     <div class="tab">Notification</div>
                                     <div class="tab">Bank Accounts</div>
+
                                 </article>
 
 
                                 <!-- profile -->
-                                <section id="profile">
+                                <section id="profile" aria-labelledby="profile-title">
 
                                     <div class="profile__container">
 
-                                        <p>Profile information</p>
+                                        <h2 id="profile-title" class="header-7">Profile information</h2>
                                         <hr class="dividor">
-
 
                                         <div class="main-profile-stats flex-grid two-column-20_80_grid">
 
                                             <div class="profile-img-container">
-                                                <img src="../static/images/icons/profile.png" alt="profile image"  class="profile-img">
+                                                <img src="../static/images/icons/profile.png"
+                                                    alt="Profile picture of Sherlock Holmes" class="profile-img">
                                             </div>
 
-                                            <div class="profile-info">
-                                                <div class="profile-info-name">JJ <span>Verified</span></div>
+                                            <div class="profile-info mt-16 flex-grid">
+                                                <div class="profile-info-name">
+                                                    Sherlock Holmes
+                                                    <span aria-hidden="true">
+                                                        <i class="fa-solid fa-circle-check"></i>
+                                                    </span>
+                                                    <span class="sr-only">(Identity verified)</span>
+                                                </div>
+
+                                                <p class="text-muted">Identity verified</p>
                                             </div>
+
+                                        </div>
+
+
+                                        <!-- First name -->
+                                        <div class="flex flex-space-between profile-stat-container">
+
+                                            <div class="profile-stats">
+                                                <p id="profile-first-name-label" class="profile-label">First name</p>
+                                                <p aria-labelledby="profile-first-name-label">Sherlock Holmes</p>
+                                            </div>
+
+                                            <a href="#" aria-label="Edit first name">Edit</a>
+
+                                        </div>
+
+
+                                        <!-- Email -->
+                                        <div class="flex flex-space-between profile-stat-container">
+
+                                            <div class="profile-stats">
+                                                <p id="profile-email-label" class="profile-label">Email</p>
+                                                <p aria-labelledby="profile-email-label">
+                                                    sherlock.holmes@bakerstreet.co.uk
+                                                </p>
+                                                <p class="text-muted">Email verified</p>
+                                            </div>
+
+                                            <a href="#" aria-label="Edit email address">Edit</a>
+
+                                        </div>
+
+
+                                        <!-- Gender -->
+                                        <div class="flex flex-space-between profile-stat-container">
+
+                                            <div class="profile-stats">
+                                                <p id="profile-gender-label" class="profile-label">Gender</p>
+                                                <p aria-labelledby="profile-gender-label">Male</p>
+                                            </div>
+
+                                            <a href="#" aria-label="Edit gender">Edit</a>
+
+                                        </div>
+
+
+                                        <!-- Phone -->
+                                        <div class="flex flex-space-between profile-stat-container">
+
+                                            <div class="profile-stats">
+                                                <p id="profile-phone-label" class="profile-label">Phone number</p>
+                                                <p aria-labelledby="profile-phone-label">+44 20 7224 3688</p>
+                                            </div>
+
+                                            <a href="#" aria-label="Edit phone number">Edit</a>
+
+                                        </div>
+
+
+                                        <!-- Address -->
+                                        <div class="flex flex-space-between profile-stat-container">
+
+                                            <div class="profile-stats">
+                                                <p id="profile-address-label" class="profile-label">Address</p>
+
+                                                <address aria-labelledby="profile-address-label">
+                                                    221B Baker Street<br>
+                                                    Marylebone<br>
+                                                    London NW1 6XE<br>
+                                                    United Kingdom
+                                                </address>
+
+                                            </div>
+
+                                            <a href="#" aria-label="Edit address">Edit</a>
+
+                                        </div>
+
+
+                                        <!-- Location -->
+                                        <div class="flex flex-space-between profile-stat-container">
+
+                                            <div class="profile-stats">
+                                                <p id="profile-location-label" class="profile-label">Location</p>
+                                                <p aria-labelledby="profile-location-label">London</p>
+                                            </div>
+
+                                            <a href="#" aria-label="Edit location">Edit</a>
+
                                         </div>
 
                                     </div>
 
                                 </section>
 
-
                             </div>
                         </section>
-                   
 
-                    
+
+
 
                     </div>
 
 
                 </section>
-
-           
-
-          
-          
-
-            
-
-
 
 
 
