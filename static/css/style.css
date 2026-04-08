@@ -4306,3 +4306,22 @@ clicks the button
     font-size: 0.95rem;
     text-align: center;
 }
+
+
+
+/* Account settings */
+
+.account-settings__container .tabs .tab:not(:last-child) {
+    border-right: 2px solid lavender;
+    text-align: center;
+}
+
+.account-settings__container .tabs .tab {
+    text-align: center;
+    cursor: pointer;
+}
+
+
+.profile-img {
+    height: 100px;
+}
