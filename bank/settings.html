@@ -30,7 +30,7 @@
 
 
                         <li class="sidebar-nav__item">
-                            <a href="#" class="sidebar-nav__link" aria-current="page">
+                            <a href="dashboard.html" class="sidebar-nav__link" aria-current="page">
                                 <span class="sidebar-nav__icon" aria-hidden="true">
                                     <i class="fa-regular fa-house"></i>
                                 </span>
@@ -270,93 +270,93 @@
 
                                         <!-- First name -->
                                         <div class="flex flex-space-between profile-stat-container">
-
                                             <div class="profile-stats">
                                                 <p id="profile-first-name-label" class="profile-label">First name</p>
-                                                <p aria-labelledby="profile-first-name-label">Sherlock Holmes</p>
+                                                <p aria-labelledby="profile-first-name-label" class="profile-p-label-value show">Sherlock Holmes</p>
+                                                <input type="text" id="first-name-input" value="Sherlock holmes" class="hidden profile-input-hidden-field mt-8">
                                             </div>
 
-                                            <a href="#" aria-label="Edit first name">Edit</a>
+                                            <div class="spinner profile-stats__spinner" id="spinner__first-name" data-spinner="true"></div>
+                                            <a href="#" aria-label="Edit first name" class="profile_edit capitalise" data-input-id="first-name-input">Edit</a>
 
+                                            
                                         </div>
-
 
                                         <!-- Email -->
                                         <div class="flex flex-space-between profile-stat-container">
-
                                             <div class="profile-stats">
                                                 <p id="profile-email-label" class="profile-label">Email</p>
-                                                <p aria-labelledby="profile-email-label">
-                                                    sherlock.holmes@bakerstreet.co.uk
-                                                </p>
+                                                
+                                                <p aria-labelledby="profile-email-label"  class="profile-p-label-value show">sherlock.holmes@bakerstreet.co.uk</p>
+                                                 <input type="email" id="email-name-input" value="sherlock.holmes@bakerstreet.co.uk" class=" mt-8">
+                                                <small id="emailError"></small>
                                                 <p class="text-muted">Email verified</p>
                                             </div>
 
-                                            <a href="#" aria-label="Edit email address">Edit</a>
-
+                                            <div class="spinner profile-stats__spinner" id="spinner__email" data-spinner="true"></div>
+                                            <a href="#" aria-label="Edit first name" class="profile_edit capitalise" data-input-id="email-name-input">Edit</a>
                                         </div>
-
 
                                         <!-- Gender -->
                                         <div class="flex flex-space-between profile-stat-container">
-
                                             <div class="profile-stats">
                                                 <p id="profile-gender-label" class="profile-label">Gender</p>
-                                                <p aria-labelledby="profile-gender-label">Male</p>
+                                                <p aria-labelledby="profile-gender-label"  class="profile-p-label-value show">Male</p>
+                                                <select name="gender" id="gender" class="profile-input-hidden">
+                                                    <option value="" disabled selected>Choose your gender</option>
+                                                    <option value="Male">Male</option>
+                                                    <option value="Female">Female</option>
+                                                    <option value="Prefer not to say">Prefer not to say</option>
+                                                </select>
                                             </div>
 
-                                            <a href="#" aria-label="Edit gender">Edit</a>
-
+                                            <div class="spinner profile-stats__spinner" id="spinner__gender"  data-spinner="true"></div>
+                                            <a href="#" aria-label="Edit gender"  class="profile_edit capitalise" data-input-id="gender-name-input">Edit</a>
                                         </div>
-
 
                                         <!-- Phone -->
                                         <div class="flex flex-space-between profile-stat-container">
-
                                             <div class="profile-stats">
                                                 <p id="profile-phone-label" class="profile-label">Phone number</p>
-                                                <p aria-labelledby="profile-phone-label">+44 20 7224 3688</p>
+                                                <p aria-labelledby="profile-phone-label" class="profile-p-label-value show">+44 20 7224 3688</p>
+                                                 <input type="tel" id="tel-name-input" value="44 20 7224 368" class=" mt-8">
                                             </div>
 
-                                            <a href="#" aria-label="Edit phone number">Edit</a>
-
+                                            <div class="spinner profile-stats__spinner" id="spinner__phone"  data-spinner="true"></div>
+                                        
+                                            <a href="#" aria-label="Edit phone number" class="profile_edit capitalise" data-input-id="tel-name-input">Edit</a>
                                         </div>
-
 
                                         <!-- Address -->
                                         <div class="flex flex-space-between profile-stat-container">
-
                                             <div class="profile-stats">
                                                 <p id="profile-address-label" class="profile-label">Address</p>
 
-                                                <address aria-labelledby="profile-address-label">
+                                                <address aria-labelledby="profile-address-label" class="profile-p-label-value show" >
                                                     221B Baker Street<br>
                                                     Marylebone<br>
                                                     London NW1 6XE<br>
                                                     United Kingdom
                                                 </address>
-
+                                                  <input type="text" id="address-name-input" value="221B Baker Street, Marylebone, London NW1 6XE United Kingdom" class=" mt-8">
                                             </div>
 
-                                            <a href="#" aria-label="Edit address">Edit</a>
-
+                                            <div class="spinner profile-stats__spinner" id="spinner__address" data-spinner="true"></div>
+                                            <a href="#" aria-label="Edit address" class="profile_edit capitalise" data-input-id="address-name-input">Edit</a>
                                         </div>
-
 
                                         <!-- Location -->
                                         <div class="flex flex-space-between profile-stat-container">
-
                                             <div class="profile-stats">
                                                 <p id="profile-location-label" class="profile-label">Location</p>
-                                                <p aria-labelledby="profile-location-label">London</p>
+                                                <p aria-labelledby="profile-location-label" class="profile-p-label-value show">London</p>
+                                                <input type="text" id="location-name-input" value="London" class=" mt-8">
+
                                             </div>
 
-                                            <a href="#" aria-label="Edit location">Edit</a>
-
+                                            <div class="spinner profile-stats__spinner" id="spinner__location" data-spinner="true"></div>
+                                            <a href="#" aria-label="Edit location" class="profile_edit capitalise" data-input-id="location-name-input">Edit</a>
                                         </div>
-
-                                    </div>
-
                                 </section>
 
                             </div>
@@ -466,7 +466,9 @@
 
     </main>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.12.2/dist/sweetalert2.all.min.js"></script>
-    <script src="/static/js/dashboard/bank-dashboard.js" type="module"></script>
+    <!-- <script src="/static/js/dashboard/bank-dashboard.js" type="module"></script> -->
+     <script src="/static/js/dashboard/settings.js" type="module"></script>
+    
 </body>
 
 </html>

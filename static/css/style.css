@@ -4347,6 +4347,7 @@ clicks the button
     border-top: 2px solid lavender;
     padding-top: var(--space-16);
     padding-bottom: var(--space-16);
+    position: relative;
 }
 
 .profile-stat-container + .profile-stat-container {
@@ -4357,4 +4358,47 @@ clicks the button
 .profile-label {
     font-weight: 600;
     text-transform: capitalize;
+
+}
+
+
+.profile-p-label-value {
+    display: none;
+}
+
+.profile-p-label-value.show {
+    display: block;
+}
+
+
+
+
+
+.profile-stats__spinner {
+    height: 30px;
+    width: 30px;
+    position: absolute;
+    top: 25%;
+    left: 50%;
+    display: none;
+
+}
+
+
+.profile-stats input,
+.profile-stats select,
+.profile-stats {
+    width: 100%;
+}
+
+
+.profile-stats select,
+.profile-stats input  {
+    display: none;
+}
+
+
+.profile-stats select.show,
+.profile-stats input.show {
+    display: block;
 }
