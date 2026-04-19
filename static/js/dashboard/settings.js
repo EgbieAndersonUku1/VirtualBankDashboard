@@ -1,15 +1,18 @@
 import { warnError, logError } from "../logger.js";
 import { selectElement, toggleSpinner } from "../utils.js";
+import { AlertUtils } from "../alerts.js";
 
 const hiddenInputFields = document.querySelectorAll(".profile-input-hidden-field");
 const dashboard         = document.getElementById("dashboard");
+const tabs              = document.querySelectorAll(".tab");
+const sectionTabs       = document.querySelectorAll(".section-tab")
 
 
 // hidden form values
 // checks if hiddenInputFieds are all nodelist
 document.addEventListener("DOMContentLoaded", () => {
     
-    if (!(hiddenInputFields instanceof NodeList)) {
+    if (!(hiddenInputFields instanceof NodeList) && !(tabs instanceof NodeList)) {
 
         logError("updateHiddenInputField", {
             result: "The hidden input fields is not a node list",
@@ -18,7 +21,13 @@ document.addEventListener("DOMContentLoaded", () => {
             
         })
         return;
+
+       
     };
+
+     // show the first section when loaded e.g profile page tab
+     const profileSection = sectionTabs[0];
+     selectElement(profileSection, "show")
 })
 
 
@@ -72,10 +81,22 @@ function handleDelegation(e) {
 
    const EXPECTED_CLASS_SELECTOR  = "profile_edit";
    const EDIT = "edit";
-   const SAVE = "save"
+   const SAVE = "save";
+   const EXPECTED_FIELD_TYPE = "radio"
 
-   if (!e.target.classList.contains(EXPECTED_CLASS_SELECTOR)) return false;
   
+    if (e.target.classList.contains("tab")) {
+         console.log(e.target.classList.contains("tab"))
+        handleTabs(e)
+    }
+
+    if ( !e.target.classList.contains(EXPECTED_CLASS_SELECTOR) &&  
+    (e.target.tagName !== "INPUT" || e.target.type !== EXPECTED_FIELD_TYPE)) {
+    return false;
+    }
+    
+   
+    
     const linkTextContent = e.target.textContent.toLowerCase().trim();
     switch(linkTextContent) {
 
@@ -85,6 +106,10 @@ function handleDelegation(e) {
         case SAVE:
             handleSaveClick(e);
             break;
+        default:
+            handleRadioButtonClick(e)
+            break;
+
     }
    
 }
@@ -339,6 +364,196 @@ function handleSaveClick(e) {
 
 
 
+/**
+ * Routes radio button interactions to the appropriate handler.
+ *
+ * This function acts as a dispatcher for radio input events, determining
+ * which feature-specific handler to invoke based on the parsed identifier
+ * from the event target.
+ *
+ * It currently supports:
+ * - 2FA recovery code backup toggling
+ * - Suspicious activity alert toggling (default fallback)
+ *
+ * The routing logic relies on a parsed identifier (via `parseIdFromEvent`)
+ * to decide which handler to execute.
+ *
+ * @function handleRadioButtonClick
+ * @param {Event} e - The event triggered by a radio button interaction.
+ * @param {HTMLInputElement} e.target - The radio input element that was interacted with.
+ *
+ * @returns {void}
+ */
+function handleRadioButtonClick(e) {
 
+    const id = parseIdFromEvent(e)
+    const AUTH_RECOVERY_CODE_ID = "two-fa-status";
+ 
+    switch(id) {
+
+        case AUTH_RECOVERY_CODE_ID:
+            handle2FARecoveryCodeBackup(e);
+            break;
+        default:
+            handleSuspiciousAlert(e);
+            break;
+    }
+    
+}
+
+
+
+/**
+ * Handles toggling of 2FA recovery code backup for the user account.
+ *
+ * This function presents a confirmation alert before enabling or disabling
+ * backup codes used for account recovery. The messaging dynamically reflects
+ * the selected state, clearly explaining the benefit of enabling (account
+ * recovery access) and the risk of disabling (losing a backup option).
+ *
+ *
+ * @async
+ * @function handle2FARecoveryCodeBackup
+ * @param {Event} e - The change event triggered by the radio input.
+ * @param {HTMLInputElement} e.target - The input element containing the selected value ("on" or "off").
+ *
+ * @returns {Promise<void>} Resolves once the confirmation flow is completed.
+ */
+async function handle2FARecoveryCodeBackup(e) {
+    const value = e.target.value;
+
+    const isEnabling = value === "on";
+
+    const confirm = await AlertUtils.showConfirmationAlert({
+        title: isEnabling ? "Enable backup codes?" : "Disable backup codes?",
+        text: isEnabling
+            ? "Backup codes let you access your account if you lose your 2FA device."
+            : "Disabling this removes your backup access option if you lose your 2FA device.",
+        icon: "warning",
+        cancelMessage: "No changes made",
+        messageToDisplayOnSuccess: isEnabling
+            ? "Backup codes enabled successfully."
+            : "Backup codes disabled successfully.",
+        denyButtonText: "Cancel action",
+        confirmButtonText: isEnabling ? "Enable" : "Disable",
+    });
+
+    if (confirm) {
+        // perform action with fetch. No backend yet.
+    }
+}
+
+
+
+
+
+/**
+ * Handles toggling of suspicious activity alerts for the user account.
+ *
+ * This function prompts the user with a confirmation alert before enabling
+ * or disabling suspicious activity notifications. The messaging is dynamically
+ * adjusted based on the selected state to clearly communicate the impact
+ * of the action (e.g., missing important security alerts when disabled).
+ *
+ *
+ * @async
+ * @function handleSuspiciousAlert
+ * @param {Event} e - The change event triggered by the radio input.
+ * @param {HTMLInputElement} e.target - The input element containing the selected value ("on" or "off").
+ *
+ * @returns {Promise<void>} Resolves once the confirmation flow is completed.
+ */
+async function handleSuspiciousAlert(e) {
+    const value = e.target.value;
+    const isEnabling = value === "on";
+
+    const confirm = await AlertUtils.showConfirmationAlert({
+        title: isEnabling 
+            ? "Enable suspicious activity alerts?" 
+            : "Disable suspicious activity alerts?",
+        text: isEnabling
+            ? "You’ll be notified if we detect unusual activity on your account."
+            : "You may miss important alerts about unusual activity on your account.",
+        icon: isEnabling ? "info" : "warning",
+        cancelMessage: "No changes made",
+        messageToDisplayOnSuccess: isEnabling
+            ? "Suspicious activity alerts enabled."
+            : "Suspicious activity alerts disabled.",
+        denyButtonText: "Cancel alert",
+        confirmButtonText: isEnabling ? "Enable alerts" : "Disable alerts",
+    });
+
+    if (confirm) {
+            // perform action with fetch. No backend yet.
+    }
+}
+
+
+
+
+
+/**
+ * Handles tab switching logic for the UI.
+ *
+ * This function manages the active tab state and corresponding content sections.
+ * It assumes a strict 1:1 index-based relationship between `tabs` and `sectionTabs`,
+ * meaning each tab directly maps to a section at the same index.
+ *
+ * On user interaction, it:
+ * - deselects all tabs but leaves the clicked tab
+ * - Hides all sections
+ * - Displays the corresponding section based on the clicked tab's dataset value
+ *
+ * If the number of tabs and sections is mismatched, the function logs an error
+ * and exits early to prevent UI inconsistencies.
+ *
+ * @function handleTabs
+ * @param {Event} e - Click event from a tab element.
+ * @param {HTMLElement} e.target - The clicked tab element containing dataset.sectionName.
+ *
+ * @returns {void}
+ */
+function handleTabs(e) {
+    const clickedTab          = e.target;
+    const ACTIVE_TAB_SELECTOR = "active";
+    const SHOW_SELECTOR       = "show";
+    let sectionToShow;
+
+
+   if (tabs.length !== sectionTabs.length) {
+    warnError("handleTabs", {
+        numberOfTabs: tabs.length,
+        numberOfSections: sectionTabs.length,
+        errorMsg: "Tabs and sections count mismatch. Each tab must correspond to a section."
+    });
+    return;
+}
+
+//  console.log("I am here")
+  
+ // Single pass to update both tabs and sections.
+// This relies on tabs and sections being equal in number and index-aligned,
+// meaning each tab corresponds directly to a section at the same index.
+// This avoids separate loops and keeps the operation efficient.
+  for (let i = 0; i < tabs.length; i++) {
+
+      const tab = tabs[i];
+      tab.classList.remove(ACTIVE_TAB_SELECTOR);
+
+      const section = sectionTabs[i];
+      section.classList.remove(SHOW_SELECTOR)
+
+      if (section && section.id === clickedTab.dataset.sectionName) {
+         sectionToShow = section
+      }
+  }
+
+  
+  // show the active tab and section corresponding to the tab
+  toggleElement(clickedTab, true,  ACTIVE_TAB_SELECTOR);
+  toggleElement(sectionToShow, true,  SHOW_SELECTOR)
+
+
+}
 
 

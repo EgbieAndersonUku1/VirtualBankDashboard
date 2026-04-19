@@ -228,18 +228,18 @@
 
 
                                 <!-- the tabs -->
-                                <article class="tabs flex-grid five-column-grid">
-                                    <div class="tab active">Profile</div>
-                                    <div class="tab">Verified documents</div>
-                                    <div class="tab">Security</div>
-                                    <div class="tab">Notification</div>
-                                    <div class="tab">Bank Accounts</div>
+                                <article class="tabs active flex-grid five-column-grid">
+                                    <div class="tab active" data-section-name="profile">Profile</div>
+                                    <div class="tab" data-section-name="verified-documents">Verified documents</div>
+                                    <div class="tab" data-section-name="security">Security</div>
+                                    <div class="tab" data-section-name="notifications">Notification</div>
+                                    <div class="tab" data-section-name="bank-accounts">Bank Accounts</div>
 
                                 </article>
 
 
                                 <!-- profile -->
-                                <section id="profile" aria-labelledby="profile-title">
+                                <section id="profile" aria-labelledby="profile-title" class="section-tab">
 
                                     <div class="profile__container">
 
@@ -272,36 +272,46 @@
                                         <div class="flex flex-space-between profile-stat-container">
                                             <div class="profile-stats">
                                                 <p id="profile-first-name-label" class="profile-label">First name</p>
-                                                <p aria-labelledby="profile-first-name-label" class="profile-p-label-value show">Sherlock Holmes</p>
-                                                <input type="text" id="first-name-input" value="Sherlock holmes" class="hidden profile-input-hidden-field mt-8">
+                                                <p aria-labelledby="profile-first-name-label"
+                                                    class="profile-p-label-value show">Sherlock Holmes</p>
+                                                <input type="text" id="first-name-input" value="Sherlock holmes"
+                                                    class="hidden profile-input-hidden-field mt-8">
                                             </div>
 
-                                            <div class="spinner profile-stats__spinner" id="spinner__first-name" data-spinner="true"></div>
-                                            <a href="#" aria-label="Edit first name" class="profile_edit capitalise" data-input-id="first-name-input">Edit</a>
+                                            <div class="spinner profile-stats__spinner" id="spinner__first-name"
+                                                data-spinner="true"></div>
+                                            <a href="#" aria-label="Edit first name" class="profile_edit capitalise"
+                                                data-input-id="first-name-input">Edit</a>
 
-                                            
+
                                         </div>
 
                                         <!-- Email -->
                                         <div class="flex flex-space-between profile-stat-container">
                                             <div class="profile-stats">
                                                 <p id="profile-email-label" class="profile-label">Email</p>
-                                                
-                                                <p aria-labelledby="profile-email-label"  class="profile-p-label-value show">sherlock.holmes@bakerstreet.co.uk</p>
-                                                 <input type="email" id="email-name-input" value="sherlock.holmes@bakerstreet.co.uk" class=" mt-8">
+
+                                                <p aria-labelledby="profile-email-label"
+                                                    class="profile-p-label-value show">sherlock.holmes@bakerstreet.co.uk
+                                                </p>
+                                                <input type="email" id="email-name-input"
+                                                    value="sherlock.holmes@bakerstreet.co.uk" class=" mt-8">
                                                 <small id="emailError"></small>
                                                 <p class="text-muted">Email verified</p>
                                             </div>
 
-                                            <div class="spinner profile-stats__spinner" id="spinner__email" data-spinner="true"></div>
-                                            <a href="#" aria-label="Edit first name" class="profile_edit capitalise" data-input-id="email-name-input">Edit</a>
+                                            <div class="spinner profile-stats__spinner" id="spinner__email"
+                                                data-spinner="true"></div>
+                                            <a href="#" aria-label="Edit first name" class="profile_edit capitalise"
+                                                data-input-id="email-name-input">Edit</a>
                                         </div>
 
                                         <!-- Gender -->
                                         <div class="flex flex-space-between profile-stat-container">
                                             <div class="profile-stats">
                                                 <p id="profile-gender-label" class="profile-label">Gender</p>
-                                                <p aria-labelledby="profile-gender-label"  class="profile-p-label-value show">Male</p>
+                                                <p aria-labelledby="profile-gender-label"
+                                                    class="profile-p-label-value show">Male</p>
                                                 <select name="gender" id="gender" class="profile-input-hidden">
                                                     <option value="" disabled selected>Choose your gender</option>
                                                     <option value="Male">Male</option>
@@ -310,21 +320,27 @@
                                                 </select>
                                             </div>
 
-                                            <div class="spinner profile-stats__spinner" id="spinner__gender"  data-spinner="true"></div>
-                                            <a href="#" aria-label="Edit gender"  class="profile_edit capitalise" data-input-id="gender-name-input">Edit</a>
+                                            <div class="spinner profile-stats__spinner" id="spinner__gender"
+                                                data-spinner="true"></div>
+                                            <a href="#" aria-label="Edit gender" class="profile_edit capitalise"
+                                                data-input-id="gender-name-input">Edit</a>
                                         </div>
 
                                         <!-- Phone -->
                                         <div class="flex flex-space-between profile-stat-container">
                                             <div class="profile-stats">
                                                 <p id="profile-phone-label" class="profile-label">Phone number</p>
-                                                <p aria-labelledby="profile-phone-label" class="profile-p-label-value show">+44 20 7224 3688</p>
-                                                 <input type="tel" id="tel-name-input" value="44 20 7224 368" class=" mt-8">
+                                                <p aria-labelledby="profile-phone-label"
+                                                    class="profile-p-label-value show">+44 20 7224 3688</p>
+                                                <input type="tel" id="tel-name-input" value="44 20 7224 368"
+                                                    class=" mt-8">
                                             </div>
 
-                                            <div class="spinner profile-stats__spinner" id="spinner__phone"  data-spinner="true"></div>
-                                        
-                                            <a href="#" aria-label="Edit phone number" class="profile_edit capitalise" data-input-id="tel-name-input">Edit</a>
+                                            <div class="spinner profile-stats__spinner" id="spinner__phone"
+                                                data-spinner="true"></div>
+
+                                            <a href="#" aria-label="Edit phone number" class="profile_edit capitalise"
+                                                data-input-id="tel-name-input">Edit</a>
                                         </div>
 
                                         <!-- Address -->
@@ -332,32 +348,214 @@
                                             <div class="profile-stats">
                                                 <p id="profile-address-label" class="profile-label">Address</p>
 
-                                                <address aria-labelledby="profile-address-label" class="profile-p-label-value show" >
+                                                <address aria-labelledby="profile-address-label"
+                                                    class="profile-p-label-value show">
                                                     221B Baker Street<br>
                                                     Marylebone<br>
                                                     London NW1 6XE<br>
                                                     United Kingdom
                                                 </address>
-                                                  <input type="text" id="address-name-input" value="221B Baker Street, Marylebone, London NW1 6XE United Kingdom" class=" mt-8">
+                                                <input type="text" id="address-name-input"
+                                                    value="221B Baker Street, Marylebone, London NW1 6XE United Kingdom"
+                                                    class=" mt-8">
                                             </div>
 
-                                            <div class="spinner profile-stats__spinner" id="spinner__address" data-spinner="true"></div>
-                                            <a href="#" aria-label="Edit address" class="profile_edit capitalise" data-input-id="address-name-input">Edit</a>
+                                            <div class="spinner profile-stats__spinner" id="spinner__address"
+                                                data-spinner="true"></div>
+                                            <a href="#" aria-label="Edit address" class="profile_edit capitalise"
+                                                data-input-id="address-name-input">Edit</a>
                                         </div>
 
                                         <!-- Location -->
                                         <div class="flex flex-space-between profile-stat-container">
                                             <div class="profile-stats">
                                                 <p id="profile-location-label" class="profile-label">Location</p>
-                                                <p aria-labelledby="profile-location-label" class="profile-p-label-value show">London</p>
-                                                <input type="text" id="location-name-input" value="London" class=" mt-8">
+                                                <p aria-labelledby="profile-location-label"
+                                                    class="profile-p-label-value show">London</p>
+                                                <input type="text" id="location-name-input" value="London"
+                                                    class=" mt-8">
 
                                             </div>
 
-                                            <div class="spinner profile-stats__spinner" id="spinner__location" data-spinner="true"></div>
-                                            <a href="#" aria-label="Edit location" class="profile_edit capitalise" data-input-id="location-name-input">Edit</a>
+                                            <div class="spinner profile-stats__spinner" id="spinner__location"
+                                                data-spinner="true"></div>
+                                            <a href="#" aria-label="Edit location" class="profile_edit capitalise"
+                                                data-input-id="location-name-input">Edit</a>
                                         </div>
                                 </section>
+
+                                <!-- verified documents -->
+                                <section id="verified-documents" class="section-tab">
+                                    not yet implemented
+                                </section>
+
+                                <!-- security -->
+                                <section id="security" aria-labelledby="security-heading" class="section-tab">
+
+                                    <div class="security__container">
+                                        <h2 id="security-heading" class="security-section__heading mt-16 mb-16">
+                                            Security
+                                        </h2>
+
+                                        <!-- Change Password -->
+                                        <div id="change-password" class="border-box security-card">
+
+
+
+                                            <div class="security-card__header mt-8">
+                                                <h3 class="security-card__title">Change Password</h3>
+                                            </div>
+
+                                            <hr>
+
+                                            <div class="security-card__row flex-grid two-column-80_20_grid mt-16">
+
+                                                <p class="security-card__description">
+                                                    Update your password to keep your account secure.
+                                                </p>
+
+                                                <div class="security-card__actions">
+                                                    <button type="button" class="btn-large blue-bg white-text capitalise">
+                                                        Change password
+                                                    </button>
+                                                </div>
+
+                                            </div>
+                                        </div>
+
+
+                                        <!-- 2FA Recovery Codes -->
+                                        <div id="two-fa-recovery" class="border-box security-card">
+
+                                            <div class="security-card__header">
+                                                <h3 class="security-card__title">Recovery Codes</h3>
+                                            </div>
+
+                                            <form action="" id="two-fa-recovery-form" class="mt-8">
+
+                                                <div class="flex-grid two-column-80_20_grid">
+
+                                                    <div>
+                                                        <p id="two-fa-description" class="security-card__description">
+                                                            Generate one-time recovery codes to access your account if
+                                                            you lose your two-factor authentication device.
+                                                        </p>
+
+                                                        <p id="two-fa-helper" class="security-card__helper mt-8">
+                                                            Each code can only be used once. Store them somewhere safe.
+                                                        </p>
+                                                    </div>
+
+                                                    <fieldset class="two-fa-toggle flex"
+                                                        aria-describedby="two-fa-description two-fa-helper">
+
+                                                        <legend class="text-muted">
+                                                            Enable recovery codes
+                                                        </legend>
+
+                                                        <div class="two-fa-toggle__option pr-16">
+                                                            <input type="radio" name="two-fa-status" id="two-fa-on"
+                                                                value="on" checked data-input-id="two-fa-status">
+                                                            <label for="two-fa-on">On</label>
+                                                        </div>
+
+                                                        <div class="two-fa-toggle__option">
+                                                            <input type="radio" name="two-fa-status" id="two-fa-off" data-input-id="two-fa-status"
+                                                                value="off">
+                                                            <label for="two-fa-off">Off</label>
+                                                        </div>
+
+                                                    </fieldset>
+
+                                                </div>
+
+                                            </form>
+
+                                            <hr class="dividor">
+                                            <hr>
+
+                                            <div class="security-card__row flex-grid two-column-80_20_grid mt-16">
+
+                                                <p class="security-card__label">
+                                                    Manage recovery codes
+                                                </p>
+
+                                                <div class="security-card__actions">
+                                                    <button type="button" class="btn-large blue-bg white-text capitalise">
+                                                        View and regenerate codes
+                                                    </button>
+                                                </div>
+
+                                            </div>
+                                        </div>
+
+
+                                        <!-- Susipicious alerts -->
+                                        <div id="suspicious-alerts" class="border-box security-card">
+
+                                            <div class="security-card__header">
+                                                <h3 class="security-card__title">Suspicious alerts</h3>
+                                            </div>
+
+                                            <form action="" id="suspicious-alerts-form" class="mt-8">
+
+                                                <div class="flex-grid two-column-80_20_grid">
+
+                                                    <div>
+                                                        <p id="suspicious-alerts-description"
+                                                            class="security-card__description">
+                                                            Receive alerts for suspicious activiity for your account
+                                                        </p>
+
+
+                                                    </div>
+
+                                                    <fieldset class="suspicious-alerts-toggle flex"
+                                                        aria-describedby="suspicious-alert-description suspicious-alert-helper">
+
+                                                        <legend class="text-muted">
+                                                            Enable suspicious alert
+                                                        </legend>
+
+                                                        <div class="suspicious-alerts-toggle__option pr-16">
+                                                            <input type="radio" name="suspicious-alerts-status"
+                                                                id="suspicious-alert-on" value="on" checked 
+                                                                data-input-id="suspicious-alerts-status">
+                                                            <label for="suspicious-alert-on">On</label>
+                                                        </div>
+
+                                                        <div class="suspicious-alerts-toggle__option">
+                                                            <input type="radio" name="suspicious-alerts-status"
+                                                                id="suspicious-alert-off" value="off" data-input-id="suspicious-alerts-status">
+                                                            <label for="suspicious-alert-off">Off</label>
+                                                        </div>
+
+                                                    </fieldset>
+
+                                                </div>
+
+                                            </form>
+
+
+
+
+                                        </div>
+
+                                    </div>
+
+                                </section>
+
+                                <!-- Notficiations -->
+                                <section id="notifications" class="section-tab">
+                                    not yet implemented
+                                </section>
+
+                                  <!-- bank account -->
+                                <section id="bank-accounts" class="section-tab">
+                                    not yet implemented
+                                </section>
+
+
 
                             </div>
                         </section>
@@ -467,8 +665,8 @@
     </main>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.12.2/dist/sweetalert2.all.min.js"></script>
     <!-- <script src="/static/js/dashboard/bank-dashboard.js" type="module"></script> -->
-     <script src="/static/js/dashboard/settings.js" type="module"></script>
-    
+    <script src="/static/js/dashboard/settings.js" type="module"></script>
+
 </body>
 
 </html>
