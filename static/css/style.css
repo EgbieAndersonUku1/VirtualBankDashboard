@@ -4405,12 +4405,22 @@ clicks the button
 }
 
 
+
+#profile,
+#security,
+#verified-documents,
+#notifications,
+#bank-accounts,
 .profile-stats select,
 .profile-stats input  {
     display: none;
 }
 
-
+#profile.show,
+#security.show,
+#verified-documents.show,
+#notifications.show,
+#bank-accounts.show,
 .profile-stats select.show,
 .profile-stats input.show {
     display: block;
@@ -4428,3 +4438,7 @@ clicks the button
 #two-fa-description {
     width: 80%;
 }
+
+
+
+ 

@@ -228,18 +228,18 @@
 
 
                                 <!-- the tabs -->
-                                <article class="tabs flex-grid five-column-grid">
-                                    <div class="tab">Profile</div>
-                                    <div class="tab">Verified documents</div>
-                                    <div class="tab active">Security</div>
-                                    <div class="tab">Notification</div>
-                                    <div class="tab">Bank Accounts</div>
+                                <article class="tabs active flex-grid five-column-grid">
+                                    <div class="tab active" data-section-name="profile">Profile</div>
+                                    <div class="tab" data-section-name="verified-documents">Verified documents</div>
+                                    <div class="tab" data-section-name="security">Security</div>
+                                    <div class="tab" data-section-name="notifications">Notification</div>
+                                    <div class="tab" data-section-name="bank-accounts">Bank Accounts</div>
 
                                 </article>
 
 
                                 <!-- profile -->
-                                <section id="profile" aria-labelledby="profile-title">
+                                <section id="profile" aria-labelledby="profile-title" class="section-tab">
 
                                     <div class="profile__container">
 
@@ -384,9 +384,13 @@
                                         </div>
                                 </section>
 
+                                <!-- verified documents -->
+                                <section id="verified-documents" class="section-tab">
+                                    not yet implemented
+                                </section>
 
                                 <!-- security -->
-                                <section id="security" aria-labelledby="security-heading">
+                                <section id="security" aria-labelledby="security-heading" class="section-tab">
 
                                     <div class="security__container">
                                         <h2 id="security-heading" class="security-section__heading mt-16 mb-16">
@@ -411,7 +415,7 @@
                                                 </p>
 
                                                 <div class="security-card__actions">
-                                                    <button type="button" class="btn btn-primary">
+                                                    <button type="button" class="btn-large blue-bg white-text capitalise">
                                                         Change password
                                                     </button>
                                                 </div>
@@ -451,12 +455,12 @@
 
                                                         <div class="two-fa-toggle__option pr-16">
                                                             <input type="radio" name="two-fa-status" id="two-fa-on"
-                                                                value="on" checked>
+                                                                value="on" checked data-input-id="two-fa-status">
                                                             <label for="two-fa-on">On</label>
                                                         </div>
 
                                                         <div class="two-fa-toggle__option">
-                                                            <input type="radio" name="two-fa-status" id="two-fa-off"
+                                                            <input type="radio" name="two-fa-status" id="two-fa-off" data-input-id="two-fa-status"
                                                                 value="off">
                                                             <label for="two-fa-off">Off</label>
                                                         </div>
@@ -477,7 +481,7 @@
                                                 </p>
 
                                                 <div class="security-card__actions">
-                                                    <button type="button" class="btn btn-secondary">
+                                                    <button type="button" class="btn-large blue-bg white-text capitalise">
                                                         View and regenerate codes
                                                     </button>
                                                 </div>
@@ -515,13 +519,14 @@
 
                                                         <div class="suspicious-alerts-toggle__option pr-16">
                                                             <input type="radio" name="suspicious-alerts-status"
-                                                                id="suspicious-alert-on" value="on" checked>
+                                                                id="suspicious-alert-on" value="on" checked 
+                                                                data-input-id="suspicious-alerts-status">
                                                             <label for="suspicious-alert-on">On</label>
                                                         </div>
 
                                                         <div class="suspicious-alerts-toggle__option">
                                                             <input type="radio" name="suspicious-alerts-status"
-                                                                id="suspicious-alert-off" value="off">
+                                                                id="suspicious-alert-off" value="off" data-input-id="suspicious-alerts-status">
                                                             <label for="suspicious-alert-off">Off</label>
                                                         </div>
 
@@ -539,6 +544,19 @@
                                     </div>
 
                                 </section>
+
+                                <!-- Notficiations -->
+                                <section id="notifications" class="section-tab">
+                                    not yet implemented
+                                </section>
+
+                                  <!-- bank account -->
+                                <section id="bank-accounts" class="section-tab">
+                                    not yet implemented
+                                </section>
+
+
+
                             </div>
                         </section>
 
