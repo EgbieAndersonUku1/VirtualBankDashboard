@@ -388,14 +388,27 @@ function handleRadioButtonClick(e) {
 
     const id = parseIdFromEvent(e)
     const AUTH_RECOVERY_CODE_ID = "two-fa-status";
+    const SUSPICIOUS_CODE_ID    = "suspicious-alerts-status";
+    const ACCOUNT_ACTIVITY_CODE_ID = "account-activity-status";
+    const TRANSACTION_ALERTS_CODE_ID = "transaction-alerts-status";
+    const PROMOTIONAL_ALERTS_CODE_ID  = "promotional-status";
  
     switch(id) {
 
         case AUTH_RECOVERY_CODE_ID:
             handle2FARecoveryCodeBackup(e);
             break;
-        default:
+        case SUSPICIOUS_CODE_ID:
             handleSuspiciousAlert(e);
+            break;
+        case ACCOUNT_ACTIVITY_CODE_ID:
+            handleAccountActivityAlert(e);
+            break;
+        case TRANSACTION_ALERTS_CODE_ID:
+            handleTransactionAlert(e);
+            break;
+        case PROMOTIONAL_ALERTS_CODE_ID:
+            handlePromotionalAlert(e);
             break;
     }
     
@@ -488,6 +501,135 @@ async function handleSuspiciousAlert(e) {
     }
 }
 
+
+
+/**
+ * Handles toggling of account activity alerts for the user account.
+ *
+ * This function presents a confirmation alert before enabling or disabling
+ * notifications related to account activity (e.g. login attempts and account changes).
+ * The messaging dynamically reflects the selected state, highlighting the benefit
+ * of staying informed when enabled and the potential risk of missing important
+ * security updates when disabled.
+ *
+ * @async
+ * @function handleAccountActivityAlert
+ * @param {Event} e - The change event triggered by the radio input.
+ * @param {HTMLInputElement} e.target - The input element containing the selected value ("on" or "off").
+ *
+ * @returns {Promise<void>} Resolves once the confirmation flow is completed.
+ */
+async function handleAccountActivityAlert(e) {
+    const value = e.target.value;
+    const isEnabling = value === "on";
+
+    const confirm = await AlertUtils.showConfirmationAlert({
+        title: isEnabling 
+            ? "Enable account activity alerts?" 
+            : "Disable account activity alerts?",
+        text: isEnabling
+            ? "You’ll be notified about login attempts and important changes to your account."
+            : "You may miss important updates about login attempts or changes to your account.",
+        icon: isEnabling ? "info" : "warning",
+        cancelMessage: "No changes made",
+        messageToDisplayOnSuccess: isEnabling
+            ? "Account activity alerts enabled."
+            : "Account activity alerts disabled.",
+        denyButtonText: "Cancel action",
+        confirmButtonText: isEnabling ? "Enable alerts" : "Disable alerts",
+    });
+
+    if (confirm) {
+        // perform action with fetch. No backend yet.
+    }
+}
+
+
+
+
+/**
+ * Handles toggling of transaction alerts for the user account.
+ *
+ * This function presents a confirmation alert before enabling or disabling
+ * notifications related to account transactions and unusual financial activity.
+ * The messaging dynamically reflects the selected state, highlighting the benefit
+ * of staying informed about account activity when enabled and the potential risk
+ * of missing important transaction updates when disabled.
+ *
+ * @async
+ * @function handleTransactionAlert
+ * @param {Event} e - The change event triggered by the radio input.
+ * @param {HTMLInputElement} e.target - The input element containing the selected value ("on" or "off").
+ *
+ * @returns {Promise<void>} Resolves once the confirmation flow is completed.
+ */
+async function handleTransactionAlert(e) {
+    const value = e.target.value;
+    const isEnabling = value === "on";
+
+    const confirm = await AlertUtils.showConfirmationAlert({
+        title: isEnabling 
+            ? "Enable transaction alerts?" 
+            : "Disable transaction alerts?",
+        text: isEnabling
+            ? "You’ll be notified about important transactions and unusual activity."
+            : "You may miss important updates about transactions or unusual activity on your account.",
+        icon: isEnabling ? "info" : "warning",
+        cancelMessage: "No changes made",
+        messageToDisplayOnSuccess: isEnabling
+            ? "Transaction alerts enabled."
+            : "Transaction alerts disabled.",
+        denyButtonText: "Cancel action",
+        confirmButtonText: isEnabling ? "Enable alerts" : "Disable alerts",
+    });
+
+    if (confirm) {
+        // perform action with fetch. No backend yet.
+    }
+}
+
+
+
+/**
+ * Handles toggling of promotional notifications for the user account.
+ *
+ * This function presents a confirmation alert before enabling or disabling
+ * marketing-related notifications such as offers, updates, and product announcements.
+ * The messaging dynamically reflects the selected state, emphasising the benefit
+ * of staying informed about new features and promotions when enabled, while making
+ * it clear that disabling will stop non-essential communications.
+ *
+ * @async
+ * @function handlePromotionalAlert
+ * @param {Event} e - The change event triggered by the radio input.
+ * @param {HTMLInputElement} e.target - The input element containing the selected value ("on" or "off").
+ *
+ * @returns {Promise<void>} Resolves once the confirmation flow is completed.
+ */
+async function handlePromotionalAlert(e) {
+    const value      = e.target.value;
+    const isEnabling = value === "on";
+
+    const confirm = await AlertUtils.showConfirmationAlert({
+        title: isEnabling 
+            ? "Enable promotional notifications?" 
+            : "Disable promotional notifications?",
+        text: isEnabling
+            ? "You’ll receive updates about offers, new features, and announcements."
+            : "You will no longer receive promotional updates or offers.",
+        icon: "info",
+        cancelMessage: "No changes made",
+        messageToDisplayOnSuccess: isEnabling
+            ? "Promotional notifications enabled."
+            : "Promotional notifications disabled.",
+        denyButtonText: "Cancel action",
+        confirmButtonText: isEnabling ? "Enable" : "Disable",
+    });
+
+    if (confirm) {
+        // perform action with fetch. No backend yet.
+    }
+}
 
 
 

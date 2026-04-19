@@ -83,14 +83,7 @@
                             </a>
                         </li>
 
-                        <li class="sidebar-nav__item">
-                            <a href="#" class="sidebar-nav__link">
-                                <span class="sidebar-nav__icon" aria-hidden="true">
-                                    <i class="fa-solid fa-shield-halved"></i>
-                                </span>
-                                <span class="sidebar-nav__label">Security</span>
-                            </a>
-                        </li>
+                     
                     </ul>
 
 
@@ -400,8 +393,6 @@
                                         <!-- Change Password -->
                                         <div id="change-password" class="border-box security-card">
 
-
-
                                             <div class="security-card__header mt-8">
                                                 <h3 class="security-card__title">Change Password</h3>
                                             </div>
@@ -415,7 +406,8 @@
                                                 </p>
 
                                                 <div class="security-card__actions">
-                                                    <button type="button" class="btn-large blue-bg white-text capitalise">
+                                                    <button type="button"
+                                                        class="btn-large blue-bg white-text capitalise">
                                                         Change password
                                                     </button>
                                                 </div>
@@ -460,8 +452,8 @@
                                                         </div>
 
                                                         <div class="two-fa-toggle__option">
-                                                            <input type="radio" name="two-fa-status" id="two-fa-off" data-input-id="two-fa-status"
-                                                                value="off">
+                                                            <input type="radio" name="two-fa-status" id="two-fa-off"
+                                                                data-input-id="two-fa-status" value="off">
                                                             <label for="two-fa-off">Off</label>
                                                         </div>
 
@@ -481,7 +473,8 @@
                                                 </p>
 
                                                 <div class="security-card__actions">
-                                                    <button type="button" class="btn-large blue-bg white-text capitalise">
+                                                    <button type="button"
+                                                        class="btn-large blue-bg white-text capitalise">
                                                         View and regenerate codes
                                                     </button>
                                                 </div>
@@ -519,14 +512,15 @@
 
                                                         <div class="suspicious-alerts-toggle__option pr-16">
                                                             <input type="radio" name="suspicious-alerts-status"
-                                                                id="suspicious-alert-on" value="on" checked 
+                                                                id="suspicious-alert-on" value="on" checked
                                                                 data-input-id="suspicious-alerts-status">
                                                             <label for="suspicious-alert-on">On</label>
                                                         </div>
 
                                                         <div class="suspicious-alerts-toggle__option">
                                                             <input type="radio" name="suspicious-alerts-status"
-                                                                id="suspicious-alert-off" value="off" data-input-id="suspicious-alerts-status">
+                                                                id="suspicious-alert-off" value="off"
+                                                                data-input-id="suspicious-alerts-status">
                                                             <label for="suspicious-alert-off">Off</label>
                                                         </div>
 
@@ -545,12 +539,184 @@
 
                                 </section>
 
-                                <!-- Notficiations -->
+
+                                <!-- Notifications -->
                                 <section id="notifications" class="section-tab">
-                                    not yet implemented
+                                    <div class="notification__container">
+
+                                        <h2 id="notifications-heading"
+                                            class="notification-section__heading mt-16 mb-16">
+                                            Notification Preferences
+                                        </h2>
+
+                                        <!-- Account Activity Alerts -->
+                                        <div id="account-activity-alerts" class="border-box security-card">
+
+                                            <div class="security-card__header">
+                                                <h3 class="security-card__title">Account activity</h3>
+                                            </div>
+
+                                            <form id="account-activity-form" class="mt-8">
+
+                                                <div class="flex-grid two-column-80_20_grid">
+
+                                                    <div>
+                                                        <p id="account-activity-description"
+                                                            class="security-card__description">
+                                                            Receive notifications when there are login attempts or
+                                                            important changes to your account.
+                                                        </p>
+
+                                                        <p id="account-activity-helper"
+                                                            class="security-card__helper mt-8">
+                                                            Recommended to keep this enabled to stay informed about your
+                                                            account security.
+                                                        </p>
+                                                    </div>
+
+                                                    <fieldset class="toggle-group flex"
+                                                        aria-describedby="account-activity-description account-activity-helper">
+
+                                                        <legend class="text-muted">
+                                                            Account activity alerts
+                                                        </legend>
+
+                                                        <div class="toggle-option pr-16">
+                                                            <input type="radio" name="account-activity-status"
+                                                                id="account-activity-on" value="on" checked
+                                                                data-input-id="account-activity-status">
+                                                            <label for="account-activity-on">On</label>
+                                                        </div>
+
+                                                        <div class="toggle-option">
+                                                            <input type="radio" name="account-activity-status"
+                                                                id="account-activity-off" value="off"
+                                                                data-input-id="account-activity-status">
+                                                            <label for="account-activity-off">Off</label>
+                                                        </div>
+
+                                                    </fieldset>
+
+                                                </div>
+
+                                            </form>
+
+                                        </div>
+
+
+                                        <!-- Transaction Alerts -->
+                                        <div id="transaction-alerts" class="border-box security-card">
+
+                                            <div class="security-card__header">
+                                                <h3 class="security-card__title">Transaction alerts</h3>
+                                            </div>
+
+                                            <form id="transaction-alerts-form" class="mt-8">
+
+                                                <div class="flex-grid two-column-80_20_grid">
+
+                                                    <div>
+                                                        <p id="transaction-alerts-description"
+                                                            class="security-card__description">
+                                                            Get notified about important transactions and unusual
+                                                            activity related to your account. Receive notifications for 
+                                                            withdrawals, deposits and payments.
+                                                        </p>
+
+                                                        <p id="transaction-alerts-helper"
+                                                            class="security-card__helper mt-8">
+                                                            Helps you quickly identify unauthorised or unexpected
+                                                            activity.
+                                                        </p>
+                                                    </div>
+
+                                                    <fieldset class="toggle-group flex"
+                                                        aria-describedby="transaction-alerts-description transaction-alerts-helper">
+
+                                                        <legend class="text-muted">
+                                                            Transaction alerts
+                                                        </legend>
+
+                                                        <div class="toggle-option pr-16">
+                                                            <input type="radio" name="transaction-alerts-status"
+                                                                id="transaction-alerts-on" value="on" checked
+                                                                data-input-id="transaction-alerts-status">
+                                                            <label for="transaction-alerts-on">On</label>
+                                                        </div>
+
+                                                        <div class="toggle-option">
+                                                            <input type="radio" name="transaction-alerts-status"
+                                                                id="transaction-alerts-off" value="off"
+                                                                data-input-id="transaction-alerts-status">
+                                                            <label for="transaction-alerts-off">Off</label>
+                                                        </div>
+
+                                                    </fieldset>
+
+                                                </div>
+
+                                            </form>
+
+                                        </div>
+
+
+                                        <!-- Promotional Notifications -->
+                                        <div id="promotional-notifications" class="border-box security-card">
+
+                                            <div class="security-card__header">
+                                                <h3 class="security-card__title">Promotional notifications</h3>
+                                            </div>
+
+                                            <form id="promotional-notifications-form" class="mt-8">
+
+                                                <div class="flex-grid two-column-80_20_grid">
+
+                                                    <div>
+                                                        <p id="promotional-description"
+                                                            class="security-card__description">
+                                                            Receive updates about offers, new features, and product
+                                                            announcements.
+                                                        </p>
+
+                                                        <p id="promotional-helper" class="security-card__helper mt-8">
+                                                            Optional, you can turn this off if you prefer not to
+                                                            receive marketing messages.
+                                                        </p>
+                                                    </div>
+
+                                                    <fieldset class="toggle-group flex"
+                                                        aria-describedby="promotional-description promotional-helper">
+
+                                                        <legend class="text-muted">
+                                                            Promotional notifications
+                                                        </legend>
+
+                                                        <div class="toggle-option pr-16">
+                                                            <input type="radio" name="promotional-status"
+                                                                id="promotional-on" value="on" checked
+                                                                data-input-id="promotional-status">
+                                                            <label for="promotional-on">On</label>
+                                                        </div>
+
+                                                        <div class="toggle-option">
+                                                            <input type="radio" name="promotional-status"
+                                                                id="promotional-off" value="off"
+                                                                data-input-id="promotional-status">
+                                                            <label for="promotional-off">Off</label>
+                                                        </div>
+
+                                                    </fieldset>
+
+                                                </div>
+
+                                            </form>
+
+                                        </div>
+
+                                    </div>
                                 </section>
 
-                                  <!-- bank account -->
+                                <!-- bank account -->
                                 <section id="bank-accounts" class="section-tab">
                                     not yet implemented
                                 </section>

@@ -4432,6 +4432,7 @@ clicks the button
     padding: 16px;
     margin-top: 8px;
     box-shadow: var(--box-shadow-secondary);
+    background: white;
 }
 
 
