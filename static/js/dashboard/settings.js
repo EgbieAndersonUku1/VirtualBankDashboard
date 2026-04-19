@@ -5,7 +5,47 @@ import { AlertUtils } from "../alerts.js";
 const hiddenInputFields = document.querySelectorAll(".profile-input-hidden-field");
 const dashboard         = document.getElementById("dashboard");
 const tabs              = document.querySelectorAll(".tab");
-const sectionTabs       = document.querySelectorAll(".section-tab")
+const sectionTabs       = document.querySelectorAll(".section-tab");
+
+
+// =======================================================
+// SECURITY SETTINGS RADIO CONTROLS (ON / OFF TOGGLES)
+// =======================================================
+// This section contains DOM references for all radio button
+// groups used in the Security & Notification settings panel.
+//
+// Each feature is represented as a binary toggle (ON / OFF):
+// - Two-Factor Authentication (2FA)
+// - Suspicious Activity Alerts
+// - Account Activity Notifications
+// - Transaction Alerts
+// - Promotional Notifications
+//
+// These elements are intentionally grouped in pairs so they
+// can be managed generically through a shared toggle handler
+// with confirmation logic and state rollback support.
+// =======================================================
+
+
+// 2FA radio buttons
+const twoFaOnRadio  = document.getElementById("two-fa-on");
+const twoFaOffRadio = document.getElementById("two-fa-off");
+
+// Suspicious activity alerts
+const suspiciousOnRadio  = document.getElementById("suspicious-alert-on");
+const suspiciousOffRadio = document.getElementById("suspicious-alert-off");
+
+// Account activity notifications
+const accountActivityOnRadio  = document.getElementById("account-activity-on");
+const accountActivityOffRadio = document.getElementById("account-activity-off");
+
+// Transaction alerts
+const transactionAlertsOnRadio  = document.getElementById("transaction-alerts-on");
+const transactionAlertsOffRadio = document.getElementById("transaction-alerts-off");
+
+// Promotional notifications
+const promotionalOnRadio  = document.getElementById("promotional-on");
+const promotionalOffRadio = document.getElementById("promotional-off");
 
 
 // hidden form values
@@ -435,8 +475,10 @@ function handleRadioButtonClick(e) {
 async function handle2FARecoveryCodeBackup(e) {
     const value = e.target.value;
 
-    const isEnabling = value === "on";
 
+    const isEnabling = value === "on";
+    const previousRadioBtnStatus = isEnabling ? twoFaOffRadio : twoFaOnRadio;
+   
     const confirm = await AlertUtils.showConfirmationAlert({
         title: isEnabling ? "Enable backup codes?" : "Disable backup codes?",
         text: isEnabling
@@ -453,7 +495,12 @@ async function handle2FARecoveryCodeBackup(e) {
 
     if (confirm) {
         // perform action with fetch. No backend yet.
-    }
+        e.target.checked = true;
+        return;
+        
+    } 
+     previousRadioBtnStatus.checked = true;
+    
 }
 
 
@@ -480,6 +527,9 @@ async function handleSuspiciousAlert(e) {
     const value = e.target.value;
     const isEnabling = value === "on";
 
+    // const previousValue = 
+    const previousRadioBtnStatus = isEnabling ? suspiciousOffRadio : suspiciousOnRadio;
+
     const confirm = await AlertUtils.showConfirmationAlert({
         title: isEnabling 
             ? "Enable suspicious activity alerts?" 
@@ -498,7 +548,11 @@ async function handleSuspiciousAlert(e) {
 
     if (confirm) {
             // perform action with fetch. No backend yet.
+        e.target.checked = true;
+        return;
     }
+
+    previousRadioBtnStatus.checked = true;
 }
 
 
@@ -523,6 +577,8 @@ async function handleAccountActivityAlert(e) {
     const value = e.target.value;
     const isEnabling = value === "on";
 
+    const previousRadioBtnStatus = isEnabling ? accountActivityOffRadio : accountActivityOnRadio;
+
     const confirm = await AlertUtils.showConfirmationAlert({
         title: isEnabling 
             ? "Enable account activity alerts?" 
@@ -541,7 +597,11 @@ async function handleAccountActivityAlert(e) {
 
     if (confirm) {
         // perform action with fetch. No backend yet.
+        e.target.checked = true;
+        return;
     }
+
+    previousRadioBtnStatus.checked = true;
 }
 
 
@@ -566,6 +626,8 @@ async function handleAccountActivityAlert(e) {
 async function handleTransactionAlert(e) {
     const value = e.target.value;
     const isEnabling = value === "on";
+    
+    const previousRadioBtnStatus = isEnabling ? transactionAlertsOffRadio : transactionAlertsOnRadio;
 
     const confirm = await AlertUtils.showConfirmationAlert({
         title: isEnabling 
@@ -583,9 +645,13 @@ async function handleTransactionAlert(e) {
         confirmButtonText: isEnabling ? "Enable alerts" : "Disable alerts",
     });
 
-    if (confirm) {
+   if (confirm) {
         // perform action with fetch. No backend yet.
-    }
+        e.target.checked = true;
+        return;
+        
+    } 
+    previousRadioBtnStatus.checked = true;
 }
 
 
@@ -610,6 +676,8 @@ async function handlePromotionalAlert(e) {
     const value      = e.target.value;
     const isEnabling = value === "on";
 
+    const previousRadioBtnStatus = isEnabling ? promotionalOffRadio : promotionalOnRadio;
+
     const confirm = await AlertUtils.showConfirmationAlert({
         title: isEnabling 
             ? "Enable promotional notifications?" 
@@ -628,7 +696,11 @@ async function handlePromotionalAlert(e) {
 
     if (confirm) {
         // perform action with fetch. No backend yet.
-    }
+        e.target.checked = true;
+        return;
+        
+    } 
+     previousRadioBtnStatus.checked = true;
 }
 
 
