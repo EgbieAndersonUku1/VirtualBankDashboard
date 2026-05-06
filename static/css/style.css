@@ -406,6 +406,31 @@ img:hover {
     color: var(--red);
 }
 
+.red-outline {
+    border: 1px solid var(--red);
+    color: var(--red);
+}
+
+
+.green-outline {
+  border: 1px solid var(--green-600);
+  color: var(--green-600);
+}
+
+.blue-outline {
+ border: 1px solid var(--blue-600);
+ color: var(--blue-600);
+}
+
+
+.green-outline,
+.blue-outline,
+.red-outline {
+    background: white;
+    font-weight: bold;
+ 
+}
+
 /* utilities */
 
 
@@ -4448,12 +4473,15 @@ clicks the button
  .setting-account-card {
     background: white;
     padding: var(--space-24);
+    box-shadow: var(--box-shadow-primary);
+    border-radius: 16px;
+  
  }
 
  .setting-account-card__bank-logo {
     position: relative;
-    height: 150px;
-    width: 150px;
+    height: 100px;
+    width: 100px;
  }
 
  .setting-account-card__bank-logo img {
@@ -4468,7 +4496,7 @@ clicks the button
  .group__account-name,
  .group__account-status {
     font-weight: 600;
-    font-size: 1.1rem;
+    font-size: 1rem;
  }
 
  .group {
@@ -4486,7 +4514,7 @@ clicks the button
 }
 
 .group__value {
-    font-weight: 400;
+    font-weight: 600;
 }
 
 .badge {
@@ -4509,4 +4537,61 @@ clicks the button
 .badge--secondary {
     background: #eef2ff;
     color: #3730a3;
+}
+
+
+/* the setting buttons in th settings page */
+.action-settings-btn {
+    padding: var(--space-8);
+}
+
+.icon-actions,
+.account-card__actions {
+    column-gap: var(--space-8);
+}
+
+#setting-savings-transfer-btn,
+#setting-transfer-btn,
+.icon-actions button {
+    font-size: 0.85rem;
+    letter-spacing: 0.7px;
+}
+
+
+.external-bank__container .card {
+   padding: var(--space-24);
+}
+
+.external-bank__container .card .head {
+    position: relative;
+    height: 150px;
+    width: 150px;
+    border: 2px solid lavender;
+}
+
+.external-bank__container .card .head img {
+   position: absolute;
+   height: 100%;
+   width: 100%;
+}
+
+
+.danger-outline {
+    border-radius: 0;
+    border: 4px solid lavender;
+    background: white;
+}
+
+
+
+#bank-accounts button {
+    border-radius: 0;
+}
+
+.bank-info h1 {
+    font-size: 1rem;
+}
+
+.account-details hr {
+    margin-top: 0;
 }
