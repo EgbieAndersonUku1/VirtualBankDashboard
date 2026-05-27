@@ -708,7 +708,10 @@ header {
     text-align: center;
 }
 
+
+.card-request-cards .card-request-card:hover,
 .admin-cards .admin-card:hover,
+
 .view-card-panel-button:hover,
 .bank-card:hover,
 .call-to-action__button:hover {
@@ -1014,6 +1017,7 @@ button:hover {
     column-gap: var(--space-8);
     row-gap: var(--space-12);
 }
+
 
 .features__cards .card {
 
@@ -4594,4 +4598,41 @@ clicks the button
 
 .account-details hr {
     margin-top: 0;
+}
+
+
+
+
+/* card requests */
+
+.card-request-cards {
+    column-gap: var(--space-8);
+}
+
+.card-request-card {
+    background: white;
+    border: 1px solid lavender;
+    padding: var(--space-24);
+      box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 3px, rgba(0, 0, 0, 0.24) 0px 1px 2px;
+      cursor: pointer;
+}
+
+.card-request-stats {
+    font-weight: 600;
+    display: flex;
+    align-items: baseline;
+    color: var(--blue-600);
+    font-size: 1.4rem;
+    margin-top: var(--space-8);
+    margin-bottom: var(--space-8);
+}
+
+
+.card-request-controls select {
+     
+    border: 0.8px solid #d1d5db;
+    border-radius: 4px;
+    padding: 10px 7px;
+    font-size: 0.8rem;
+
 }
