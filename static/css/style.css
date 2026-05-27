@@ -4603,19 +4603,27 @@ clicks the button
 
 
 
-/* card requests */
+/* card requests  section */
+
+#card-requests-header {
+    font-size: 400;
+    font-size: 1rem;
+}
+
 
 .card-request-cards {
     column-gap: var(--space-8);
 }
 
+
 .card-request-card {
     background: white;
     border: 1px solid lavender;
     padding: var(--space-24);
-      box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 3px, rgba(0, 0, 0, 0.24) 0px 1px 2px;
-      cursor: pointer;
+    box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 3px, rgba(0, 0, 0, 0.24) 0px 1px 2px;
+    cursor: pointer;
 }
+
 
 .card-request-stats {
     font-weight: 600;
@@ -4635,4 +4643,125 @@ clicks the button
     padding: 10px 7px;
     font-size: 0.8rem;
 
+}
+
+
+#card-request-details,
+#num-of-card-requests {
+    border: 1px solid lavender;
+    width: 50%;
+    background: #fff;
+    padding: var(--space-24);
+    
+}
+
+
+#card-request-details {  
+    width: 50%;
+
+}
+
+
+#num-of-card-requests {
+    width: 50%;
+}
+
+
+
+#num-of-card-requests {
+    margin-right: var(--space-4);
+}
+
+
+#card-request-search {
+    border-radius: 0;
+    padding: var(--space-8);
+   
+}
+
+#search-request-search-field {
+    
+    border: initial;
+    padding: initial;
+     width: 100%;
+}
+
+
+#card-requests-table {
+    width: 100%;
+    border-collapse: collapse;
+    border: 1px solid #e5e7eb; 
+    border-radius: 8px;
+    overflow: hidden; 
+   
+}
+
+#card-requests-table thead th {
+    position: sticky;
+    top: 0;
+    background: #111827;
+    color: white;
+    z-index: 1;
+}
+
+#card-requests-table tbody tr:nth-child(odd) {
+    background: #ffffff;
+}
+
+#card-requests-table tbody tr:nth-child(even) {
+    background: #f9fafb;
+}
+
+
+#card-requests-table tr,
+#card-requests-table th {
+    font-weight: 400;
+    font-size: 0.82rem;
+    text-align: center;
+    cursor: pointer;
+
+}
+
+#card-requests-table tbody tr td:first-child {
+    text-align: left;
+}
+
+
+#card-requests-table thead th,
+#card-requests-table tr td {
+  padding-top: var(--space-12);
+  padding-bottom: var(--space-12);
+}
+
+
+.status {
+    padding: 4px 10px;
+    border-radius: 999px;
+    font-size: 0.75rem;
+    font-weight: 600;
+}
+
+.status--pending {
+    background: #fff4d6;
+    color: #b7791f;
+}
+
+.status--approved {
+    background: #d1fae5;
+    color: #065f46;
+}
+
+.status--rejected {
+    background: #fee2e2;
+    color: #991b1b;
+}
+
+.status--review {
+    background: #e0e7ff;
+    color: #3730a3;
+}
+
+.status--withdrawn {
+    background: #f3f4f6;
+    color: #374151;
 }

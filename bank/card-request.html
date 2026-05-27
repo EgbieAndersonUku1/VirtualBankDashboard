@@ -265,12 +265,12 @@
                     <!-- the request card status -->
                     <section id="card-request-status" class="m-16 mt-24" aria-labelledby="card-request-status-heading">
 
-                      <div class="card-request-status">
-                        <h2 class="header-8">Card Request Status</h2>
-                        <small class="card-request-status-subtitle">
-                            Monitor pending, approved, rejected, and in-review card applications in real time.
-                        </small>
-                      </div>
+                        <div class="card-request-status">
+                            <h2 class="header-8">Card Request Status</h2>
+                            <small class="card-request-status-subtitle">
+                                Monitor pending, approved, rejected, and in-review card applications in real time.
+                            </small>
+                        </div>
 
                         <div class="card-request-status__container mt-4">
 
@@ -376,6 +376,187 @@
 
                     </section>
 
+
+                    <!-- the request overview -->
+                    <section id="card-request-overview" class="m-16">
+
+                        <div class="card-request-status mb-24 mt-24">
+                            <h2 class="header-8">Card Request Review Centre</h2>
+                            <small class="card-request-status-subtitle">
+                                Review incoming card applications, track their status, and manage approvals in real
+                                time.
+                            </small>
+                        </div>
+
+                        <div class="card-request-overview__container flex">
+
+                            <section id="num-of-card-requests">
+
+                                <div class="num-of-card-requests__container">
+
+                                    <div class="num-of-card-request__header flex-grid two-column-30_70_grid ">
+
+                                        <div class="header">
+                                            <h3 id="card-requests-header">Card Requests (8) </h3>
+                                        </div>
+
+                                        <div class="search-cards-requests">
+                                            <form action="" method="post" class="flex">
+                                                <input type="search" name="search-cards-requests"
+                                                    id="search-request-search-field">
+                                                <button type="submit" id="card-request-search">Search</button>
+                                            </form>
+
+
+                                        </div>
+
+                                    </div>
+
+                                    <!-- the table of cards -->
+                                    <div class="card-table mt-24">
+
+                                        <table id="card-requests-table">
+
+                                            <thead>
+                                                <tr>
+                                                    <th scope="col">User</th>
+                                                    <th scope="col">Account</th>
+                                                    <th scope="col">Card type</th>
+                                                    <th scope="col">Status</th>
+                                                    <th scope="col">Date</th>
+                                                </tr>
+                                            </thead>
+
+                                            <tbody>
+
+                                                <tr>
+                                                    <td>Jake Thompson</td>
+                                                    <td class="flex-grid">**** **** 4444</td>
+                                                    <td>Visa</td>
+                                                    <td><span class="status status--pending">Pending</span></td>
+                                                    <td>27 May 2026</td>
+                                                </tr>
+
+                                                <tr>
+                                                    <td>Aisha Khan</td>
+                                                    <td class="flex-grid">**** **** 9821</td>
+                                                    <td>Mastercard</td>
+                                                    <td><span class="status status--approved">Approved</span></td>
+                                                    <td>26 May 2026</td>
+                                                </tr>
+
+                                                <tr>
+                                                    <td>Michael Brown</td>
+                                                    <td class="flex-grid">**** **** 1209</td>
+                                                    <td>Visa</td>
+                                                    <td><span class="status status--rejected">Rejected</span></td>
+                                                    <td>25 May 2026</td>
+                                                </tr>
+
+                                                <tr>
+                                                    <td>Sophia Williams</td>
+                                                    <td class="flex-grid">**** **** 7710</td>
+                                                    <td>Discover</td>
+                                                    <td><span class="status status--review">Under Review</span></td>
+                                                    <td>24 May 2026</td>
+                                                </tr>
+
+                                                <tr>
+                                                    <td>Daniel Smith</td>
+                                                    <td class="flex-grid">**** **** 3384</td>
+                                                    <td>Visa</td>
+                                                    <td><span class="status status--approved">Approved</span></td>
+                                                    <td>23 May 2026</td>
+                                                </tr>
+
+                                                <tr>
+                                                    <td>Emily Johnson</td>
+                                                    <td class="flex-grid">**** **** 9090</td>
+                                                    <td>Mastercard</td>
+                                                    <td><span class="status status--pending">Pending</span></td>
+                                                    <td>22 May 2026</td>
+                                                </tr>
+
+                                                <tr>
+                                                    <td>Jane Garcia</td>
+                                                    <td class="flex-grid">**** **** 5621</td>
+                                                    <td>Visa</td>
+                                                    <td><span class="status status--withdrawn">Withdrawn</span></td>
+                                                    <td>21 May 2026</td>
+                                                </tr>
+
+                                                 <tr>
+                                                    <td>Peter Garcia</td>
+                                                    <td class="flex-grid">**** **** 5821</td>
+                                                    <td>Visa</td>
+                                                    <td><span class="status status--pending">Pending</span></td>
+                                                    <td>21 May 2026</td>
+                                                </tr>
+
+                                                 <tr>
+                                                    <td>MacBeth</td>
+                                                    <td class="flex-grid">**** **** 5921</td>
+                                                    <td>Visa</td>
+                                                    <td><span class="status status--approved">Approved</span></td>
+                                                    <td>21 May 2026</td>
+                                                </tr>
+
+                                                 <tr>
+                                                    <td>Egbie U</td>
+                                                    <td class="flex-grid">**** **** 7921</td>
+                                                    <td>Visa</td>
+                                                    <td><span class="status status--rejected">Rejected</span></td>
+                                                    <td>21 May 2026</td>
+                                                </tr>
+                                            </tbody>
+
+                                        </table>
+
+
+                                        <div class="pagination flex flex-space-between mt-16">
+
+                                            <div class="num-of-pages">
+                                                <p class="text-muted">Showing 1 of 24 pages</p>
+                                            </div>
+
+                                            <div class="pagination-numbers">
+                                                <a href="#">1</a>
+                                                <a href="#">2</a>
+                                                <a href="#">3</a>
+                                                <a href="#">4</a>
+                                                <a href="#">....</a>
+                                                <a href="#">10</a>
+                                            </div>
+
+                                           
+
+                                        </div>
+
+                                    </div>
+
+                                </div>
+
+
+                            </section>
+
+
+
+
+                            <section id="card-request-details">
+                                <div class="card-request-details__container">
+
+                                    <div class="card-request-header">
+                                        <h2>Request details</h2>
+                                    </div>
+
+                                </div>
+                            </section>
+
+
+                        </div>
+
+
+                    </section>
 
 
                 </section>
