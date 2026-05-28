@@ -1,0 +1,1090 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/static/css/style.css">
+    <link rel="shortcut icon" href="/static/images/virtual-bank-logo.png" type="image/x-icon">
+    <link rel="stylesheet" href="/static/vendor/fontawesome/css/all.min.css">
+    <title>Virtual bank Dashboard</title>
+</head>
+
+<body>
+
+
+    <main>
+
+        <section id="dashboard" aria-label="User dashboard">
+
+            <div class="dashboard__container">
+
+                <!-- Sidebar navigation -->
+                <nav class="dashboard__container__sidebar" aria-label="Primary dashboard navigation">
+
+                    <div class="sidebar-brand">
+                        <i class="fa-solid fa-building-columns" aria-hidden="true"></i>
+                        <span class="sidebar-brand__name">Virtual Bank</span>
+                    </div>
+                    <ul class="sidebar-nav">
+
+
+                        <li class="sidebar-nav__item">
+                            <a href="#" class="sidebar-nav__link" aria-current="page">
+                                <span class="sidebar-nav__icon" aria-hidden="true">
+                                    <i class="fa-regular fa-house"></i>
+                                </span>
+                                <span class="sidebar-nav__label">Dashboard</span>
+                            </a>
+                        </li>
+
+                        <li class="sidebar-nav__item">
+                            <a href="#" class="sidebar-nav__link">
+                                <span class="sidebar-nav__icon" aria-hidden="true">
+                                    <i class="fa-solid fa-wallet"></i>
+                                </span>
+                                <span class="sidebar-nav__label">My Wallet</span>
+                            </a>
+                        </li>
+
+                        <li class="sidebar-nav__item">
+                            <a href="transfer-money.html" class="sidebar-nav__link">
+                                <span class="sidebar-nav__icon" aria-hidden="true">
+                                    <i class="fa-solid fa-money-bill-transfer"></i>
+                                </span>
+                                <span class="sidebar-nav__label">Money Transfer</span>
+                            </a>
+                        </li>
+
+                        <li class="sidebar-nav__item">
+                            <a href="manage-credit-cards.html" class="sidebar-nav__link">
+                                <span class="sidebar-nav__icon" aria-hidden="true">
+                                    <i class="fa-solid fa-credit-card"></i>
+                                </span>
+                                <span class="sidebar-nav__label">Manage Credit Cards</span>
+                            </a>
+                        </li>
+
+                        <li class="sidebar-nav__item">
+                            <a href="card-request.html" class="sidebar-nav__link">
+                                <span class="sidebar-nav__icon" aria-hidden="true">
+                                    <i class="fa-solid fa-credit-card"></i>
+                                </span>
+                                <span class="sidebar-nav__label">Card Request</span>
+                            </a>
+                        </li>
+
+                        <li class="sidebar-nav__item">
+                            <a href="../admin/admin.html" class="sidebar-nav__link">
+                                <span class="sidebar-nav__icon" aria-hidden="true">
+                                    <i class="fa-solid fa-eye"></i>
+                                </span>
+                                <span class="sidebar-nav__label">Admin</span>
+                            </a>
+                        </li>
+
+                        <li class="sidebar-nav__item">
+                            <a href="settings.html" class="sidebar-nav__link">
+                                <span class="sidebar-nav__icon" aria-hidden="true">
+                                    <i class="fa-solid fa-gear"></i>
+                                </span>
+                                <span class="sidebar-nav__label">Settings</span>
+                            </a>
+                        </li>
+
+                    </ul>
+
+
+
+                    <!-- Latest login info -->
+                    <section id="latest-login" aria-labelledby="latest-login-heading">
+                        <div class="flex-grid two-column-20_80_grid">
+                            <span aria-hidden="true">
+                                <i class="fa-solid fa-right-to-bracket"></i>
+                            </span>
+
+                            <div id="latest-login__details">
+                                <h2 id="latest-login-heading" class="capitalise header-9">
+                                    Last login
+                                </h2>
+                                <time datetime="2026-01-29T20:32">Today at 20:32</time>
+                            </div>
+                        </div>
+
+                        <hr class="dividor" aria-hidden="true">
+
+                        <p id="latest-login__note">
+                            Add two-factor authentication recovery codes to your account so you
+                            never lose access.
+                        </p>
+
+                        <div class="btns centre mt-24">
+                            <a href="#" class="btn-large manage-security-btn" aria-describedby="latest-login__note">
+                                Manage security
+                                <span aria-hidden="true"> &gt; </span>
+                            </a>
+                        </div>
+                    </section>
+
+                    <!-- Logout -->
+                    <nav class="logout" aria-label="Account actions">
+                        <ul class="sidebar-nav">
+                            <li class="sidebar-nav__item">
+                                <a href="#" class="sidebar-nav__link" id="logout-dashboard-link">
+                                    <span class="sidebar-nav__icon" aria-hidden="true">
+                                        <i class="fa-solid fa-right-from-bracket"></i>
+                                    </span>
+                                    <span class="sidebar-nav__label">Log out</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </nav>
+
+                </nav>
+
+                <!-- Main content -->
+                <section class="dashboard__container__main" tabindex="-1">
+
+                    <nav class="dashboard__container__navbar flex flex-space-between">
+                        <div class="dashbaord__container__nav-head sidebar-brand">
+                            <i class="fa-solid fa-building-columns" aria-hidden="true"></i>
+                            <span class="sidebar-brand__name dashboard-nav-site-name">Virtual Bank</span>
+                        </div>
+
+                        <div class="dashboard__container__nav-body flex-grid three-column-grid">
+                            <div class="dashboard_container__amount">
+                                <span class="bold"><span class="currency">£</span>1,500</span>
+                            </div>
+
+                            <div class="dashboard__profile" id="dashboard-profile">
+                                <img src="/static/images/icons/profile.png" alt="" class="dashboard-profile-img">
+
+                                <div class="dashboard__container__dropdown-menu dropdown-menu"
+                                    id="dashboard__container__dropdown-menu">
+                                    <ul>
+                                        <li class="flex-grid two-column-20_80_grid">
+                                            <span>
+                                                <img src="/static/images/icons/profile.png" alt=""
+                                                    class="dashboard-profile-img">
+                                            </span>
+
+                                            <span class="flex-grid">
+                                                <span class="bold">John Doe</span>
+                                                <span class="lower-case">Johndoe@example.com</span>
+                                            </span>
+                                        </li>
+
+                                        <li>
+                                            <span><i class="fa-regular fa-user"></i></span><span>Account</span>
+                                        </li>
+                                        <li>
+                                            <span><i class="fa-solid fa-shield-halved"></i></span><span>Security</span>
+                                        </li>
+                                        <li>
+                                            <span><i class="fa-regular fa-circle-question"></i></span><span>Help &
+                                                Support</span>
+                                        </li>
+
+                                        <li class="dashboard-logout">
+                                            <span><i class="fa-solid fa-right-from-bracket"></i></span><span>Log
+                                                out</span>
+                                        </li>
+                                    </ul>
+                                </div>
+
+                            </div>
+
+                            <div class="dashboard__container__notification-bell">
+                                <div class="notifications">
+                                    <img src="/static/images/icons/notification_smartphone_icon.png" alt=""
+                                        class="dashboard-notification-bell-img">
+                                </div>
+
+
+                            </div>
+
+
+                        </div>
+
+
+                    </nav>
+
+                    <!-- the card request -->
+                    <article class="card-request-header flex flex-space-between m-16">
+
+                        <div class="card-request-title">
+                            <h1 class="header-8">Card Request</h1>
+                            <small>Review and manage card requests from customers</small>
+                        </div>
+
+                        <div class="card-request-controls three-column-grid">
+
+                            <!-- Filter by card status -->
+                            <label for="card-status-filter" class="sr-only">
+                                Filter card requests by status
+                            </label>
+
+                            <select name="card_status" id="card-status-filter">
+                                <option value="" selected>All status</option>
+                                <option value="pending">Pending</option>
+                                <option value="approved">Approved</option>
+                                <option value="withdrawn">Withdrawn</option>
+                                <option value="dispatched">Dispatched</option>
+                                <option value="place-on-hold">Place on hold</option>
+                            </select>
+
+                            <!-- Filter by card type -->
+                            <label for="card-type-filter" class="sr-only">
+                                Filter card requests by card type
+                            </label>
+
+                            <select name="card_type" id="card-type-filter">
+                                <option value="" selected>Card types</option>
+                                <option value="visa">Visa</option>
+                                <option value="mastercard">Mastercard</option>
+                                <option value="discover">Discover</option>
+                            </select>
+
+                            <!-- Export report -->
+                            <label for="export-format" class="sr-only">
+                                Export report format
+                            </label>
+
+                            <select name="export_format" id="export-format">
+                                <option value="" selected>Export report</option>
+                                <option value="csv">CSV</option>
+                                <option value="pdf">PDF</option>
+                                <option value="json">JSON</option>
+                            </select>
+
+                        </div>
+
+                    </article>
+
+
+                    <!-- the request card status -->
+                    <section id="card-request-status" class="m-16 mt-24" aria-labelledby="card-request-status-heading">
+
+                        <div class="card-request-status">
+                            <h2 class="header-8">Card Request Status</h2>
+                            <small class="card-request-status-subtitle">
+                                Monitor pending, approved, rejected, and in-review card applications in real time.
+                            </small>
+                        </div>
+
+                        <div class="card-request-status__container mt-4">
+
+                            <div class="card-request-cards flex-grid four-column-grid">
+
+                                <!-- pending request -->
+                                <article class="card-request-card flex-grid" aria-labelledby="pending-request-title">
+
+                                    <div class="card-request-card__title">
+                                        <p id="pending-request-title" class="text-muted">Pending request</p>
+                                    </div>
+
+                                    <div class="card-request-card__body flex flex-space-between">
+
+                                        <div class="card-request-pending card-request-stats"
+                                            aria-label="12 pending requests">
+                                            12
+                                        </div>
+
+                                    </div>
+
+                                    <div class="card-request-card__footer">
+                                        <small>Requires action</small>
+                                    </div>
+
+                                </article>
+
+                                <!-- Under review -->
+                                <article class="card-request-card flex-grid" aria-labelledby="under-review-title">
+
+                                    <div class="card-request-card__title">
+                                        <p id="under-review-title" class="text-muted">Under review</p>
+                                    </div>
+
+                                    <div class="card-request-card__body flex flex-space-between">
+
+                                        <div class="card-request-under-review card-request-stats"
+                                            aria-label="5 requests under review">
+                                            5
+                                        </div>
+
+
+
+                                    </div>
+
+                                    <div class="card-request-card__footer">
+                                        <small class="capitalise">In progress</small>
+                                    </div>
+
+                                </article>
+
+                                <!-- Approved today -->
+                                <article class="card-request-card flex-grid" aria-labelledby="approved-today-title">
+
+                                    <div class="card-request-card__title">
+                                        <p id="approved-today-title" class="text-muted">Approved today</p>
+                                    </div>
+
+                                    <div class="card-request-card__body flex flex-space-between">
+
+                                        <div class="card-request-under-review card-request-stats"
+                                            aria-label="4 approved requests today">
+                                            4
+                                        </div>
+
+
+
+                                    </div>
+
+                                    <div class="card-request-card__footer">
+                                        <small class="capitalise">This calendar day</small>
+                                    </div>
+
+                                </article>
+
+                                <!-- Rejected today -->
+                                <article class="card-request-card flex-grid" aria-labelledby="rejected-today-title">
+
+                                    <div class="card-request-card__title">
+                                        <p id="rejected-today-title" class="text-muted">Rejected today</p>
+                                    </div>
+
+                                    <div class="card-request-card__body flex flex-space-between">
+
+                                        <div class="card-request-under-review card-request-stats"
+                                            aria-label="2 rejected requests today">
+                                            2
+                                        </div>
+
+
+
+                                    </div>
+
+                                    <div class="card-request-card__footer">
+                                        <small class="capitalise">This calendar day</small>
+                                    </div>
+
+                                </article>
+
+                            </div>
+
+                        </div>
+
+                    </section>
+
+
+                    <!-- the request overview -->
+                    <section id="card-request-overview" class="m-16">
+
+                        <div class="card-request-status mb-24 mt-24">
+                            <h2 class="header-8">Card Request Review Centre</h2>
+                            <small class="card-request-status-subtitle">
+                                Review incoming card applications, track their status, and manage approvals in real
+                                time.
+                            </small>
+                        </div>
+
+                        <div class="card-request-overview__container flex">
+
+                            <section id="num-of-card-requests">
+
+                                <div class="num-of-card-requests__container">
+
+                                    <div class="num-of-card-request__header flex-grid two-column-30_70_grid ">
+
+                                        <div class="header">
+                                            <h3 id="card-requests-header">Card Requests (8) </h3>
+                                        </div>
+
+                                        <div class="search-cards-requests">
+                                            <form action="" method="post" class="flex">
+                                                <input type="search" name="search-cards-requests"
+                                                    id="search-request-search-field">
+                                                <button type="submit" id="card-request-search">Search</button>
+                                            </form>
+
+
+                                        </div>
+
+                                    </div>
+
+                                    <!-- the table of cards -->
+                                    <div class="card-table mt-24">
+
+                                        <table id="card-requests-table">
+
+                                            <thead>
+                                                <tr>
+                                                    <th scope="col">User</th>
+                                                    <th scope="col">Account</th>
+                                                    <th scope="col">Card type</th>
+                                                    <th scope="col">Status</th>
+                                                    <th scope="col">Date</th>
+                                                </tr>
+                                            </thead>
+
+                                            <tbody>
+
+                                                <tr>
+                                                    <td>Jake Thompson</td>
+                                                    <td class="flex-grid pt-16">**** **** 4444</td>
+                                                    <td>
+                                                        <p>Visa</p>
+                                                        <p class="text-muted"><small>Physical card</small></p>
+                                                    </td>
+                                                    <td><span class="status status--pending">Pending</span></td>
+                                                    <td>
+                                                        <p>27 May 2026</p>
+                                                        <p><small>10:30 PM</small></p>
+                                                    </td>
+                                                </tr>
+
+                                                <tr>
+                                                    <td>Aisha Khan</td>
+                                                    <td class="flex-grid">**** **** 9821</td>
+                                                    <td>
+                                                        <p>Mastercard</p>
+                                                        <p class="text-muted"><small>Virtual card</small></p>
+                                                    </td>
+                                                    <td><span class="status status--approved">Approved</span></td>
+                                                    <td>
+                                                        <p>26 May 2026</p>
+                                                        <p><small>08:12 AM</small></p>
+                                                    </td>
+                                                </tr>
+
+                                                <tr>
+                                                    <td>Michael Brown</td>
+                                                    <td class="flex-grid">**** **** 1209</td>
+                                                    <td>
+                                                        <p>Visa</p>
+                                                        <p class="text-muted"><small>Replacement</small></p>
+                                                    </td>
+                                                    <td><span class="status status--rejected">Rejected</span></td>
+                                                    <td>
+                                                        <p>25 May 2026</p>
+                                                        <p><small>04:45 PM</small></p>
+                                                    </td>
+                                                </tr>
+
+                                                <tr>
+                                                    <td>Sophia Williams</td>
+                                                    <td class="flex-grid">**** **** 7710</td>
+                                                    <td>
+                                                        <p>Discover</p>
+                                                        <p class="text-muted"><small>New card</small></p>
+                                                    </td>
+                                                    <td><span class="status status--review">Under Review</span></td>
+                                                    <td>
+                                                        <p>24 May 2026</p>
+                                                        <p><small>09:02 AM</small></p>
+                                                    </td>
+                                                </tr>
+
+                                                <tr>
+                                                    <td>Daniel Smith</td>
+                                                    <td class="flex-grid">**** **** 3384</td>
+                                                    <td>
+                                                        <p>Visa</p>
+                                                        <p class="text-muted"><small>Virtual card</small></p>
+                                                    </td>
+                                                    <td><span class="status status--approved">Approved</span></td>
+                                                    <td>
+                                                        <p>23 May 2026</p>
+                                                        <p><small>07:18 PM</small></p>
+                                                    </td>
+                                                </tr>
+
+                                                <tr>
+                                                    <td>Emily Johnson</td>
+                                                    <td class="flex-grid">**** **** 9090</td>
+                                                    <td>
+                                                        <p>Mastercard</p>
+                                                        <p class="text-muted"><small>Physical card</small></p>
+                                                    </td>
+                                                    <td><span class="status status--pending">Pending</span></td>
+                                                    <td>
+                                                        <p>22 May 2026</p>
+                                                        <p><small>01:25 PM</small></p>
+                                                    </td>
+                                                </tr>
+
+                                                <tr>
+                                                    <td>Jane Garcia</td>
+                                                    <td class="flex-grid">**** **** 5621</td>
+                                                    <td>
+                                                        <p>Visa</p>
+                                                        <p class="text-muted"><small>Card upgrade</small></p>
+                                                    </td>
+                                                    <td><span class="status status--withdrawn">Withdrawn</span></td>
+                                                    <td>
+                                                        <p>21 May 2026</p>
+                                                        <p><small>11:40 AM</small></p>
+                                                    </td>
+                                                </tr>
+
+                                                <tr>
+                                                    <td>Peter Garcia</td>
+                                                    <td class="flex-grid">**** **** 5821</td>
+                                                    <td>
+                                                        <p>Visa</p>
+                                                        <p class="text-muted"><small>Physical card</small></p>
+                                                    </td>
+                                                    <td><span class="status status--pending">Pending</span></td>
+                                                    <td>
+                                                        <p>21 May 2026</p>
+                                                        <p><small>06:52 PM</small></p>
+                                                    </td>
+                                                </tr>
+
+                                                <tr>
+                                                    <td>MacBeth</td>
+                                                    <td class="flex-grid">**** **** 5921</td>
+                                                    <td>
+                                                        <p>Visa</p>
+                                                        <p class="text-muted"><small>Replacement</small></p>
+                                                    </td>
+                                                    <td><span class="status status--approved">Approved</span></td>
+                                                    <td>
+                                                        <p>21 May 2026</p>
+                                                        <p><small>02:11 PM</small></p>
+                                                    </td>
+                                                </tr>
+
+                                                <tr>
+                                                    <td>Egbie U</td>
+                                                    <td class="flex-grid">**** **** 7921</td>
+                                                    <td>
+                                                        <p>Visa</p>
+                                                        <p class="text-muted"><small>Virtual card</small></p>
+                                                    </td>
+                                                    <td><span class="status status--rejected">Rejected</span></td>
+                                                    <td>
+                                                        <p>21 May 2026</p>
+                                                        <p><small>09:48 AM</small></p>
+                                                    </td>
+                                                </tr>
+
+                                            </tbody>
+
+                                        </table>
+
+
+                                        <div class="pagination flex flex-space-between mt-16">
+
+                                            <div class="num-of-pages">
+                                                <p class="text-muted">Showing 1 of 24 pages</p>
+                                            </div>
+
+                                            <div class="pagination-numbers">
+                                                <a href="#">1</a>
+                                                <a href="#">2</a>
+                                                <a href="#">3</a>
+                                                <a href="#">4</a>
+                                                <a href="#">....</a>
+                                                <a href="#">10</a>
+                                            </div>
+
+                                        </div>
+
+                                    </div>
+
+                                </div>
+
+
+                            </section>
+
+
+                            <!-- The card request details tab -->
+                            <section id="card-request-details">
+                                <div class="card-request-details__container">
+
+                                    <div class="card-request-header flex">
+                                        <h2 class="header-8">Request details </h2><span
+                                            class="text-muted ml-4">REQ-AAE-RSETE</span>
+                                    </div>
+                                    <hr class="dividor">
+
+
+                                    <section class="request-status flex flex-space-between"
+                                        aria-labelledby="request-status-title">
+
+                                        <h6 id="request-status-title" class="sr-only">
+                                            Request status overview
+                                        </h6>
+
+                                        <div class="profile-details flex">
+
+                                            <div class="profile-pic mr-4">
+                                                <img src="/static/images/icons/profile.png"
+                                                    alt="Profile placeholder image" id="request-status-profile-pic">
+                                            </div>
+
+                                            <div class="profile-information mt-12">
+                                                <p class="bold capitalise">
+                                                    <small>Jake Thompson</small>
+                                                </p>
+
+                                                <p>
+                                                    <small>
+                                                        <a href="mailto:jakeThompson@gmail.com">
+                                                            jakeThompson@gmail.com
+                                                        </a>
+                                                    </small>
+                                                </p>
+                                            </div>
+
+                                        </div>
+
+                                        <div class="rquest-current-status flex-grid"
+                                            aria-label="Request status details">
+
+                                            <span class="status status--pending capitalise center"
+                                                aria-label="Current status: pending">
+                                                pending
+                                            </span>
+
+                                            <span>
+                                                <small>Requested: 27 May 2026</small>
+                                            </span>
+
+                                            <span>
+                                                <small>10:30pm</small>
+                                            </span>
+
+                                        </div>
+
+                                    </section>
+                                    <hr class="dividor">
+
+
+                                    <!-- account information -->
+                                    <section class="account-information-cards flex-grid four-column-grid" role="list"
+                                        aria-label="Account information">
+
+                                        <!-- Account number -->
+                                        <div class="account-information-card" role="listitem">
+                                            <div class="account-information-card__head">
+                                                <small class="text-muted" id="account-number-label">
+                                                    Account No.
+                                                </small>
+                                            </div>
+
+                                            <div class="account-information-card__head">
+                                                <small aria-labelledby="account-number-label" class="light-bold">
+                                                    Ending in 4444
+                                                </small>
+                                            </div>
+                                        </div>
+
+                                        <!-- Sort code -->
+                                        <div class="account-information-card" role="listitem">
+                                            <div class="account-information-card__head">
+                                                <small class="text-muted" id="sort-code-label">
+                                                    Sort code
+                                                </small>
+                                            </div>
+
+                                            <div class="account-information-card__head">
+                                                <small aria-labelledby="sort-code-label" class="light-bold">
+                                                    Ending in 2123
+                                                </small>
+                                            </div>
+                                        </div>
+
+                                        <!-- Account type -->
+                                        <div class="account-information-card" role="listitem">
+                                            <div class="account-information-card__head">
+                                                <small class="text-muted" id="account-type-label">
+                                                    Account type
+                                                </small>
+                                            </div>
+
+                                            <div class="account-information-card__head">
+                                                <small aria-labelledby="account-type-label" class="light-bold">
+                                                    Current account
+                                                </small>
+                                            </div>
+                                        </div>
+
+                                        <!-- Balance -->
+                                        <div class="account-information-card" role="listitem">
+                                            <div class="account-information-card__head">
+                                                <small class="text-muted" id="balance-label" class="light-bold">
+                                                    Balance
+                                                </small>
+                                            </div>
+
+                                            <div class="account-information-card__head">
+                                                <small aria-labelledby="balance-label" class="light-bold">
+                                                    £0.00
+                                                </small>
+                                            </div>
+                                        </div>
+
+                                    </section>
+
+
+                                    <!-- request informations visual tab -->
+                                    <section id="request-informations" class="mt-8">
+
+                                        <!-- Tabs -->
+                                        <div class="tabs flex-grid four-column-grid center" role="tablist"
+                                            aria-label="Request information tabs">
+
+                                            <div class="tab active" role="tab" aria-selected="true" tabindex="0">
+                                                Request Info
+                                            </div>
+
+                                            <div class="tab" role="tab" aria-selected="false" tabindex="-1">
+                                                User information
+                                            </div>
+
+                                            <div class="tab" role="tab" aria-selected="false" tabindex="-1">
+                                                Account Details
+                                            </div>
+
+                                            <div class="tab" role="tab" aria-selected="false" tabindex="-1">
+                                                Audit Trail
+                                            </div>
+                                        </div>
+
+                                        <!-- Content request information tab -->
+                                        <div class="flex-grid two-column-grid" id="request-group-information">
+
+                                            <div class="card-request-details">
+
+                                                <h3>Request information details</h3>
+
+                                                <!-- Card Type -->
+                                                <div class="group-info flex-grid two-column-grid" role="group"
+                                                    aria-label="Card Type">
+
+                                                    <div class="label" aria-hidden="true">
+                                                        <p class="text-muted">Card Type</p>
+                                                    </div>
+
+                                                    <div class="value">
+                                                        <p>Visa Debit</p>
+                                                    </div>
+                                                </div>
+
+                                                <!-- Card Variant -->
+                                                <div class="group-info flex-grid two-column-grid" role="group"
+                                                    aria-label="Card Variant">
+
+                                                    <div class="label" aria-hidden="true">
+                                                        <p class="text-muted">Card Variant</p>
+                                                    </div>
+
+                                                    <div class="value">
+                                                        <p class="capitalise">Physical card</p>
+                                                    </div>
+                                                </div>
+
+                                                <!-- Delivery Address -->
+                                                <div class="group-info flex-grid two-column-grid" role="group"
+                                                    aria-label="Delivery Address">
+
+                                                    <div class="label" aria-hidden="true">
+                                                        <p class="text-muted">Delivery Address</p>
+                                                    </div>
+
+                                                    <div class="value">
+                                                        <p>
+                                                            46 Albert Square<br>
+                                                            Waltford<br>
+                                                            London<br>
+                                                            E20 6PQ
+                                                        </p>
+                                                    </div>
+                                                </div>
+
+                                                <!-- Phone -->
+                                                <div class="group-info flex-grid two-column-grid" role="group"
+                                                    aria-label="Phone number">
+
+                                                    <div class="label" aria-hidden="true">
+                                                        <p class="text-muted">Phone number</p>
+                                                    </div>
+
+                                                    <div class="value">
+                                                        <a href="tel:079571203747">
+                                                            07957 1203747
+                                                        </a>
+                                                    </div>
+                                                </div>
+
+                                                <!-- Special Instructions -->
+                                                <div class="group-info flex-grid two-column-grid" role="group"
+                                                    aria-label="Special Instructions">
+
+                                                    <div class="label" aria-hidden="true">
+                                                        <p class="text-muted">Special Instructions</p>
+                                                    </div>
+
+                                                    <div class="value">
+                                                        <p>None</p>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+
+                                            <!-- Benefits -->
+                                            <div class="card-benefits">
+
+                                                <h3>Card benefits</h3>
+
+                                                <div class="group-info">
+                                                    <ul class="benefits-list" aria-label="Card benefits list">
+
+                                                        <li>
+                                                            <i class="fa-solid fa-check active-text bold"
+                                                                aria-hidden="true"></i>
+                                                            Worldwide acceptance
+                                                        </li>
+
+                                                        <li>
+                                                            <i class="fa-solid fa-check active-text bold"
+                                                                aria-hidden="true"></i>
+                                                            Chip and pin
+                                                        </li>
+
+                                                        <li>
+                                                            <i class="fa-solid fa-check active-text bold"
+                                                                aria-hidden="true"></i>
+                                                            Contactless payment
+                                                        </li>
+
+                                                        <li>
+                                                            <i class="fa-solid fa-check active-text bold"
+                                                                aria-hidden="true"></i>
+                                                            ATM Withdrawal
+                                                        </li>
+
+                                                        <li>
+                                                            <i class="fa-solid fa-check active-text bold"
+                                                                aria-hidden="true"></i>
+                                                            Online banking access
+                                                        </li>
+
+                                                        <li>
+                                                            <i class="fa-solid fa-check active-text bold"
+                                                                aria-hidden="true"></i>
+                                                            Fraud protection
+                                                        </li>
+
+                                                    </ul>
+                                                </div>
+
+                                            </div>
+
+                                        </div>
+
+
+                                        <!-- Content user information tab -->
+
+
+                                        <!-- Account information tab -->
+
+
+                                        <!-- Audit tab -->
+                                    </section>
+
+                                    <!-- the admin control section -->
+                                    <section id="admin-control" aria-labelledby="admin-actions-title">
+
+                                        <div class="admin-control__container mt-24">
+
+                                            <h6 id="admin-actions-title" class="text-muted mt-8 mb-2">
+                                                Admin actions
+                                            </h6>
+
+                                            <p id="admin-actions-desc" class="text-muted mb-8">
+                                                Review and update the status of this request
+                                            </p>
+
+                                            <div class="admin-buttons flex-grid two-column-grid"
+                                                aria-describedby="admin-actions-desc">
+
+                                                <button class="btn-large btn-approve" type="button">
+                                                    <i class="fa-solid fa-check" aria-hidden="true"></i>
+                                                    Approve request
+                                                </button>
+
+                                                <button class="btn-large btn-reject" type="button">
+                                                    <i class="fa-solid fa-xmark" aria-hidden="true"></i>
+                                                    Reject request
+                                                </button>
+
+                                                <button class="btn-large btn-verify center" type="button">
+                                                    <i class="fa-solid fa-shield-halved" aria-hidden="true"></i>
+                                                    Request verification
+                                                </button>
+
+                                                <button class="btn-large btn-hold center" type="button">
+                                                    <i class="fa-solid fa-pause" aria-hidden="true"></i>
+                                                    Place on hold
+                                                </button>
+
+                                            </div>
+
+                                        </div>
+
+                                    </section>
+
+
+                                    <!-- Ant extra information the admin wants to add -->
+                                    <section id="admin-additonal-inforamtion" class="mt-16"
+                                        aria-labelledby="admin-additional-title">
+
+                                        <h6 id="admin-additional-title" class="text-muted mt-8 mb-2">
+                                            Additional Information
+                                        </h6>
+
+                                        <p class="text-muted mb-8" id="admin-additional-desc">
+                                            Add internal notes or context to support this request review
+                                        </p>
+
+                                        <form action="" method="post" class="flex-grid"
+                                            aria-describedby="admin-additional-desc">
+
+                                            <label for="notes">
+                                                Notes <span class="text-muted">Optional</span>
+                                            </label>
+
+                                            <textarea name="notes" id="notes" rows="3" cols="3"
+                                                aria-describedby="notes-help notes-counter"></textarea>
+
+                                            <button class="center green-bg white-text mt-4 mb-4" type="submit"
+                                                id="admin-note-save">
+                                                Save
+                                            </button>
+
+                                            <p id="notes-help"
+                                                class="num-of-characters-remaining text-align-right character-usage-message">
+                                                Minimum characters to use: 50
+                                            </p>
+
+                                            <p id="notes-counter"
+                                                class="num-of-characters-to-use text-align-right character-usage-message"
+                                                aria-live="polite">
+                                                Number of characters remaining: 150
+                                            </p>
+
+                                        </form>
+
+                                    </section>
+
+                                </div>
+                            </section>
+
+                        </div>
+
+                    </section>
+                </section>
+
+
+
+                <!-- The footer section -->
+                <footer>
+
+                    <div class="footer__container">
+
+                        <div class="footer__header">
+                            <img src="/static/images/virtual-wallet-logo.png" alt="The virtual logo"
+                                class="footer-logo">
+
+                        </div>
+
+
+                        <div class="flex-grid five-column-grid" id="footer-sections">
+
+                            <!-- About us column -->
+                            <div class="col flex-grid" id="about-us">
+                                <h1 class="footer-head pb-16">About us</h1>
+                                <a href="#" class="footer-link">Our company</a>
+                                <a href="#" class="footer-link">Careers</a>
+                                <a href="#" class="footer-link">Security</a>
+                                <a href="#" class="footer-link">Investor relations</a>
+
+                            </div>
+
+                            <!-- services column -->
+                            <div class="col flex-grid" id="services">
+                                <h1 class="footer-head pb-16">services</h1>
+                                <a href="#" class="footer-link">Online banking</a>
+                                <a href="#" class="footer-link">Mobile app</a>
+                                <a href="#" class="footer-link">Credit app</a>
+                                <a href="#" class="footer-link">Loans and mortgages</a>
+                            </div>
+
+                            <!-- support column -->
+                            <div class="col flex-grid" id="support">
+                                <h1 class="footer-head pb-16">support</h1>
+                                <a href="#" class="footer-link">FAQs</a>
+                                <a href="#" class="footer-link">Help Center</a>
+                                <a href="#" class="footer-link">Contact us</a>
+                                <a href="#" class="footer-link">Live chat</a>
+                            </div>
+
+                            <div class="col flex-grid" id="resources">
+                                <h1 class="footer-head pb-16">resources</h1>
+                                <a href="#" class="footer-link">Financial Education</a>
+                                <a href="#" class="footer-link">Blog</a>
+                                <a href="#" class="footer-link">News and Insight</a>
+                                <a href="#" class="footer-link">Calculators</a>
+                            </div>
+
+                            <div class="col" id="download-app">
+                                <h1 class="footer-head">Download our app</h1>
+
+                                <div id="apps" class="flex-grid two-column-grid">
+                                    <img src="/static/images/footer-icons/appStore.svg" alt="" class="footer-icon">
+                                    <img src="/static/images/footer-icons/googlePlay.svg" alt="" class="footer-icon">
+                                </div>
+
+
+                            </div>
+                        </div>
+
+                        <div class="socials copyright flex-grid two-column-grid pb-24">
+
+                            <div class="socials four-column-grid">
+                                <a href="#"><img src="/static/images/icons/facebook.svg" alt="facebook"
+                                        class="social-icon"></a>
+                                <a href="#"><img src="/static/images/icons/instagram.svg" alt="facebook"
+                                        class="social-icon"></a>
+
+                            </div>
+
+                            <div class="copyright four-column-grid">
+                                <a href="#" class="copyright-link"><span class="copyright-date">@2026 </span>Virtual
+                                    bank. All
+                                    rights reserved</a>
+                                <a href="#" class="copyright-link footer-link">Privacy policy</a>
+                                <a href="#" class="copyright-link footer-link">Terms of use</a>
+
+                            </div>
+                        </div>
+
+                    </div>
+
+                </footer>
+
+
+
+            </div>
+
+        </section>
+
+    </main>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.12.2/dist/sweetalert2.all.min.js"></script>
+    <script src="/static/js/dashboard/bank-dashboard.js" type="module"></script>
+</body>
+
+</html>

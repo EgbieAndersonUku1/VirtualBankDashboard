@@ -12,9 +12,7 @@
 
 <body>
 
-
     <main>
-
         <section id="dashboard" aria-label="User dashboard">
 
             <div class="dashboard__container">
@@ -56,6 +54,15 @@
                             </a>
                         </li>
 
+                           <li class="sidebar-nav__item">
+                            <a href="card-request.html" class="sidebar-nav__link">
+                                <span class="sidebar-nav__icon" aria-hidden="true">
+                                    <i class="fa-solid fa-credit-card"></i>
+                                </span>
+                                <span class="sidebar-nav__label">Card Request</span>
+                            </a>
+                        </li>
+                        
                         <li class="sidebar-nav__item">
                             <a href="manage-credit-cards.html" class="sidebar-nav__link">
                                 <span class="sidebar-nav__icon" aria-hidden="true">
@@ -83,10 +90,8 @@
                             </a>
                         </li>
 
-                     
+
                     </ul>
-
-
 
                     <!-- Latest login info -->
                     <section id="latest-login" aria-labelledby="latest-login-heading">
@@ -191,20 +196,9 @@
                                     <img src="/static/images/icons/notification_smartphone_icon.png" alt=""
                                         class="dashboard-notification-bell-img">
                                 </div>
-
-
                             </div>
-
-
                         </div>
-
-
                     </nav>
-
-
-
-
-
 
                     <hr class="dividor">
 
@@ -218,8 +212,6 @@
 
                             <div class="account-settings__container">
 
-
-
                                 <!-- the tabs -->
                                 <article class="tabs active flex-grid five-column-grid">
                                     <div class="tab active" data-section-name="profile">Profile</div>
@@ -229,7 +221,6 @@
                                     <div class="tab" data-section-name="bank-accounts">Bank Accounts</div>
 
                                 </article>
-
 
                                 <!-- profile -->
                                 <section id="profile" aria-labelledby="profile-title" class="section-tab">
@@ -407,14 +398,13 @@
 
                                                 <div class="security-card__actions">
                                                     <button type="button"
-                                                        class="btn-large blue-bg white-text capitalise">
+                                                        class="btn-large blue-outline white-text capitalise">
                                                         Change password
                                                     </button>
                                                 </div>
 
                                             </div>
                                         </div>
-
 
                                         <!-- 2FA Recovery Codes -->
                                         <div id="two-fa-recovery" class="border-box security-card">
@@ -464,7 +454,6 @@
                                             </form>
 
                                             <hr class="dividor">
-                                            <hr>
 
                                             <div class="security-card__row flex-grid two-column-80_20_grid mt-16">
 
@@ -474,7 +463,7 @@
 
                                                 <div class="security-card__actions">
                                                     <button type="button"
-                                                        class="btn-large blue-bg white-text capitalise">
+                                                        class="btn-large blue-outline white-text capitalise">
                                                         View and regenerate codes
                                                     </button>
                                                 </div>
@@ -529,9 +518,6 @@
                                                 </div>
 
                                             </form>
-
-
-
 
                                         </div>
 
@@ -619,7 +605,7 @@
                                                         <p id="transaction-alerts-description"
                                                             class="security-card__description">
                                                             Get notified about important transactions and unusual
-                                                            activity related to your account. Receive notifications for 
+                                                            activity related to your account. Receive notifications for
                                                             withdrawals, deposits and payments.
                                                         </p>
 
@@ -718,7 +704,215 @@
 
                                 <!-- bank account -->
                                 <section id="bank-accounts" class="section-tab">
-                                    not yet implemented
+                                    <div class="bank-accounts__container">
+
+                                        <h1 class="header-7 mt-16 mb-16 white-bg pl-48 pt-16 pb-16">My Accounts</h1>
+
+                                        <div class="checking-account setting-account-card">
+                                            <div class="flex-grid two-column-20_80_grid">
+
+                                                <div class="setting-account-card__bank-logo centre">
+                                                    <img src="../static/images/icons/checking-account.png" alt=""
+                                                        loading="lazy" srcset="">
+                                                </div>
+
+
+                                                <div class="account-details">
+
+                                                    <div class="group">
+                                                        <span class="group__account-name">Current Account
+                                                            ****7052</span>
+                                                        <span class="group__account-status badge badge--primary">Primary
+                                                        </span>
+                                                    </div>
+                                                    <hr class="dividor">
+
+                                                    <div class="group text-muted">
+                                                        <span class="group__label">
+                                                            <i class="fa-solid fa-wallet"></i> Balance
+                                                        </span>
+                                                        <span class="group__value">£1,500.00</span>
+                                                    </div>
+
+                                                    <div class="group text-muted">
+                                                        <span class="group__label">
+                                                            <i class="fa-solid fa-circle-check"></i> Status
+                                                        </span>
+                                                        <span
+                                                            class="group__value group__value--primary active-text bold">Active</span>
+                                                    </div>
+
+                                                    <div class="group text-muted">
+                                                        <span class="group__label">
+                                                            <i class="fa-solid fa-clock-rotate-left"></i> Last Activity
+                                                        </span>
+                                                        <span class="group__value">2 hours ago</span>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+
+                                            <hr class="dividor">
+
+                                            <!-- Actions buttons -->
+                                            <div class="account-card__actions flex-grid two-column-grid mt-8">
+
+                                                <button class=" action-settings-btn green-outline white-text "
+                                                    id="setting-transfer-btn">
+                                                    Transfer
+                                                </button>
+
+                                                <div class="icon-actions flex-grid two-column-grid ">
+                                                    <button aria-label="View statements" id="settings-view-settings-btn"
+                                                        class="action-settings-btn blue-outline white-text ">
+                                                        <i class="fa-regular fa-file-lines"></i>
+                                                        View Statement
+                                                    </button>
+
+                                                    <button aria-label="View account details"
+                                                        id="settings-view-account-details-btn"
+                                                        class="action-settings-btn red-outline white-text ">
+                                                        <i class="fa-regular fa-eye"></i>
+                                                        View Account Details
+                                                    </button>
+
+                                                </div>
+
+                                            </div>
+
+                                        </div>
+
+                                        <div class="checking-account setting-account-card mt-16">
+                                            <div class="flex-grid two-column-20_80_grid">
+
+                                                <div class="setting-account-card__bank-logo centre">
+                                                    <img src="../static/images/icons/savings-account.png" alt=""
+                                                        srcset="" loading="lazy">
+                                                </div>
+
+                                                <div class="account-details">
+
+                                                    <div class="group">
+                                                        <span class="group__account-name">Saving Account
+                                                            ****1401</span>
+                                                        <span
+                                                            class="group__account-status badge badge--secondary">Secondary</span>
+                                                    </div>
+                                                    <hr class="dividor">
+
+                                                    <div class="group text-muted">
+                                                        <span class="group__label">
+                                                            <i class="fa-solid fa-wallet"></i> Balance
+                                                        </span>
+                                                        <span class="group__value">£0.00</span>
+                                                    </div>
+
+                                                    <div class="group text-muted">
+                                                        <span class="group__label">
+                                                            <i class="fa-solid fa-circle-check"></i> Status
+                                                        </span>
+                                                        <span
+                                                            class="group__value group__value active-text bold">Active</span>
+                                                    </div>
+
+                                                    <div class="group text-muted">
+                                                        <span class="group__label">
+                                                            <i class="fa-solid fa-clock-rotate-left"></i> Last Activity
+                                                        </span>
+                                                        <span class="group__value">2 hours ago</span>
+                                                    </div>
+
+
+                                                </div>
+                                            </div>
+
+                                            <hr class="dividor">
+                                            <div class="account-card__actions flex-grid two-column-grid mt-8">
+
+                                                <button class="action-settings-btn green-outline white-text "
+                                                    id="setting-savings-transfer-btn">
+                                                    Transfer
+                                                </button>
+
+                                                <div class="icon-actions flex-grid two-column-grid ">
+                                                    <button aria-label="View statements"
+                                                        id="settings-savings-view-settings-btn"
+                                                        class="action-settings-btn blue-outline white-text ">
+                                                        <i class="fa-regular fa-file-lines"></i>
+                                                        View Statement
+                                                    </button>
+
+                                                    <button aria-label="View account details"
+                                                        id="settings-savings-view-account-details-btn"
+                                                        class="action-settings-btn red-outline white-text ">
+                                                        <i class="fa-regular fa-eye"></i>
+                                                        View Account Details
+                                                    </button>
+
+
+                                                </div>
+
+                                            </div>
+
+                                        </div>
+
+
+                                        <!-- Linked External bank -->
+                                        <section id="external-bank" class="mt-16 white-bg">
+                                            <div class="external-bank__container">
+
+                                                <div class="card flex-grid two-column-20_80_grid setting-account-card">
+
+                                                    <div class="head bank-logo">
+                                                        <img src="/static/images/card-icons/atlas-bank.png"
+                                                            alt="Atlas Bank logo" class="">
+                                                    </div>
+
+                                                    <div class="body bank-information">
+
+                                                        <div class="bank-info">
+                                                            <h1 class="group__account-name mb-24">
+                                                                Bank of Atlas ****701
+                                                                <span class="badge badge--primary">Verified</span>
+                                                            </h1>
+
+
+                                                            <p class="text-muted">
+                                                                Minimum Deposit: <span class="bold">£0.00</span>
+                                                            </p>
+
+                                                             <p class="text-muted">
+                                                                Monthly deposit: <span class="bold">£0.00</span>
+                                                            </p>
+
+                                                            <p class="text-muted">
+                                                                Overdraft: <span class="bold">No</span>
+                                                            </p>
+
+                                                            <p class="text-muted">
+                                                                Saving Account Available: <span class="bold">No</span>
+                                                            </p>
+                                                        </div>
+
+                                                        <hr class="dividor">
+
+                                                        <div class="connection flex flex-space-between mt-8">
+                                                            <span class="connection-status text-muted">
+                                                                <i class="fa-solid fa-link"></i> Connected 3 days ago
+                                                            </span>
+
+                                                            <span class="blue-outline p-8 text-muted">
+                                                                Connected
+                                                            </span>
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </section>
+
+
+                                    </div>
                                 </section>
 
 
@@ -830,7 +1024,7 @@
 
     </main>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.12.2/dist/sweetalert2.all.min.js"></script>
-    <!-- <script src="/static/js/dashboard/bank-dashboard.js" type="module"></script> -->
+    <script src="/static/js/dashboard/bank-dashboard.js" type="module"></script>
     <script src="/static/js/dashboard/settings.js" type="module"></script>
 
 </body>
