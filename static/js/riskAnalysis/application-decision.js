@@ -8,7 +8,7 @@ const APPLICATION_DECISION_THRESHOLD = {
 };
 
 
-const APPLICATION_DECISION = {
+export const APPLICATION_DECISION = {
     APPROVE: "Passed",
     MANUAL_REVIEW: "Manual Review",
     REJECT: "Reject"

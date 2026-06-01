@@ -614,6 +614,11 @@ img:hover {
 
 }
 
+.two-column-5_95_grid {
+    grid-template-columns: 5% 95%;
+    grid-template-rows: auto;
+}
+
 
 /* Site logo */
 
@@ -5055,13 +5060,56 @@ clicks the button
 .rule i {
     width: 16px;
     text-align: center;
-    color: #64748B;
     margin-right: var(--space-4);
 }
 
 
 
 .small-spinner {
-    height: 25px;
-    width: 25px;
+    height: 22px;
+    width: 22px;
+}
+
+
+.risk-check-message {
+    text-align: left;
+    margin-top: var(--space-4);
+    margin-bottom: var(--space-4);
+}
+
+.decision-circle {
+    width: 140px;
+    height: 140px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border: 6px solid #e0e0e0;
+    margin-top: 16px;
+    transform: translateX(200px)
+}
+
+.decision-circle-inner {
+    text-align: center;
+}
+
+.decision-score {
+    font-size: 2rem;
+    font-weight: 700;
+    display: block;
+}
+
+.decision-max {
+    font-size: 0.9rem;
+    color: #888;
+}
+
+
+#decision {
+    display: none;
+}
+
+#decision.show {
+    display: block;
 }
