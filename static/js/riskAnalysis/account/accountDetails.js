@@ -34,7 +34,7 @@ const accountDetails = {
     },
 
     kycStatus: {
-        level: KYCStatus.FULL,
+        level: KYCStatus.PARTIAL,
         methods: ["EMAIL", "PHONE", "PASSPORT"],
         verificationDate: "2025-12-25"
   },
@@ -59,8 +59,8 @@ const accountDetails = {
     },
 
     security: {
-        failedLoginAttempts: 0,
-        passwordResets: 1,
+        failedLoginAttempts: 4,
+        passwordResets: 10,
         suspiciousLoginDetected: false,
        
     }

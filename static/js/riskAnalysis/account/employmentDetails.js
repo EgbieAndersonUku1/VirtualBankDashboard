@@ -2,8 +2,8 @@ import { EmploymentTypeLabel, PayFrequency, Contract } from "../rules/employment
 
 
 export const employmentDetails = {
-    employed: true,
-    employmentType: EmploymentTypeLabel.SELF_EMPLOYED,
+    employed: false,
+    employmentType: EmploymentTypeLabel.UNEMPLOYED,
     employerName: "Greenlight Timelord Productions",
     yearsEmployed: 3,
     salary: 30000,

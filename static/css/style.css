@@ -4819,8 +4819,8 @@ clicks the button
 
 }
 
-.rquest-current-status span:nth-child(2),
-.rquest-current-status span:nth-child(3) {
+.request-current-status span:nth-child(2),
+.request-current-status span:nth-child(3) {
     text-align: right;
 }
 
@@ -5087,7 +5087,8 @@ clicks the button
 
     border: 6px solid #e0e0e0;
     margin-top: 16px;
-    transform: translateX(200px)
+    transform: translateX(200px);
+   
 }
 
 .decision-circle-inner {
@@ -5112,4 +5113,38 @@ clicks the button
 
 #decision.show {
     display: block;
+}
+
+
+
+#full-report-spinner {
+    display: none;
+}
+
+
+#full-report-spinner.show {
+    display: flex;
+}
+
+
+#risk-button-analyser {
+    cursor: pointer;
+    z-index: 10000;
+
+}
+
+
+#see-full-report-container {
+    display: none;
+}
+
+#see-full-report-container.show {
+    display: block;
+}
+
+
+
+
+#risk-button-analyser i {
+    pointer-events: none;
 }

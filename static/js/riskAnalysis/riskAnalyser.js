@@ -86,7 +86,7 @@ export class RiskAnalyser {
      * @param {number} score - The total calculated risk score.
      * @returns {string} The corresponding risk level.
      */
-    #getRiskLevel(score) {
+   getRiskLevel(score) {
         if (score <= 20) return RiskLevel.LOW;
         if (score <= 50) return RiskLevel.MEDIUM;
         if (score <= 80) return RiskLevel.HIGH;
