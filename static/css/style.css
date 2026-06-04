@@ -614,6 +614,11 @@ img:hover {
 
 }
 
+.two-column-5_95_grid {
+    grid-template-columns: 5% 95%;
+    grid-template-rows: auto;
+}
+
 
 /* Site logo */
 
@@ -3989,6 +3994,7 @@ clicks the button
 
     padding: var(--space-8);
     font-size: 0.85rem;
+    cursor: pointer;
 }
 
 
@@ -4637,7 +4643,6 @@ clicks the button
 }
 
 
-.account-information-card,
 .card-request-card {
     background: white;
     border: 1px solid lavender;
@@ -4759,8 +4764,8 @@ clicks the button
 
 #card-requests-table thead th,
 #card-requests-table tr td {
-    padding-top: var(--space-12);
-    padding-bottom: var(--space-12);
+    padding-top: var(--space-8);
+    padding-bottom: var(--space-8);
 }
 
 
@@ -4815,8 +4820,8 @@ clicks the button
 
 }
 
-.rquest-current-status span:nth-child(2),
-.rquest-current-status span:nth-child(3) {
+.request-current-status span:nth-child(2),
+.request-current-status span:nth-child(3) {
     text-align: right;
 }
 
@@ -4825,11 +4830,12 @@ clicks the button
     column-gap: var(--space-4);
 }
 
-.account-information-card {
+
+.account-information-card,
+.user-profile-header__card {
     background: white;
     border: 1px solid lavender;
     padding: var(--space-8);
-    box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 3px, rgba(0, 0, 0, 0.24) 0px 1px 2px;
     cursor: pointer;
     text-align: left;
 }
@@ -4928,4 +4934,228 @@ clicks the button
 
 #admin-note-save {
     font-size: 1.1rem;
+}
+
+
+.group-info .value p {
+    overflow-wrap: anywhere;
+    word-break: break-word;
+}
+
+
+#request-first-tab,
+#request-second-tab,
+#request-third-tab,
+#request-fourth-tab {
+    display: none;
+}
+
+
+.user-profile-header__cards {
+    column-gap: var(--space-4);
+}
+.user-profile-header__card {
+ 
+    padding: var(--space-4);
+    text-align: center;
+}
+
+.user-profile-header__card small {
+    font-size: 0.8rem;
+}
+
+
+#user-information .user-information__container {
+    background: white;
+    border: 1px solid lavender;
+}
+
+
+.profile-information-list .group-row dd {
+    font-size: 0.85rem;
+}
+
+.profile-information-list .group-row dt i {
+    margin-right: var(--space-4);
+}
+
+.user-information__container {
+    padding: var(--space-12);
+    background: #ffff;
+}
+
+.profile-information-list .group-row {
+    margin-top: var(--space-8);
+    margin-bottom: var(--space-8);
+}
+
+#profile-information-heading {
+    font-size: 1rem;
+}
+
+
+#user-stats .user-stats__container .user-stats__cards {
+    column-gap: var(--space-8);
+    row-gap: var(--space-12);
+}
+
+
+#user-stats .user-stats__container .user-stats__cards .user-stats__card {
+   padding: var(--space-8);
+   cursor: pointer;
+}
+
+
+#user-stats .user-stats__container .user-stats__cards .user-stats__card .user-stats__card-head {
+   position: relative;
+}
+
+#user-stats .user-stats__container .user-stats__cards .user-stats__card .user-stats__card-head i {
+   position: absolute;
+   left: 50%;
+ 
+   transform: translateY(50%);
+   cursor: pointer;
+}
+
+
+.user-stats__card {
+    border: 1px solid lavender;
+}
+
+
+
+.user-stats__card-body p:nth-child(1) {
+   font-weight: bold;
+}
+
+.user-stats__card-body p:nth-child(2) {
+    color: var(--blue-600);
+    font-weight: 500;
+    font-size: 1.3rem;
+}
+
+
+
+.text-success {
+    color: #16A34A;
+}
+
+.text-warning {
+    color: #D97706;
+}
+
+.text-danger {
+    color: #DC2626;
+}
+
+.text-info {
+    color: #2563EB;
+}
+
+
+.rules-group  {
+    font-size: 0.875rem;
+    margin-top: var(--space-8);
+    margin-bottom: var(--space-8);
+}
+
+
+
+.rule i {
+    width: 16px;
+    text-align: center;
+    margin-right: var(--space-4);
+}
+
+
+
+.small-spinner {
+    height: 22px;
+    width: 22px;
+}
+
+
+.risk-check-message {
+    text-align: left;
+    margin-top: var(--space-4);
+    margin-bottom: var(--space-4);
+}
+
+.decision-circle {
+    width: 140px;
+    height: 140px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border: 6px solid #e0e0e0;
+    margin-top: 16px;
+    transform: translateX(200px);
+   
+}
+
+.decision-circle-inner {
+    text-align: center;
+}
+
+.decision-score {
+    font-size: 2rem;
+    font-weight: 700;
+    display: block;
+}
+
+.decision-max {
+    font-size: 0.9rem;
+    color: #888;
+}
+
+
+#decision {
+    display: none;
+}
+
+#decision.show {
+    display: block;
+}
+
+
+
+#full-report-spinner {
+    display: none;
+}
+
+
+#full-report-spinner.show {
+    display: flex;
+}
+
+
+#risk-button-analyser {
+    cursor: pointer;
+    z-index: 10000;
+
+}
+
+
+#see-full-report-container {
+    display: none;
+}
+
+#see-full-report-container.show {
+    display: block;
+}
+
+
+
+
+#risk-button-analyser i {
+    pointer-events: none;
+}
+
+
+#full-report-link.visited {
+    opacity: 0.6;
+    font-size: 0.95em;
 }

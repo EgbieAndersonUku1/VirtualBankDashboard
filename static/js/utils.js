@@ -771,3 +771,15 @@ export function enableAutoFocusNavigation(inputElements, onlyNumbers = true) {
 
     });
 }
+
+
+
+export function formatDate(dateString) {
+    if (!dateString) return "N/A";
+
+    return new Intl.DateTimeFormat("en-GB", {
+        day: "numeric",
+        month: "long",
+        year: "numeric"
+    }).format(new Date(dateString));
+}

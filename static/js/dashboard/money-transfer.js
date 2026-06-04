@@ -3,6 +3,7 @@ import { warnError } from "../logger.js";
 import { parseFormData } from "../formUtils.js";
 import { AlertUtils } from "../alerts.js";
 import { minimumCharactersToUse } from "../utils/password/textboxCharEnforcer.js";
+import { deselectAllTabs, highlightTab } from "../utils/tab-utils.js";
 
 // ---------------------------
 // Transfer Form Elements
@@ -557,7 +558,7 @@ function handleTabs(e) {
     const REQUEST_TAB  = "request-money";
     const cssSelector  = "show";
    
-    deselectAllTabs();
+    deselectAllTabs(tabLinks);
     highlightTab(link)
   
     hideTransferAndRequestForms();
@@ -918,34 +919,7 @@ function showVerifiedUser(firstName, surname) {
 
 
 
-/**
- * Removes the active state from all tab links.
- *
- * This is typically called before activating a new tab to ensure that
- * only one tab appears highlighted at a time.
- *
- * @param {string} [cssSelector="active"] - The CSS class representing
- * the active/selected tab state.
- */
-function deselectAllTabs(cssSelector="active") {
-    tabLinks.forEach((link) => {
-        link.classList.remove(cssSelector);
-    })
 
-}
-
-
-/**
- * Applies the active state to a specific tab element.
- *
- * @param {HTMLElement} tab - The tab element that should be highlighted.
- * @param {string} [cssSelector="active"] - The CSS class used to indicate
- * the active/selected state.
- */
-function highlightTab(tab, cssSelector="active") {
-    tab.classList.add(cssSelector);
-
-}
 
 
 /**
