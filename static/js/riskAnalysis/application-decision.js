@@ -3,8 +3,8 @@ import { warnError } from "../logger.js";
 
 const APPLICATION_DECISION_THRESHOLD = {
     APPROVE: 25,
-    MANUAL_REVIEW: 80,
-    REJECT: 100
+    MANUAL_REVIEW: 50,
+    REJECT: 80,
 };
 
 

@@ -1,7 +1,49 @@
+/**
+ * Card Request Information Configuration
+ *
+ * This file defines the dataset used for card request simulation and processing.
+ *
+ * It acts as the single source of truth for card-related inputs used throughout the system,
+ * including card issuance details, delivery information, and user-provided request data.
+ *
+ * The values in this object are intentionally structured to be manually editable in order
+ * to simulate different card request scenarios and observe their impact on both:
+ *
+ * 1. Risk analysis outcomes (decision logic, scoring, rule evaluation)
+ * 2. UI rendering (displayed card request details in the frontend)
+ *
+ * This configuration is not intended to contain business logic or computed values.
+ * All processing, validation, and analysis are handled elsewhere in the application.
+ */
 
-const cardRequestInformation = {
-    cardType: "Visa Debit",
-    cardVariant: "Physical Card",
+
+
+const cardType = Object.freeze({
+    VISA: "Visa Debit",
+    MASTERCARD: "Mastercard",
+    DISCOVER: "Discover",
+    CREDIT_CARD: "Visa Credit"
+});
+
+
+const cardVariant = Object.freeze({
+    PHYSICAL_CARD: "Physical Card",
+    VIRTUAL_CARD: "Virtual Card",
+    TEMPORARY: "Temporary Card",
+    REPLACEMENT: "Replacement Card",
+});
+
+
+
+
+// manipulate object to alter the risk outcome and render the new values to the frontend
+export const cardRequestInformation = {
+
+    fullName: "Jake Thompson",
+    cardType: cardType.VISA,
+    cardVariant: cardVariant.PHYSICAL_CARD,
+    phoneNumber: "+44 07214405252",
+
     DeliveryAddress: {
         line1: "46 Albert Square",
         line2: "",

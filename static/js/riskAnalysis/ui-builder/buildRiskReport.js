@@ -429,10 +429,6 @@ function highlightDecision(decisionElement) {
 
 
 
-
-
-
-
 export function showFullReport(report) {
     
     const divContainer = DecisionReportBuilder.createReport(report)

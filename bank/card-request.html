@@ -597,13 +597,12 @@
 
                                         <div class="profile-information mt-12">
                                             <p class="bold capitalise">
-                                                <small>Jake Thompson</small>
+                                                <small id="profile-name"></small>
                                             </p>
 
                                             <p>
                                                 <small>
-                                                    <a href="mailto:jakeThompson@gmail.com">
-                                                        jakeThompson@gmail.com
+                                                    <a href="#" id="profile-email">
                                                     </a>
                                                 </small>
                                             </p>
@@ -638,13 +637,15 @@
 
                                 <!-- Tabs -->
                                 <section class="tabs flex-grid four-column-grid center mb-8" role="tablist"
-                                    aria-label="Request information tabs">
+                                    aria-label="Request information tabs" id="tabs">
 
-                                    <div class="tab" role="tab" aria-selected="true" tabindex="0">
+                                    <div class="tab" role="tab" aria-selected="true" tabindex="0"
+                                        data-tab="request-first-tab">
                                         Request Info
                                     </div>
 
-                                    <div class="tab active" role="tab" aria-selected="false" tabindex="-1">
+                                    <div class="tab" role="tab" aria-selected="false" tabindex="-1"
+                                        data-tab="request-second-tab">
                                         User information
                                     </div>
 
@@ -660,7 +661,7 @@
 
                                 <!-- the first tab request for info -->
 
-                                <div class="request-first-tab">
+                                <div id="request-first-tab" class="request-first-tab request-tab-content">
 
                                     <!-- request info -->
                                     <section class="account-information-cards flex-grid four-column-grid" role="list"
@@ -676,7 +677,8 @@
 
                                             <div class="account-information-card__head">
                                                 <small aria-labelledby="account-number-label" class="light-bold">
-                                                    Ending in 4444
+                                                    <span>Ending in </span>
+                                                    <span id="request-sortcode"></span>
                                                 </small>
                                             </div>
                                         </div>
@@ -691,7 +693,8 @@
 
                                             <div class="account-information-card__head">
                                                 <small aria-labelledby="sort-code-label" class="light-bold">
-                                                    Ending in 2123
+                                                    <span>Ending in </span>
+                                                    <span id="request-accountNumber"></span>
                                                 </small>
                                             </div>
                                         </div>
@@ -706,8 +709,8 @@
                                             </div>
 
                                             <div class="account-information-card__head">
-                                                <small aria-labelledby="account-type-label" class="light-bold">
-                                                    Current account
+                                                <small aria-labelledby="account-type-label" class="light-bold" id="request__account-type">
+                                                   
                                                 </small>
                                             </div>
                                         </div>
@@ -721,8 +724,8 @@
                                             </div>
 
                                             <div class="account-information-card__head">
-                                                <small aria-labelledby="balance-label" class="light-bold">
-                                                    £0.00
+                                                <small aria-labelledby="balance-label" class="light-bold" id="card-balance">
+                                                   
                                                 </small>
                                             </div>
                                         </div>
@@ -750,7 +753,7 @@
                                                     </div>
 
                                                     <div class="value">
-                                                        <p>Visa Debit</p>
+                                                        <p id="card-request-details__card-type" class="capitalise"></p>
                                                     </div>
                                                 </div>
 
@@ -764,7 +767,7 @@
                                                     </div>
 
                                                     <div class="value">
-                                                        <p class="capitalise">Physical card</p>
+                                                        <p class="capitalise" id="card-request-details__card-variant"></p>
                                                     </div>
                                                 </div>
 
@@ -777,12 +780,14 @@
                                                     </div>
 
                                                     <div class="value">
-                                                        <p>
-                                                            46 Albert Square<br>
-                                                            Waltford<br>
-                                                            London<br>
-                                                            E20 6PQ
-                                                        </p>
+                                                          <div class="address flex-grid">
+                                                            <span id="request-card__address1"></span>
+                                                            <span id="request-card__address2"></span>
+                                                            <span id="request-card__city"></span>
+                                                            <span id="request-card__county"></span>
+                                                            <span id="request-card__postcode"></span>
+                                                            <span id="request-card__country"></span>
+                                                        </div>
                                                     </div>
                                                 </div>
 
@@ -796,9 +801,9 @@
                                                     </div>
 
                                                     <div class="value">
-                                                        <a href="tel:079571203747">
-                                                            07957 1203747
-                                                        </a>
+                                                        <p id="request-phoneNumber">
+                                                           
+                                                        </p>
                                                     </div>
                                                 </div>
 
@@ -811,72 +816,60 @@
                                                     </div>
 
                                                     <div class="value">
-                                                        <p>Please leave the card in a secure location if no one is
-                                                            home.
-                                                            Ring the doorbell twice and wait for 2 minutes.
-                                                            If delivery fails, reattempt the next working day
-                                                            between
-                                                            9am–6pm.</p>
+                                                        <p id="special-instructions"></p>
                                                     </div>
                                                 </div>
 
 
-                                                <div class="card-benefits">
-                                                    <h3>Card benefits</h3>
+                                            </div>
 
-                                                    <div class="group-info">
+                                            <div class="card-benefits">
+                                                <h3>Card benefits</h3>
 
-                                                        <ul class="benefits-list" aria-label="Card benefits list">
+                                                <div class="group-info">
 
-                                                            <li>
-                                                                <i class="fa-solid fa-check active-text bold"
-                                                                    aria-hidden="true"></i>
-                                                                Worldwide acceptance
-                                                            </li>
+                                                    <ul class="benefits-list" aria-label="Card benefits list">
 
-                                                            <li>
-                                                                <i class="fa-solid fa-check active-text bold"
-                                                                    aria-hidden="true"></i>
-                                                                Chip and pin
-                                                            </li>
+                                                        <li>
+                                                            <i class="fa-solid fa-check active-text bold"
+                                                                aria-hidden="true"></i>
+                                                            Worldwide acceptance
+                                                        </li>
 
-                                                            <li>
-                                                                <i class="fa-solid fa-check active-text bold"
-                                                                    aria-hidden="true"></i>
-                                                                Contactless payment
-                                                            </li>
+                                                        <li>
+                                                            <i class="fa-solid fa-check active-text bold"
+                                                                aria-hidden="true"></i>
+                                                            Chip and pin
+                                                        </li>
 
-                                                            <li>
-                                                                <i class="fa-solid fa-check active-text bold"
-                                                                    aria-hidden="true"></i>
-                                                                ATM Withdrawal
-                                                            </li>
+                                                        <li>
+                                                            <i class="fa-solid fa-check active-text bold"
+                                                                aria-hidden="true"></i>
+                                                            Contactless payment
+                                                        </li>
 
-                                                            <li>
-                                                                <i class="fa-solid fa-check active-text bold"
-                                                                    aria-hidden="true"></i>
-                                                                Online banking access
-                                                            </li>
+                                                        <li>
+                                                            <i class="fa-solid fa-check active-text bold"
+                                                                aria-hidden="true"></i>
+                                                            ATM Withdrawal
+                                                        </li>
 
-                                                            <li>
-                                                                <i class="fa-solid fa-check active-text bold"
-                                                                    aria-hidden="true"></i>
-                                                                Fraud protection
-                                                            </li>
+                                                        <li>
+                                                            <i class="fa-solid fa-check active-text bold"
+                                                                aria-hidden="true"></i>
+                                                            Online banking access
+                                                        </li>
 
-                                                        </ul>
+                                                        <li>
+                                                            <i class="fa-solid fa-check active-text bold"
+                                                                aria-hidden="true"></i>
+                                                            Fraud protection
+                                                        </li>
 
-
-                                                    </div>
+                                                    </ul>
 
 
                                                 </div>
-
-
-
-
-
-
 
 
                                             </div>
@@ -991,7 +984,7 @@
 
 
                                 <!-- second tab -->
-                                <div class="request-second-tab">
+                                <div id="request-second-tab" class="request-second-tab request-tab-content">
 
                                     <!-- User profile summary -->
                                     <section class="user-profile-header mb-8">
@@ -1008,13 +1001,13 @@
                                             <!-- Membership Date -->
                                             <div class="user-profile-header__card flex-grid">
                                                 <span class="text-muted">Member Since</span>
-                                                <small>25 December 2025</small>
+                                                <small id="creation-date"></small>
                                             </div>
 
                                             <!-- (KYC) Status -->
                                             <div class="user-profile-header__card flex-grid">
                                                 <span class="text-muted">KYC Status</span>
-                                                <small class="capitalise active-text">Verified</small>
+                                                <small class="capitalise" id="KYC-status-value">Verified</small>
                                             </div>
 
                                             <!-- Risk Assessment Score -->
@@ -1022,7 +1015,7 @@
                                                 <span class="text-muted">Risk Score</span>
                                                 <small class="capitalise" id="risk-score">
                                                     <span class="dot">&dot;</span>
-                                                    Not calculated yet
+                                                    Not calculated
                                                 </small>
                                             </div>
 
@@ -1056,7 +1049,8 @@
                                                     </dt>
 
                                                     <dd class="user-value">
-                                                        Jake Thompson
+                                                        <span id="fullName" class="capitalise" >Jake Thompson</span>
+
                                                     </dd>
                                                 </div>
 
@@ -1068,8 +1062,10 @@
                                                     </dt>
 
                                                     <dd class="user-value flex flex-space-between">
-                                                        +44 7700 900123
-                                                        <span class="status status--approved">Verified</span>
+                                                        <span id="phoneNum">+44 7700 900123</span>
+
+                                                        <span class="status status--approved capitalise"
+                                                            id="is-phone-num-verified">Verified</span>
                                                     </dd>
                                                 </div>
 
@@ -1084,12 +1080,12 @@
 
                                                         <!-- Address details -->
                                                         <div class="address flex-grid">
-                                                            <span>Greenlight Productions Studio</span>
-                                                            <span>3 Abbey Road</span>
-                                                            <span>Windsor</span>
-                                                            <span>Berkshire</span>
-                                                            <span>SL4 1QF</span>
-                                                            <span>United Kingdom</span>
+                                                            <span id="address1"></span>
+                                                            <span id="address2"></span>
+                                                            <span id="city"></span>
+                                                            <span id="county"></span>
+                                                            <span id="postcode"></span>
+                                                            <span id="country"></span>
                                                         </div>
 
 
@@ -1105,8 +1101,10 @@
                                                     </dt>
 
                                                     <dd class="user-value flex flex-space-between">
-                                                        jakeThompson@gmail.com
-                                                        <span class="status status--approved">Verified</span>
+
+                                                        <span id="email-address">jakeThompson@gmail.com</span>
+                                                        <span class="status status--approved"
+                                                            id="is-email-verified">Verified</span>
                                                     </dd>
                                                 </div>
 
@@ -1118,8 +1116,9 @@
                                                     </dt>
 
                                                     <dd class="user-value flex flex-space-between">
-                                                        ****4554
-                                                        <span class="status status--approved">Verified</span>
+                                                        <span id="passport"></span>
+                                                        <span class="status status--approved"
+                                                            id="is-passport-verified">Verified</span>
                                                     </dd>
                                                 </div>
 
@@ -1130,8 +1129,8 @@
                                                         <span class="text-muted">Nationality</span>
                                                     </dt>
 
-                                                    <dd class="user-value">
-                                                        Timelord
+                                                    <dd class="user-value" id="nationality">
+
                                                     </dd>
                                                 </div>
 
@@ -1142,8 +1141,8 @@
                                                         <span class="text-muted">Pref language</span>
                                                     </dt>
 
-                                                    <dd class="user-value">
-                                                        English (UK)
+                                                    <dd class="user-value" id="preferred-language">
+
                                                     </dd>
                                                 </div>
 
@@ -1188,7 +1187,7 @@
                                                         </p>
 
                                                         <p id="total-accounts-value">
-                                                            2
+                                                            0
                                                         </p>
                                                     </div>
 
@@ -1211,7 +1210,7 @@
                                                         </p>
 
                                                         <p id="total-cards-value">
-                                                            2
+                                                            
                                                         </p>
                                                     </div>
 
@@ -1234,7 +1233,7 @@
                                                         </p>
 
                                                         <p id="transactions-value">
-                                                            2
+                                                            
                                                         </p>
                                                     </div>
 
@@ -1463,6 +1462,7 @@
 
     </main>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.12.2/dist/sweetalert2.all.min.js"></script>
+    <script src="/static/js/riskAnalysis/load-info-to-ui.js" type="module"></script>
     <script src="/static/js/riskAnalysis/runRiskAnalyser.js" type="module"></script>
 
 </body>

@@ -3994,6 +3994,7 @@ clicks the button
 
     padding: var(--space-8);
     font-size: 0.85rem;
+    cursor: pointer;
 }
 
 
@@ -4942,9 +4943,13 @@ clicks the button
 }
 
 
-.request-first-tab {
+#request-first-tab,
+#request-second-tab,
+#request-third-tab,
+#request-fourth-tab {
     display: none;
 }
+
 
 .user-profile-header__cards {
     column-gap: var(--space-4);
@@ -5147,4 +5152,10 @@ clicks the button
 
 #risk-button-analyser i {
     pointer-events: none;
+}
+
+
+#full-report-link.visited {
+    opacity: 0.6;
+    font-size: 0.95em;
 }

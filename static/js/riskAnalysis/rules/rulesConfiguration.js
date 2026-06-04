@@ -1,4 +1,9 @@
+
 export const RuleConfiguration = {
+
+    "Account Status": {
+        icon: "fa-solid fa-circle-check"
+    },
     "Address Match": {
         icon: "fa-solid fa-location-dot"
     },
@@ -7,12 +12,24 @@ export const RuleConfiguration = {
         icon: "fa-solid fa-envelope-circle-check"
     },
 
+    "Phone Number": {
+        icon: "fa-solid fa-phone"
+    },
+
+    "Full Name": {
+        icon: "fa-solid fa-user"
+    },
+
     "Employment Stability": {
         icon: "fa-solid fa-briefcase"
     },
 
     "Login Activity": {
         icon: "fa-solid fa-right-to-bracket"
+    },
+
+    "Passport": {
+        icon: "fa-solid fa-passport"
     },
 
     "Account Balance": {
@@ -39,6 +56,7 @@ export const RuleConfiguration = {
         icon: "fa-solid fa-credit-card"
     }
 };
+
 
 
 export default RuleConfiguration;

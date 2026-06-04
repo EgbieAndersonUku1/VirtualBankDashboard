@@ -1,4 +1,4 @@
-// Test to see if the data is showing up
+
 import { warnError } from "../logger.js";
 import { RiskAnalyser } from "./riskAnalyser.js";
 import accountDetails from "./account/accountDetails.js";
@@ -8,9 +8,9 @@ import employmentDetails from "./account/employmentDetails.js";
 import { buildRules, runChecks } from "./ui-builder/buildRiskReport.js";
 import { RiskLevel, RuleStatus } from "./rules/risk.js";
 import { showDecisionOutcome, showFullReport } from "./ui-builder/buildRiskReport.js";
-import { clearDivElement } from "./rules/utils.js";
+import { clearDivElement, applyRiskLevelStyle, cache } from "./rules/utils.js";
 import { toggleSpinner } from "../utils.js";
-import { cache } from "./rules/utils.js";
+
 
 
 const fullReportLink = document.getElementById("full-report-link");
@@ -24,6 +24,7 @@ const fullReportSpinner = document.getElementById("full-report-spinner");
 
 
 
+
 fullReportLink.addEventListener("click", handleFullReportLinkClick);
 riskButton.addEventListener("click", handleRiskButton);
 
@@ -31,7 +32,9 @@ riskButton.addEventListener("click", handleRiskButton);
 const riskAnalyser = new RiskAnalyser()
 
 
-
+/**
+ * Returns the number of rules that have passed in the risk data.
+ */
 function getNumberPassed(riskData) {
     const rules = riskData.rules;
 
@@ -47,6 +50,10 @@ function getNumberPassed(riskData) {
 
 
 
+/**
+ * Runs the full risk analysis workflow, including rule evaluation,
+ * decision display, caching, and UI updates.
+ */
 async function analysisRisk() {
 
     const riskData = riskAnalyser.calculate(accountDetails,
@@ -89,7 +96,10 @@ async function analysisRisk() {
 
 
 
-
+/**
+ * Handles click events for the full report link, including loading state,
+ * toggling UI content, and rendering or clearing the report.
+ */
 function handleFullReportLinkClick(e) {
 
     const DELAY_MS = 1000;
@@ -118,15 +128,21 @@ function handleFullReportLinkClick(e) {
 
 
 
+/**
+ * Toggles the full report link between "See full report" and "Close report"
+ * and updates its styling accordingly.
+ */
 function updateFullReportLink(link) {
-    switch (e.target.textContent) {
+    switch (link) {
 
         case "See full report":
             fullReportLink.textContent = "Close report";
+            fullReportLink.classList.add("visited")
             break;
 
         case "Close report":
             fullReportLink.textContent = "See full report";
+            fullReportLink.classList.remove("visited")
             break;
 
     }
@@ -134,47 +150,59 @@ function updateFullReportLink(link) {
 
 
 
+/**
+ * Resets the full report link back to its default state.
+ */
+function resetReportLink() {
+    fullReportLink.textContent = "See full report";
+}
+
+
+
+/**
+ * Updates the UI risk score display and applies styling based on risk level.
+ */
 function updateRiskScore(score) {
 
     const riskLevel = riskAnalyser.getRiskLevel(score);
     riskScoreContainer.innerHTML = `<span class="dot">${riskLevel}</span>(${score})`
 
-    switch (riskLevel) {
-
-        case RiskLevel.LOW:
-            riskScoreContainer.classList.add("text-success");
-            break;
-
-        case RiskLevel.MEDIUM:
-            riskScoreContainer.classList.add("text-warning");
-            break;
-
-        case RiskLevel.HIGH:
-            riskScoreContainer.classList.add("text-danger");
-            break;
-
-        case RiskLevel.CRITICAL:
-            riskScoreContainer.classList.add("text-danger");
-            break;
-
-    }
-
-    riskScoreContainer.classList.add("bold")
-
+    applyRiskLevelStyle.applyRiskLevelStyling(riskScoreContainer, riskLevel)
 
 }
 
 
-
+/**
+ * Displays the full report link container in the UI.
+ */
 function showFullReportLinkContainer() {
-    seeFullReportContainer.classList.add("show")
+    seeFullReportContainer.classList.add("show");
 }
 
 
 
+
+/**
+ * Handles the risk button click event by resetting UI state
+ * and triggering a new risk analysis.
+ */
 function handleRiskButton(e) {
-    
+
     clearDivElement(rulesContainer);
-    clearDivElement(riskChecklist)
-    analysisRisk()
+    clearDivElement(riskChecklist);
+
+    resetReportLink();
+    clearDivElement(fullReportContainer);
+
+    analysisRisk();
+}
+
+
+
+/**
+ * Loads account-related information into the UI.
+ * (Currently a placeholder for KYC status handling.)
+ */
+function loadAccountInformation() {
+    const kycStatusValue = document.getElementById("KYC-status-value");
 }

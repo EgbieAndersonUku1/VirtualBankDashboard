@@ -9,6 +9,7 @@ import { CARD_RULES } from "./rules/card.js";
 import { SECURITY_RULES } from "./rules/security.js";
 import { RiskLevel } from "./rules/risk.js";
 import { ApplicationDecision } from "./application-decision.js";
+import { ACCOUNT_STATUS } from "./accountStatus.js";
 import { warnError } from "../logger.js";
 
   
@@ -58,8 +59,11 @@ export class RiskAnalyser {
 
         this.#resetState()
 
+        this.#assessAccountStatus(accountDetails)
+        this.#assessFullName(cardRequestInformation, profileInformation)
         this.#assessAddressRisk(cardRequestInformation, profileInformation);
         this.#assessEmailRisk(profileInformation);
+        this.#assessPassport(profileInformation);
         this.#assessEmploymentRisk(employmentInformation);
         this.#assessLoginRisk(accountDetails.security);
         this.#assessBalanceRisk(accountDetails.balance);
@@ -123,6 +127,43 @@ export class RiskAnalyser {
     }
 
     /**
+     * Account verification
+     * @param {*} accountDetails - Contains the account details
+     * @returns null
+     */
+    #assessAccountStatus(accountDetails) {
+
+        const rules = ACCOUNT_STATUS;
+
+        if (accountDetails.status.active) {
+            this.#updateFlag({ rules: ACCOUNT_STATUS.ACTIVE});
+            return;
+        }
+
+        if (accountDetails.status.frozen ) {
+            this.#updateFlag({ rules: ACCOUNT_STATUS.FROZEN });
+            return;
+        }
+
+        this.#updateFlag({ rules: ACCOUNT_STATUS.CLOSED });
+       
+    }
+
+
+    /**
+     * Full name mismatch
+     */
+    #assessFullName(cardRequestDetails, profileInfoDetails) {
+        if (cardRequestDetails?.fullName.toLowerCase() !== profileInfoDetails?.fullName.toLowerCase()) {
+            this.#updateFlag({rules: PROFILE_INFORMATION_RULES.FULL_NAME.NOT_MATCHED });
+            return;
+        }
+
+        this.#updateFlag({rules: PROFILE_INFORMATION_RULES.FULL_NAME.MATCHED})
+    }
+
+
+    /**
      * Address mismatch checks.
      */
     #assessAddressRisk(cardRequestInformation, profileInformation) {
@@ -139,6 +180,45 @@ export class RiskAnalyser {
 
         
     }
+
+    /**
+     * Phone number verification checks.
+     */
+    #assessPhoneNumber(profileInformation) {
+
+        if (!accountDetails.phoneNumber.verified) {
+            this.#updateFlag({rules: PROFILE_INFORMATION_RULES.PHONE_NUMBER.NOT_VERIFIED});
+            return;
+        }
+
+        this.#updateFlag({rules: PROFILE_INFORMATION_RULES.PHONE_NUMBER.VERIFIED})
+    }
+
+
+     /**
+     * Passport verification checks.
+     */
+    #assessPassport(profileInformation) {
+
+        if (!profileInformation.passport.value) {
+            this.#updateFlag({rules: PROFILE_INFORMATION_RULES.PASSPORT.NOT_PROVIDED });
+            return;
+        }
+
+        if (!profileInformation.passport.verified) {
+            this.#updateFlag({rules: PROFILE_INFORMATION_RULES.PASSPORT.NOT_VERIFIED});
+            return;
+        }
+
+      
+        this.#updateFlag({rules: PROFILE_INFORMATION_RULES.PASSPORT.VERIFIED})
+        return;
+        
+      
+    }
+
+
+
 
     /**
      * Email verification checks.

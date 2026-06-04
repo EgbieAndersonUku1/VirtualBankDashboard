@@ -12,9 +12,20 @@ export const RuleStatus = Object.freeze({
 });
 
 
-
-
 export const rulesCheck = [
+    {
+        name: 'Account Status',
+        message: 'Checking whether the account is active and ensuring it is not frozen or closed.'
+    },
+
+    {
+        name: 'Full Name',
+        message: 'Checking whether the full name matches expected identity records.'
+    },
+    {
+        name: 'Phone Number',
+        message: 'Checking whether the phone number is valid and verified.'
+    },
     {
         name: 'Address Match',
         message: 'Checking whether the profile and delivery addresses match.'
@@ -22,6 +33,10 @@ export const rulesCheck = [
     {
         name: 'Email Verification',
         message: 'Checking whether the email address has been verified.'
+    },
+    {
+        name: 'Passport',
+        message: 'Checking whether passport details are valid and match identity records.'
     },
     {
         name: 'Employment Stability',

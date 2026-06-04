@@ -1,7 +1,28 @@
 import { warnError } from "../../logger.js";
+import { RiskLevel, RuleStatus } from "../rules/risk.js";
+import { applyRiskLevelStyle } from "../rules/utils.js";
 
 
 const DecisionReportBuilder = (() => {
+
+    function applyStylingToReportValues(value, element) {
+        
+        if (value === RuleStatus.FLAGGED || value === RuleStatus.WARNING  || value === RiskLevel.MEDIUM ) {
+            applyRiskLevelStyle.applyRiskLevelStyling(element, RiskLevel.MEDIUM)
+        }
+        
+        if (value === RuleStatus.PASSED || value === RiskLevel.LOW ) {
+            applyRiskLevelStyle.applyRiskLevelStyling(element, RiskLevel.LOW)
+        }
+
+        if (value === RiskLevel.CRITICAL || value === RiskLevel.HIGH) {
+            applyRiskLevelStyle.applyRiskLevelStyling(element, RiskLevel.HIGH)
+        }
+
+        if (value === RuleStatus.FLAGGED || value === RuleStatus.WARNING  || value === RuleStatus.PASSED ) {
+            element.classList.add("capitalise")
+        }
+    }
 
     /**
      * Creates a full report DOM structure from a report object.
@@ -63,6 +84,7 @@ const DecisionReportBuilder = (() => {
         spanNameElement.textContent = `${key} `;
         spanValueElement.textContent = value;
 
+        applyStylingToReportValues(value, spanValueElement)
         spanRow.appendChild(spanNameElement);
         spanRow.appendChild(spanValueElement);
 
@@ -81,6 +103,7 @@ const DecisionReportBuilder = (() => {
 
         for (let [key, value] of Object.entries(report)) {
             const spanElement = createSpanDetails(key, value);
+          
             divRow.appendChild(spanElement);
         }
 
