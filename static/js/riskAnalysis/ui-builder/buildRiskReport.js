@@ -301,7 +301,7 @@ export async function runChecks() {
         const ui = addCheck(rule);
 
         // simulate async processing
-        await delay(700);
+        await delay(300);
 
 
         ui.spinner.classList.add('hidden');

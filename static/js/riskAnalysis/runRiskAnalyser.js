@@ -10,6 +10,8 @@ import { RiskLevel, RuleStatus } from "./rules/risk.js";
 import { showDecisionOutcome, showFullReport } from "./ui-builder/buildRiskReport.js";
 import { clearDivElement, applyRiskLevelStyle, cache } from "./rules/utils.js";
 import { toggleSpinner } from "../utils.js";
+import { AlertUtils } from "../alerts.js";
+import { APPLICATION_DECISION, ApplicationDecision } from "./application-decision.js";
 
 
 
@@ -21,12 +23,15 @@ const rulesContainer = document.getElementById("rules");
 const riskChecklist = document.getElementById("risk-analysis-checklist");
 const seeFullReportContainer = document.getElementById("see-full-report-container");
 const fullReportSpinner = document.getElementById("full-report-spinner");
+const approveRequestBtn = document.getElementById("approve-request-btn");
+const currentStatusOverivew = document.getElementById("current-status")
 
 
 
 
 fullReportLink.addEventListener("click", handleFullReportLinkClick);
 riskButton.addEventListener("click", handleRiskButton);
+approveRequestBtn.addEventListener("click", handleApproveRequestBtn)
 
 
 const riskAnalyser = new RiskAnalyser()
@@ -205,4 +210,93 @@ function handleRiskButton(e) {
  */
 function loadAccountInformation() {
     const kycStatusValue = document.getElementById("KYC-status-value");
+}
+
+
+
+
+/**
+ * Handles the approve request button for the UI
+ * @param {*} e : The event
+ * @returns 
+ */
+async function handleApproveRequestBtn(e) {
+
+    if (isRequestApproved()) {
+
+        AlertUtils.showAlert({
+            title: "Request already approved",
+            text: "You have already approved this request",
+            icon: "success",
+            confirmButtonText: "ok!"
+        })
+        return
+    }
+
+    const data = cache.getCacheData();
+    let question;
+    let icon = "warning"
+    let info;
+
+     if (data === undefined) {
+        question = "Risk analysis has not been run yet. Approve this request anyway?"
+        info = "info";
+
+     } else if (data.decision === APPLICATION_DECISION.REJECT) {
+
+        question = `Risk analysis returned a **rejected decision** based on user
+                     information. Are you sure you want to approve this request?`
+
+     } else if (data.decision === APPLICATION_DECISION.APPROVE || data.decision === APPLICATION_DECISION.MANUAL_REVIEW ) {
+
+        question = "Are you sure you want to approve this request?"  
+        info = "info";
+     }
+
+     const confirmation = await  AlertUtils.showConfirmationAlert({
+        title: "Approve request",
+        text: question,
+        icon: icon,
+        cancelMessage: "No action taken",
+        confirmButtonText: "Approve request!",
+        denyButtonText: "Don't approve!",
+        messageToDisplayOnSuccess: "Request is successful approved"
+     })
+
+     if (confirmation) {
+        updateCurrentStatus(APPLICATION_DECISION.APPROVE)
+     }
+
+     
+     console.log(data)
+
+}
+
+
+/**
+ * Updates the pending status in the UI. This status is depends on
+ * the button the user clicks
+ * 
+ * @param {*} status - The status to update the button with
+ */
+function updateCurrentStatus(status) {
+
+    currentStatusOverivew.classList.remove("status--pending", "status", "status--approved")
+
+    switch (status) {
+        case APPLICATION_DECISION.APPROVE:
+            currentStatusOverivew.textContent = "Approved";
+            currentStatusOverivew.classList.add("status",  "status--approved");
+            break;
+    }
+}
+
+
+/**
+ * Checks if the status has already been approved.
+ * This prevents the app from updating unchanged data
+ * @returns null
+ */
+function isRequestApproved() {
+    return currentStatusOverivew.textContent === "Approved";
 }
