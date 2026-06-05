@@ -620,7 +620,7 @@
 
                                     <div class="rquest-current-status flex-grid" aria-label="Request status details">
 
-                                        <span class="status status--pending capitalise center"
+                                        <span class="status status--pending capitalise center" id="current-status"
                                             aria-label="Current status: pending">
                                             pending
                                         </span>
@@ -900,7 +900,7 @@
                                                 aria-describedby="admin-actions-desc">
 
                                                 <!-- Approve request action -->
-                                                <button class="btn-large btn-approve" type="button">
+                                                <button class="btn-large btn-approve" type="button" id="approve-request-btn">
                                                     <i class="fa-solid fa-check" aria-hidden="true"></i>
                                                     Approve request
                                                 </button>
@@ -1461,7 +1461,7 @@
         </section>
 
     </main>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.12.2/dist/sweetalert2.all.min.js"></script>
+    <script src="/static/js/sweetalert2.all.min.js"></script>
     <script src="/static/js/riskAnalysis/load-info-to-ui.js" type="module"></script>
     <script src="/static/js/riskAnalysis/runRiskAnalyser.js" type="module"></script>
 
