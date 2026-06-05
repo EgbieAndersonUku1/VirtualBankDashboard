@@ -9,9 +9,10 @@ import { buildRules, runChecks } from "./ui-builder/buildRiskReport.js";
 import { RiskLevel, RuleStatus } from "./rules/risk.js";
 import { showDecisionOutcome, showFullReport } from "./ui-builder/buildRiskReport.js";
 import { clearDivElement, applyRiskLevelStyle, cache } from "./rules/utils.js";
-import { toggleSpinner } from "../utils.js";
+import { toggleSpinner, getFormattedDateTime } from "../utils.js";
 import { AlertUtils } from "../alerts.js";
 import { APPLICATION_DECISION, ApplicationDecision } from "./application-decision.js";
+import { getLastFourDigits } from "./load-info-to-ui.js";
 
 
 
@@ -24,8 +25,9 @@ const riskChecklist = document.getElementById("risk-analysis-checklist");
 const seeFullReportContainer = document.getElementById("see-full-report-container");
 const fullReportSpinner = document.getElementById("full-report-spinner");
 const approveRequestBtn = document.getElementById("approve-request-btn");
-const currentStatusOverivew = document.getElementById("current-status")
-
+const currentStatusOverivew = document.getElementById("current-status");
+const requestTBody = document.getElementById("card-requests-tbody");
+const approvalCard = document.getElementById("card-request-approved-card")
 
 
 
@@ -35,6 +37,17 @@ approveRequestBtn.addEventListener("click", handleApproveRequestBtn)
 
 
 const riskAnalyser = new RiskAnalyser()
+
+
+
+const statusMap = {
+   
+    "Passed": "approved",
+    "Manual Review": "review",
+    "Reject": "rejected"
+   
+}
+
 
 
 /**
@@ -264,7 +277,10 @@ async function handleApproveRequestBtn(e) {
      })
 
      if (confirmation) {
+
         updateCurrentStatus(APPLICATION_DECISION.APPROVE)
+        updateTable(statusMap[APPLICATION_DECISION.APPROVE])
+        updateRequestApprovalCard()
      }
 
      
@@ -299,4 +315,76 @@ function updateCurrentStatus(status) {
  */
 function isRequestApproved() {
     return currentStatusOverivew.textContent === "Approved";
+}
+
+
+
+
+function updateTable(status) {
+
+
+    const { date, time } = getFormattedDateTime();
+    const tr = document.createElement("tr");
+
+    const tdName = document.createElement("td");
+    const tdAccountNumber = document.createElement("td");
+    const tdCardDetails = document.createElement("td");
+    const tdStatus = document.createElement("td");
+    const tdDate = document.createElement("td");
+
+    tdName.textContent = cardRequestDetails.fullName;
+
+    tdAccountNumber.className = "flex-grid pt-16";
+    tdAccountNumber.textContent = maskedValue(getLastFourDigits(accountDetails.accountNumber?.toString()));
+
+    tdStatus.classList.add("capitalise")
+
+    tdCardDetails.innerHTML = `
+        <p>${cardRequestDetails.cardType}</p>
+        <p class="text-muted">
+            <small>${cardRequestDetails.cardVariant}</small>
+        </p>
+    `;
+
+    tdStatus.innerHTML = `
+        <span class="status status--${status}">
+            ${status}
+        </span>
+    `;
+
+    tdDate.innerHTML = `
+        <p>${date}</p>
+        <p>
+            <small>${time}</small>
+        </p>
+    `;
+
+    tr.appendChild(tdName);
+    tr.appendChild(tdAccountNumber);
+    tr.appendChild(tdCardDetails);
+    tr.appendChild(tdStatus);
+    tr.appendChild(tdDate);
+
+    requestTBody.insertBefore(tr, requestTBody.firstElementChild)
+    // return tr;
+}
+
+
+function maskedValue(value) {
+    try {
+        return "**** ****" + value.toString()
+    } catch (error) {
+        throw new Error(error.message)
+    }
+  
+}
+
+
+
+function updateRequestApprovalCard() {
+    updateCardNumer(approvalCard)
+}
+
+function updateCardNumer(element) {
+    element.textContent = parseInt(element.textContent) + 1
 }

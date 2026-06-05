@@ -783,3 +783,22 @@ export function formatDate(dateString) {
         year: "numeric"
     }).format(new Date(dateString));
 }
+
+
+
+export function getFormattedDateTime() {
+    const now = new Date();
+
+    return {
+        date: now.toLocaleDateString("en-GB", {
+            day: "numeric",
+            month: "short",
+            year: "numeric"
+        }),
+        time: now.toLocaleTimeString("en-GB", {
+            hour: "numeric",
+            minute: "2-digit",
+            hour12: true
+        })
+    };
+}
