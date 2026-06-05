@@ -419,7 +419,7 @@ function setText(id, value) {
 /**
  * Returns the last four characters of a string value.
  */
-function getLastFourDigits(value) {
+export function getLastFourDigits(value) {
     if (value) {
         return value.slice(-4);
     }
