@@ -3,7 +3,7 @@ import profileInfoDetails from "./account/profileInfoDetails.js";
 import cardRequestDetails from "./account/cardRequestDetails.js";
 import employmentDetails from "./account/employmentDetails.js";
 
-import { AlertUtils } from "../alerts.js";
+
 import { warnError } from "../logger.js";
 import { toggleSpinner, getFormattedDateTime } from "../utils.js";
 
