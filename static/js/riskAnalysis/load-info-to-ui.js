@@ -5,6 +5,7 @@ import { deselectAllTabs, highlightTab } from "../utils/tab-utils.js";
 import { formatDate, formatCurrency } from "../utils.js";
 import { warnError } from "../logger.js";
 import cardRequestInformation from "./account/cardRequestDetails.js";
+import { getLastFourDigits } from "../utils.js";
 
 
 const tabs                = document.querySelectorAll(".tabs .tab")
@@ -414,16 +415,6 @@ function checkIfVerified(id, profileValue) {
 function setText(id, value) {
     const element = document.getElementById(id);
     if (element) element.textContent = value || "";
-}
-
-/**
- * Returns the last four characters of a string value.
- */
-export function getLastFourDigits(value) {
-    if (value) {
-        return value.slice(-4);
-    }
-    return;
 }
 
 

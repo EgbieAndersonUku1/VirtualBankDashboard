@@ -259,7 +259,7 @@
 
                                     <div class="card-request-card__body flex flex-space-between">
 
-                                        <div class="card-request-under-review card-request-stats"
+                                        <div class="card-request-under-review card-request-stats" id="card-request-under-review"
                                             aria-label="5 requests under review">
                                             5
                                         </div>
@@ -307,7 +307,7 @@
 
                                     <div class="card-request-card__body flex flex-space-between">
 
-                                        <div class="card-request-under-review card-request-stats"
+                                        <div class="card-request-under-review card-request-stats" id="card-request-reject-card"
                                             aria-label="2 rejected requests today">
                                             2
                                         </div>
@@ -350,7 +350,7 @@
                                     <div class="num-of-card-request__header flex-grid two-column-30_70_grid ">
 
                                         <div class="header">
-                                            <h3 id="card-requests-header">Card Requests (8) </h3>
+                                            <h3 id="card-requests-header">Card Requests (<small id="table-row-counter">10</small>) </h3>
                                         </div>
 
                                         <div class="search-cards-requests">
@@ -906,19 +906,19 @@
                                                 </button>
 
                                                 <!-- Reject request action -->
-                                                <button class="btn-large btn-reject" type="button">
+                                                <button class="btn-large btn-reject" type="button" id="reject-request-btn">
                                                     <i class="fa-solid fa-xmark" aria-hidden="true"></i>
                                                     Reject request
                                                 </button>
 
                                                 <!-- Request additional verification -->
-                                                <button class="btn-large btn-verify center" type="button">
+                                                <button class="btn-large btn-verify center" type="button" id="request-verification-btn">
                                                     <i class="fa-solid fa-shield-halved" aria-hidden="true"></i>
                                                     Request verification
                                                 </button>
 
                                                 <!-- Put request on hold -->
-                                                <button class="btn-large btn-hold center" type="button">
+                                                <button class="btn-large btn-hold center" type="button" id="request-place-on-hold">
                                                     <i class="fa-solid fa-pause" aria-hidden="true"></i>
                                                     Place on hold
                                                 </button>
@@ -1464,6 +1464,7 @@
     <script src="/static/js/sweetalert2.all.min.js"></script>
     <script src="/static/js/riskAnalysis/load-info-to-ui.js" type="module"></script>
     <script src="/static/js/riskAnalysis/runRiskAnalyser.js" type="module"></script>
+    <script src="/static/js/riskAnalysis/handleRequestBtns.js" type="module"></script>
 
 </body>
 
