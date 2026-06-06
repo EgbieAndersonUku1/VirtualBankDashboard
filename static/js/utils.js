@@ -802,3 +802,63 @@ export function getFormattedDateTime() {
         })
     };
 }
+
+
+
+/**
+ * Returns the last four characters of a string value.
+ */
+export function getLastFourDigits(value) {
+    if (value) {
+        return value.slice(-4);
+    }
+    return;
+}
+
+
+
+
+
+/**
+ * Formats an account number for display by masking all but the last four digits.
+ *
+ * The function expects a string account number with a minimum length of four
+ * characters. If the input is invalid, an error is logged and the function
+ * returns without producing a value.
+ *
+ * @param {string} accountNumber - The account number to format.
+ * @returns {string|undefined} A masked account number in the format
+ * "**** ****1234", or undefined if validation fails.
+ *
+ * @example
+ * formatMaskedAccountNumber("12345678");
+ * // Returns: "**** ****5678"
+ *
+ * @example
+ * formatMaskedAccountNumber("987654321");
+ * // Returns: "**** ****4321"
+ */
+export function formatMaskedAccountNumber(accountNumber) {
+
+    if (typeof accountNumber !== "string") {
+        logError("formatMaskedAccountNumber", {
+            error: "The parameter entered must be a string",
+            valueReceived: accountNumber,
+            valueType: typeof accountNumber
+        });
+        return;
+    }
+
+    accountNumber = accountNumber.trim();
+    const MINIMUM_LENGTH = 4
+
+    if (accountNumber.length < MINIMUM_LENGTH) {
+        logError("formatMaskedAccountNumber", {
+            error: "The length must be four or greater",
+            valueLengthReceived: accountNumber.length
+        });
+        return;
+    }
+
+    return `**** ****${getLastFourDigits(accountNumber)}`;
+}

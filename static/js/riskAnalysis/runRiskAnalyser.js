@@ -1,51 +1,108 @@
-
-import { warnError } from "../logger.js";
-import { RiskAnalyser } from "./riskAnalyser.js";
 import accountDetails from "./account/accountDetails.js";
 import profileInfoDetails from "./account/profileInfoDetails.js";
 import cardRequestDetails from "./account/cardRequestDetails.js";
 import employmentDetails from "./account/employmentDetails.js";
-import { buildRules, runChecks } from "./ui-builder/buildRiskReport.js";
-import { RiskLevel, RuleStatus } from "./rules/risk.js";
-import { showDecisionOutcome, showFullReport } from "./ui-builder/buildRiskReport.js";
-import { clearDivElement, applyRiskLevelStyle, cache } from "./rules/utils.js";
+
+
+import { warnError } from "../logger.js";
 import { toggleSpinner, getFormattedDateTime } from "../utils.js";
-import { AlertUtils } from "../alerts.js";
+
 import { APPLICATION_DECISION, ApplicationDecision } from "./application-decision.js";
-import { getLastFourDigits } from "./load-info-to-ui.js";
+import { RiskAnalyser } from "./riskAnalyser.js";
+
+import {buildRules, runChecks, showDecisionOutcome, showFullReport} from "./ui-builder/buildRiskReport.js";
+import {RiskLevel,RuleStatus} from "./rules/risk.js";
+import {applyRiskLevelStyle, cache, clearDivElement } from "./rules/utils.js";
+import {buildConfirmationDialogConfig, hasRequestAlreadyBeenProcessed, runConfirmationPrompt} from "./confirmation-service.js";
+
+import { updateTable } from "./table.js";
 
 
 
-const fullReportLink = document.getElementById("full-report-link");
-const fullReportContainer = document.getElementById("full-report");
-const riskScoreContainer = document.getElementById("risk-score");
-const riskButton = document.getElementById("risk-button-analyser");
-const rulesContainer = document.getElementById("rules");
-const riskChecklist = document.getElementById("risk-analysis-checklist");
+// ===== Risk Analysis / Report
+const fullReportLink         = document.getElementById("full-report-link");
+const fullReportContainer    = document.getElementById("full-report");
+const fullReportSpinner      = document.getElementById("full-report-spinner");
 const seeFullReportContainer = document.getElementById("see-full-report-container");
-const fullReportSpinner = document.getElementById("full-report-spinner");
-const approveRequestBtn = document.getElementById("approve-request-btn");
-const currentStatusOverivew = document.getElementById("current-status");
-const requestTBody = document.getElementById("card-requests-tbody");
-const approvalCard = document.getElementById("card-request-approved-card")
+
+const riskScoreContainer     = document.getElementById("risk-score");
+const riskButton             = document.getElementById("risk-button-analyser");
+const riskChecklist          = document.getElementById("risk-analysis-checklist");
+
+// ===== Rules =====
+const rulesContainer         = document.getElementById("rules");
 
 
-
+// event listeners
 fullReportLink.addEventListener("click", handleFullReportLinkClick);
 riskButton.addEventListener("click", handleRiskButton);
-approveRequestBtn.addEventListener("click", handleApproveRequestBtn)
 
 
+
+/**
+ * =========================================================
+ * REQUEST DECISION SYSTEM
+ * =========================================================
+ *
+ * This module controls the full request workflow including:
+ *
+ * - Risk analysis execution and interpretation
+ * - Decision handling (approve, reject, manual review, hold)
+ * - Confirmation dialog messaging
+ * - Tracking processed request state
+ * - Mapping risk outcomes to UI status updates
+ *
+ * Key components:
+ *
+ * - RiskAnalyser: runs risk evaluation logic
+ * - statusMap: maps risk outcomes to UI states
+ * - processedRequestsState: tracks already handled actions
+ * - dialogConfigs: defines confirmation UI messages per action
+ *
+ * Note:
+ * This file primarily defines configuration + UI wiring.
+ *
+ * =========================================================
+ */
 const riskAnalyser = new RiskAnalyser()
 
 
 
-const statusMap = {
-   
-    "Passed": "approved",
-    "Manual Review": "review",
-    "Reject": "rejected"
-   
+/**
+ * Runs the full risk analysis workflow, including rule evaluation,
+ * decision display, caching, and UI updates.
+ */
+async function analysisRisk() {
+
+    const riskData = riskAnalyser.calculate(accountDetails, profileInfoDetails, cardRequestDetails, employmentDetails);
+
+    if (typeof riskData !== "object") {
+        warnError("analysisRisk", {
+            error: "RiskData is not an object",
+            rulesType: typeof riskData
+        })
+
+    }
+
+    const resp = await runChecks()
+
+    if (resp) {
+
+        await buildRules(riskData.rules)
+
+        const passed = getNumberPassed(riskData);
+        const total  = riskData.rules.length
+
+        showDecisionOutcome(passed, total, riskData.decision);
+
+        cache.addToCache(riskData);
+
+        updateRiskScore(riskData.score);
+
+        showFullReportLinkContainer();
+    
+    }
+
 }
 
 
@@ -69,46 +126,67 @@ function getNumberPassed(riskData) {
 
 
 /**
- * Runs the full risk analysis workflow, including rule evaluation,
- * decision display, caching, and UI updates.
+ * Loads account-related information into the UI.
+ * (Currently a placeholder for KYC status handling.)
  */
-async function analysisRisk() {
+function loadAccountInformation() {
+    const kycStatusValue = document.getElementById("KYC-status-value");
+}
 
-    const riskData = riskAnalyser.calculate(accountDetails,
-        profileInfoDetails,
-        cardRequestDetails,
-        employmentDetails
-    );
 
-    if (typeof riskData !== "object") {
-        warnError("analysisRisk", {
-            error: "RiskData is not an object",
-            rulesType: typeof riskData
-        })
+
+/**
+ * Resets the full report link back to its default state.
+ */
+function resetReportLink() {
+    fullReportLink.textContent = "See full report";
+}
+
+
+
+/**
+ * Displays the full report link container in the UI.
+ */
+function showFullReportLinkContainer() {
+    seeFullReportContainer.classList.add("show");
+}
+
+
+
+
+
+/**
+ * Toggles the full report link between "See full report" and "Close report"
+ * and updates its styling accordingly.
+ */
+function updateFullReportLink(link) {
+    switch (link) {
+
+        case "See full report":
+            fullReportLink.textContent = "Close report";
+            fullReportLink.classList.add("visited")
+            break;
+
+        case "Close report":
+            fullReportLink.textContent = "See full report";
+            fullReportLink.classList.remove("visited")
+            break;
 
     }
+}
 
 
-    const resp = await runChecks()
-
-    if (resp) {
-
-        await buildRules(riskData.rules)
-
-        const passed = getNumberPassed(riskData);
-        const total = riskData.rules.length
-
-        showDecisionOutcome(passed, total, riskData.decision);
-
-        cache.addToCache(riskData);
-
-        updateRiskScore(riskData.score);
-
-        showFullReportLinkContainer();
-        // console.log(riskData)
 
 
-    }
+/**
+ * Updates the UI risk score display and applies styling based on risk level.
+ */
+function updateRiskScore(score) {
+
+    const riskLevel = riskAnalyser.getRiskLevel(score);
+    riskScoreContainer.innerHTML = `<span class="dot">${riskLevel}</span>(${score})`
+
+    applyRiskLevelStyle.applyRiskLevelStyling(riskScoreContainer, riskLevel)
 
 }
 
@@ -146,58 +224,6 @@ function handleFullReportLinkClick(e) {
 
 
 
-/**
- * Toggles the full report link between "See full report" and "Close report"
- * and updates its styling accordingly.
- */
-function updateFullReportLink(link) {
-    switch (link) {
-
-        case "See full report":
-            fullReportLink.textContent = "Close report";
-            fullReportLink.classList.add("visited")
-            break;
-
-        case "Close report":
-            fullReportLink.textContent = "See full report";
-            fullReportLink.classList.remove("visited")
-            break;
-
-    }
-}
-
-
-
-/**
- * Resets the full report link back to its default state.
- */
-function resetReportLink() {
-    fullReportLink.textContent = "See full report";
-}
-
-
-
-/**
- * Updates the UI risk score display and applies styling based on risk level.
- */
-function updateRiskScore(score) {
-
-    const riskLevel = riskAnalyser.getRiskLevel(score);
-    riskScoreContainer.innerHTML = `<span class="dot">${riskLevel}</span>(${score})`
-
-    applyRiskLevelStyle.applyRiskLevelStyling(riskScoreContainer, riskLevel)
-
-}
-
-
-/**
- * Displays the full report link container in the UI.
- */
-function showFullReportLinkContainer() {
-    seeFullReportContainer.classList.add("show");
-}
-
-
 
 
 /**
@@ -217,174 +243,17 @@ function handleRiskButton(e) {
 
 
 
-/**
- * Loads account-related information into the UI.
- * (Currently a placeholder for KYC status handling.)
- */
-function loadAccountInformation() {
-    const kycStatusValue = document.getElementById("KYC-status-value");
-}
 
 
 
 
-/**
- * Handles the approve request button for the UI
- * @param {*} e : The event
- * @returns 
- */
-async function handleApproveRequestBtn(e) {
-
-    if (isRequestApproved()) {
-
-        AlertUtils.showAlert({
-            title: "Request already approved",
-            text: "You have already approved this request",
-            icon: "success",
-            confirmButtonText: "ok!"
-        })
-        return
-    }
-
-    const data = cache.getCacheData();
-    let question;
-    let icon = "warning"
-    let info;
-
-     if (data === undefined) {
-        question = "Risk analysis has not been run yet. Approve this request anyway?"
-        info = "info";
-
-     } else if (data.decision === APPLICATION_DECISION.REJECT) {
-
-        question = `Risk analysis returned a **rejected decision** based on user
-                     information. Are you sure you want to approve this request?`
-
-     } else if (data.decision === APPLICATION_DECISION.APPROVE || data.decision === APPLICATION_DECISION.MANUAL_REVIEW ) {
-
-        question = "Are you sure you want to approve this request?"  
-        info = "info";
-     }
-
-     const confirmation = await  AlertUtils.showConfirmationAlert({
-        title: "Approve request",
-        text: question,
-        icon: icon,
-        cancelMessage: "No action taken",
-        confirmButtonText: "Approve request!",
-        denyButtonText: "Don't approve!",
-        messageToDisplayOnSuccess: "Request is successful approved"
-     })
-
-     if (confirmation) {
-
-        updateCurrentStatus(APPLICATION_DECISION.APPROVE)
-        updateTable(statusMap[APPLICATION_DECISION.APPROVE])
-        updateRequestApprovalCard()
-     }
-
-     
-     console.log(data)
-
-}
-
-
-/**
- * Updates the pending status in the UI. This status is depends on
- * the button the user clicks
- * 
- * @param {*} status - The status to update the button with
- */
-function updateCurrentStatus(status) {
-
-    currentStatusOverivew.classList.remove("status--pending", "status", "status--approved")
-
-    switch (status) {
-        case APPLICATION_DECISION.APPROVE:
-            currentStatusOverivew.textContent = "Approved";
-            currentStatusOverivew.classList.add("status",  "status--approved");
-            break;
-    }
-}
-
-
-/**
- * Checks if the status has already been approved.
- * This prevents the app from updating unchanged data
- * @returns null
- */
-function isRequestApproved() {
-    return currentStatusOverivew.textContent === "Approved";
-}
 
 
 
 
-function updateTable(status) {
-
-
-    const { date, time } = getFormattedDateTime();
-    const tr = document.createElement("tr");
-
-    const tdName = document.createElement("td");
-    const tdAccountNumber = document.createElement("td");
-    const tdCardDetails = document.createElement("td");
-    const tdStatus = document.createElement("td");
-    const tdDate = document.createElement("td");
-
-    tdName.textContent = cardRequestDetails.fullName;
-
-    tdAccountNumber.className = "flex-grid pt-16";
-    tdAccountNumber.textContent = maskedValue(getLastFourDigits(accountDetails.accountNumber?.toString()));
-
-    tdStatus.classList.add("capitalise")
-
-    tdCardDetails.innerHTML = `
-        <p>${cardRequestDetails.cardType}</p>
-        <p class="text-muted">
-            <small>${cardRequestDetails.cardVariant}</small>
-        </p>
-    `;
-
-    tdStatus.innerHTML = `
-        <span class="status status--${status}">
-            ${status}
-        </span>
-    `;
-
-    tdDate.innerHTML = `
-        <p>${date}</p>
-        <p>
-            <small>${time}</small>
-        </p>
-    `;
-
-    tr.appendChild(tdName);
-    tr.appendChild(tdAccountNumber);
-    tr.appendChild(tdCardDetails);
-    tr.appendChild(tdStatus);
-    tr.appendChild(tdDate);
-
-    requestTBody.insertBefore(tr, requestTBody.firstElementChild)
-    // return tr;
-}
-
-
-function maskedValue(value) {
-    try {
-        return "**** ****" + value.toString()
-    } catch (error) {
-        throw new Error(error.message)
-    }
-  
-}
 
 
 
-function updateRequestApprovalCard() {
-    updateCardNumer(approvalCard)
-}
 
-function updateCardNumer(element) {
-    element.textContent = parseInt(element.textContent) + 1
-}
+
+
