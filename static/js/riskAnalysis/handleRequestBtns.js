@@ -3,9 +3,8 @@ import { APPLICATION_DECISION, ApplicationDecision } from "./application-decisio
 import {buildConfirmationDialogConfig, hasRequestAlreadyBeenProcessed, runConfirmationPrompt} from "./confirmation-service.js";
 import { updateTable } from "./table.js";
 import accountDetails from "./account/accountDetails.js";
-import cardRequestInformation from "./account/cardRequestDetails.js";
-
-
+import cardRequestInformation, { cardType, cardVariant } from "./account/cardRequestDetails.js";
+import { cardStatus } from "./account/cardRequestDetails.js";
 
 
 // ===== Request Actions 
@@ -46,7 +45,7 @@ requestVerificationBtn.addEventListener("click", handleRequestVerifciationButton
  *
  * Key components:
  *
- * - statusMap: maps risk outcomes to UI states
+ * - statusClassMap: maps risk outcomes to UI states
  * - processedRequestsState: tracks already handled actions
  * - dialogConfigs: defines confirmation UI messages per action
  *
@@ -59,13 +58,18 @@ requestVerificationBtn.addEventListener("click", handleRequestVerifciationButton
 
 
 
-const statusMap = {
-   
-    "Passed": "approved",
-    "Manual Review": "review",
-    "Reject": "rejected"
-   
-}
+export const statusClassMap = {
+    [cardStatus.APPROVED]: "approved",
+    [cardStatus.UNDER_REVIEW]: "review",
+    [cardStatus.REJECTED]: "rejected",
+    [cardStatus.PENDING]: "pending",
+    [cardStatus.WITHDRAWN]: "withdrawn",
+    [APPLICATION_DECISION.APPROVE]: "approved",
+    [APPLICATION_DECISION.UNDER_REVIEW]: "review",
+    [APPLICATION_DECISION.MANUAL_REVIEW]: "review",
+    [APPLICATION_DECISION.REJECT]: "rejected",
+};
+
 
 
 const processedRequestsState = {
@@ -214,11 +218,13 @@ async function processRequestDecision(command) {
 
     const {date, time } = getFormattedDateTime()
 
-    updateTable({ status: statusMap[decision], 
-                cardRequestDetails: cardRequestInformation, 
-                accountDetails: accountDetails,
-                date: date,
-                time: time
+    updateTable({ status: statusClassMap[decision], 
+                 fullName: cardRequestInformation?.fullName, 
+                 accountNumber: accountDetails.accountNumber,
+                 cardType: cardRequestInformation.cardType,
+                 cardVariant: cardRequestInformation.cardVariant,
+                 date: date,
+                 time: time
                 })
 
     if (typeof onSuccess !== "function") {

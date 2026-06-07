@@ -5159,3 +5159,7 @@ clicks the button
     opacity: 0.6;
     font-size: 0.95em;
 }
+
+#search-request-search-field {
+    height: 30px;
+}

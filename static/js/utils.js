@@ -862,3 +862,27 @@ export function formatMaskedAccountNumber(accountNumber) {
 
     return `**** ****${getLastFourDigits(accountNumber)}`;
 }
+
+
+
+
+/**
+ * Creates a debounced version of a function that delays execution
+ * until after a specified period of inactivity.
+ *
+ * Useful for limiting frequent function calls such as search input,
+ * resize, or scroll events.
+ *
+ * @param {Function} func - The function to debounce.
+ * @param {number} delay - The delay in milliseconds.
+ * @returns {Function} A debounced function.
+ */
+export function debounce(func, delay = 300) {
+    let timeout;
+
+    return (...args) => {
+        clearTimeout(timeout);
+
+        timeout = setTimeout(() => { func(...args);}, delay);
+    };
+}

@@ -18,7 +18,7 @@
 
 
 
-const cardType = Object.freeze({
+export const cardType = Object.freeze({
     VISA: "Visa Debit",
     MASTERCARD: "Mastercard",
     DISCOVER: "Discover",
@@ -26,13 +26,24 @@ const cardType = Object.freeze({
 });
 
 
-const cardVariant = Object.freeze({
+export const cardVariant = Object.freeze({
     PHYSICAL_CARD: "Physical Card",
     VIRTUAL_CARD: "Virtual Card",
     TEMPORARY: "Temporary Card",
     REPLACEMENT: "Replacement Card",
+    UPGRADE: "Card Upgrade",
+    NEW_CARD: "New card"
 });
 
+
+
+export const cardStatus = Object.freeze({
+    APPROVED: "Approved",
+    UNDER_REVIEW: "Under review",
+    REJECTED: "Rejected",
+    PENDING: "Pending",
+    WITHDRAWN: "Withdrawn"
+});
 
 
 
