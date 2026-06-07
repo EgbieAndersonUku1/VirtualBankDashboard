@@ -1,11 +1,16 @@
 import accountDetails from "./account/accountDetails.js";
 import profileInformationDetails from "./account/profileInfoDetails.js";
-import { sanitizeText } from "../utils.js";
 import { deselectAllTabs, highlightTab } from "../utils/tab-utils.js";
-import { formatDate, formatCurrency } from "../utils.js";
+import { formatDate, formatCurrency, getLastFourDigits, sanitizeText } from "../utils.js";
 import { warnError } from "../logger.js";
 import cardRequestInformation from "./account/cardRequestDetails.js";
-import { getLastFourDigits } from "../utils.js";
+import { db } from "./db.js";
+import { updateTable } from "./table.js";
+import { clearDivElement } from "./rules/utils.js";
+import { statusClassMap } from "./handleRequestBtns.js";
+import { renderTable } from "./table.js";
+
+
 
 
 const tabs                = document.querySelectorAll(".tabs .tab")
@@ -26,6 +31,8 @@ document.addEventListener("DOMContentLoaded", () => {
         populatePersonalInformation();
 
         showFirstTab();
+
+        populateTableData();
 });
 
 
@@ -335,6 +342,18 @@ function loadProfileDataToTopCard() {
     setText("profile-email", profileInformationDetails.email.value.toLowerCase() || "N/A");
 }
 
+
+
+/**
+ * Populates the table data when the page loads
+ */
+function populateTableData() {
+
+    const tableBody = document.getElementById("card-requests-tbody")
+    renderTable(db)
+   
+  
+}
 
 
 /**

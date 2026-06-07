@@ -15,7 +15,6 @@ import {RiskLevel,RuleStatus} from "./rules/risk.js";
 import {applyRiskLevelStyle, cache, clearDivElement } from "./rules/utils.js";
 import {buildConfirmationDialogConfig, hasRequestAlreadyBeenProcessed, runConfirmationPrompt} from "./confirmation-service.js";
 
-import { updateTable } from "./table.js";
 
 
 
@@ -55,7 +54,7 @@ riskButton.addEventListener("click", handleRiskButton);
  * Key components:
  *
  * - RiskAnalyser: runs risk evaluation logic
- * - statusMap: maps risk outcomes to UI states
+ * - statusClassMap: maps risk outcomes to UI states
  * - processedRequestsState: tracks already handled actions
  * - dialogConfigs: defines confirmation UI messages per action
  *
