@@ -1,7 +1,7 @@
 import accountDetails from "./account/accountDetails.js";
 import profileInformationDetails from "./account/profileInfoDetails.js";
 import { deselectAllTabs, highlightTab } from "../utils/tab-utils.js";
-import { formatDate, formatCurrency, getLastFourDigits, sanitizeText } from "../utils.js";
+import { formatCurrency, getLastFourDigits, sanitizeText } from "../utils.js";
 import { warnError } from "../logger.js";
 import cardRequestInformation from "./account/cardRequestDetails.js";
 import { db } from "./db.js";
@@ -198,7 +198,7 @@ function loadSpecialInstructions() {
  * Displays the account creation date.
  */
 function loadCreationDate() {
-    setText("creation-date", formatDate(accountDetails.accountCreationDate) || "N/A");
+    setText("creation-date", accountDetails.accountCreationDate || "N/A");
 }
 
 
