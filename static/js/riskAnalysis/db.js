@@ -1,4 +1,5 @@
 import { cardType, cardVariant, cardStatus } from "./account/cardRequestDetails.js"
+import { warnError } from "../logger.js";
 
 
 // Mock dataset used to populate the card requests table
@@ -157,7 +158,8 @@ export const db = [
  * - Card type
  * - Card variant
  * - Request status
- * - Date and time approved/rejected/withdraw/place on hold
+ * - Date and time 
+ * - approved/rejected/withdraw/place on hold
  *
  * @param {string} value - The search query entered by the user.
  * @returns {Array<Object>} Matching card request records.
@@ -177,4 +179,87 @@ export function searchDb(value) {
             row.time.includes(query)
         );
     });
+}
+
+
+
+
+
+/**
+ * Adds a new card request record to the mock database.
+ *
+ * Validates that all required fields are present and are strings
+ * before persisting the record.
+ *
+ * @param {Object} params - The record data.
+ * @param {string} params.name - Customer name.
+ * @param {string} params.account - Account number.
+ * @param {string} params.cardType - Card type.
+ * @param {string} params.cardVariant - Card variant.
+ * @param {string} params.status - Current request status.
+ * @param {string} params.date - Request date.
+ * @param {string} params.time - Request time.
+ *
+ * @returns {boolean}
+ * Returns true if the record was successfully added to the database;
+ * otherwise returns false when validation fails.
+ */
+export function updateDbRow({name, account, cardType, cardVariant, status, date, time}) {
+
+    if (!(name && account && cardType && cardVariant && status && date && time )) {
+        warnError("updateDbRow", {
+            error: "One or more of the parameter is emtpy",
+            paramsReceived: {
+                name: name,
+                account: account,
+                cardType: cardType,
+                cardVariant: cardVariant,
+                status: status,
+                date: date,
+                time: time,
+            }
+        })
+
+        return false;
+    }
+
+    const nameType        = typeof name;
+    const accountType     = typeof account;
+    const cardtype        = typeof cardType;
+    const cardVariantType = typeof cardVariant;
+    const statusType      = typeof status;
+    const dateType        = typeof date;
+    const timeType        = typeof time;
+
+    if (nameType !== "string" || accountType !== "string" || cardtype !== "string" || cardVariantType !== "string" ||
+        statusType !== "string" ||
+        dateType !== "string" ||
+        timeType !== "string"
+        ) {
+            warnError("updateDbRow", {
+                error: "Not all values received are strings",
+                paramsTypeReceived: {
+                    name: nameType,
+                    account: accountType,
+                    card: cardtype,
+                    cardVariant: cardVariantType,
+                    status: statusType,
+                    date: dateType,
+                    time: timeType,
+                }
+            });
+            return false;
+    }
+
+    db.push( {name: name,
+            account: account,
+            cardType: cardType,
+            cardVariant: cardVariant,
+            status: status,
+            date: date,
+            time: time
+            }
+        )
+    return true;
+
 }

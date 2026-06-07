@@ -5,6 +5,7 @@ import { updateTable } from "./table.js";
 import accountDetails from "./account/accountDetails.js";
 import cardRequestInformation, { cardType, cardVariant } from "./account/cardRequestDetails.js";
 import { cardStatus } from "./account/cardRequestDetails.js";
+import { updateDbRow } from "./db.js";
 
 
 // ===== Request Actions 
@@ -68,6 +69,11 @@ export const statusClassMap = {
     [APPLICATION_DECISION.UNDER_REVIEW]: "review",
     [APPLICATION_DECISION.MANUAL_REVIEW]: "review",
     [APPLICATION_DECISION.REJECT]: "rejected",
+    approved: cardStatus.APPROVED,
+    review: cardStatus.UNDER_REVIEW,
+    rejected: cardStatus.REJECTED,
+    pending: cardStatus.PENDING,
+    withdrawn: cardStatus.WITHDRAWN,
 };
 
 
@@ -218,11 +224,29 @@ async function processRequestDecision(command) {
 
     const {date, time } = getFormattedDateTime()
 
-    updateTable({ status: statusClassMap[decision], 
-                 fullName: cardRequestInformation?.fullName, 
-                 accountNumber: accountDetails.accountNumber,
-                 cardType: cardRequestInformation.cardType,
-                 cardVariant: cardRequestInformation.cardVariant,
+    const status = statusClassMap[decision];
+    const name = cardRequestInformation?.fullName;
+    const account = accountDetails.accountNumber?.toString();
+    const cardType = cardRequestInformation.cardType;
+    const cardVariant = cardRequestInformation.cardVariant;
+    
+
+    updateTable({ status: status, 
+                 fullName: name, 
+                 accountNumber: account,
+                 cardType: cardType,
+                 cardVariant: cardVariant,
+                 date: date,
+                 time: time
+                })
+
+    
+    // update the db row
+    updateDbRow({ status: statusClassMap[status], 
+                 name: name, 
+                 account: account,
+                 cardType: cardType,
+                 cardVariant: cardVariant,
                  date: date,
                  time: time
                 })
