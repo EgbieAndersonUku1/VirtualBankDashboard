@@ -1,7 +1,8 @@
 import accountDetails from "./account/accountDetails.js";
 import profileInformationDetails from "./account/profileInfoDetails.js";
 import { deselectAllTabs, highlightTab } from "../utils/tab-utils.js";
-import { formatCurrency, getLastFourDigits, sanitizeText } from "../utils.js";
+import { formatCurrency, sanitizeText, getLastFourDigits, formatMaskedAccountNumber } from "../utils.js";
+import { badgeConfig } from "./badge.config.js";
 import { warnError } from "../logger.js";
 import cardRequestInformation from "./account/cardRequestDetails.js";
 import { db } from "./db.js";
@@ -17,11 +18,14 @@ const tabs                = document.querySelectorAll(".tabs .tab")
 const requestTabContainer = document.getElementById("tabs");
 const requestTabContents  = document.querySelectorAll(".request-tab-content");
 const firstTabContent     = document.getElementById("request-first-tab");
-const secondTabContent    = document.getElementById("request-second-tab")
+const secondTabContent    = document.getElementById("request-second-tab");
+const thirdTabContent     = document.getElementById("request-third-tab")
 
 
 
 requestTabContainer.addEventListener("click", handleDelegation);
+
+
 
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -29,6 +33,7 @@ document.addEventListener("DOMContentLoaded", () => {
         populateCardRequestDetails();
         populateAccountInformation();
         populatePersonalInformation();
+        populateUserAccountDetails();
 
         showFirstTab();
 
@@ -51,6 +56,10 @@ function handleDelegation(e) {
 
         case "request-second-tab":
             activateTab(tab, secondTabContent);
+            break;
+        
+        case "request-third-tab":
+            activateTab(tab, thirdTabContent);
             break;
     }
 }
@@ -282,7 +291,10 @@ function loadPhoneNumber() {
     const cleanedPhoneNumber = cleanPhoneNumber(phoneNumber);
 
     setText("phoneNum", cleanedPhoneNumber || "N/A");
-    checkIfVerified("is-phone-num-verified", phoneNumber);
+    updateVerificationStatusBadge({id: "is-phone-num-verified", 
+                                  valueToCheck: profileInformationDetails.phoneNumber.verified, 
+                                  activeStatusText: "Verified", 
+                                  nonActiveStatusText: "Not verified"});
 }
 
 
@@ -292,7 +304,11 @@ function loadPhoneNumber() {
 function loadEmailAddress() {
     const email = profileInformationDetails.email;
     setText("email-address", email?.value || "N/A");
-    checkIfVerified("is-email-verified", email);
+    updateVerificationStatusBadge({id: "is-email-verified", 
+                                  valueToCheck: email.verified,
+                                   activeStatusText: badgeConfig.verified.text, 
+                                   nonActiveStatusText: badgeConfig.unverified.text 
+                                });
 }
 
 
@@ -330,7 +346,11 @@ function loadPassport() {
     }
 
     setText("passport", cleanedPassportValue || "N/A");
-    checkIfVerified("is-passport-verified", passport);
+    updateVerificationStatusBadge({id: "is-passport-verified", 
+                                  valueToCheck: passport.verified, 
+                                  activeStatusText: "Verified",
+                                   nonActiveStatusText: "Not verified"});
+
 }
 
 
@@ -408,23 +428,40 @@ function safeBalance(balance) {
  * Updates a verification status badge in the UI based on a profile field.
  * Sets text and styling for verified or not verified states.
  */
-function checkIfVerified(id, profileValue) {
-
+function updateVerificationStatusBadge({id, 
+                                        valueToCheck, 
+                                        activeStatusText, 
+                                        nonActiveStatusText,
+                                        activeClass=badgeConfig.active.class,
+                                        nonActiveClass=badgeConfig.deactivated.class,
+                                         }) {
     const verificationSpanElement = document.getElementById(id);
     if (!verificationSpanElement) return;
 
-    verificationSpanElement.classList.remove("status--approved", "status--rejected");
+    if (typeof valueToCheck !== "boolean"){
+        warnError("updateVerificationStatusBadge", {
+            error: `valueTocheck must be a boolean`,
+            received: `Value type received ${valueToCheck}`
+        })
+        return;
+    }
 
-    if (profileValue?.verified) {
-        verificationSpanElement.textContent = "Verified";
-        verificationSpanElement.classList.add("status", "status--approved");
+    verificationSpanElement.classList.remove(activeClass, nonActiveClass);
+
+    if (valueToCheck) {
+        verificationSpanElement.textContent = activeStatusText;
+        verificationSpanElement.classList.add("status", activeClass);
     } else {
-        verificationSpanElement.textContent = "Not Verified";
-        verificationSpanElement.classList.add("status", "status--rejected");
+        verificationSpanElement.textContent = nonActiveStatusText;
+        verificationSpanElement.classList.add("status", nonActiveClass);
     }
 
     verificationSpanElement.classList.add("capitalise");
 }
+
+
+
+
 
 
 /**
@@ -489,4 +526,20 @@ function safeNumber({ value, fallback = "N/A", context = "" }) {
         return fallback;
     }
     return value;
+}
+
+
+
+
+/**
+ * Load the profile user account details
+ */
+function populateUserAccountDetails() {
+    setText("bank-details__sortcode-value", formatMaskedAccountNumber(accountDetails.sortCode?.toString()));
+    setText("bank-details__account-num-value", formatMaskedAccountNumber(accountDetails.accountNumber?.toString()));
+    setText("bank-details__balance-value", formatCurrency(accountDetails.balance?.available))
+    updateVerificationStatusBadge({id: "bank-details__is-verified", 
+                                    valueToCheck: accountDetails.status.active, 
+                                    activeStatusText: badgeConfig.active.text, 
+                                    nonActiveStatusText: badgeConfig.deactivated.text})
 }

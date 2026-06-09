@@ -259,8 +259,8 @@
 
                                     <div class="card-request-card__body flex flex-space-between">
 
-                                        <div class="card-request-under-review card-request-stats" id="card-request-under-review"
-                                            aria-label="5 requests under review">
+                                        <div class="card-request-under-review card-request-stats"
+                                            id="card-request-under-review" aria-label="5 requests under review">
                                             5
                                         </div>
 
@@ -307,8 +307,8 @@
 
                                     <div class="card-request-card__body flex flex-space-between">
 
-                                        <div class="card-request-under-review card-request-stats" id="card-request-reject-card"
-                                            aria-label="2 rejected requests today">
+                                        <div class="card-request-under-review card-request-stats"
+                                            id="card-request-reject-card" aria-label="2 rejected requests today">
                                             2
                                         </div>
 
@@ -350,14 +350,15 @@
                                     <div class="num-of-card-request__header flex-grid two-column-30_70_grid ">
 
                                         <div class="header">
-                                            <h3 id="card-requests-header">Card Requests (<small id="table-row-counter">10</small>) </h3>
+                                            <h3 id="card-requests-header">Card Requests (<small
+                                                    id="table-row-counter">10</small>) </h3>
                                         </div>
 
                                         <div class="search-cards-requests">
                                             <form action="" method="post" class="flex">
                                                 <input type="search" name="search-cards-requests"
                                                     id="search-request-search-field">
-                                           
+
                                             </form>
 
 
@@ -504,7 +505,8 @@
                                         User information
                                     </div>
 
-                                    <div class="tab" role="tab" aria-selected="false" tabindex="-1">
+                                    <div class="tab" role="tab" aria-selected="false" tabindex="-1"
+                                        data-tab="request-third-tab">
                                         Account Details
                                     </div>
 
@@ -564,8 +566,9 @@
                                             </div>
 
                                             <div class="account-information-card__head">
-                                                <small aria-labelledby="account-type-label" class="light-bold" id="request__account-type">
-                                                   
+                                                <small aria-labelledby="account-type-label" class="light-bold"
+                                                    id="request__account-type">
+
                                                 </small>
                                             </div>
                                         </div>
@@ -579,8 +582,9 @@
                                             </div>
 
                                             <div class="account-information-card__head">
-                                                <small aria-labelledby="balance-label" class="light-bold" id="card-balance">
-                                                   
+                                                <small aria-labelledby="balance-label" class="light-bold"
+                                                    id="card-balance">
+
                                                 </small>
                                             </div>
                                         </div>
@@ -622,7 +626,8 @@
                                                     </div>
 
                                                     <div class="value">
-                                                        <p class="capitalise" id="card-request-details__card-variant"></p>
+                                                        <p class="capitalise" id="card-request-details__card-variant">
+                                                        </p>
                                                     </div>
                                                 </div>
 
@@ -635,7 +640,7 @@
                                                     </div>
 
                                                     <div class="value">
-                                                          <div class="address flex-grid">
+                                                        <div class="address flex-grid">
                                                             <span id="request-card__address1"></span>
                                                             <span id="request-card__address2"></span>
                                                             <span id="request-card__city"></span>
@@ -657,7 +662,7 @@
 
                                                     <div class="value">
                                                         <p id="request-phoneNumber">
-                                                           
+
                                                         </p>
                                                     </div>
                                                 </div>
@@ -755,25 +760,29 @@
                                                 aria-describedby="admin-actions-desc">
 
                                                 <!-- Approve request action -->
-                                                <button class="btn-large btn-approve" type="button" id="approve-request-btn">
+                                                <button class="btn-large btn-approve" type="button"
+                                                    id="approve-request-btn">
                                                     <i class="fa-solid fa-check" aria-hidden="true"></i>
                                                     Approve request
                                                 </button>
 
                                                 <!-- Reject request action -->
-                                                <button class="btn-large btn-reject" type="button" id="reject-request-btn">
+                                                <button class="btn-large btn-reject" type="button"
+                                                    id="reject-request-btn">
                                                     <i class="fa-solid fa-xmark" aria-hidden="true"></i>
                                                     Reject request
                                                 </button>
 
                                                 <!-- Request additional verification -->
-                                                <button class="btn-large btn-verify center" type="button" id="request-verification-btn">
+                                                <button class="btn-large btn-verify center" type="button"
+                                                    id="request-verification-btn">
                                                     <i class="fa-solid fa-shield-halved" aria-hidden="true"></i>
                                                     Request verification
                                                 </button>
 
                                                 <!-- Put request on hold -->
-                                                <button class="btn-large btn-hold center" type="button" id="request-place-on-hold">
+                                                <button class="btn-large btn-hold center" type="button"
+                                                    id="request-place-on-hold">
                                                     <i class="fa-solid fa-pause" aria-hidden="true"></i>
                                                     Place on hold
                                                 </button>
@@ -904,7 +913,7 @@
                                                     </dt>
 
                                                     <dd class="user-value">
-                                                        <span id="fullName" class="capitalise" >Jake Thompson</span>
+                                                        <span id="fullName" class="capitalise">Jake Thompson</span>
 
                                                     </dd>
                                                 </div>
@@ -1065,7 +1074,7 @@
                                                         </p>
 
                                                         <p id="total-cards-value">
-                                                            
+
                                                         </p>
                                                     </div>
 
@@ -1088,7 +1097,7 @@
                                                         </p>
 
                                                         <p id="transactions-value">
-                                                            
+
                                                         </p>
                                                     </div>
 
@@ -1193,7 +1202,59 @@
                                 </div>
 
 
+                                <!-- Third Tab -->
+                                <div id="request-third-tab" class="request-third-tab request-tab-content"
+                                    role="tabpanel" aria-labelledby="request-third-tab-button">
 
+                                    <section id="bank-details" aria-labelledby="bank-account-heading">
+                                        <div class="bank-details__container">
+
+                                            <div class="bank-details__bank-logo">
+                                                <!-- Decorative image -->
+                                                <img src="/static/images/icons/checking-account.png" alt="">
+                                            </div>
+
+                                            <div id="bank-details__overview">
+
+                                                <h2 id="bank-account-heading" class="header-9 capitalise">
+                                                    Chase checking account
+                                                    <span class="status status--approved ml-4" aria-live="polite" id="bank-details__is-verified">
+                                                        Active
+                                                    </span>
+                                                </h2>
+
+                                                <dl class="flex-grid three-column-grid mt-4 mb-8 account-summary">
+
+                                                    <div class="sortcode flex-grid" id="bank-details__bank-sortcode">
+                                                        <dt class="text-muted">Sort code</dt>
+                                                        <dd class="bold" aria-label="Sort code ending in 4444" id="bank-details__sortcode-value">
+                                                         
+                                                        </dd>
+                                                    </div>
+
+                                                    <div class="account-number flex-grid"
+                                                        id="bank-details__bank-account-number">
+                                                        <dt class="text-muted">Account number</dt>
+                                                        <dd class="bold" aria-label="Account number ending in 4444" id="bank-details__account-num-value">
+                                                         
+                                                        </dd>
+                                                    </div>
+
+                                                    <div class="bank-balance flex-grid" id="bank-details__bank-balance">
+                                                        <dt class="text-muted">Bank balance</dt>
+                                                        <dd>
+                                                            <span class="bold" id="bank-details__balance-value"></span>
+                                                        </dd>
+                                                    </div>
+
+                                                </dl>
+
+                                            </div>
+
+                                        </div>
+                                    </section>
+
+                                </div>
 
 
 
