@@ -13,7 +13,6 @@ import { renderTable } from "./table.js";
 
 
 
-
 const tabs                = document.querySelectorAll(".tabs .tab")
 const requestTabContainer = document.getElementById("tabs");
 const requestTabContents  = document.querySelectorAll(".request-tab-content");
@@ -34,6 +33,7 @@ document.addEventListener("DOMContentLoaded", () => {
         populateAccountInformation();
         populatePersonalInformation();
         populateUserAccountDetails();
+        populateBankDetails.load();
 
         showFirstTab();
 
@@ -543,3 +543,86 @@ function populateUserAccountDetails() {
                                     activeStatusText: badgeConfig.active.text, 
                                     nonActiveStatusText: badgeConfig.deactivated.text})
 }
+
+
+
+
+/**
+ * Populate the bank and account detains
+ */
+const populateBankDetails = (() => {
+
+    function populateBankAddress() {
+        const bankAddress = accountDetails.bank.address;
+      
+        setText("branch-address-line1", bankAddress.line1);
+        setText("branch-address-line2", bankAddress.line2);
+        setText("branch-city", bankAddress.city);
+        setText("branch-country", bankAddress.country)
+        setText("branch-postcode", bankAddress.postCode)
+
+    }
+
+    function populateAccountType() {
+        setText("account-type", accountDetails.accountType)
+    }
+
+    function populatePhoneNumber() {
+        setText("branch-phone", accountDetails.bank.phoneNumber)
+    }
+
+    function populateBranchName() {
+        setText("bank-name", accountDetails.bank.name)
+    }
+
+    function populateBankBranch() {
+        setText("bank-branch", accountDetails.bank.branch)
+    }
+
+    function populateBalance() {
+        setText("available-balance", formatCurrency(accountDetails.balance.available))
+    }
+
+    function populateCurrencySymbol() {
+        setText("account-currency-symbol", accountDetails.balance.currencyLabel)
+    }
+
+    function populateCurrency() {
+        setText("account-currency-code", accountDetails.balance.currency)
+    }
+
+    function populateAccountStatus() {
+        const id = "account-status"
+        setText(id, accountDetails.status.active)
+        updateVerificationStatusBadge({
+            id: id,
+            valueToCheck: accountDetails.status.active,
+            activeStatusText: "Active",
+            nonActiveStatusText: "Deactivated",
+
+        })
+    }
+
+    function populateOverdraft() {
+        setText("account-overdraft", formatCurrency(accountDetails.overdraft.limit))
+    }
+
+    function load() {
+        populateBankAddress();
+        populatePhoneNumber();
+        populateBranchName()
+        populateBankBranch();
+        populateBalance();
+        populateCurrencySymbol();
+        populateCurrency();
+        populateAccountStatus();
+        populateOverdraft();
+        populateAccountType();
+    }
+
+    return {
+        load
+    };
+
+})();
+

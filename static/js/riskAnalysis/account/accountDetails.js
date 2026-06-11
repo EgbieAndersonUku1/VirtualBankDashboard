@@ -17,6 +17,7 @@
  */
 
 import { KYCStatus } from "../rules/kyc.js";
+import { bankDetails, bankNames } from "./bankDetails.js";
 
 
 const AccountType = Object.freeze({
@@ -49,7 +50,7 @@ const accountDetails = {
         available: 2026.26,  // value can be a postive or a negative value, only numbers or floats, the app will handle the currency e.g £, $, etc
         pending: 0.00,
         averageMonthlyBalance: 450.25,
-        currencyLabel: "£",
+        currencyLabel: "(£)",
         currency: "GBP",
 
     },
@@ -67,10 +68,7 @@ const accountDetails = {
         verificationDate: "2025-12-25"
   },
 
-    branch: {
-        name: "Chase",
-        country: "United Kingdom"
-    },
+   
 
     accountActivity: {
         totalTransactions: 100,
@@ -93,7 +91,9 @@ const accountDetails = {
         passwordResets: 10,
         suspiciousLoginDetected: false,
        
-    }
+    },
+
+    bank: bankDetails.branches[bankNames.EXAMPLE_BANK]
 };
 
 export default accountDetails;

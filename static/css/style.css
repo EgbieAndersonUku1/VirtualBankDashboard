@@ -277,6 +277,10 @@ html {
     padding-left: var(--space-8);
 }
 
+.pl-12 {
+    padding-left: var(--space-12);
+}
+
 .pl-16 {
     padding-left: var(--space-16);
 }
@@ -5201,3 +5205,53 @@ clicks the button
     font-size: 0.8rem;
     font-weight: 500;
 }
+
+
+#account-information__overview {
+    column-gap: var(--space-12);
+}
+
+#account-information__overview > div.account-information__table_1 > dl > div, 
+#account-information__overview > div.account-information__table_2 > dl > div {
+    font-size: 0.85rem;
+    padding: var(--space-12);
+    border-bottom: 2px solid lavender;
+}
+
+#account-information__overview > div.account-information__table_1 > dl > div dt, 
+#account-information__overview > div.account-information__table_2 > dl > div dt{
+  font-weight: 600;
+}
+
+
+#account-information__overview > div.account-information__table_1 > dl > div dd, 
+#account-information__overview > div.account-information__table_2 > dl > div dd{
+  font-weight: 700;
+  color: #6B7280;
+}
+
+
+
+.section-label {
+    font-size: 0.875rem;
+    color: var(--text-muted-color);
+    font-weight: 600;
+    margin-bottom: var(--space-8);
+    border-bottom: 1px solid lavender;
+    font-style: normal;
+    text-transform: capitalize;
+}
+
+#account-information-heading,
+#branch-location p:not(.section-label),
+#branch-phone {
+   font-size: 0.875rem;
+}
+
+
+#request-third-tab #bank-details,
+#request-third-tab #account-information {
+    border: 2px solid ghostwhite;
+}
+
+
