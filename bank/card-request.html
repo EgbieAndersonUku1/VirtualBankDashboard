@@ -1263,7 +1263,7 @@
                                         aria-labelledby="account-information-heading">
                                         <div class="account-information__container">
 
-                                          <address class="pl-12 mt-24" id="branch-location">
+                                            <address class="pl-12 mt-24" id="branch-location">
                                                 <p class="section-label">Our physical location</p>
 
                                                 <p id="branch-address-line1"></p>
@@ -1277,7 +1277,7 @@
                                                 <p class="section-label">Our number</p>
 
                                                 <p id="branch-phone">
-                                                   
+
                                                 </p>
                                             </div>
 
@@ -1291,27 +1291,32 @@
                                                 <div class="account-information__table_1">
                                                     <dl>
 
-                                                        <div class="account-information-group flex-grid two-column-grid">
+                                                        <div
+                                                            class="account-information-group flex-grid two-column-grid">
                                                             <dt>Account Type</dt>
                                                             <dd id="account-type" class="capitalise"></dd>
                                                         </div>
 
-                                                        <div class="account-information-group flex-grid two-column-grid">
+                                                        <div
+                                                            class="account-information-group flex-grid two-column-grid">
                                                             <dt>Currency</dt>
                                                             <dd id="account-currency-symbol">(£)</dd>
                                                         </div>
 
-                                                          <div class="account-information-group flex-grid two-column-grid">
+                                                        <div
+                                                            class="account-information-group flex-grid two-column-grid">
                                                             <dt>Currency code</dt>
                                                             <dd id="account-currency-code"></dd>
                                                         </div>
 
-                                                        <div class="account-information-group flex-grid two-column-grid">
+                                                        <div
+                                                            class="account-information-group flex-grid two-column-grid">
                                                             <dt>Status</dt>
                                                             <dd id="account-status" class="center">Active</dd>
                                                         </div>
 
-                                                        <div class="account-information-group flex-grid two-column-grid">
+                                                        <div
+                                                            class="account-information-group flex-grid two-column-grid">
                                                             <dt>Overdraft</dt>
                                                             <dd id="account-overdraft"></dd>
                                                         </div>
@@ -1322,23 +1327,66 @@
                                                 <div class="account-information__table_2">
                                                     <dl>
 
-                                                        <div class="account-information-group flex-grid two-column-grid">
+                                                        <div
+                                                            class="account-information-group flex-grid two-column-grid">
                                                             <dt>Bank Name</dt>
                                                             <dd id="bank-name"></dd>
                                                         </div>
 
-                                                        <div class="account-information-group flex-grid two-column-grid">
+                                                        <div
+                                                            class="account-information-group flex-grid two-column-grid">
                                                             <dt>Branch</dt>
                                                             <dd id="bank-branch">Central London Branch </dd>
                                                         </div>
 
-                                                        <div class="account-information-group flex-grid two-column-grid">
+                                                        <div
+                                                            class="account-information-group flex-grid two-column-grid">
                                                             <dt>Balance</dt>
                                                             <dd id="available-balance"></dd>
                                                         </div>
 
                                                     </dl>
                                                 </div>
+
+                                            </div>
+
+                                            <!-- linked accounts -->
+                                            <div id="linked-account-table" class="mt-48">
+
+                                                <h4 class="mb-8 mt-24 pl-12 capitalise" id="linked-account-table-heading">
+                                                    Cards history    
+                                                </h4>
+
+                                                <table>
+                                                    <thead>
+                                                        <th>Active cards</th>
+                                                        <th>Replacement cards</th>
+                                                        <th>Lost cards</th>
+                                                        <th>Stolen cards</th>
+                                                    </thead>
+
+                                                    <tbody id="linked-account-table-body">
+                                                        <!-- generated by js -->
+                                                    </tbody>
+
+                                                </table>
+
+
+                                            </div>
+
+
+                                            <!-- recent transactions -->
+                                            <div id="recent-transaction" class="mt-48">
+
+                                                <h4 class="mt-24 pl-12 capitalise" id="recent-transaction-heading">
+                                                    Recent transaction (<span id="num-of-transactions"></span>)
+                                                
+                                                </h4>
+
+                                                <div class="recent-transaction__cards">
+                                                     <!-- generated dynmaically by js -->
+                                                </div>
+
 
                                             </div>
 

@@ -9,7 +9,8 @@ import { db } from "./db.js";
 import { updateTable } from "./table.js";
 import { clearDivElement } from "./rules/utils.js";
 import { statusClassMap } from "./handleRequestBtns.js";
-import { renderTable } from "./table.js";
+import { renderTable, populateCardHistoryTable } from "./table.js";
+import TransactionRenderer from "./ui-builder/buildTransactionCards.js";
 
 
 
@@ -607,6 +608,23 @@ const populateBankDetails = (() => {
         setText("account-overdraft", formatCurrency(accountDetails.overdraft.limit))
     }
 
+
+    function populateCardHistory() {
+        const cardHistory = accountDetails.cardHistory;
+
+        populateCardHistoryTable({
+            activeCards: cardHistory.activeCards,
+            replacementCards: cardHistory.replacementCards,
+            lostCards: cardHistory.lostCardsReported,
+            stolenCards: cardHistory.stolenCardsReported,
+
+        })
+    }
+
+    function  populateRecentTransactionHistory() {
+        TransactionRenderer.renderTransactions(accountDetails.recentTransaction)
+    }
+
     function load() {
         populateBankAddress();
         populatePhoneNumber();
@@ -618,6 +636,8 @@ const populateBankDetails = (() => {
         populateAccountStatus();
         populateOverdraft();
         populateAccountType();
+        populateCardHistory();
+        populateRecentTransactionHistory();
     }
 
     return {
@@ -625,4 +645,8 @@ const populateBankDetails = (() => {
     };
 
 })();
+
+
+
+
 

@@ -18,6 +18,7 @@
 
 import { KYCStatus } from "../rules/kyc.js";
 import { bankDetails, bankNames } from "./bankDetails.js";
+import { recentTransactions } from "./cardTransactionDetails.js";
 
 
 const AccountType = Object.freeze({
@@ -93,7 +94,11 @@ const accountDetails = {
        
     },
 
-    bank: bankDetails.branches[bankNames.EXAMPLE_BANK]
+    bank: bankDetails.branches[bankNames.EXAMPLE_BANK],
+
+    recentTransaction: recentTransactions.transactions,
+
+
 };
 
 export default accountDetails;

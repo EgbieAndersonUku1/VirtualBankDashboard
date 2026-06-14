@@ -1,10 +1,12 @@
-const numOfCardTableRows = document.getElementById("card-requests-header");
-const tableRowCounter    = document.getElementById("table-row-counter");
+const numOfCardTableRows      = document.getElementById("card-requests-header");
+const tableRowCounter         = document.getElementById("table-row-counter");
+const linkedAccountTableBody  = document.getElementById("linked-account-table-body")
 
 
 import { formatMaskedAccountNumber } from "../utils.js";
 import { clearDivElement } from "./rules/utils.js";
 import { statusClassMap } from "./handleRequestBtns.js";
+import { warnError } from "../logger.js";
 
 
 const tableBody = document.getElementById("card-requests-tbody");
@@ -197,4 +199,68 @@ export function renderTable(rows) {
             time: row.time,
         });
     });
+}
+
+
+
+
+/**
+ * Populates the card history table with the number of active,
+ * replacement, lost, and stolen cards.
+ *
+ * @param {Object} cardHistory - Card history statistics.
+ * @param {number} activeCards - Number of active cards.
+ * @param {number} replacementCards - Number of replacement cards.
+ * @param {number} lostCards - Number of lost cards.
+ * @param {number} stolenCards - Number of stolen cards.
+ *
+ * @returns {void}
+ *
+ * @example
+ * populateCardHistoryTable({
+ *     activeCards: 12,
+ *     replacementCards: 3,
+ *     lostCards: 1,
+ *     stolenCards: 0
+ * });
+ */
+export function populateCardHistoryTable({ activeCards, replacementCards, lostCards, stolenCards}) {
+
+    const activeCardType   = typeof activeCards;
+    const replaceCardType  = typeof replacementCards;
+    const lostCardType     = typeof lostCards;
+    const stolenCardType   = typeof stolenCards;
+
+    if (activeCardType !== "number" || replaceCardType !== "number" || lostCardType !== "number" || stolenCardType !== "number") {
+        warnError("populateLinkTable", {
+            error: "One or more of params is not a number",
+            activeCard: activeCardType,
+            replaceCard: replaceCardType,
+            lostCards: lostCardType,
+            stolenCard: stolenCardType,
+        });
+        return;
+    }
+
+    const trElement           = document.createElement("tr");
+    const activeCardElement   = document.createElement("td");
+    const replaceCardElement  = document.createElement("td");
+    const lostCardElement     = document.createElement("td");
+    const stolenCardElement   = document.createElement("td");
+
+    activeCardElement.textContent = activeCards;
+    replaceCardElement.textContent = replacementCards;
+    lostCardElement.textContent = lostCards;
+
+    stolenCardElement.textContent = stolenCards;
+
+
+    trElement.appendChild(activeCardElement);
+    trElement.appendChild(replaceCardElement);
+    trElement.appendChild(lostCardElement);
+    trElement.appendChild(stolenCardElement);
+    trElement.classList.add("center")
+
+    linkedAccountTableBody.appendChild(trElement)
+  
 }
