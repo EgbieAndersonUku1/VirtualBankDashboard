@@ -277,6 +277,10 @@ html {
     padding-left: var(--space-8);
 }
 
+.pl-12 {
+    padding-left: var(--space-12);
+}
+
 .pl-16 {
     padding-left: var(--space-16);
 }
@@ -4781,11 +4785,14 @@ clicks the button
     color: #b7791f;
 }
 
+
+.status--active,
 .status--approved {
     background: #d1fae5;
     color: #065f46;
 }
 
+.status--disabled,
 .status--rejected {
     background: #fee2e2;
     color: #991b1b;
@@ -5162,4 +5169,134 @@ clicks the button
 
 #search-request-search-field {
     height: 30px;
+}
+
+
+/* the bank details for the third tab in the card request.html*/
+#request-third-tab #bank-details .bank-details__container {
+    display: grid;
+    grid-template-columns: 15% 85%;
+    grid-template-rows: auto;
+    column-gap: var(--space-8);
+}
+
+
+#request-third-tab #bank-details .bank-details__bank-logo {
+    position: relative;
+    height: 80px;
+    width: 80px;
+}
+
+#request-third-tab #bank-details .bank-details__bank-logo img {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+}
+
+
+#request-third-tab #bank-details {
+    background: ghostwhite;
+    padding: var(--space-8);
+    border: 2px solid lavender;
+}
+
+
+.account-summary div dd {
+    font-size: 0.8rem;
+    font-weight: 500;
+}
+
+
+#account-information__overview {
+    column-gap: var(--space-12);
+}
+
+
+
+#account-information__overview > div.account-information__table_1 > dl > div, 
+#account-information__overview > div.account-information__table_2 > dl > div {
+    font-size: 0.85rem;
+    padding: var(--space-12);
+    border-bottom: 2px solid lavender;
+}
+
+#account-information__overview > div.account-information__table_1 > dl > div dt, 
+#account-information__overview > div.account-information__table_2 > dl > div dt{
+  font-weight: 600;
+}
+
+
+#account-information__overview > div.account-information__table_1 > dl > div dd, 
+#account-information__overview > div.account-information__table_2 > dl > div dd{
+  font-weight: 600;
+  color: #6B7280;
+}
+
+
+
+.section-label {
+    font-size: 0.875rem;
+    color: var(--text-muted-color);
+    font-weight: 600;
+    margin-bottom: var(--space-8);
+    border-bottom: 1px solid lavender;
+    font-style: normal;
+    text-transform: capitalize;
+}
+
+#recent-transaction-heading,
+#linked-account-table-heading,
+#account-information-heading,
+#branch-location p:not(.section-label),
+#branch-phone {
+   font-size: 0.875rem;
+}
+
+
+#recent-transaction-heading {
+    background: ghostwhite;
+    padding-top: var(--space-8);
+    padding-bottom: var(--space-8);
+}
+
+#request-third-tab #bank-details,
+#request-third-tab #account-information {
+    border: 2px solid ghostwhite;
+}
+
+
+
+#linked-account-table table {
+    width: 100%;
+    font-size: 0.85rem;
+    border: 1px solid lavender;
+}
+
+#linked-account-table table th {
+    font-weight: 500;
+}
+
+
+
+#linked-account-table table thead th {
+    background: ghostwhite;
+    color: black;   
+}
+
+
+.recent-transaction__cards .recent-transaction_card {
+   grid-template-columns: 10% 60% 35%;
+   grid-template-rows: auto;
+
+   border-top: 1px solid lavender;
+   border-bottom: 1px solid lavender;
+   padding-top: var(--space-8);
+   padding-bottom: var(--space-8);
+   padding-right: var(--space-24);
+ 
+}
+
+
+.transaction-card__date {
+    font-size: 0.8rem;
 }
