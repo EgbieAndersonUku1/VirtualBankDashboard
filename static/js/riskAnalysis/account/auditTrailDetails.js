@@ -53,7 +53,11 @@ export const AuditTrailDetails = {
             performedBy: `${name}`,
             channel: "Web",
             date: "2026-05-26",
-            time: "16:18"
+            time: "16:18",
+            metadata: {
+                currentStatus: "Pending",
+                
+            }
         },
         {
             event: auditEventType.REQUEST_STATUS_CHANGED,
@@ -62,8 +66,7 @@ export const AuditTrailDetails = {
             date: "2026-05-26",
             time: "16:22",
             metadata: {
-                previousStatus: "Pending",
-                newStatus: "Under Review"
+                currentStatus: "Under Review"
             }
         },
         {
@@ -71,28 +74,40 @@ export const AuditTrailDetails = {
             description: "User profile and account details viewed",
             performedBy: "John Wicks (Top head hunter manager)",
             date: "2026-05-26",
-            time: "16:23"
+            time: "16:23",
+            metadata: {
+                currentStatus: "Under Review"
+            }
         },
         {
             event: auditEventType.ACCOUNT_DETAILS_ACCESSED,
             description: `Account ${formatMaskedAccountNumber(accountDetails.accountNumber)} details accessed`,
             performedBy: "John Wicks (Top head hunter manager)",
             date: "2026-05-26",
-            time: "16:26"
+            time: "16:26",
+            metadata: {
+                currentStatus: "Under Review"
+            }
         },
         {
             event: auditEventType.KYC_VERIFIED,
             description: "User identity and documents verified successfully",
             performedBy: "John Wicks (Top head hunter manager)",
             date: "2026-05-27",
-            time: "09:05"
+            time: "09:05",
+            metadata: {
+                currentStatus: "Under Review"
+            }
         },
         {
             event: auditEventType.CARD_REQUEST_APPROVED,
             description: "Visa Debit card request approved",
             performedBy: "John Wicks (Top head hunter manager)",
             date: "2026-05-27",
-            time: "09:12"
+            time: "09:12",
+            metadata: {
+                currentStatus: "Approved"
+            }
         },
         {
             event: auditEventType.REQUEST_STATUS_CHANGED,
@@ -101,7 +116,6 @@ export const AuditTrailDetails = {
             date: "2026-05-27",
             time: "09:13",
             metadata: {
-                previousStatus: "Under Review",
                 newStatus: "Approved"
             }
         },
@@ -110,14 +124,20 @@ export const AuditTrailDetails = {
             description: "Card added to dispatch queue",
             performedBy: "System",
             date: "2026-05-27",
-            time: "09:20"
+            time: "09:20",
+             metadata: {
+                newStatus: "Approved"
+            }
         },
         {
             event: auditEventType.SMS_NOTIFICATION_SENT,
             description: "Card approval notification sent to user",
             performedBy: "System",
             date: "2026-05-27",
-            time: "09:21"
+            time: "09:21",
+            metadata: {
+                newStatus: "Approved"
+            }
         }
     ]
 };

@@ -19,7 +19,8 @@ const requestTabContainer = document.getElementById("tabs");
 const requestTabContents  = document.querySelectorAll(".request-tab-content");
 const firstTabContent     = document.getElementById("request-first-tab");
 const secondTabContent    = document.getElementById("request-second-tab");
-const thirdTabContent     = document.getElementById("request-third-tab")
+const thirdTabContent     = document.getElementById("request-third-tab");
+const fourthTabContent    = document.getElementById("request-fourth-tab")
 
 
 
@@ -61,6 +62,10 @@ function handleDelegation(e) {
         
         case "request-third-tab":
             activateTab(tab, thirdTabContent);
+            break;
+        
+        case "request-fourth-tab":
+            activateTab(tab, fourthTabContent);
             break;
     }
 }
