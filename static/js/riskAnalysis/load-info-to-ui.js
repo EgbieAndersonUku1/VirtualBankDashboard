@@ -1,7 +1,7 @@
 import accountDetails from "./account/accountDetails.js";
 import profileInformationDetails from "./account/profileInfoDetails.js";
 import { deselectAllTabs, highlightTab } from "../utils/tab-utils.js";
-import { formatCurrency, sanitizeText, getLastFourDigits, formatMaskedAccountNumber } from "../utils.js";
+import { formatCurrency, sanitizeText, getLastFourDigits, formatMaskedAccountNumber, toggleSpinner } from "../utils.js";
 import { badgeConfig } from "./badge.config.js";
 import { warnError } from "../logger.js";
 import cardRequestInformation from "./account/cardRequestDetails.js";
@@ -11,20 +11,31 @@ import { clearDivElement } from "./rules/utils.js";
 import { statusClassMap } from "./handleRequestBtns.js";
 import { renderTable, populateCardHistoryTable } from "./table.js";
 import TransactionRenderer from "./ui-builder/buildTransactionCards.js";
+import { AuditTrailRenderer } from "./ui-builder/auditTrail.js";
+import { AuditTrailDetails } from "./account/auditTrailDetails.js";
+
 
 
 
 const tabs                = document.querySelectorAll(".tabs .tab")
-const requestTabContainer = document.getElementById("tabs");
+const mainSectionContainer = document.querySelector(".dashboard__container__main");
 const requestTabContents  = document.querySelectorAll(".request-tab-content");
 const firstTabContent     = document.getElementById("request-first-tab");
 const secondTabContent    = document.getElementById("request-second-tab");
-const thirdTabContent     = document.getElementById("request-third-tab")
+const thirdTabContent     = document.getElementById("request-third-tab");
+const fourthTabContent    = document.getElementById("request-fourth-tab");
+const auditSpinner        = document.getElementById("load-audit-spinner");
 
 
 
-requestTabContainer.addEventListener("click", handleDelegation);
+mainSectionContainer.addEventListener("click", handleDelegation);
 
+// initialise the audit render
+const auditRender = new AuditTrailRenderer({numOfCardsToLoadPerClick:2, 
+                                            auditTrail:AuditTrailDetails.audit, 
+                                            auditCardContainerId:"audit-trail__cards",
+                                            loadButtonId: "load-more",
+                                            })
 
 
 
@@ -39,6 +50,10 @@ document.addEventListener("DOMContentLoaded", () => {
         showFirstTab();
 
         populateTableData();
+
+        // initialise the audit renderer and render a couple
+        auditRender.initialise();
+        auditRender.render();
 });
 
 
@@ -47,9 +62,9 @@ document.addEventListener("DOMContentLoaded", () => {
  */
 function handleDelegation(e) {
 
-    const id = e.target.dataset.tab;
+    const id = e.target.dataset.tab || e.target.id;
     const tab = e.target;
-
+  
     switch (id) {
         case "request-first-tab":
             activateTab(tab, firstTabContent);
@@ -61,6 +76,15 @@ function handleDelegation(e) {
         
         case "request-third-tab":
             activateTab(tab, thirdTabContent);
+            break;
+        
+        case "request-fourth-tab":
+            activateTab(tab, fourthTabContent);
+            break;
+        
+        case "load-more":
+            console.log("I am here")
+            handleRendererAuditClick(e.target);
             break;
     }
 }
@@ -647,6 +671,27 @@ const populateBankDetails = (() => {
 })();
 
 
+/**
+ * Handles the rendering of the audit card when the button is click.
+ * Depending on the text, it is either loaded or the loaded cards is 
+ * removed back to initial state
+ * @param {*} buttonElement 
+ */
+function handleRendererAuditClick(buttonElement) {
+    const DELAY_MS = 200;
 
+    toggleSpinner(auditSpinner);
 
+    setTimeout(() => {
+         toggleSpinner(auditSpinner, false);
 
+        if (buttonElement.textContent === auditRender.loadButtonLessText) {
+            auditRender.showLess();
+            // console.log("I am here")
+            return
+        }
+       
+        const resp = auditRender.render();
+
+    }, DELAY_MS)
+}

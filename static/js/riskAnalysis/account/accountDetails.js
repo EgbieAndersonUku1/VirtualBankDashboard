@@ -82,9 +82,9 @@ const accountDetails = {
 
     cardHistory: {
         activeCards: 4,
-        replacementCards: 0,
-        lostCardsReported: 0,
-        stolenCardsReported: 0
+        replacementCards: 4,
+        lostCardsReported: 1,
+        stolenCardsReported: 1
     },
 
     security: {
