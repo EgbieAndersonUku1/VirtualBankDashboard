@@ -44,7 +44,6 @@ export const auditEventType = Object.freeze({
 
 
 const name = profileInformationDetails.fullName;
-
 export const AuditTrailDetails = {
     audit: [
         {
@@ -56,13 +55,13 @@ export const AuditTrailDetails = {
             time: "16:18",
             metadata: {
                 currentStatus: "Pending",
-                
             }
         },
         {
             event: auditEventType.REQUEST_STATUS_CHANGED,
             description: "Status changed from Pending to Under Review",
             performedBy: "John Wicks (Top head hunter manager)",
+            channel: "Admin Portal",
             date: "2026-05-26",
             time: "16:22",
             metadata: {
@@ -73,6 +72,7 @@ export const AuditTrailDetails = {
             event: auditEventType.USER_INFORMATION_VIEWED,
             description: "User profile and account details viewed",
             performedBy: "John Wicks (Top head hunter manager)",
+            channel: "Admin Portal",
             date: "2026-05-26",
             time: "16:23",
             metadata: {
@@ -81,8 +81,9 @@ export const AuditTrailDetails = {
         },
         {
             event: auditEventType.ACCOUNT_DETAILS_ACCESSED,
-            description: `Account ${formatMaskedAccountNumber(accountDetails.accountNumber)} details accessed`,
+            description: `Account ${formatMaskedAccountNumber(accountDetails?.accountNumber.toString())} details accessed`,
             performedBy: "John Wicks (Top head hunter manager)",
+            channel: "Admin Portal",
             date: "2026-05-26",
             time: "16:26",
             metadata: {
@@ -93,6 +94,7 @@ export const AuditTrailDetails = {
             event: auditEventType.KYC_VERIFIED,
             description: "User identity and documents verified successfully",
             performedBy: "John Wicks (Top head hunter manager)",
+            channel: "Admin Portal",
             date: "2026-05-27",
             time: "09:05",
             metadata: {
@@ -103,6 +105,7 @@ export const AuditTrailDetails = {
             event: auditEventType.CARD_REQUEST_APPROVED,
             description: "Visa Debit card request approved",
             performedBy: "John Wicks (Top head hunter manager)",
+            channel: "Admin Portal",
             date: "2026-05-27",
             time: "09:12",
             metadata: {
@@ -113,6 +116,7 @@ export const AuditTrailDetails = {
             event: auditEventType.REQUEST_STATUS_CHANGED,
             description: "Status changed from Under Review to Approved",
             performedBy: "John Wicks (Top head hunter manager)",
+            channel: "Admin Portal",
             date: "2026-05-27",
             time: "09:13",
             metadata: {
@@ -123,9 +127,10 @@ export const AuditTrailDetails = {
             event: auditEventType.CARD_QUEUED_FOR_DISPATCH,
             description: "Card added to dispatch queue",
             performedBy: "System",
+            channel: "System",
             date: "2026-05-27",
             time: "09:20",
-             metadata: {
+            metadata: {
                 newStatus: "Approved"
             }
         },
@@ -133,6 +138,7 @@ export const AuditTrailDetails = {
             event: auditEventType.SMS_NOTIFICATION_SENT,
             description: "Card approval notification sent to user",
             performedBy: "System",
+            channel: "Notification Service",
             date: "2026-05-27",
             time: "09:21",
             metadata: {

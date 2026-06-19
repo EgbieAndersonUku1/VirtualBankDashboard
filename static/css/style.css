@@ -415,6 +415,15 @@ img:hover {
     color: var(--red);
 }
 
+
+.blue-text {
+    color: var(--blue-600)
+}
+
+.orange-text {
+    color: var(--amber-500)
+}
+
 .red-outline {
     border: 1px solid var(--red);
     color: var(--red);
@@ -4189,6 +4198,7 @@ clicks the button
     display: none;
 }
 
+#load-audit-spinner.show,
 #add-pin__spinner.show,
 #add-recipient__spinner.show {
     display: block;
@@ -5306,6 +5316,7 @@ clicks the button
     margin-top: var(--space-16);
 }
 
+
 .audit-trail__card {
     display: grid;
     grid-template-columns: 10% 90%;
@@ -5352,17 +5363,35 @@ clicks the button
     
 }
 
-.audit_trail_card__meta {
+
+
+.audit-trail-card__info h1,
+.audit-trail-card__info h2 {
+    font-size: 0.9rem;
+    text-transform: capitalize;
+}
+
+.audit-trail__body {
+    font-size: 0.8rem;
+}
+
+.audit-trail-card__meta {
     display: grid;
     grid-template-columns: auto 1fr;
     gap: 0.2rem 0.5rem;
 }
 
-.audit_trail_card__meta dt,
-.audit_trail_card__meta dd {
+.audit-trail-card__meta dt,
+.audit-trail-card__meta dd {
     margin: 0;
 }
 
-.audit_trail_card__meta dt {
+.audit-trail-card__meta dt {
     font-weight: 500;
 }
+
+#load-audit-spinner {
+    margin-left: 50%;
+    display: none;
+}
+

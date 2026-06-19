@@ -886,3 +886,88 @@ export function debounce(func, delay = 300) {
         timeout = setTimeout(() => { func(...args);}, delay);
     };
 }
+
+
+
+/**
+ * Determines whether a value is a valid numeric string.
+ *
+ * A valid numeric string must:
+ * - Be a string containing a number.
+ * - Not be empty or contain only whitespace.
+ * - Be safely convertible to a finite number.
+ *
+ * @param {string} value - The value to check.
+ * @returns {boolean} True if the value is a valid numeric string, otherwise false.
+ *
+ * @example
+ * isNumberString("123");     // true
+ * isNumberString("12.5");    // true
+ * isNumberString("hello");   // false
+ * isNumberString("");        // false
+ * isNumberString("   ");     // false
+ */
+export function isNumberString(value) {
+    return value.trim() !== "" && Number.isFinite(Number(value));
+}
+
+
+
+
+/**
+ * Validates that the provided hour and minute values form a valid time.
+ *
+ * Both values must be numeric strings and must fall within the accepted
+ * 24-hour time format range:
+ * - Hours must be between 0 and 23.
+ * - Minutes must be between 0 and 59.
+ *
+ * The function throws an error when validation fails. If no error is thrown,
+ * the provided time values are considered valid.
+ *
+ * @param {string} hour - The hour value (HH) as a numeric string.
+ * @param {string} mins - The minute value (MM) as a numeric string.
+ *
+ * @throws {Error} Throws an error if:
+ * - The hour is not a valid numeric string.
+ * - The minutes are not a valid numeric string.
+ * - The hour or minutes are less than 0.
+ * - The hour is greater than 23.
+ * - The minutes are greater than 59.
+ *
+ * @example
+ * validateTimeString("09", "30");
+ * // Completes successfully
+ *
+ * @example
+ * validateTimeString("24", "00");
+ * // Throws: Error - The hour cannot be greater than 23
+ */
+export function validateTimeString(hour, mins) {
+    if (!isNumberString(hour)) {
+        throw new Error(
+            "The hour is not a number string. HH can be a string but it must be a valid number"
+        );
+    }
+
+    if (!isNumberString(mins)) {
+        throw new Error(
+            "The mins is not a number string. MM can be a string but it must be a valid number"
+        );
+    }
+
+    const hourStringToNum = Number(hour);
+    const minsStringToNum = Number(mins);
+
+    if (hourStringToNum < 0 || minsStringToNum < 0) {
+        throw new Error("The hour or mins value cannot be less than 0");
+    }
+
+    if (hourStringToNum > 23) {
+        throw new Error("The hour cannot be greater than 23");
+    }
+
+    if (minsStringToNum > 59) {
+        throw new Error("The minutes cannot be greater than 59");
+    }
+}
