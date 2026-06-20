@@ -13,6 +13,7 @@ import { renderTable, populateCardHistoryTable } from "./table.js";
 import TransactionRenderer from "./ui-builder/buildTransactionCards.js";
 import { AuditTrailRenderer } from "./ui-builder/auditTrail.js";
 import { AuditTrailDetails } from "./account/auditTrailDetails.js";
+import { minimumCharactersToUse } from "../utils/password/textboxCharEnforcer.js";
 
 
 
@@ -50,6 +51,8 @@ document.addEventListener("DOMContentLoaded", () => {
         showFirstTab();
 
         populateTableData();
+
+        showNumOfCharsRemaining();
 
         // initialise the audit renderer and render a couple
         auditRender.initialise();
@@ -694,4 +697,30 @@ function handleRendererAuditClick(buttonElement) {
         const resp = auditRender.render();
 
     }, DELAY_MS)
+}
+
+
+
+function showNumOfCharsRemaining() {
+   const requestTextArea = document.getElementById("notes");
+
+   if (!requestTextArea) {
+     warnError("showNumOfCharsRemaining", {
+        error: "The id for the notes text area is invalid"
+     });
+     return;
+   }
+
+ 
+    minimumCharactersToUse(notes, {
+        minCharClass: ".num-of-characters-remaining",
+        maxCharClass: ".num-of-characters-to-use",
+        minCharMessage: "Minimum characters to use: ",
+        maxCharMessage: "Number of characters remaining: ",
+        minCharsLimit: 50,
+        maxCharsLimit: 255,
+        disablePaste: true,
+    })
+    
+    
 }
