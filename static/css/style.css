@@ -36,7 +36,8 @@
 
     --warning-color: #FFF8E1;
     --accent: #38bdf8;
-    ;
+    --text-primary: #1f2937;
+    --border-colour: #d1d5db;
 
 }
 
@@ -1391,16 +1392,26 @@ footer {
 
 
 /* html selctors  */
-.account-card__add-amount button,
-input,
-select,
-textarea {
-    /* border-color: 0.5px solid #1F4FD8; */
+.account-card__add-amount button {
+ 
     border: 1px solid #d1d5db;
     box-shadow: 0 0 0 3px rgba(31, 79, 216, 0.15);
     border-radius: 6px;
     padding: 12px 14px;
     font-size: 1rem;
+
+}
+
+
+input,
+select,
+textarea {
+    border: 2px solid var(--border-colour);
+    border-radius: 6px;
+    padding: 12px 14px;
+    font-size: 1rem;
+    padding: 0.75rem 1rem;
+    background-color: #ffffff;
 
 }
 
@@ -1997,6 +2008,8 @@ take up 50 to left and 50 up
     column-gap: var(--space-8);
 }
 
+
+.card-request-summary .card-request-summary__info dl .group dt,
 .bank-completion__details dt {
     text-transform: capitalize;
     font-size: 0.875rem;
@@ -2006,6 +2019,7 @@ take up 50 to left and 50 up
     /* muted grey */
 }
 
+.card-request-summary .card-request-summary__info dl .group dd,
 .bank-completion__details dd {
     font-size: 0.9375rem;
     /* 15px*/
@@ -5395,3 +5409,222 @@ clicks the button
     display: none;
 }
 
+
+
+
+
+/* card request information.html */
+
+#card-information .card-information__container {
+    display: grid;
+    grid-template-columns: 60% 40%;
+    grid-template-rows: auto;
+    column-gap: var(--space-8);
+}
+
+
+.card-request-personal-information h2 {
+    margin-top: var(--space-24);
+    margin-bottom: var(--space-8);
+}
+
+
+.card-request-personal-information .subtitle {
+    margin-bottom: var(--space-8);
+}
+
+
+.card-request-progress__step,
+#card-information .section-header,
+.card-request-progress__container 
+#card-information 
+.card-request-personal-information {
+
+    border: 2px solid lavender;
+    background: white;
+    padding: var(--space-24);
+}
+
+
+.card-request-progress__step {
+    border: 0;;
+}
+
+
+.card-request-personal-information .form-group label {
+    font-size: 0.875rem; /* 14px */
+    font-weight: 600;
+    line-height: 1.4;
+    color: var(--text-primary);
+}
+
+
+textarea::placeholder {
+    font-size: 0.875rem;
+    color: var(--text-muted);
+    line-height: 1.5;
+}
+
+
+
+/* Card request progress  */
+
+.card-request-progress__steps {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+
+    align-items: flex-start;
+}
+
+
+.card-request-progress__step {
+    position: relative;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    text-align: center;
+    gap: 0.7rem;
+}
+
+
+/* Circle */
+.card-request-progress__number {
+    width: 42px;
+    height: 42px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 50%;
+
+    background-color: #e5e7eb;
+    color: #6b7280;
+
+    font-size: 1rem;
+    font-weight: 600;
+
+    line-height: 1;
+
+    transition: all 0.2s ease;
+}
+
+
+/* Label for the steps */
+.card-request-progress__label {
+  
+    font-size: 0.875rem;
+    font-weight: 500;
+    line-height: 1.4;
+    color: #6b7280;
+}
+
+
+/* Active step */
+.card-request-progress__step--active 
+.card-request-progress__number {
+
+    background-color: #2563eb;
+    color: #ffffff;
+
+}
+
+
+.card-request-progress__step--active 
+.card-request-progress__label {
+
+    color: #111827;
+    font-weight: 600;
+
+}
+
+
+/* Completed step */
+.card-request-progress__step--complete 
+.card-request-progress__number {
+
+    background-color: #16a34a;
+    color: #ffffff;
+
+}
+
+
+.card-request-progress__step--complete 
+.card-request-progress__number::before {
+
+    content: "✓";
+
+}
+
+
+.card-request-progress__step--complete 
+.card-request-progress__number {
+
+    font-size: 0;
+
+}
+
+
+/* Pending step */
+.card-request-progress__step:not(
+.card-request-progress__step--active
+):not(
+.card-request-progress__step--complete
+)
+.card-request-progress__number {
+
+    background-color: #f3f4f6;
+
+}
+
+
+
+
+/* Constants */
+.column-gap-8 {
+    column-gap: var(--space-8);
+}
+
+
+
+
+
+.card-request-summary {
+    border: 2px solid lavender;
+    padding: var(--space-32);
+    background: #ffffff;
+}
+
+
+.card-request-summary .card-request-summary__info dl .group {
+    border-bottom: 1px solid lavender;
+    padding-top: var(--space-8);
+    padding-bottom: var(--space-8);
+}
+
+
+.card-request-summary__container .bank-card {
+    box-shadow: none;
+}
+
+.chat-info {
+    border: 1px solid lavender;
+    padding-top: var(--space-16);
+    padding-bottom: var(--space-16);
+    padding-left: var(--space-4);
+}
+
+.chat-info i {
+    font-size: 2rem;
+}
+
+
+#card-request-next-btn {
+    padding: 4px;
+    border-radius: 0;
+    width: 25%;
+    font-size: 1.3ren;
+}
