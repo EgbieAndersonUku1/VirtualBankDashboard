@@ -290,7 +290,7 @@
 
                             <section id="card-information" class="mt-16">
 
-                                <form action="" method="post">
+                                <form action="" method="post" id="card-request-form">
 
                                     <!-- Section header -->
                                     <div class="section-header">
@@ -354,7 +354,7 @@
                                                     id="requested-card-account-type" required>
 
                                                     <option value="" disabled selected>
-                                                        (Please select account type)
+                                                        Please select account type
                                                     </option>
 
                                                     <option value="debit">
@@ -378,7 +378,7 @@
                                                         required>
 
                                                         <option value="" disabled selected>
-                                                            (Please select a card)
+                                                            Please select a card
                                                         </option>
 
                                                         <option value="virtual">
@@ -405,7 +405,7 @@
                                                         required>
 
                                                         <option value="" disabled selected>
-                                                            (Please select a card type)
+                                                            Please select a card type
                                                         </option>
 
                                                         <option value="visa">
@@ -617,8 +617,9 @@
 
 
                                     <div class="buttons flex flex-end mt-8">
-                                        <button class="blue-bg white-text capitalise" id="card-request-next-btn">Next
-                                            &gt;</button>
+                                        <button type="submit" class="blue-bg white-text capitalise" id="card-request-next-btn">Next
+                                            &gt;
+                                        </button>
                                     </div>
                                 </form>
 
@@ -732,6 +733,7 @@
 
     </main>
     <script src="/static/js/sweetalert2.all.min.js"></script>
+    <script src="/static/js/riskAnalysis/card-request.js" type="module"></script>
 
 
 </body>
