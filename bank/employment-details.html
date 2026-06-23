@@ -1,0 +1,821 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/static/css/style.css">
+    <link rel="shortcut icon" href="/static/images/virtual-bank-logo.png" type="image/x-icon">
+    <link rel="stylesheet" href="/static/vendor/fontawesome/css/all.min.css">
+    <title>Virtual bank Dashboard</title>
+</head>
+
+<body>
+
+
+    <main>
+
+        <section id="dashboard" aria-label="User dashboard">
+
+            <div class="dashboard__container">
+
+                <!-- Sidebar navigation -->
+                <nav class="dashboard__container__sidebar" aria-label="Primary dashboard navigation">
+
+                    <div class="sidebar-brand">
+                        <i class="fa-solid fa-building-columns" aria-hidden="true"></i>
+                        <span class="sidebar-brand__name">Virtual Bank</span>
+                    </div>
+                    <ul class="sidebar-nav">
+
+
+                        <li class="sidebar-nav__item">
+                            <a href="#" class="sidebar-nav__link" aria-current="page">
+                                <span class="sidebar-nav__icon" aria-hidden="true">
+                                    <i class="fa-regular fa-house"></i>
+                                </span>
+                                <span class="sidebar-nav__label">Dashboard</span>
+                            </a>
+                        </li>
+
+                        <li class="sidebar-nav__item">
+                            <a href="#" class="sidebar-nav__link">
+                                <span class="sidebar-nav__icon" aria-hidden="true">
+                                    <i class="fa-solid fa-wallet"></i>
+                                </span>
+                                <span class="sidebar-nav__label">My Wallet</span>
+                            </a>
+                        </li>
+
+                        <li class="sidebar-nav__item">
+                            <a href="transfer-money.html" class="sidebar-nav__link">
+                                <span class="sidebar-nav__icon" aria-hidden="true">
+                                    <i class="fa-solid fa-money-bill-transfer"></i>
+                                </span>
+                                <span class="sidebar-nav__label">Money Transfer</span>
+                            </a>
+                        </li>
+
+                        <li class="sidebar-nav__item">
+                            <a href="manage-credit-cards.html" class="sidebar-nav__link">
+                                <span class="sidebar-nav__icon" aria-hidden="true">
+                                    <i class="fa-solid fa-credit-card"></i>
+                                </span>
+                                <span class="sidebar-nav__label">Manage Credit Cards</span>
+                            </a>
+                        </li>
+
+                        <li class="sidebar-nav__item">
+                            <a href="card-request.html" class="sidebar-nav__link">
+                                <span class="sidebar-nav__icon" aria-hidden="true">
+                                    <i class="fa-solid fa-credit-card"></i>
+                                </span>
+                                <span class="sidebar-nav__label">Card Request</span>
+                            </a>
+                        </li>
+
+
+
+                        <li class="sidebar-nav__item">
+                            <a href="../admin/admin.html" class="sidebar-nav__link">
+                                <span class="sidebar-nav__icon" aria-hidden="true">
+                                    <i class="fa-solid fa-eye"></i>
+                                </span>
+                                <span class="sidebar-nav__label">Admin</span>
+                            </a>
+                        </li>
+
+                        <li class="sidebar-nav__item">
+                            <a href="settings.html" class="sidebar-nav__link">
+                                <span class="sidebar-nav__icon" aria-hidden="true">
+                                    <i class="fa-solid fa-gear"></i>
+                                </span>
+                                <span class="sidebar-nav__label">Settings</span>
+                            </a>
+                        </li>
+
+                    </ul>
+
+
+
+                    <!-- Latest login info -->
+                    <section id="latest-login" aria-labelledby="latest-login-heading">
+                        <div class="flex-grid two-column-20_80_grid">
+                            <span aria-hidden="true">
+                                <i class="fa-solid fa-right-to-bracket"></i>
+                            </span>
+
+                            <div id="latest-login__details">
+                                <h2 id="latest-login-heading" class="capitalise header-9">
+                                    Last login
+                                </h2>
+                                <time datetime="2026-01-29T20:32">Today at 20:32</time>
+                            </div>
+                        </div>
+
+                        <hr class="dividor" aria-hidden="true">
+
+                        <p id="latest-login__note">
+                            Add two-factor authentication recovery codes to your account so you
+                            never lose access.
+                        </p>
+
+                        <div class="btns centre mt-24">
+                            <a href="#" class="btn-large manage-security-btn" aria-describedby="latest-login__note">
+                                Manage security
+                                <span aria-hidden="true"> &gt; </span>
+                            </a>
+                        </div>
+                    </section>
+
+                    <!-- Logout -->
+                    <nav class="logout" aria-label="Account actions">
+                        <ul class="sidebar-nav">
+                            <li class="sidebar-nav__item">
+                                <a href="#" class="sidebar-nav__link" id="logout-dashboard-link">
+                                    <span class="sidebar-nav__icon" aria-hidden="true">
+                                        <i class="fa-solid fa-right-from-bracket"></i>
+                                    </span>
+                                    <span class="sidebar-nav__label">Log out</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </nav>
+
+                </nav>
+
+                <!-- Main content -->
+                <section class="dashboard__container__main" tabindex="-1">
+
+                    <nav class="dashboard__container__navbar flex flex-space-between">
+                        <div class="dashbaord__container__nav-head sidebar-brand">
+                            <i class="fa-solid fa-building-columns" aria-hidden="true"></i>
+                            <span class="sidebar-brand__name dashboard-nav-site-name">Virtual Bank</span>
+                        </div>
+
+                        <div class="dashboard__container__nav-body flex-grid three-column-grid">
+                            <div class="dashboard_container__amount">
+                                <span class="bold"><span class="currency">£</span>1,500</span>
+                            </div>
+
+                            <div class="dashboard__profile" id="dashboard-profile">
+                                <img src="/static/images/icons/profile.png" alt="" class="dashboard-profile-img">
+
+                                <div class="dashboard__container__dropdown-menu dropdown-menu"
+                                    id="dashboard__container__dropdown-menu">
+                                    <ul>
+                                        <li class="flex-grid two-column-20_80_grid">
+                                            <span>
+                                                <img src="/static/images/icons/profile.png" alt=""
+                                                    class="dashboard-profile-img">
+                                            </span>
+
+                                            <span class="flex-grid">
+                                                <span class="bold">John Doe</span>
+                                                <span class="lower-case">Johndoe@example.com</span>
+                                            </span>
+                                        </li>
+
+                                        <li>
+                                            <span><i class="fa-regular fa-user"></i></span><span>Account</span>
+                                        </li>
+                                        <li>
+                                            <span><i class="fa-solid fa-shield-halved"></i></span><span>Security</span>
+                                        </li>
+                                        <li>
+                                            <span><i class="fa-regular fa-circle-question"></i></span><span>Help &
+                                                Support</span>
+                                        </li>
+
+                                        <li class="dashboard-logout">
+                                            <span><i class="fa-solid fa-right-from-bracket"></i></span><span>Log
+                                                out</span>
+                                        </li>
+                                    </ul>
+                                </div>
+
+                            </div>
+
+                            <div class="dashboard__container__notification-bell">
+                                <div class="notifications">
+                                    <img src="/static/images/icons/notification_smartphone_icon.png" alt=""
+                                        class="dashboard-notification-bell-img">
+                                </div>
+
+
+                            </div>
+
+
+                        </div>
+
+
+                    </nav>
+
+
+
+
+                    <hr class="dividor">
+
+                    <!-- The main content -->
+
+                    <section id="card-request-progress" class="m-16" aria-label="Card request progress">
+
+                        <div class="card-request-progress__container">
+
+                            <ol class="card-request-progress__steps flex-grid four-column-grid">
+
+                                <li id="card-step-request"
+                                    class="card-request-progress__step card-request-progress__step--complete white-text"
+                                    aria-current="step">
+
+                                    <span class="card-request-progress__number " aria-hidden="true">
+                                        1
+                                    </span>
+
+                                    <span class="card-request-progress__label">
+                                        Card Request
+                                    </span>
+
+                                    <span class="sr-only">
+                                        Current step
+                                    </span>
+
+                                </li>
+
+
+                                <li id="card-step-employment"
+                                    class="card-request-progress__step card-request-progress__step--active">
+
+                                    <span class="card-request-progress__number" aria-hidden="true">
+                                        2
+                                    </span>
+
+                                    <span class="card-request-progress__label">
+                                        Employment Details
+                                    </span>
+
+                                </li>
+
+
+                                <li id="card-step-review" class="card-request-progress__step">
+
+                                    <span class="card-request-progress__number" aria-hidden="true">
+                                        3
+                                    </span>
+
+                                    <span class="card-request-progress__label">
+                                        Review and Confirm
+                                    </span>
+
+                                </li>
+
+
+                                <li id="card-step-agreement" class="card-request-progress__step">
+
+                                    <span class="card-request-progress__number" aria-hidden="true">
+                                        4
+                                    </span>
+
+                                    <span class="card-request-progress__label">
+                                        Agreement
+                                    </span>
+
+                                </li>
+
+                            </ol>
+
+                            <hr class="dividor">
+
+
+                            <!-- card request information -->
+
+                            <section id="card-information" class="mt-16">
+
+                                <form action="" method="post">
+
+                                    <!-- Section header -->
+                                    <div class="section-header">
+                                        <h1 class="header-7">Employment Details</h1>
+
+                                        <p class="text-muted subtitle">
+                                            Tell us about your employment and income.
+                                        </p>
+                                    </div>
+
+
+                                    <hr class="dividor">
+
+                                    <div class="card-information__container">
+
+                                        <!-- Card request-->
+                                        <div id="card-request-employment-information">
+
+                                            <!-- Employment information -->
+                                            <fieldset id="card-request-employment-group" class="form-group flex-grid">
+
+                                                <legend>
+                                                    Are you currently employed?*
+                                                </legend>
+
+                                                <div id="card-request-employment-options"
+                                                    class="card-request-employment-options flex-grid two-column-grid column-gap-8">
+
+                                                    <div id="card-request-employment-option-no"
+                                                        class="card-request-employment-option">
+
+                                                        <input type="radio" name="is-employed"
+                                                            id="card-request-employment-no" value="no"
+                                                            aria-required="true" checked>
+
+                                                        <label for="card-request-employment-no">
+                                                            No
+                                                        </label>
+
+                                                    </div>
+
+
+                                                    <div id="card-request-employment-option-yes"
+                                                        class="card-request-employment-option">
+
+                                                        <input type="radio" name="is-employed"
+                                                            id="card-request-employment-yes" value="yes"
+                                                            aria-required="true">
+
+                                                        <label for="card-request-employment-yes">
+                                                            Yes
+                                                        </label>
+
+                                                    </div>
+
+                                                </div>
+
+                                            </fieldset>
+
+
+                                            <!-- Employment details hidden message -->
+                                            <div id="card-request-employment-details-message"
+                                                class="card-request-information-message mt-24">
+
+                                                <h2 class="header-9">
+                                                    Employment information unavailable
+                                                </h2>
+
+                                                <p class="text-muted">
+                                                    Employment and income fields will become available once you select
+                                                    <strong>Yes</strong> for your employment status.
+                                                </p>
+
+                                            </div>
+
+                                            <!-- the employment spinner -->
+                                            <div class="spinner center" id="employment-details-spinner"></div>
+
+
+                                            <!-- the employment container -->
+                                            <div id="employment-container" class="mt-48">
+
+                                                <div class="section-header">
+
+                                                    <h2 class="header-8">
+                                                        Employment and Income Details
+                                                    </h2>
+
+                                                    <p class="text-muted subtitle">
+                                                        This information helps us assess your application and determine
+                                                        eligibility.
+                                                    </p>
+
+                                                </div>
+
+                                                <hr class="dividor">
+
+                                                <!-- Employer name -->
+                                                <div id="card-request-employer-name-group" class="form-group flex-grid">
+
+                                                    <label for="card-request-employer-name">
+                                                        Employer name*
+                                                    </label>
+
+                                                    <input type="text" name="employer-name"
+                                                        id="card-request-employer-name" required
+                                                        placeholder="Enter employer name" maxlength="40">
+
+                                                </div>
+
+                                                <!-- Employment type -->
+                                                <div class="form-group flex-grid">
+
+                                                    <label for="card-request-employment-type">
+                                                        Employment type*
+                                                    </label>
+
+                                                    <select name="requested-employment-type"
+                                                        id="card-request-employment-type" required>
+
+                                                        <option value="" disabled selected>
+                                                            Please select Employment type
+                                                        </option>
+
+                                                        <option value="full-time">
+                                                            Full Time
+                                                        </option>
+
+                                                        <option value="part-time">
+                                                            Part time
+                                                        </option>
+
+                                                        <option value="self-employment">
+                                                            Self-employment
+                                                        </option>
+                                                    </select>
+
+                                                </div>
+
+                                                <!-- Years employed -->
+                                                <div id="card-request-years-employed-group"
+                                                    class="form-group flex-grid">
+
+                                                    <label for="card-request-years-employed">
+                                                        Years employed*
+                                                    </label>
+
+                                                    <select name="years-employed" id="card-request-years-employed"
+                                                        required>
+
+                                                        <option value="" disabled selected>
+                                                            Please select number of years employed
+                                                        </option>
+
+                                                        <option value="1">
+                                                            1
+                                                        </option>
+
+                                                        <option value="2">
+                                                            2
+                                                        </option>
+
+                                                        <option value="3">
+                                                            3
+                                                        </option>
+
+                                                        <option value="4">
+                                                            4
+                                                        </option>
+
+                                                        <option value="5-plus">
+                                                            5+
+                                                        </option>
+
+                                                    </select>
+
+                                                </div>
+
+                                                <!-- Annual salary -->
+                                                <div id="card-request-annual-salary-group" class="form-group flex-grid">
+
+                                                    <label for="card-request-annual-salary">
+                                                        Annual salary*
+                                                    </label>
+
+                                                    <select name="annual-salary" id="card-request-annual-salary"
+                                                        required>
+
+                                                        <option value="" disabled selected>
+                                                            Please select annual salary
+                                                        </option>
+
+                                                        <option value="under-15000">
+                                                            Under £15,000
+                                                        </option>
+
+                                                        <option value="15000-24999">
+                                                            £15,000 - £24,999
+                                                        </option>
+
+                                                        <option value="25000-34999">
+                                                            £25,000 - £34,999
+                                                        </option>
+
+                                                        <option value="35000-49999">
+                                                            £35,000 - £49,999
+                                                        </option>
+
+                                                        <option value="50000-74999">
+                                                            £50,000 - £74,999
+                                                        </option>
+
+                                                        <option value="75000-99999">
+                                                            £75,000 - £99,999
+                                                        </option>
+
+                                                        <option value="100000-149999">
+                                                            £100,000 - £149,999
+                                                        </option>
+
+                                                        <option value="150000-plus">
+                                                            £150,000+
+                                                        </option>
+
+                                                    </select>
+
+                                                </div>
+
+                                                <!-- Pay frequency -->
+                                                <div id="card-request-pay-frequency-group" class="form-group flex-grid">
+
+                                                    <label for="card-request-pay-frequency">
+                                                        Pay frequency*
+                                                    </label>
+
+                                                    <select name="pay-frequency" id="card-request-pay-frequency"
+                                                        required>
+
+                                                        <option value="" disabled selected>
+                                                            Please select pay frequency
+                                                        </option>
+
+                                                        <option value="Daily">
+                                                            Daily
+                                                        </option>
+
+                                                        <option value="Weekly">
+                                                            Weekly
+                                                        </option>
+
+                                                        <option value="Bi-Weekly">
+                                                            Bi-Weekly
+                                                        </option>
+
+                                                        <option value="Monthly">
+                                                            Monthly
+                                                        </option>
+
+                                                    </select>
+
+                                                </div>
+
+
+                                                <!-- Contract type -->
+                                                <div id="card-request-contract-type-group" class="form-group flex-grid">
+
+                                                    <label for="card-request-contract-type">
+                                                        Contract type*
+                                                    </label>
+
+                                                    <select name="contract-type" id="card-request-contract-type"
+                                                        required>
+
+                                                        <option value="" disabled selected>
+                                                            Please select contract type
+                                                        </option>
+
+                                                        <option value="Permanent">
+                                                            Permanent
+                                                        </option>
+
+                                                        <option value="Temporary">
+                                                            Temporary
+                                                        </option>
+
+                                                        <option value="Contractor">
+                                                            Contractor
+                                                        </option>
+
+                                                        <option value="Fixed-Term">
+                                                            Fixed-Term
+                                                        </option>
+
+                                                        <option value="Agency Worker">
+                                                            Agency Worker
+                                                        </option>
+
+                                                        <option value="Apprenticeship">
+                                                            Apprenticeship
+                                                        </option>
+
+                                                    </select>
+
+                                                </div>
+
+                                            </div>
+
+                                        </div>
+
+
+                                        <!-- application summary -->
+                                        <div class="card-request-summary">
+
+                                            <div class="card-request-summary__container">
+                                                <h2 class="mb-4 header-8">Application summary</h2>
+
+                                                <p class="text-muted mb-24">
+                                                    Preview your card details and application information before
+                                                    continuing.
+                                                </p>
+
+                                                <div class="bank-card credit-discover-card" role="region"
+                                                    aria-label="Atlas Bank Discover Debit Card, balance £0.00">
+                                                    <div class="card-head">
+                                                        <div class="card-head-info">
+                                                            <h3>Atlas Bank</h3>
+                                                            <p class="bank-card-amount">£0.00</p>
+                                                        </div>
+
+                                                        <div class="card-type-logo flex flex-end">
+                                                            <img src="/static/images/icons/discover.svg"
+                                                                alt="Discover logo">
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="card-body">
+                                                        <div class="chip">
+                                                            <img src="/static/images/icons/sim-card-chip.svg"
+                                                                alt="Card chip">
+                                                        </div>
+
+                                                        <div class="credit-transaction-type flex flex-end">
+                                                            <span class="card-type">Credit</span>
+                                                        </div>
+
+                                                        <div class="card-number flex flex-end">
+                                                            <span class="card-number">***********</span>
+
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="card-footer flex flex-space-between">
+                                                        <div class="card-name">Joke Thompson</div>
+                                                        <div class="card-expiry-date">
+                                                            <p>Expiry date: TBD</p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+
+                                            </div>
+
+                                            <div class="card-request-summary__info mt-24">
+
+                                                <dl>
+                                                    <div class="group">
+                                                        <dd>Card Type</dd>
+                                                        <dt>Visa</dt>
+                                                    </div>
+
+                                                    <div class="group">
+                                                        <dd>Card Variant</dd>
+                                                        <dt>Virtual card</dt>
+                                                    </div>
+
+                                                    <div class="group">
+                                                        <dd>Delivery</dd>
+                                                        <dt>Online</dt>
+                                                    </div>
+
+                                                    <div class="group">
+                                                        <dd>Ext delivery</dd>
+                                                        <dt>Instant</dt>
+                                                    </div>
+                                                </dl>
+                                            </div>
+
+                                            <div class="chat-info flex-grid two-column-20_80_grid mt-24">
+                                                <div class="chat-icon center" aria-hidden="true">
+                                                    <i class="fa-solid fa-headset"></i>
+                                                </div>
+
+                                                <div class="chat">
+                                                    <h3 class="header-9">Need help</h3>
+                                                    <p class="text-muted">Chat with our support team</p>
+                                                </div>
+                                            </div>
+
+                                        </div>
+
+                                    </div>
+
+
+
+                                    <div class="buttons flex flex-end mt-48">
+                                        <a href="card-request-information.html"
+                                            class="back-btn center white-bg capitalise mr-4">
+                                            &lt; Back
+
+                                        </a>
+
+                                        <button class="blue-bg white-text capitalise" id="card-request-next-btn"
+                                            type="submit">Next
+                                            &gt;</button>
+                                    </div>
+                                </form>
+
+                            </section>
+                        </div>
+
+                    </section>
+
+                </section>
+
+
+                <!-- The footer section -->
+                <footer>
+
+                    <div class="footer__container">
+
+                        <div class="footer__header">
+                            <img src="/static/images/virtual-wallet-logo.png" alt="The virtual logo"
+                                class="footer-logo">
+
+                        </div>
+
+
+                        <div class="flex-grid five-column-grid" id="footer-sections">
+
+                            <!-- About us column -->
+                            <div class="col flex-grid" id="about-us">
+                                <h1 class="footer-head pb-16">About us</h1>
+                                <a href="#" class="footer-link">Our company</a>
+                                <a href="#" class="footer-link">Careers</a>
+                                <a href="#" class="footer-link">Security</a>
+                                <a href="#" class="footer-link">Investor relations</a>
+
+                            </div>
+
+                            <!-- services column -->
+                            <div class="col flex-grid" id="services">
+                                <h1 class="footer-head pb-16">services</h1>
+                                <a href="#" class="footer-link">Online banking</a>
+                                <a href="#" class="footer-link">Mobile app</a>
+                                <a href="#" class="footer-link">Credit app</a>
+                                <a href="#" class="footer-link">Loans and mortgages</a>
+                            </div>
+
+                            <!-- support column -->
+                            <div class="col flex-grid" id="support">
+                                <h1 class="footer-head pb-16">support</h1>
+                                <a href="#" class="footer-link">FAQs</a>
+                                <a href="#" class="footer-link">Help Center</a>
+                                <a href="#" class="footer-link">Contact us</a>
+                                <a href="#" class="footer-link">Live chat</a>
+                            </div>
+
+                            <div class="col flex-grid" id="resources">
+                                <h1 class="footer-head pb-16">resources</h1>
+                                <a href="#" class="footer-link">Financial Education</a>
+                                <a href="#" class="footer-link">Blog</a>
+                                <a href="#" class="footer-link">News and Insight</a>
+                                <a href="#" class="footer-link">Calculators</a>
+                            </div>
+
+                            <div class="col" id="download-app">
+                                <h1 class="footer-head">Download our app</h1>
+
+                                <div id="apps" class="flex-grid two-column-grid">
+                                    <img src="/static/images/footer-icons/appStore.svg" alt="" class="footer-icon">
+                                    <img src="/static/images/footer-icons/googlePlay.svg" alt="" class="footer-icon">
+                                </div>
+
+
+                            </div>
+                        </div>
+
+                        <div class="socials copyright flex-grid two-column-grid pb-24">
+
+                            <div class="socials four-column-grid">
+                                <a href="#"><img src="/static/images/icons/facebook.svg" alt="facebook"
+                                        class="social-icon"></a>
+                                <a href="#"><img src="/static/images/icons/instagram.svg" alt="facebook"
+                                        class="social-icon"></a>
+
+                            </div>
+
+                            <div class="copyright four-column-grid">
+                                <a href="#" class="copyright-link"><span class="copyright-date">@2026 </span>Virtual
+                                    bank. All
+                                    rights reserved</a>
+                                <a href="#" class="copyright-link footer-link">Privacy policy</a>
+                                <a href="#" class="copyright-link footer-link">Terms of use</a>
+
+                            </div>
+                        </div>
+
+                    </div>
+
+                </footer>
+
+
+
+            </div>
+
+        </section>
+
+    </main>
+    <script src="/static/js/sweetalert2.all.min.js"></script>
+    <script src="/static/js/riskAnalysis/card-request.js" type="module"></script>
+
+
+
+
+</body>
+
+</html>

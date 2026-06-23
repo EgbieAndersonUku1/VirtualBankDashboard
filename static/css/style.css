@@ -858,6 +858,9 @@ blockquote {
 }
 
 
+.back-btn {
+    border: 1px solid black;
+}
 
 #login-btn {
     background: var(--blue-600);
@@ -4212,6 +4215,8 @@ clicks the button
     display: none;
 }
 
+
+#employment-details-spinner.show,
 #load-audit-spinner.show,
 #add-pin__spinner.show,
 #add-recipient__spinner.show {
@@ -5451,6 +5456,8 @@ clicks the button
 }
 
 
+#card-request-employment-group legend,
+#employment-container  label,
 .card-request-personal-information .form-group label {
     font-size: 0.875rem; /* 14px */
     font-weight: 600;
@@ -5540,47 +5547,35 @@ textarea::placeholder {
     font-weight: 600;
 
 }
-
-
 /* Completed step */
 .card-request-progress__step--complete 
 .card-request-progress__number {
 
     background-color: #16a34a;
-    color: #ffffff;
+    color: transparent;
 
 }
-
 
 .card-request-progress__step--complete 
 .card-request-progress__number::before {
 
     content: "✓";
-
-}
-
-
-.card-request-progress__step--complete 
-.card-request-progress__number {
-
-    font-size: 0;
+    color: #ffffff;
+    font-size: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
 }
 
 
 /* Pending step */
-.card-request-progress__step:not(
-.card-request-progress__step--active
-):not(
-.card-request-progress__step--complete
-)
+.card-request-progress__step:not(.card-request-progress__step--active):not( .card-request-progress__step--complete)
 .card-request-progress__number {
 
     background-color: #f3f4f6;
 
 }
-
-
 
 
 /* Constants */
@@ -5621,10 +5616,90 @@ textarea::placeholder {
     font-size: 2rem;
 }
 
-
+.back-btn,
 #card-request-next-btn {
     padding: 4px;
     border-radius: 0;
-    width: 25%;
+    width: 20%;
     font-size: 1.3ren;
+}
+
+
+
+/* the employment page */
+.card-request-employment-option {
+    padding: var(--space-24);
+    border: 2px solid lavender;
+    background: white;
+}
+
+
+/* Hide default radio button */
+.card-request-employment-option input[type="radio"] {
+    position: absolute;
+    opacity: 0;
+}
+
+
+/* Create custom radio circle */
+.card-request-employment-option label {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    cursor: pointer;
+}
+
+
+
+/* Selected employment option also changes the background of the div */
+.card-request-employment-option:has(input[type="radio"]:checked) {
+
+    background-color: #dcfce7;
+    border-color: #16a34a;
+
+}
+
+.card-request-employment-option label::before {
+    content: "";
+    width: 1.25rem;
+    height: 1.25rem;
+    border: 2px solid #9ca3af;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+   
+}
+
+
+
+/* When selected */
+.card-request-employment-option input[type="radio"]:checked + label::before {
+
+    content: "✓";
+    background-color: #16a34a;
+    border-color: #16a34a;
+    color: #ffffff;
+    font-size: 0.9rem;
+    font-weight: bold;
+
+}
+
+
+
+#employment-container {
+    display: none;
+    background: white;
+    padding: var(--space-32);
+    border-radius: 2&;
+}
+
+
+
+
+#employment-details-spinner {
+    position: relative;
+    left: 50%;
+    display: none;
+    margin-top: var(--space-4);
 }
