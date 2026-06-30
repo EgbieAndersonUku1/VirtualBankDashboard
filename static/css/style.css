@@ -5703,3 +5703,13 @@ textarea::placeholder {
     display: none;
     margin-top: var(--space-4);
 }
+
+
+
+
+/* the review and check section */
+
+.card-request-review-personal-information dd,
+.card-request-review-personal-information dt {
+    margin-top: var(--space-16);
+}

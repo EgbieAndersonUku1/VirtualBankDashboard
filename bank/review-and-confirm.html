@@ -225,10 +225,9 @@
                             <ol class="card-request-progress__steps flex-grid four-column-grid">
 
                                 <li id="card-step-request"
-                                    class="card-request-progress__step card-request-progress__step--complete white-text"
-                                    aria-current="step">
+                                    class="card-request-progress__step card-request-progress__step--complete white-text">
 
-                                    <span class="card-request-progress__number " aria-hidden="true">
+                                    <span class="card-request-progress__number" aria-hidden="true">
                                         1
                                     </span>
 
@@ -244,7 +243,7 @@
 
 
                                 <li id="card-step-employment"
-                                    class="card-request-progress__step card-request-progress__step--active">
+                                    class="card-request-progress__step card-request-progress__step--complete white-text">
 
                                     <span class="card-request-progress__number" aria-hidden="true">
                                         2
@@ -257,7 +256,9 @@
                                 </li>
 
 
-                                <li id="card-step-review" class="card-request-progress__step">
+                                <li id="card-step-review"
+                                    class="card-request-progress__step card-request-progress__step--active"
+                                    aria-current="current step">
 
                                     <span class="card-request-progress__number" aria-hidden="true">
                                         3
@@ -291,314 +292,327 @@
 
                             <section id="card-information" class="mt-16">
 
-                                <form action="" method="post" id="card-request-employment-form">
+                                <form action="" method="post" id="card-request-form">
 
                                     <!-- Section header -->
-                                    <div class="section-header">
-                                        <h1 class="header-7">Employment Details</h1>
+                                    <div class="mt-24" id="greeting-section">
 
-                                        <p class="text-muted subtitle">
-                                            Tell us about your employment and income.
+
+                                        <p class="white-text green-bg p-24">
+                                            Your details look good. Please confirm that all the information is correct
                                         </p>
                                     </div>
 
 
                                     <hr class="dividor">
 
-                                    <div class="card-information__container">
+                                    <div class="card-information__container mt-16">
 
                                         <!-- Card request-->
-                                        <div id="card-request-employment-information">
+                                        <div class="card-request-review-personal-information white-bg p-24">
 
-                                            <!-- Employment information -->
-                                            <fieldset id="card-request-employment-group" class="form-group flex-grid">
+                                            <!-- Personal information -->
+                                            <div class="flex flex-space-between">
 
-                                                <legend>
-                                                    Are you currently employed?*
-                                                </legend>
-
-                                                <div id="card-request-employment-options"
-                                                    class="card-request-employment-options flex-grid two-column-grid column-gap-8">
-
-                                                    <div id="card-request-employment-option-no"
-                                                        class="card-request-employment-option">
-
-                                                        <input type="radio" name="is-employed"
-                                                            id="card-request-employment-no" value="no"
-                                                            aria-required="true" checked>
-
-                                                        <label for="card-request-employment-no">
-                                                            No
-                                                        </label>
-
-                                                    </div>
-
-
-                                                    <div id="card-request-employment-option-yes"
-                                                        class="card-request-employment-option">
-
-                                                        <input type="radio" name="is-employed"
-                                                            id="card-request-employment-yes" value="yes"
-                                                            aria-required="true" class="required-input">
-
-                                                        <label for="card-request-employment-yes">
-                                                            Yes
-                                                        </label>
-
-                                                    </div>
-
+                                                <div class="header">
+                                                    <h2 class="header-8">Card Request Information</h2>
                                                 </div>
 
-                                            </fieldset>
-
-
-                                            <!-- Employment details hidden message -->
-                                            <div id="card-request-employment-details-message"
-                                                class="card-request-information-message mt-24">
-
-                                                <h2 class="header-9">
-                                                    Employment information unavailable
-                                                </h2>
-
-                                                <p class="text-muted">
-                                                    Employment and income fields will become available once you select
-                                                    <strong>Yes</strong> for your employment status.
-                                                </p>
+                                                <div class="edit">
+                                                    <a href="card-request-information.html">
+                                                        <i class="fa-solid fa-pen-to-square"></i>
+                                                        Edit
+                                                    </a>
+                                                </div>
 
                                             </div>
 
-                                            <!-- the employment spinner -->
-                                            <div class="spinner center" id="employment-details-spinner"></div>
+                                            <p class="text-muted subtitle">
+                                                Verify if this is the correct card request information.
+                                            </p>
+
+                                            <hr class="dividor">
 
 
-                                            <!-- the employment container -->
-                                            <div id="employment-container" class="mt-48">
+                                            <!-- Personal information -->
 
-                                                <div class="section-header">
+                                            <div class="form-group flex-grid">
 
+                                                <dl class="card-request-review-confirm__list" id="personal-information-review">
+
+                                                    <!-- full name -->
+                                                    <div class="form-row flex-grid two-column-grid">
+                                                        <dt class="card-request-review-confirm__label">
+                                                            <i class="fa-solid fa-user"></i>
+                                                            Full Name
+                                                        </dt>
+
+                                                        <dd class="card-request-review-confirm__value">
+                                                            Not added
+                                                        </dd>
+                                                    </div>
+
+
+                                                    <!-- card type -->
+                                                    <div class="form-row flex-grid two-column-grid">
+                                                        <dt class="card-request-review-confirm__label">
+                                                            <i class="fa-solid fa-credit-card"></i>
+                                                            Card Type
+                                                        </dt>
+
+                                                        <dd class="card-request-review-confirm__value">
+                                                            Not added
+                                                        </dd>
+                                                    </div>
+
+
+                                                    <!-- card variant -->
+                                                    <div class="form-row flex-grid two-column-grid">
+                                                        <dt class="card-request-review-confirm__label">
+                                                            <i class="fa-solid fa-layer-group"></i>
+                                                            Card Variant
+                                                        </dt>
+
+                                                        <dd class="card-request-review-confirm__value">
+                                                            Not added
+                                                        </dd>
+                                                    </div>
+
+
+                                                    <!-- Phone number -->
+                                                    <div class="form-row flex-grid two-column-grid">
+                                                        <dt class="card-request-review-confirm__label">
+                                                            <i class="fa-solid fa-phone"></i>
+                                                            Phone Number
+                                                        </dt>
+
+                                                        <dd class="card-request-review-confirm__value">
+                                                            Not added
+                                                        </dd>
+                                                    </div>
+
+                                                </dl>
+
+                                            </div>
+
+                                            <hr class="dividor">
+
+
+
+                                            <!-- Delivery address -->
+
+                                            <div class="flex flex-space-between mt-48">
+
+                                                <div class="header">
+                                                    <h2 class="header-8">Delivery Information</h2>
+                                                </div>
+
+                                                <div class="edit">
+                                                    <a href="card-request-information.html">
+                                                        <i class="fa-solid fa-pen-to-square"></i>
+                                                        Edit
+                                                    </a>
+                                                </div>
+
+                                            </div>
+
+                                            <p class="text-muted subtitle">
+                                                Verify if this is the correct delivery address information.
+                                            </p>
+
+                                            <hr class="dividor">
+
+
+                                            <div class="form-group flex-grid ">
+
+                                            
+                                                    <!-- Address -->
+
+                                                    <dl class="card-requeset-confirm__list" id="delivery-address-review">
+                                                        <div class="form-row flex-grid two-column-grid">
+
+                                                            <dt class="card-request-review-confirm__label">
+                                                                <i class="fa-solid fa-house"></i>
+                                                                Delivery Address
+                                                            </dt>
+
+                                                            <dd class="card-request-review-confirm__value">
+                                                                Not added
+                                                            </dd>
+                                                        </div>
+
+                                                        <!-- Town / City -->
+                                                        <div class="form-row flex-grid two-column-grid">
+                                                            <dt class="card-request-review-confirm__label">
+                                                                <i class="fa-solid fa-city"></i>
+                                                                Town / City
+                                                            </dt>
+
+                                                            <dd class="card-request-review-confirm__value">
+                                                               Not added
+                                                            </dd>
+                                                        </div>
+
+
+                                                        <!-- Postcode -->
+                                                        <div class="form-row flex-grid two-column-grid">
+                                                            <dt class="card-request-review-confirm__label">
+                                                                <i class="fa-solid fa-envelopes-bulk"></i>
+                                                                Postcode
+                                                            </dt>
+
+                                                            <dd class="card-request-review-confirm__value">
+                                                               Not added
+                                                            </dd>
+                                                        </div>
+
+                                                          <!-- Special Instructions -->
+                                                        <div class="form-row flex-grid two-column-grid">
+                                                            <dt class="card-request-review-confirm__label">
+                                                                <i class="fa-solid fa-note-sticky"></i>
+                                                                Special Instructions
+                                                            </dt>
+
+                                                            <dd class="card-request-review-confirm__value">
+                                                                 Not added
+                                                            </dd>
+                                                        </div>
+
+                                                    </dl>
+
+                                                  
+
+                                            </div>
+
+
+                                            <hr class="dividor">
+
+                                            <div class="flex flex-space-between mt-48">
+
+                                                <div class="header">
                                                     <h2 class="header-8">
-                                                        Employment and Income Details
+                                                        <i class="fa-solid fa-briefcase"></i>
+                                                        Employment
                                                     </h2>
 
-                                                    <p class="text-muted subtitle">
-                                                        This information helps us assess your application and determine
-                                                        eligibility.
-                                                    </p>
-
+                                                    <p class="text-muted subtitle">Verify if the employment details are
+                                                        correct</p>
                                                 </div>
 
-                                                <hr class="dividor">
+                                                <div class="edit">
+                                                    <a href="employment-details.html">
+                                                        <i class="fa-solid fa-pen-to-square"></i>
+                                                        Edit
+                                                    </a>
 
-                                                <!-- Employer name -->
-                                                <div id="card-request-employer-name-group" class="form-group flex-grid">
-
-                                                    <label for="card-request-employer-name">
-                                                        Employer name*
-                                                    </label>
-
-                                                    <input type="text" name="employer-name"
-                                                        id="card-request-employer-name" required
-                                                        placeholder="Enter employer name" maxlength="40" class="required-input">
-
-                                                </div>
-
-                                                <!-- Employment type -->
-                                                <div class="form-group flex-grid">
-
-                                                    <label for="card-request-employment-type">
-                                                        Employment type*
-                                                    </label>
-
-                                                    <select name="requested-employment-type"
-                                                        id="card-request-employment-type" required class="required-input">
-
-                                                        <option value="" disabled selected>
-                                                            Please select Employment type
-                                                        </option>
-
-                                                        <option value="full-time">
-                                                            Full Time
-                                                        </option>
-
-                                                        <option value="part-time">
-                                                            Part time
-                                                        </option>
-
-                                                        <option value="self-employment">
-                                                            Self-employment
-                                                        </option>
-                                                    </select>
-
-                                                </div>
-
-                                                <!-- Years employed -->
-                                                <div id="card-request-years-employed-group"
-                                                    class="form-group flex-grid">
-
-                                                    <label for="card-request-years-employed">
-                                                        Years employed*
-                                                    </label>
-
-                                                    <select name="years-employed" id="card-request-years-employed"
-                                                        required class="required-input">
-
-                                                        <option value="" disabled selected>
-                                                            Please select number of years employed
-                                                        </option>
-
-                                                        <option value="1">
-                                                            1
-                                                        </option>
-
-                                                        <option value="2">
-                                                            2
-                                                        </option>
-
-                                                        <option value="3">
-                                                            3
-                                                        </option>
-
-                                                        <option value="4">
-                                                            4
-                                                        </option>
-
-                                                        <option value="5-plus">
-                                                            5+
-                                                        </option>
-
-                                                    </select>
-
-                                                </div>
-
-                                                <!-- Annual salary -->
-                                                <div id="card-request-annual-salary-group" class="form-group flex-grid">
-
-                                                    <label for="card-request-annual-salary">
-                                                        Annual salary*
-                                                    </label>
-
-                                                    <select name="annual-salary" id="card-request-annual-salary"
-                                                        required class="required-input">
-
-                                                        <option value="" disabled selected>
-                                                            Please select annual salary
-                                                        </option>
-
-                                                        <option value="under-15000">
-                                                            Under £15,000
-                                                        </option>
-
-                                                        <option value="15000-24999">
-                                                            £15,000 - £24,999
-                                                        </option>
-
-                                                        <option value="25000-34999">
-                                                            £25,000 - £34,999
-                                                        </option>
-
-                                                        <option value="35000-49999">
-                                                            £35,000 - £49,999
-                                                        </option>
-
-                                                        <option value="50000-74999">
-                                                            £50,000 - £74,999
-                                                        </option>
-
-                                                        <option value="75000-99999">
-                                                            £75,000 - £99,999
-                                                        </option>
-
-                                                        <option value="100000-149999">
-                                                            £100,000 - £149,999
-                                                        </option>
-
-                                                        <option value="150000-plus">
-                                                            £150,000+
-                                                        </option>
-
-                                                    </select>
-
-                                                </div>
-
-                                                <!-- Pay frequency -->
-                                                <div id="card-request-pay-frequency-group" class="form-group flex-grid">
-
-                                                    <label for="card-request-pay-frequency">
-                                                        Pay frequency*
-                                                    </label>
-
-                                                    <select name="pay-frequency" id="card-request-pay-frequency"
-                                                        required class="required-input">
-
-                                                        <option value="" disabled selected>
-                                                            Please select pay frequency
-                                                        </option>
-
-                                                        <option value="Daily">
-                                                            Daily
-                                                        </option>
-
-                                                        <option value="Weekly">
-                                                            Weekly
-                                                        </option>
-
-                                                        <option value="Bi-Weekly">
-                                                            Bi-Weekly
-                                                        </option>
-
-                                                        <option value="Monthly">
-                                                            Monthly
-                                                        </option>
-
-                                                    </select>
-
-                                                </div>
-
-
-                                                <!-- Contract type -->
-                                                <div id="card-request-contract-type-group" class="form-group flex-grid">
-
-                                                    <label for="card-request-contract-type">
-                                                        Contract type*
-                                                    </label>
-
-                                                    <select name="contract-type" id="card-request-contract-type"
-                                                        required class="required-input">
-
-                                                        <option value="" disabled selected>
-                                                            Please select contract type
-                                                        </option>
-
-                                                        <option value="Permanent">
-                                                            Permanent
-                                                        </option>
-
-                                                        <option value="Temporary">
-                                                            Temporary
-                                                        </option>
-
-                                                        <option value="Contractor">
-                                                            Contractor
-                                                        </option>
-
-                                                        <option value="Fixed-Term">
-                                                            Fixed-Term
-                                                        </option>
-
-                                                        <option value="Agency Worker">
-                                                            Agency Worker
-                                                        </option>
-
-                                                        <option value="Apprenticeship">
-                                                            Apprenticeship
-                                                        </option>
-
-                                                    </select>
 
                                                 </div>
 
                                             </div>
 
+
+                                            <hr class="dividor">
+
+
+                                            <div class="form-group flex-grid">
+
+                                                <dl class="card-request-review-confirm__list" id="employment-review">
+
+ 
+                                                    <!-- Employment status -->
+                                                    <div class="form-row flex-grid two-column-grid">
+                                                        <dt class="card-request-review-confirm__label">
+                                                            <i class="fa-solid fa-user-tie"></i>
+                                                            Employment Status
+                                                        </dt>
+
+                                                        <dd class="card-request-review-confirm__value">
+                                                            No status given
+                                                        </dd>
+                                                    </div>
+
+
+                                                    <!-- Employment type -->
+                                                    <div class="form-row flex-grid two-column-grid">
+                                                        <dt class="card-request-review-confirm__label">
+                                                            <i class="fa-solid fa-briefcase"></i>
+                                                            Employment Type
+                                                        </dt>
+
+                                                        <dd class="card-request-review-confirm__value">
+                                                            Not added
+                                                        </dd>
+                                                    </div>
+
+
+                                                    <!-- Employer name -->
+                                                    <div class="form-row flex-grid two-column-grid">
+                                                        <dt class="card-request-review-confirm__label">
+                                                            <i class="fa-solid fa-building"></i>
+                                                            Employer Name
+                                                        </dt>
+
+                                                        <dd class="card-request-review-confirm__value">
+                                                           Not added
+                                                        </dd>
+                                                    </div>
+
+
+                                                    <!-- Years employed -->
+                                                    <div class="form-row flex-grid two-column-grid">
+                                                        <dt class="card-request-review-confirm__label">
+                                                            <i class="fa-solid fa-clock"></i>
+                                                            Years Employed
+                                                        </dt>
+
+                                                        <dd class="card-request-review-confirm__value">
+                                                            Not added
+                                                        </dd>
+                                                    </div>
+
+
+                                                    <!-- Annual salary -->
+                                                    <div class="form-row flex-grid two-column-grid">
+                                                        <dt class="card-request-review-confirm__label">
+                                                            <i class="fa-solid fa-sterling-sign"></i>
+                                                            Annual Salary
+                                                        </dt>
+
+                                                        <dd class="card-request-review-confirm__value">
+                                                            Not added
+                                                        </dd>
+                                                    </div>
+
+
+                                                    <!-- Payment frequency -->
+                                                    <div class="form-row flex-grid two-column-grid">
+                                                        <dt class="card-request-review-confirm__label">
+                                                            <i class="fa-solid fa-money-bill-wave"></i>
+                                                            Payment Frequency
+                                                        </dt>
+
+                                                        <dd class="card-request-review-confirm__value">
+                                                            Not added
+                                                        </dd>
+                                                    </div>
+
+
+                                                    <!-- Contract type -->
+                                                    <div class="form-row flex-grid two-column-grid">
+                                                        <dt class="card-request-review-confirm__label">
+                                                            <i class="fa-solid fa-file-contract"></i>
+                                                            Contract Type
+                                                        </dt>
+
+                                                        <dd class="card-request-review-confirm__value">
+                                                           Not added
+                                                        </dd>
+                                                    </div>
+
+
+                                                </dl>
+
+                                            </div>
                                         </div>
 
 
@@ -695,22 +709,29 @@
                                     </div>
 
 
-
                                     <div class="buttons flex flex-end mt-48">
-                                        <a href="card-request-information.html"
+                                        <a href="employment-details.html"
                                             class="back-btn center white-bg capitalise mr-4">
                                             &lt; Back
 
                                         </a>
 
                                         <button class="blue-bg white-text capitalise" id="card-request-next-btn"
-                                            type="submit">Next
+                                            type="button">Next
                                             &gt;</button>
                                     </div>
                                 </form>
 
                             </section>
+
+
+
                         </div>
+
+
+
+
+
 
                     </section>
 
@@ -812,7 +833,7 @@
     </main>
     <script src="/static/js/sweetalert2.all.min.js"></script>
     <script src="/static/js/riskAnalysis/card-request.js" type="module"></script>
-
+    
 
 
 
