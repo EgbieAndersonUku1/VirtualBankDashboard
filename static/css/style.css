@@ -4741,8 +4741,6 @@ clicks the button
 
 #search-request-search-field {
 
-    border: initial;
-    padding: initial;
     width: 100%;
 }
 
@@ -5713,3 +5711,43 @@ textarea::placeholder {
 .card-request-review-personal-information dt {
     margin-top: var(--space-16);
 }
+
+
+
+/* the agreement */
+
+#card-request-agreement {
+    height: 600px;
+    border: 2px solid lavender;
+    overflow-y: scroll;
+    padding: var(--space-24);
+    background: white;
+    box-shadow: var(--box-shadow-primary);
+}
+
+
+.agreement-content ul li {
+    margin-top: var(--space-24);
+    margin-bottom: var(--space-24);
+    font-size: 0.89rem;
+}
+
+
+.agreement-checkbox span {
+    font-size: 0.9rem;
+}
+
+
+
+.review-info {
+    background: lavender;
+    cursor: pointer;
+}
+
+.review-info  .badge {
+    font-size: 3rem;
+}
+
+.review-info .text-info {
+    font-size: 0.9rem;
+  }

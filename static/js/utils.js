@@ -1114,3 +1114,16 @@ export function getSessionId() {
 
     return sessionId;
 }
+
+
+
+/**
+ * Takes a page and redirects to that page
+ * 
+ * @param {*} page - The page to tranverse to
+ */
+export function goToNextPage(page) {
+    location.href =  page;
+}
+
+
