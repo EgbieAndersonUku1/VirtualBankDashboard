@@ -1,11 +1,13 @@
 import { warnError } from "../logger.js";
-import { toggleSpinner, toggleRequiredInput, isFormFieldEmpty, toTitle, getSessionId } from "../utils.js";
+import { toggleSpinner, toggleRequiredInput, isFormFieldEmpty, toTitle, getSessionId, goToNextPage } from "../utils.js";
 import { parseFormData } from "../formUtils.js";
 import { getLocalStorage, setLocalStorage, removeFromLocalStorage } from "../db.js";
+import { AlertUtils } from "../alerts.js";
+import { getSessionState, saveSessionState } from "./stateSession.js";
 
 
 const cardRequestForm                   = document.getElementById("card-request-form");
-const employmentRequestForm             = document.getElementById("card-request-employment-form")
+const employmentRequestForm             = document.getElementById("card-request-employment-form");
 const cardRequestEmploymentContainer    = document.getElementById("card-request-employment-information");
 const employmentMessageElement          = document.getElementById("card-request-employment-details-message");
 const employmentContainerElement        = document.getElementById("employment-container");
@@ -13,13 +15,20 @@ const employmentSpinner                 = document.getElementById("employment-de
 const requiredEmploymentInputFields     = document.querySelectorAll(".required-input");
 const personalInformationReviewElements = document.querySelectorAll("#personal-information-review dd");
 const deliveryAddressElements           = document.querySelectorAll("#delivery-address-review dd");
-const employmentElements                = document.querySelectorAll("#employment-review dd")
+const employmentElements                = document.querySelectorAll("#employment-review dd");
+const cardReviewNextBtn                 = document.getElementById("card-request-next-btn")
+
 
 
 // event listeners
 cardRequestForm?.addEventListener("submit", handleCardRequest);
 employmentRequestForm?.addEventListener("submit", handleCardEmploymentRequest)
 cardRequestEmploymentContainer?.addEventListener("click",  handleEmploymentOptions);
+
+cardReviewNextBtn.addEventListener("click", handleBtnClick)
+
+
+
 
 
 
@@ -29,68 +38,12 @@ document.addEventListener("DOMContentLoaded", () => {
     // the required fields must be set to false as well othewise
     // clicking next will result in a focusable error
     toggleRequiredInput({elementsNodeList: requiredEmploymentInputFields, required: false});
-    state.employment.employed = false;
-    saveSessionState(state)
-
-
+   
     populatePersonalInformationReviewData();
     populateEmploymentInformationData();
     
 })
 
-
-
-/**
- * Gets the state for the current browser session.
- *
- * The session state is automatically created the first time
- * it is requested and reused for the lifetime of the browser tab.
- *
- * @returns {Object} The session state.
- */
-function getSessionState() {
-    const sessionId = getSessionId();
-
-    let sessionState = getLocalStorage(sessionId) 
-
-    // get Local storage returns an empty array if there is no data
-    if (Array.isArray(sessionState)) {
-        sessionState = {};
-        sessionState.formCompletion = {
-                        cardRequest: null,
-                        employmentRequest: null,
-                        }
-        
-        sessionState.employment  = {employed: false}
-    }
-
-
-    return sessionState;
-}
-
-
-
-/**
- * Takes a session state and saves it to the local storage.
- * This function is needed to keep track of the form completion stages
- * 
- * @param {*} sessionState - The state for each stage of the form
- */
-function saveSessionState(sessionState) {
-    const sessionId = getSessionId();
-    setLocalStorage(sessionId, sessionState)
-}
-
-
-
-/**
- * Takes a page and redirects to that page
- * 
- * @param {*} page - The page to tranverse to
- */
-function goToNextPage(page) {
-    location.href =  page;
-}
 
 
 
@@ -220,7 +173,7 @@ function handleCardRequest(e) {
 function handleCardEmploymentRequest(e) {
 
     const sessionName = "employmentInformation";
-
+   
 
     if (!state.employment.employed ) {
 
@@ -492,6 +445,7 @@ function populateEmploymentInformationData() {
         ] = employmentElements;
 
    
+    
     if (!state.formCompletion.employmentRequest) {
         return;
     }
@@ -500,13 +454,29 @@ function populateEmploymentInformationData() {
 
     if (!data) return;
     
+
     employmentStatus.textContent = state.employment.employed  ? "Employed" : "Unemployed";
     employmentType.textContent   =  toTitle(data.requestedEmploymentType.split("-").join(" "));
     employmentName.textContent   = toTitle(data.employerName);
     yearsEmployed.textContent    = data.yearsEmployed;
     paymentFrequency.textContent = data.payFrequency;
     contractType.textContent     = data.contractType;
-    annualSalary.textContent     = data.annualSalary.split("-").join(" ")
-    
 
+
+    const storedAnnualSalary = data.annualSalary;
+
+    if (storedAnnualSalary.toLowerCase().trim().startsWith("under")) {
+       annualSalary.textContent  = toTitle(storedAnnualSalary.split("-").join(" "))
+
+    } else {
+          annualSalary.textContent  = storedAnnualSalary;
+    }
+   
+
+}
+
+
+
+function handleBtnClick(e) {
+    goToNextPage("card-request-agreement.html")
 }

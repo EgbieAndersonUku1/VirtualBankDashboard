@@ -1,3 +1,4 @@
+import { warnError } from "./logger.js";
 
 
 export function setLocalStorage(key, value) {
@@ -20,6 +21,20 @@ export function getLocalStorage(key) {
     }
 }
 
+
+
+export function removeSingleItemFromLocalStorage(key) {
+    try {
+        localStorage.removeItem(key);
+        return true;
+
+    } catch (error) {
+        warnError("removeSingleItemFromLocalStorage", {
+            error: "Failed to remove an item form the local storage"
+        })
+        return false;
+    }
+}
 
 
 export function removeFromLocalStorage(key, id) {
