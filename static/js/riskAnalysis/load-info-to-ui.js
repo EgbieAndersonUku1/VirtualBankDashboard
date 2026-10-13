@@ -8,13 +8,12 @@ import cardRequestInformation from "./account/cardRequestDetails.js";
 import { db } from "./db.js";
 import { updateTable } from "./table.js";
 import { clearDivElement } from "./rules/utils.js";
-import { statusClassMap } from "./handleRequestBtns.js";
 import { renderTable, populateCardHistoryTable } from "./table.js";
 import TransactionRenderer from "./ui-builder/buildTransactionCards.js";
 import { AuditTrailRenderer } from "./ui-builder/auditTrail.js";
 import { AuditTrailDetails } from "./account/auditTrailDetails.js";
 import { minimumCharactersToUse } from "../utils/password/textboxCharEnforcer.js";
-
+import { scrollToView } from "./rules/utils.js";
 
 
 
@@ -32,8 +31,8 @@ const auditSpinner        = document.getElementById("load-audit-spinner");
 mainSectionContainer.addEventListener("click", handleDelegation);
 
 // initialise the audit render
-const auditRender = new AuditTrailRenderer({numOfCardsToLoadPerClick:2, 
-                                            auditTrail:AuditTrailDetails.audit, 
+const auditRender = new AuditTrailRenderer({numOfCardsToLoadPerClick:2,
+                                            auditTrail:AuditTrailDetails.audit,
                                             auditCardContainerId:"audit-trail__cards",
                                             loadButtonId: "load-more",
                                             })
@@ -54,6 +53,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
         showNumOfCharsRemaining();
 
+      
+
         // initialise the audit renderer and render a couple
         auditRender.initialise();
         auditRender.render();
@@ -67,7 +68,7 @@ function handleDelegation(e) {
 
     const id = e.target.dataset.tab || e.target.id;
     const tab = e.target;
-  
+
     switch (id) {
         case "request-first-tab":
             activateTab(tab, firstTabContent);
@@ -76,15 +77,15 @@ function handleDelegation(e) {
         case "request-second-tab":
             activateTab(tab, secondTabContent);
             break;
-        
+
         case "request-third-tab":
             activateTab(tab, thirdTabContent);
             break;
-        
+
         case "request-fourth-tab":
             activateTab(tab, fourthTabContent);
             break;
-        
+
         case "load-more":
             console.log("I am here")
             handleRendererAuditClick(e.target);
@@ -319,9 +320,9 @@ function loadPhoneNumber() {
     const cleanedPhoneNumber = cleanPhoneNumber(phoneNumber);
 
     setText("phoneNum", cleanedPhoneNumber || "N/A");
-    updateVerificationStatusBadge({id: "is-phone-num-verified", 
-                                  valueToCheck: profileInformationDetails.phoneNumber.verified, 
-                                  activeStatusText: "Verified", 
+    updateVerificationStatusBadge({id: "is-phone-num-verified",
+                                  valueToCheck: profileInformationDetails.phoneNumber.verified,
+                                  activeStatusText: "Verified",
                                   nonActiveStatusText: "Not verified"});
 }
 
@@ -332,10 +333,10 @@ function loadPhoneNumber() {
 function loadEmailAddress() {
     const email = profileInformationDetails.email;
     setText("email-address", email?.value || "N/A");
-    updateVerificationStatusBadge({id: "is-email-verified", 
+    updateVerificationStatusBadge({id: "is-email-verified",
                                   valueToCheck: email.verified,
-                                   activeStatusText: badgeConfig.verified.text, 
-                                   nonActiveStatusText: badgeConfig.unverified.text 
+                                   activeStatusText: badgeConfig.verified.text,
+                                   nonActiveStatusText: badgeConfig.unverified.text
                                 });
 }
 
@@ -374,8 +375,8 @@ function loadPassport() {
     }
 
     setText("passport", cleanedPassportValue || "N/A");
-    updateVerificationStatusBadge({id: "is-passport-verified", 
-                                  valueToCheck: passport.verified, 
+    updateVerificationStatusBadge({id: "is-passport-verified",
+                                  valueToCheck: passport.verified,
                                   activeStatusText: "Verified",
                                    nonActiveStatusText: "Not verified"});
 
@@ -399,8 +400,8 @@ function populateTableData() {
 
     const tableBody = document.getElementById("card-requests-tbody")
     renderTable(db)
-   
-  
+
+
 }
 
 
@@ -456,9 +457,9 @@ function safeBalance(balance) {
  * Updates a verification status badge in the UI based on a profile field.
  * Sets text and styling for verified or not verified states.
  */
-function updateVerificationStatusBadge({id, 
-                                        valueToCheck, 
-                                        activeStatusText, 
+function updateVerificationStatusBadge({id,
+                                        valueToCheck,
+                                        activeStatusText,
                                         nonActiveStatusText,
                                         activeClass=badgeConfig.active.class,
                                         nonActiveClass=badgeConfig.deactivated.class,
@@ -566,9 +567,9 @@ function populateUserAccountDetails() {
     setText("bank-details__sortcode-value", formatMaskedAccountNumber(accountDetails.sortCode?.toString()));
     setText("bank-details__account-num-value", formatMaskedAccountNumber(accountDetails.accountNumber?.toString()));
     setText("bank-details__balance-value", formatCurrency(accountDetails.balance?.available))
-    updateVerificationStatusBadge({id: "bank-details__is-verified", 
-                                    valueToCheck: accountDetails.status.active, 
-                                    activeStatusText: badgeConfig.active.text, 
+    updateVerificationStatusBadge({id: "bank-details__is-verified",
+                                    valueToCheck: accountDetails.status.active,
+                                    activeStatusText: badgeConfig.active.text,
                                     nonActiveStatusText: badgeConfig.deactivated.text})
 }
 
@@ -582,7 +583,7 @@ const populateBankDetails = (() => {
 
     function populateBankAddress() {
         const bankAddress = accountDetails.bank.address;
-      
+
         setText("branch-address-line1", bankAddress.line1);
         setText("branch-address-line2", bankAddress.line2);
         setText("branch-city", bankAddress.city);
@@ -676,9 +677,9 @@ const populateBankDetails = (() => {
 
 /**
  * Handles the rendering of the audit card when the button is click.
- * Depending on the text, it is either loaded or the loaded cards is 
+ * Depending on the text, it is either loaded or the loaded cards is
  * removed back to initial state
- * @param {*} buttonElement 
+ * @param {*} buttonElement
  */
 function handleRendererAuditClick(buttonElement) {
     const DELAY_MS = 200;
@@ -693,7 +694,7 @@ function handleRendererAuditClick(buttonElement) {
             // console.log("I am here")
             return
         }
-       
+
         const resp = auditRender.render();
 
     }, DELAY_MS)
@@ -711,7 +712,7 @@ function showNumOfCharsRemaining() {
      return;
    }
 
- 
+
     minimumCharactersToUse(notes, {
         minCharClass: ".num-of-characters-remaining",
         maxCharClass: ".num-of-characters-to-use",
@@ -721,6 +722,6 @@ function showNumOfCharsRemaining() {
         maxCharsLimit: 255,
         disablePaste: true,
     })
-    
-    
+
+
 }
