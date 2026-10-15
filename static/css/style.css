@@ -5801,7 +5801,7 @@ textarea::placeholder {
 
 /* the notification cards */
 .notification-section__notification-cards {
-    column-gap: var(--space-12);
+    column-gap: var(--space-4);
 }
 .notification-card {
     box-shadow: var(--box-shadow-primary);
@@ -5814,8 +5814,74 @@ textarea::placeholder {
     margin-bottom: var(--space-8);
     column-gap: var(--space-12);
     cursor: pointer;
+    background: white;
 }
 
 .notification-card:hover {
     transform: scale(0.98);
+}
+
+
+#notification-inbox__tabs {
+    padding: var(--space-12);
+    border: 3px solid lavender;
+    margin-bottom: var(--space-8);
+}
+
+
+.notification-inbox__filters {
+    column-gap: var(--space-48);
+}
+
+
+.notification-inbox__filters button:not(:first-child) {
+    background: transparent;
+    cursor: pointer;
+}
+
+.notification-inbox__filters button {
+    font-size: 0.9rem;
+}
+
+
+.notification-sortby select {
+    all: unset;
+    border: 2px solid lavender;
+    padding-left: var(--space-24);
+    padding-right: var(--space-24);
+    padding-top: var(--space-8);
+    cursor: pointer;
+    font-size: 0.85rem;
+    font-weight: 500;
+}
+
+.notification-active {
+    background: var(--blue-600);
+    border-radius: 999px;
+    padding: var(--space-8);
+    color: #ffff;
+    padding-left: var(--space-48);
+    padding-right: var(--space-48);
+
+}
+
+.notification-inbox__filters div {
+    padding-top: var(--space-8);
+    font-size: 0.85rem;
+    cursor: pointer;
+}
+
+.count {
+    background: white;
+    border-radius: 50%;
+    padding: 8px;
+    border: 2px solid lavender;
+    background: lavender;
+    color: var(--blue-600);
+    font-weight: bold;
+}
+
+
+#notification-inbox {
+    background: white;
 }

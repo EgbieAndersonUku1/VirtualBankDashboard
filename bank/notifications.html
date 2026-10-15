@@ -93,7 +93,7 @@
               <li class="sidebar-nav__item">
                 <a href="notifications.html" class="sidebar-nav__link">
                   <span class="sidebar-nav__icon" aria-hidden="true">
-                   <i class="fa-solid fa-bell" aria-hidden="true"></i>
+                    <i class="fa-solid fa-bell" aria-hidden="true"></i>
                   </span>
                   <span class="sidebar-nav__label">Notifications</span>
                 </a>
@@ -236,7 +236,9 @@
 
             <!-- The notification greeting -->
 
-            <div class="notifications-greeting flex two-column-45_65_grid ml-16 mr-16 mb-24">
+            <div
+              class="notifications-greeting flex two-column-45_65_grid ml-16 mr-16 mb-24"
+            >
               <div class="notification-icon-bell">
                 <img
                   src="/static/images/notification_icons/notification_icon.png"
@@ -358,7 +360,67 @@
                 </div>
               </div>
             </section>
+
+          <!-- The notification inbox -->
+          <section id="notification-inbox"
+                  class="ml-16 mr-16"
+                  aria-label="Notification inbox">
+
+              <div class="notification-inbox__container">
+
+                  <div id="notification-inbox__tabs"
+                      class="flex flex-space-between">
+
+                      <!-- Notification filters -->
+                      <div class="notification-inbox__filters flex three-column-grid"
+                          role="group"
+                          aria-label="Filter notifications">
+
+                          <button type="button"
+                                  class="notification-active"
+                                  aria-pressed="true">
+                              All
+                          </button>
+
+                          <button type="button"
+                                  aria-pressed="false">
+                              Unread
+                              <span class="count">155</span>
+                          </button>
+
+                          <button type="button"
+                                  aria-pressed="false">
+                              Read
+                          </button>
+
+                      </div>
+
+                      <!-- Notification sorting -->
+                      <div class="notification-sortby flex two-column-grid">
+
+                          <span>
+                              <i class="fa-solid fa-arrow-down-wide-short"
+                                  aria-hidden="true"></i>
+                          </span>
+
+                          <label for="sort-by" class="sr-only">
+                              Sort notifications
+                          </label>
+
+                          <select name="sort-by" id="sort-by">
+                              <option value="newest">Sort by Newest first</option>
+                              <option value="oldest">Sort by Oldest first</option>
+                          </select>
+
+                      </div>
+
+                  </div>
+
+              </div>
+
           </section>
+
+            </section>
 
           <!-- The footer section -->
           <footer>
