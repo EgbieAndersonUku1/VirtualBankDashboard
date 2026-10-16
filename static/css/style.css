@@ -475,7 +475,7 @@ img:hover {
     text-align: right;
 }
 
-/* 
+/*
  * Fixed positioning centring (not layout centring).
  * Used when the element must be removed from normal flow and
  * positioned relative to its parent rather than centred by layout (e.g. flexbox).
@@ -1396,7 +1396,7 @@ footer {
 
 /* html selctors  */
 .account-card__add-amount button {
- 
+
     border: 1px solid #d1d5db;
     box-shadow: 0 0 0 3px rgba(31, 79, 216, 0.15);
     border-radius: 6px;
@@ -1560,8 +1560,8 @@ label {
 }
 
 
-/* resets the transfor:translate(-50%, 50%), Without this anything that shows up will 
-take up 50 to left and 50 up 
+/* resets the transfor:translate(-50%, 50%), Without this anything that shows up will
+take up 50 to left and 50 up
 */
 #add-pin.show,
 #add-recipient-section.show,
@@ -2072,7 +2072,7 @@ take up 50 to left and 50 up
 
 /* Dashboard */
 
-/* 
+/*
    DASHBOARD LAYOUT
    Core structural layout for sidebar + main content
 */
@@ -2120,7 +2120,7 @@ take up 50 to left and 50 up
 }
 
 
-/* 
+/*
    SIDEBAR NAVIGATION ITEMS
    List items, links, icons, and hover states
 */
@@ -2156,7 +2156,7 @@ take up 50 to left and 50 up
 }
 
 
-/* 
+/*
    SIDEBAR SPECIAL ACTIONS
    Logout & security-related UI
 */
@@ -2188,7 +2188,7 @@ take up 50 to left and 50 up
 }
 
 
-/* 
+/*
    LATEST LOGIN / SECURITY INFO CARD
   */
 
@@ -2205,7 +2205,7 @@ take up 50 to left and 50 up
     color: var(--red);
 }
 
-/* 
+/*
    FOOTER
    Dashboard footer layout
  */
@@ -2224,7 +2224,7 @@ take up 50 to left and 50 up
 }
 
 
-/* 
+/*
    SCROLLBAR STYLING (SIDEBAR ONLY)
    Optional cosmetic enhancement for modern browsers
  */
@@ -3200,8 +3200,8 @@ time {
 }
 
 
-/* The bank add funds panel. This is shown when the user 
-clicks the button 
+/* The bank add funds panel. This is shown when the user
+clicks the button
 */
 
 
@@ -4989,7 +4989,7 @@ clicks the button
     column-gap: var(--space-4);
 }
 .user-profile-header__card {
- 
+
     padding: var(--space-4);
     text-align: center;
 }
@@ -5047,7 +5047,7 @@ clicks the button
 #user-stats .user-stats__container .user-stats__cards .user-stats__card .user-stats__card-head i {
    position: absolute;
    left: 50%;
- 
+
    transform: translateY(50%);
    cursor: pointer;
 }
@@ -5127,7 +5127,7 @@ clicks the button
     border: 6px solid #e0e0e0;
     margin-top: 16px;
     transform: translateX(200px);
-   
+
 }
 
 .decision-circle-inner {
@@ -5240,20 +5240,20 @@ clicks the button
 
 
 
-#account-information__overview > div.account-information__table_1 > dl > div, 
+#account-information__overview > div.account-information__table_1 > dl > div,
 #account-information__overview > div.account-information__table_2 > dl > div {
     font-size: 0.85rem;
     padding: var(--space-12);
     border-bottom: 2px solid lavender;
 }
 
-#account-information__overview > div.account-information__table_1 > dl > div dt, 
+#account-information__overview > div.account-information__table_1 > dl > div dt,
 #account-information__overview > div.account-information__table_2 > dl > div dt{
   font-weight: 600;
 }
 
 
-#account-information__overview > div.account-information__table_1 > dl > div dd, 
+#account-information__overview > div.account-information__table_1 > dl > div dd,
 #account-information__overview > div.account-information__table_2 > dl > div dd{
   font-weight: 600;
   color: #6B7280;
@@ -5307,7 +5307,7 @@ clicks the button
 
 #linked-account-table table thead th {
     background: ghostwhite;
-    color: black;   
+    color: black;
 }
 
 
@@ -5320,7 +5320,7 @@ clicks the button
    padding-top: var(--space-8);
    padding-bottom: var(--space-8);
    padding-right: var(--space-24);
- 
+
 }
 
 
@@ -5377,7 +5377,7 @@ clicks the button
 
 .audit-trail__body {
     font-size: 0.8rem;
-    
+
 }
 
 
@@ -5439,8 +5439,8 @@ clicks the button
 
 .card-request-progress__step,
 #card-information .section-header,
-.card-request-progress__container 
-#card-information 
+.card-request-progress__container
+#card-information
 .card-request-personal-information {
 
     border: 2px solid lavender;
@@ -5520,7 +5520,7 @@ textarea::placeholder {
 
 /* Label for the steps */
 .card-request-progress__label {
-  
+
     font-size: 0.875rem;
     font-weight: 500;
     line-height: 1.4;
@@ -5529,7 +5529,7 @@ textarea::placeholder {
 
 
 /* Active step */
-.card-request-progress__step--active 
+.card-request-progress__step--active
 .card-request-progress__number {
 
     background-color: #2563eb;
@@ -5538,7 +5538,7 @@ textarea::placeholder {
 }
 
 
-.card-request-progress__step--active 
+.card-request-progress__step--active
 .card-request-progress__label {
 
     color: #111827;
@@ -5546,7 +5546,7 @@ textarea::placeholder {
 
 }
 /* Completed step */
-.card-request-progress__step--complete 
+.card-request-progress__step--complete
 .card-request-progress__number {
 
     background-color: #16a34a;
@@ -5554,7 +5554,7 @@ textarea::placeholder {
 
 }
 
-.card-request-progress__step--complete 
+.card-request-progress__step--complete
 .card-request-progress__number::before {
 
     content: "✓";
@@ -5666,7 +5666,7 @@ textarea::placeholder {
     display: flex;
     align-items: center;
     justify-content: center;
-   
+
 }
 
 
@@ -5751,3 +5751,207 @@ textarea::placeholder {
 .review-info .text-info {
     font-size: 0.9rem;
   }
+
+
+
+/* notifications page */
+
+
+#notification-section .notification-section__notification-cards .notification-card .icon,
+.notification-icon-bell {
+    position: relative;
+    height: 80px;
+    width: 90px;
+}
+
+
+
+#notification-section .notification-section__notification-cards .notification-card .icon {
+    position: relative;
+    height: 60px;
+    width: 60px;
+}
+
+
+#notification-section .notification-section__notification-cards .notification-card  .notification-icon-img,
+#notification-bell-icon__img {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+}
+
+
+.notifications-greeting {
+    background: ghostwhite;
+    border-top: 2px solid ghostwhite;
+    border-bottom: 2px solid lavender;
+    background: ghostwhite;
+
+}
+
+.notification-greeting__notification-msg h1 {
+    font-size: 1.7rem;
+    letter-spacing: 0.1rem;
+    font-weight: 600;
+    color: var(--blue-600);
+
+}
+
+
+
+/* the notification cards */
+.notification-section__notification-cards {
+    column-gap: var(--space-4);
+}
+.notification-card {
+    box-shadow: var(--box-shadow-primary);
+}
+
+
+.notification-card {
+    padding: var(--space-12);
+    margin-top: var(--space-8);
+    margin-bottom: var(--space-8);
+    column-gap: var(--space-12);
+    cursor: pointer;
+    background: white;
+}
+
+.notification-card:hover {
+    transform: scale(0.98);
+}
+
+
+#notification-inbox__tabs {
+    padding: var(--space-12);
+    border: 3px solid lavender;
+    margin-bottom: var(--space-8);
+}
+
+
+.notification-inbox__filters {
+    column-gap: var(--space-48);
+}
+
+
+.notification-inbox__filters button:not(:first-child) {
+    background: transparent;
+    cursor: pointer;
+}
+
+.notification-inbox__filters button {
+    font-size: 0.9rem;
+}
+
+
+.notification-sortby select {
+    all: unset;
+    border: 2px solid lavender;
+    padding-left: var(--space-24);
+    padding-right: var(--space-24);
+    padding-top: var(--space-8);
+    cursor: pointer;
+    font-size: 0.85rem;
+    font-weight: 500;
+}
+
+.notification-active {
+    background: var(--blue-600);
+    border-radius: 999px;
+    padding: var(--space-8);
+    color: #ffff;
+    padding-left: var(--space-48);
+    padding-right: var(--space-48);
+
+}
+
+.notification-inbox__filters div {
+    padding-top: var(--space-8);
+    font-size: 0.85rem;
+    cursor: pointer;
+}
+
+.count {
+    background: white;
+    border-radius: 50%;
+    padding: 8px;
+    border: 2px solid lavender;
+    background: lavender;
+    color: var(--blue-600);
+    font-weight: bold;
+}
+
+
+#notification-inbox {
+    background: white;
+}
+
+.notification-row__footer {
+    flex: 0 0 180px;
+    flex-direction: column;
+    align-items: flex-end;
+}
+
+.notification-row__footer p,
+.notification-label {
+
+    color: var(--blue-600);
+    font-weight: 500;
+    font-size: 0.85rem;
+}
+
+
+
+
+.notifcation-checkbox,
+.notifications-row-icon {
+    flex-shrink: 0;
+}
+
+.notification-row__head {
+    flex: 1;
+    min-width: 0;
+}
+
+.notification-row__head a {
+    font-size: 0.85rem;
+}
+
+
+
+.notification-row {
+    margin-top: var(--space-16);
+    cursor: pointer;
+    padding: var(--space-8);
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+
+}
+
+.notification-row:not(:last-child) {
+    border-bottom: 1px solid lavender;
+}
+
+.notification-row > p {
+    font-size: 0.8rem;
+}
+
+.notifications-row-icon {
+    position: relative;
+    height: 50px;
+    width: 50px;
+}
+
+
+.notification-row-icon-img {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+}
+
+
+
+.notification-row:hover {
+    background: ghostwhite;
+}

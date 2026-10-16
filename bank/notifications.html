@@ -1,0 +1,841 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/static/css/style.css" />
+    <link
+      rel="shortcut icon"
+      href="/static/images/virtual-bank-logo.png"
+      type="image/x-icon"
+    />
+    <link rel="stylesheet" href="/static/vendor/fontawesome/css/all.min.css" />
+    <title>Virtual bank Dashboard</title>
+  </head>
+
+  <body>
+    <main>
+      <section id="dashboard" aria-label="User dashboard">
+        <div class="dashboard__container">
+          <!-- Sidebar navigation -->
+          <nav
+            class="dashboard__container__sidebar"
+            aria-label="Primary dashboard navigation"
+          >
+            <div class="sidebar-brand">
+              <i class="fa-solid fa-building-columns" aria-hidden="true"></i>
+              <span class="sidebar-brand__name">Virtual Bank</span>
+            </div>
+            <ul class="sidebar-nav">
+              <li class="sidebar-nav__item">
+                <a href="#" class="sidebar-nav__link" aria-current="page">
+                  <span class="sidebar-nav__icon" aria-hidden="true">
+                    <i class="fa-regular fa-house"></i>
+                  </span>
+                  <span class="sidebar-nav__label">Dashboard</span>
+                </a>
+              </li>
+
+              <li class="sidebar-nav__item">
+                <a href="#" class="sidebar-nav__link">
+                  <span class="sidebar-nav__icon" aria-hidden="true">
+                    <i class="fa-solid fa-wallet"></i>
+                  </span>
+                  <span class="sidebar-nav__label">My Wallet</span>
+                </a>
+              </li>
+
+              <li class="sidebar-nav__item">
+                <a href="transfer-money.html" class="sidebar-nav__link">
+                  <span class="sidebar-nav__icon" aria-hidden="true">
+                    <i class="fa-solid fa-money-bill-transfer"></i>
+                  </span>
+                  <span class="sidebar-nav__label">Money Transfer</span>
+                </a>
+              </li>
+
+              <li class="sidebar-nav__item">
+                <a href="manage-credit-cards.html" class="sidebar-nav__link">
+                  <span class="sidebar-nav__icon" aria-hidden="true">
+                    <i class="fa-solid fa-credit-card"></i>
+                  </span>
+                  <span class="sidebar-nav__label">Manage Credit Cards</span>
+                </a>
+              </li>
+
+              <li class="sidebar-nav__item">
+                <a href="card-request.html" class="sidebar-nav__link">
+                  <span class="sidebar-nav__icon" aria-hidden="true">
+                    <i class="fa-solid fa-credit-card"></i>
+                  </span>
+                  <span class="sidebar-nav__label">Card Request</span>
+                </a>
+              </li>
+
+              <li class="sidebar-nav__item">
+                <a href="../admin/admin.html" class="sidebar-nav__link">
+                  <span class="sidebar-nav__icon" aria-hidden="true">
+                    <i class="fa-solid fa-eye"></i>
+                  </span>
+                  <span class="sidebar-nav__label">Admin</span>
+                </a>
+              </li>
+
+              <li class="sidebar-nav__item">
+                <a href="settings.html" class="sidebar-nav__link">
+                  <span class="sidebar-nav__icon" aria-hidden="true">
+                    <i class="fa-solid fa-gear"></i>
+                  </span>
+                  <span class="sidebar-nav__label">Settings</span>
+                </a>
+              </li>
+
+              <li class="sidebar-nav__item">
+                <a href="notifications.html" class="sidebar-nav__link">
+                  <span class="sidebar-nav__icon" aria-hidden="true">
+                    <i class="fa-solid fa-bell" aria-hidden="true"></i>
+                  </span>
+                  <span class="sidebar-nav__label">Notifications</span>
+                </a>
+              </li>
+            </ul>
+
+            <!-- Latest login info -->
+            <section id="latest-login" aria-labelledby="latest-login-heading">
+              <div class="flex-grid two-column-20_80_grid">
+                <span aria-hidden="true">
+                  <i class="fa-solid fa-right-to-bracket"></i>
+                </span>
+
+                <div id="latest-login__details">
+                  <h2 id="latest-login-heading" class="capitalise header-9">
+                    Last login
+                  </h2>
+                  <time datetime="2026-01-29T20:32">Today at 20:32</time>
+                </div>
+              </div>
+
+              <hr class="dividor" aria-hidden="true" />
+
+              <p id="latest-login__note">
+                Add two-factor authentication recovery codes to your account so
+                you never lose access.
+              </p>
+
+              <div class="btns centre mt-24">
+                <a
+                  href="#"
+                  class="btn-large manage-security-btn"
+                  aria-describedby="latest-login__note"
+                >
+                  Manage security
+                  <span aria-hidden="true"> &gt; </span>
+                </a>
+              </div>
+            </section>
+
+            <!-- Logout -->
+            <nav class="logout" aria-label="Account actions">
+              <ul class="sidebar-nav">
+                <li class="sidebar-nav__item">
+                  <a
+                    href="#"
+                    class="sidebar-nav__link"
+                    id="logout-dashboard-link"
+                  >
+                    <span class="sidebar-nav__icon" aria-hidden="true">
+                      <i class="fa-solid fa-right-from-bracket"></i>
+                    </span>
+                    <span class="sidebar-nav__label">Log out</span>
+                  </a>
+                </li>
+              </ul>
+            </nav>
+          </nav>
+
+          <!-- Main content -->
+          <section class="dashboard__container__main" tabindex="-1">
+            <nav class="dashboard__container__navbar flex flex-space-between">
+              <div class="dashbaord__container__nav-head sidebar-brand">
+                <i class="fa-solid fa-building-columns" aria-hidden="true"></i>
+                <span class="sidebar-brand__name dashboard-nav-site-name"
+                  >Virtual Bank</span
+                >
+              </div>
+
+              <div
+                class="dashboard__container__nav-body flex-grid three-column-grid"
+              >
+                <div class="dashboard_container__amount">
+                  <span class="bold"><span class="currency">£</span>1,500</span>
+                </div>
+
+                <div class="dashboard__profile" id="dashboard-profile">
+                  <img
+                    src="/static/images/icons/profile.png"
+                    alt=""
+                    class="dashboard-profile-img"
+                  />
+
+                  <div
+                    class="dashboard__container__dropdown-menu dropdown-menu"
+                    id="dashboard__container__dropdown-menu"
+                  >
+                    <ul>
+                      <li class="flex-grid two-column-20_80_grid">
+                        <span>
+                          <img
+                            src="/static/images/icons/profile.png"
+                            alt=""
+                            class="dashboard-profile-img"
+                          />
+                        </span>
+
+                        <span class="flex-grid">
+                          <span class="bold">John Doe</span>
+                          <span class="lower-case">Johndoe@example.com</span>
+                        </span>
+                      </li>
+
+                      <li>
+                        <span><i class="fa-regular fa-user"></i></span
+                        ><span>Account</span>
+                      </li>
+                      <li>
+                        <span><i class="fa-solid fa-shield-halved"></i></span
+                        ><span>Security</span>
+                      </li>
+                      <li>
+                        <span
+                          ><i class="fa-regular fa-circle-question"></i></span
+                        ><span>Help & Support</span>
+                      </li>
+
+                      <li class="dashboard-logout">
+                        <span
+                          ><i class="fa-solid fa-right-from-bracket"></i></span
+                        ><span>Log out</span>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+
+                <div class="dashboard__container__notification-bell">
+                  <div class="notifications">
+                    <img
+                      src="/static/images/icons/notification_smartphone_icon.png"
+                      alt=""
+                      class="dashboard-notification-bell-img"
+                    />
+                  </div>
+                </div>
+              </div>
+            </nav>
+
+            <hr class="dividor" />
+
+            <!-- The notification greeting -->
+
+            <div
+              class="notifications-greeting flex two-column-45_65_grid ml-16 mr-16 mb-24"
+            >
+              <div class="notification-icon-bell">
+                <img
+                  src="/static/images/notification_icons/notification_icon.png"
+                  alt=""
+                  id="notification-bell-icon__img"
+                />
+              </div>
+
+              <div class="notification-greeting__notification-msg flex-grid">
+                <h1>Notifications</h1>
+                <p>View your notifications and important updates</p>
+              </div>
+            </div>
+
+            <!-- The notification cards -->
+            <section
+              id="notification-section"
+              class="ml-16 mr-16"
+              aria-labelledby="notification-section-heading"
+            >
+              <h2 id="notification-section-heading" class="sr-only">
+                Notification summary
+              </h2>
+
+              <div
+                class="notification-section__notification-cards flex-grid four-column-grid"
+              >
+                <!-- Total notifications card -->
+                <div class="notification-card flex two-column-grid">
+                  <div class="icon">
+                    <img
+                      src="/static/images/notification_icons/notifications.png"
+                      alt=""
+                      class="notification-icon-img"
+                    />
+                  </div>
+
+                  <div class="notification-card__msg flex-grid">
+                    <p class="small-text balance-label bold">
+                      Total notifications
+                    </p>
+
+                    <p class="balance-value" aria-label="6 total notifications">
+                      6
+                    </p>
+
+                    <small>All your notifications</small>
+                  </div>
+                </div>
+
+                <!-- Unread notifications card -->
+                <div class="notification-card flex two-column-grid">
+                  <div class="icon">
+                    <img
+                      src="/static/images/notification_icons/unread_notifications.png"
+                      alt=""
+                      class="notification-icon-img"
+                    />
+                  </div>
+
+                  <div class="notification-card__msg flex-grid">
+                    <p class="small-text balance-label bold">
+                      Unread notifications
+                    </p>
+
+                    <p
+                      class="balance-value"
+                      aria-label="6 unread notifications"
+                    >
+                      6
+                    </p>
+
+                    <small>Require your attention</small>
+                  </div>
+                </div>
+
+                <!-- Read notifications card -->
+                <div class="notification-card flex two-column-grid">
+                  <div class="icon">
+                    <img
+                      src="/static/images/notification_icons/read_notifications.png"
+                      alt=""
+                      class="notification-icon-img"
+                    />
+                  </div>
+
+                  <div class="notification-card__msg flex-grid">
+                    <p class="small-text balance-label bold">
+                      Read notifications
+                    </p>
+
+                    <p class="balance-value" aria-label="6 read notifications">
+                      6
+                    </p>
+
+                    <small>You are up to date</small>
+                  </div>
+                </div>
+
+                <!-- Today's notifications card -->
+                <div class="notification-card flex two-column-grid">
+                  <div class="icon">
+                    <img
+                      src="/static/images/notification_icons/notifications_today.png"
+                      alt=""
+                      class="notification-icon-img"
+                    />
+                  </div>
+
+                  <div class="notification-card__msg flex-grid">
+                    <p class="small-text balance-label bold">Today</p>
+
+                    <p class="balance-value" aria-label="6 notifications today">
+                      6
+                    </p>
+
+                    <small>New notifications today</small>
+                  </div>
+                </div>
+              </div>
+            </section>
+
+            <!-- The notification inbox -->
+
+            <section
+              id="notification-inbox"
+              class="ml-16 mr-16"
+              aria-label="Notification inbox"
+            >
+              <div class="notification-inbox__container">
+                <div
+                  id="notification-inbox__tabs"
+                  class="flex flex-space-between"
+                >
+                  <!-- Notification filters -->
+                  <div
+                    class="notification-inbox__filters flex three-column-grid"
+                    role="group"
+                    aria-label="Filter notifications"
+                  >
+                    <button
+                      type="button"
+                      class="notification-active"
+                      aria-pressed="true"
+                    >
+                      All
+                    </button>
+
+                    <button type="button" aria-pressed="false">
+                      Unread
+                      <span class="count">4</span>
+                    </button>
+
+                    <button type="button" aria-pressed="false">Read</button>
+                     <button type="button" aria-pressed="false">Mark all as read</button>
+                  </div>
+
+                  <!-- Notification sorting -->
+                  <div class="notification-sortby flex two-column-grid">
+                    <span>
+                      <i
+                        class="fa-solid fa-arrow-down-wide-short"
+                        aria-hidden="true"
+                      ></i>
+                    </span>
+
+                    <label for="sort-by" class="sr-only">
+                      Sort notifications
+                    </label>
+
+                    <select name="sort-by" id="sort-by">
+                      <option value="newest">Sort by Newest first</option>
+                      <option value="oldest">Sort by Oldest first</option>
+                    </select>
+                  </div>
+                </div>
+
+                <!-- For now the rows are static later it will be changed to dynamically -->
+                <!-- Notification 1: Transfer complete (Unread) -->
+                <div
+                  class="notification-row flex flex-space-between ml-16 mr-16 mb-16 mt-16"
+                >
+                  <div class="notifcation-checkbox">
+                    <input
+                      type="checkbox"
+                      name="selected_notifications"
+                      id="notification-transfer-1"
+                      value="notification-transfer-1"
+                      aria-label="Select notification: Transfer complete"
+                    />
+                  </div>
+
+                  <div class="notifications-row-icon">
+                    <img
+                      src="../static/images/notification_icons/cardTransfer Icon.png"
+                      alt=""
+                      class="notification-row-icon-img"
+                    />
+                  </div>
+
+                  <div class="notification-row__head">
+                    <h2 class="small-text">Transfer complete</h2>
+
+                    <p class="text-muted">
+                      You sent £500.00 to Jane Smith. Sort code: 22-22-10.
+                      Account number: 02312502.
+                    </p>
+
+                    <a
+                      href="#"
+                      class="small-text"
+                      aria-label="View details for completed bank transfer"
+                    >
+                      View details &gt;
+                    </a>
+                  </div>
+
+                  <div class="notification-row__footer flex">
+                    <p class="small-text">
+                      <span class="sr-only">Received: </span>
+                      Today 14:32
+                    </p>
+
+                    <p class="small-text notification-label">
+                      <span class="sr-only">Notification status: </span>
+                      Unread
+                    </p>
+                  </div>
+                </div>
+
+                <!-- Notification 2: Card request update (Unread) -->
+                <div
+                  class="notification-row flex flex-space-between ml-16 mr-16 mb-16 mt-16"
+                >
+                  <div class="notifcation-checkbox">
+                    <input
+                      type="checkbox"
+                      name="selected_notifications"
+                      id="notification-card-request-1"
+                      value="notification-card-request-1"
+                      aria-label="Select notification: Card request update"
+                    />
+                  </div>
+
+                  <div class="notifications-row-icon">
+                    <img
+                      src="../static/images/notification_icons/card-request.png"
+                      alt=""
+                      class="notification-row-icon-img"
+                    />
+                  </div>
+
+                  <div class="notification-row__head">
+                    <h2 class="small-text">Card request update</h2>
+
+                    <p class="text-muted">
+                      Your new debit card request has been received
+                      successfully. We will notify you when your card has been
+                      dispatched.
+                    </p>
+
+                    <a
+                      href="#"
+                      class="small-text"
+                      aria-label="View details for card request update"
+                    >
+                      View details &gt;
+                    </a>
+                  </div>
+
+                  <div class="notification-row__footer flex">
+                    <p class="small-text">
+                      <span class="sr-only">Received: </span>
+                      Today 12:18
+                    </p>
+
+                    <p class="small-text notification-label">
+                      <span class="sr-only">Notification status: </span>
+                      Unread
+                    </p>
+                  </div>
+                </div>
+
+                <!-- Notification 3: Account created (Read) -->
+                <div
+                  class="notification-row flex flex-space-between ml-16 mr-16 mb-16 mt-16"
+                >
+                  <div class="notifcation-checkbox">
+                    <input
+                      type="checkbox"
+                      name="selected_notifications"
+                      id="notification-account-created-1"
+                      value="notification-account-created-1"
+                      aria-label="Select notification: Account created"
+                    />
+                  </div>
+
+                  <div class="notifications-row-icon">
+                    <img
+                      src="../static/images/notification_icons/account_created.png"
+                      alt=""
+                      class="notification-row-icon-img"
+                    />
+                  </div>
+
+                  <div class="notification-row__head">
+                    <h2 class="small-text">Account created</h2>
+
+                    <p class="text-muted">
+                      Your new current account has been created successfully.
+                      You can now view your account details from your dashboard.
+                    </p>
+
+                    <a
+                      href="#"
+                      class="small-text"
+                      aria-label="View details for account creation"
+                    >
+                      View details &gt;
+                    </a>
+                  </div>
+
+                  <div class="notification-row__footer flex">
+                    <p class="small-text">
+                      <span class="sr-only">Received: </span>
+                      Yesterday 16:45
+                    </p>
+
+                    <p class="small-text notification-label">
+                      <span class="sr-only">Notification status: </span>
+                      Read
+                    </p>
+                  </div>
+                </div>
+
+                <!-- Notification 4: Security alert (Unread) -->
+                <div
+                  class="notification-row flex flex-space-between ml-16 mr-16 mb-16 mt-16"
+                >
+                  <div class="notifcation-checkbox">
+                    <input
+                      type="checkbox"
+                      name="selected_notifications"
+                      id="notification-security-alert-1"
+                      value="notification-security-alert-1"
+                      aria-label="Select notification: Security alert"
+                    />
+                  </div>
+
+                  <div class="notifications-row-icon">
+                    <img
+                      src="../static/images/notification_icons/securityy_alert.png"
+                      alt=""
+                      class="notification-row-icon-img"
+                    />
+                  </div>
+
+                  <div class="notification-row__head">
+                    <h2 class="small-text">Security alert</h2>
+
+                    <p class="text-muted">
+                      A sign-in to your account was detected. If you do not
+                      recognise this activity, review your account security and
+                      change your password.
+                    </p>
+
+                    <a
+                      href="#"
+                      class="small-text"
+                      aria-label="View details for security alert"
+                    >
+                      View details &gt;
+                    </a>
+                  </div>
+
+                  <div class="notification-row__footer flex">
+                    <p class="small-text">
+                      <span class="sr-only">Received: </span>
+                      Yesterday 09:12
+                    </p>
+
+                    <p class="small-text">
+                      <span class="sr-only">Notification status: </span>
+                      Unread
+                    </p>
+                  </div>
+                </div>
+
+                <!-- Notification 5: Bank update (Read) -->
+                <div
+                  class="notification-row flex flex-space-between ml-16 mr-16 mb-16 mt-16"
+                >
+                  <div class="notifcation-checkbox">
+                    <input
+                      type="checkbox"
+                      name="selected_notifications"
+                      id="notification-bank-update-1"
+                      value="notification-bank-update-1"
+                      aria-label="Select notification: Bank update"
+                    />
+                  </div>
+
+                  <div class="notifications-row-icon">
+                    <img
+                      src="../static/images/notification_icons/bank_update.png"
+                      alt=""
+                      class="notification-row-icon-img"
+                    />
+                  </div>
+
+                  <div class="notification-row__head">
+                    <h2 class="small-text">Bank update</h2>
+
+                    <p class="text-muted">
+                      We have updated our banking services to improve your
+                      account experience. Visit your dashboard to review the
+                      latest service information.
+                    </p>
+
+                    <a
+                      href="#"
+                      class="small-text"
+                      aria-label="View details for bank update"
+                    >
+                      View details &gt;
+                    </a>
+                  </div>
+
+                  <div class="notification-row__footer flex">
+                    <p class="small-text">
+                      <span class="sr-only">Received: </span>
+                      14 October 10:30
+                    </p>
+
+                    <p class="small-text notification-label">
+                      <span class="sr-only">Notification status: </span>
+                      Read
+                    </p>
+                  </div>
+                </div>
+
+                <!-- Notification 6: Important information (Unread) -->
+                <div
+                  class="notification-row flex flex-space-between ml-16 mr-16 mb-16 mt-16"
+                >
+                  <div class="notifcation-checkbox">
+                    <input
+                      type="checkbox"
+                      name="selected_notifications"
+                      id="notification-important-information-1"
+                      value="notification-important-information-1"
+                      aria-label="Select notification: Important information"
+                    />
+                  </div>
+
+                  <div class="notifications-row-icon">
+                    <img
+                      src="../static/images/notification_icons/securityy_alert.png"
+                      alt=""
+                      class="notification-row-icon-img"
+                    />
+                  </div>
+
+                  <div class="notification-row__head">
+                    <h2 class="small-text">Important information</h2>
+
+                    <p class="text-muted">
+                      Please ensure your contact details are up to date so we
+                      can keep you informed about important account activity and
+                      service announcements.
+                    </p>
+
+                    <a
+                      href="#"
+                      class="small-text"
+                      aria-label="View details for important information"
+                    >
+                      View details &gt;
+                    </a>
+                  </div>
+
+                  <div class="notification-row__footer flex">
+                    <p class="small-text">
+                      <span class="sr-only">Received: </span>
+                      12 October 08:45
+                    </p>
+
+                    <p class="small-text notification-label">
+                      <span class="sr-only">Notification status: </span>
+                      Unread
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </section>
+          </section>
+
+          <!-- The footer section -->
+          <footer>
+            <div class="footer__container">
+              <div class="footer__header">
+                <img
+                  src="/static/images/virtual-wallet-logo.png"
+                  alt="The virtual logo"
+                  class="footer-logo"
+                />
+              </div>
+
+              <div class="flex-grid five-column-grid" id="footer-sections">
+                <!-- About us column -->
+                <div class="col flex-grid" id="about-us">
+                  <h1 class="footer-head pb-16">About us</h1>
+                  <a href="#" class="footer-link">Our company</a>
+                  <a href="#" class="footer-link">Careers</a>
+                  <a href="#" class="footer-link">Security</a>
+                  <a href="#" class="footer-link">Investor relations</a>
+                </div>
+
+                <!-- services column -->
+                <div class="col flex-grid" id="services">
+                  <h1 class="footer-head pb-16">services</h1>
+                  <a href="#" class="footer-link">Online banking</a>
+                  <a href="#" class="footer-link">Mobile app</a>
+                  <a href="#" class="footer-link">Credit app</a>
+                  <a href="#" class="footer-link">Loans and mortgages</a>
+                </div>
+
+                <!-- support column -->
+                <div class="col flex-grid" id="support">
+                  <h1 class="footer-head pb-16">support</h1>
+                  <a href="#" class="footer-link">FAQs</a>
+                  <a href="#" class="footer-link">Help Center</a>
+                  <a href="#" class="footer-link">Contact us</a>
+                  <a href="#" class="footer-link">Live chat</a>
+                </div>
+
+                <div class="col flex-grid" id="resources">
+                  <h1 class="footer-head pb-16">resources</h1>
+                  <a href="#" class="footer-link">Financial Education</a>
+                  <a href="#" class="footer-link">Blog</a>
+                  <a href="#" class="footer-link">News and Insight</a>
+                  <a href="#" class="footer-link">Calculators</a>
+                </div>
+
+                <div class="col" id="download-app">
+                  <h1 class="footer-head">Download our app</h1>
+
+                  <div id="apps" class="flex-grid two-column-grid">
+                    <img
+                      src="/static/images/footer-icons/appStore.svg"
+                      alt=""
+                      class="footer-icon"
+                    />
+                    <img
+                      src="/static/images/footer-icons/googlePlay.svg"
+                      alt=""
+                      class="footer-icon"
+                    />
+                  </div>
+                </div>
+              </div>
+
+              <div class="socials copyright flex-grid two-column-grid pb-24">
+                <div class="socials four-column-grid">
+                  <a href="#"
+                    ><img
+                      src="/static/images/icons/facebook.svg"
+                      alt="facebook"
+                      class="social-icon"
+                  /></a>
+                  <a href="#"
+                    ><img
+                      src="/static/images/icons/instagram.svg"
+                      alt="facebook"
+                      class="social-icon"
+                  /></a>
+                </div>
+
+                <div class="copyright four-column-grid">
+                  <a href="#" class="copyright-link"
+                    ><span class="copyright-date">@2026 </span>Virtual bank. All
+                    rights reserved</a
+                  >
+                  <a href="#" class="copyright-link footer-link"
+                    >Privacy policy</a
+                  >
+                  <a href="#" class="copyright-link footer-link"
+                    >Terms of use</a
+                  >
+                </div>
+              </div>
+            </div>
+          </footer>
+        </div>
+      </section>
+    </main>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.12.2/dist/sweetalert2.all.min.js"></script>
+    <script src="/static/js/dashboard/bank-dashboard.js" type="module"></script>
+  </body>
+</html>

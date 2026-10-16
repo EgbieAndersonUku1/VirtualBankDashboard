@@ -55,7 +55,7 @@ const transferAmountElement = document.querySelector('.transfer-confirmation__su
 const MAX_TRANSFER_AMOUNT = 1_000_000;
 let walletModalStep2Button;
 
-const excludeFields = new Set(["username", "email", "wallet-disconnect-inputfield", 
+const excludeFields = new Set(["username", "email", "wallet-disconnect-inputfield",
                              "transfer-type", "from", "to", "transaction-type", "transfer-amount"]);
 const excludeTypes = new Set(["checkbox", "radio", "password", "email", "textarea"]);
 
@@ -116,7 +116,7 @@ const transferFormSelectOption = {
         this.optionSelection = selection
     },
 
-    
+
     /**
      * Returns the selected option e.g "wallet" or "bank"
      */
@@ -125,7 +125,7 @@ const transferFormSelectOption = {
         return  this.optionSelection ? toTitle(this.optionSelection): null;
     },
 
-    
+
     /**
      * Clears the option for the selection
      */
@@ -851,7 +851,7 @@ function handleBankFundInput(e) {
 /**
  * Adjusts a currency input value by a specified number of pennies.
  * The function increase or decrease the amount by `0.01`. It also
- * assures that amount doesn't pass the maximum amount or minimum 
+ * assures that amount doesn't pass the maximum amount or minimum
  * threshold
  *
  *
@@ -881,11 +881,11 @@ function adjustCurrencyInput(amountInputField, deltaPennies = 1, maxAmount = 1_0
 
 /**
  * Handles the Enter key press on the amount input field.
- * 
+ *
  * When the Enter key is pressed, the function ensures that the input value
  * is within the defined minimum and maximum limits. It also formats it to two
  * decimal places.
- * 
+ *
  * @param {KeyboardEvent} e - The keyboard event triggered by a key press.
  */
 function handleEnter(e) {
@@ -905,11 +905,11 @@ function handleEnter(e) {
 
 /**
  * Handles the selection of bank card types when a user interacts with an account card.
- * 
- * This function checks if the clicked card is one of the expected account types 
- * (savings account, debit card, or wallet). If it is, it deselects all other 
+ *
+ * This function checks if the clicked card is one of the expected account types
+ * (savings account, debit card, or wallet). If it is, it deselects all other
  * bank card types and selects the clicked card.
- * 
+ *
  * @param {Event} e - The event triggered by user interaction (e.g., click).
  */
 function handleBankCardTypes(e) {
@@ -935,7 +935,7 @@ function handleBankCardTypes(e) {
  * Handles the "Add Funds" button click for transferring money to the user's bank account
  * when the add funds button is clicked. The functions shows a confirmation message
  * before and after the transfer
- * 
+ *
  * @param {Event} e - The click event triggered by the user.
  */
 async function handleFundAccountBtn(e) {
@@ -995,9 +995,9 @@ function resetTransferAmountToDefault() {
 
 /**
  * Handles toggling the "Add Funds" panel open or closed based on which element is clicked.
- * 
+ *
  * Depending on the clicked button, this function either opens or closes the add funds panel.
- * 
+ *
  * @param {Event} e - The click event triggered by the user.
  */
 function handleToggleAddFundsPanel(e) {
@@ -1021,8 +1021,8 @@ function handleToggleAddFundsPanel(e) {
 
 /**
  * Opens the "Add Funds" panel.
- * 
- * This function toggles the visibility of the add funds panel and sets focus 
+ *
+ * This function toggles the visibility of the add funds panel and sets focus
  * to the amount input field for immediate user input.
  */
 function openAddFundsPanel() {
@@ -1036,7 +1036,7 @@ function openAddFundsPanel() {
 
 /**
  * Closes the "Add Funds" panel.
- * 
+ *
  * This function hides the add funds panel by setting its visibility to false.
  */
 function closeAddFundsPanel() {
@@ -1107,14 +1107,14 @@ function handleToggleViewBankTransactionPanel(e) {
     }
 
     if (closePanelId) {
-    
+
         toggleElement({ element: viewBankTransacionPanel, show: false });
     }
 
 
-
-
 }
+
+
 
 /**
  * Handles a click on a card by delegating to the appropriate card click handlers.
@@ -1209,8 +1209,8 @@ function processSelectedCardClick(e) {
     selectElement(targetCard, cssSelector)
 
     if (!(transferToHiddenValueField && sourceCardHiddenValueField)) {
-        warnError("processSelectedCardClick", `one or more of the hidden field is empyty.  
-                                              transferToHiddenValueField = ${transferToHiddenValueField}  
+        warnError("processSelectedCardClick", `one or more of the hidden field is empyty.
+                                              transferToHiddenValueField = ${transferToHiddenValueField}
                                               sourceCardHiddenValueField  = ${sourceCardHiddenValueField}
                                               `);
 
@@ -1246,7 +1246,7 @@ function processSelectedCardClick(e) {
  * The element must:
  * - Have the provided base card class
  * - NOT contain the excluded class (if provided)
- * 
+ *
  * @param {Event} event - The DOM event triggered by user interaction.
  * @param {string} baseClass - The required card class (e.g., "bank-card").
  * @param {string} [excludedClass] - Optional class that disqualifies the card.
@@ -1526,7 +1526,7 @@ function removeBankCardButtonsFromCardExtraView(remove = true) {
 /**
  * handleCardSelectionTimeout
  *
- * Automatically deselects any selected card if the card details panel 
+ * Automatically deselects any selected card if the card details panel
  * ("view-card-panel") is not opened within a specified timeout.
  *
  * This function waits for 5 seconds (`MILLI_SECONDS`) and then:
@@ -1536,7 +1536,7 @@ function removeBankCardButtonsFromCardExtraView(remove = true) {
  * The timeout is only applied if the extra card info panel is currently hidden.
  *
  * Usage:
- * Call this function after a card is selected to ensure that a card does 
+ * Call this function after a card is selected to ensure that a card does
  * not remain selected indefinitely without the user viewing its details.
  *
  * @function
@@ -1624,15 +1624,15 @@ function handleBankTransferSelectFormOptions(e) {
 
     }
 
-   
-  
+
+
 }
 
 
 function closeSelectCardTransferSidePanel() {
     toggleElement({ element: selectCardsContainer, show: false });
     handleTransferAmountConfirmation(false);
-   
+
 }
 
 function handleAnotherCardSelectTransferFormOption() {
@@ -1738,7 +1738,7 @@ function renderTransferCardSelectionMessage() {
  * fundsTransferForm.addEventListener('submit', handleTransferForm);
  */
 function handleTransferForm(e) {
-    e.preventDefault(); 
+    e.preventDefault();
 
     // console.log("I am in the transfer form")
 
@@ -1752,7 +1752,7 @@ function handleTransferForm(e) {
         const resp = assertTransferSelection({ sourceCardId: sourceCardId, targetCardId: targetCardId })
 
         if (!resp) return;
-    
+
     }
 
     const hasFunds = assertSourceCardHasFunds();
@@ -1767,10 +1767,10 @@ function handleTransferForm(e) {
 
 
 /**
- * 
- * Checks if the source card (card dong the transferring) 
- * has a valid balance 
- * 
+ *
+ * Checks if the source card (card dong the transferring)
+ * has a valid balance
+ *
  * */
 function assertSourceCardHasFunds() {
     let sourceCard = selectedCardStore.get();
@@ -1817,7 +1817,7 @@ function getTransferFormObject(transferForm) {
  * 1. Ensures that both `sourceCardId` and `targetCardId` are provided.
  *    - If either is missing, an alert is shown and a warning is logged.
  * 2. Ensures that the source and target cards are not the same.
- *    - If they are the same, it means a target card was never selected in the panel, and 
+ *    - If they are the same, it means a target card was never selected in the panel, and
  * an alert is shown and a warning is logged.
  *
  * @param {Object} params - The parameters object.
@@ -1923,7 +1923,7 @@ function extractSourceAndCardIdFromHiddenField(hiddenInputValue) {
 /**
  * Shows or hides the transfer amount confirmation panel.
  *
- * @param {boolean} [show=true] - If true, displays the confirmation panel; 
+ * @param {boolean} [show=true] - If true, displays the confirmation panel;
  *                                 if false, hides it.
  *
  * @example
@@ -1945,8 +1945,8 @@ function handleTransferAmountConfirmation(show = true) {
  *
  * If a recipient type is selected from the transfer form that is used excluding "another-card".
  *  The options are "another-card", "wallet" or "bank" that value is returned.
- * 
- * However, If "bank" or "wallet" wasn't selected the recipient type becomes (null), 
+ *
+ * However, If "bank" or "wallet" wasn't selected the recipient type becomes (null),
  * and the function falls back to the "another-card" as the selection picked
  *
  *
@@ -1992,18 +1992,18 @@ function getRecipientAccountType() {
  */
 function updateConfirmationPanel(formData, recipientType) {
 
-  
+
     // If recipient account is nulll it means that the user has selected "bank" or "wallet" from the select transfer form
     if (recipientType === null || typeof recipientType !== "string")  {
         warnError("updateConfirmationPanel", {
             recipientType: recipientType,
             type: typeof recipientType,
             expected: "Expected a string value",
-            
+
         })
         return;
-      
-    } 
+
+    }
 
     sourceCardNumberElement.textContent = getCardDetailsFromElement(selectedCardStore.get()).cardNumber;
     targetCardNumberElement.textContent = recipientType;
