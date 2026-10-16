@@ -5885,3 +5885,73 @@ textarea::placeholder {
 #notification-inbox {
     background: white;
 }
+
+.notification-row__footer {
+    flex: 0 0 180px;
+    flex-direction: column;
+    align-items: flex-end;
+}
+
+.notification-row__footer p,
+.notification-label {
+
+    color: var(--blue-600);
+    font-weight: 500;
+    font-size: 0.85rem;
+}
+
+
+
+
+.notifcation-checkbox,
+.notifications-row-icon {
+    flex-shrink: 0;
+}
+
+.notification-row__head {
+    flex: 1;
+    min-width: 0;
+}
+
+.notification-row__head a {
+    font-size: 0.85rem;
+}
+
+
+
+.notification-row {
+    margin-top: var(--space-16);
+    cursor: pointer;
+    padding: var(--space-8);
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+
+}
+
+.notification-row:not(:last-child) {
+    border-bottom: 1px solid lavender;
+}
+
+.notification-row > p {
+    font-size: 0.8rem;
+}
+
+.notifications-row-icon {
+    position: relative;
+    height: 50px;
+    width: 50px;
+}
+
+
+.notification-row-icon-img {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+}
+
+
+
+.notification-row:hover {
+    background: ghostwhite;
+}
