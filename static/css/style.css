@@ -5933,7 +5933,7 @@ textarea::placeholder {
 
 .notifications-row-icon {
     position: relative;
-    height: 50px;
+    height: 40px;
     width: 50px;
 }
 
@@ -5957,17 +5957,6 @@ textarea::placeholder {
 }
 
 
-/* The notification inbox for all unread */
-#notifications__unread {
-
-}
-
-
-
-/* The notification inbox for all read */
-#notifications__unread {
-
-}
 
 .notification-inbox__filters .notification-active {
     background-color: var(--blue-600);
