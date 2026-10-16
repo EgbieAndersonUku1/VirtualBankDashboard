@@ -5689,7 +5689,7 @@ textarea::placeholder {
     display: none;
     background: white;
     padding: var(--space-32);
-    border-radius: 2&;
+    border-radius: 2;
 }
 
 
@@ -5834,9 +5834,10 @@ textarea::placeholder {
 }
 
 
-.notification-inbox__filters button:not(:first-child) {
+.notification-inbox__filters button {
     background: transparent;
     cursor: pointer;
+
 }
 
 .notification-inbox__filters button {
@@ -5855,15 +5856,7 @@ textarea::placeholder {
     font-weight: 500;
 }
 
-.notification-active {
-    background: var(--blue-600);
-    border-radius: 999px;
-    padding: var(--space-8);
-    color: #ffff;
-    padding-left: var(--space-48);
-    padding-right: var(--space-48);
 
-}
 
 .notification-inbox__filters div {
     padding-top: var(--space-8);
@@ -5907,6 +5900,7 @@ textarea::placeholder {
 .notifications-row-icon {
     flex-shrink: 0;
 }
+
 
 .notification-row__head {
     flex: 1;
@@ -5954,4 +5948,33 @@ textarea::placeholder {
 
 .notification-row:hover {
     background: ghostwhite;
+}
+
+
+/* The notification inbox for all msg */
+#notifications__all {
+    display: none;
+}
+
+
+/* The notification inbox for all unread */
+#notifications__unread {
+
+}
+
+
+
+/* The notification inbox for all read */
+#notifications__unread {
+
+}
+
+.notification-inbox__filters .notification-active {
+    background-color: var(--blue-600);
+    border-radius: 999px;
+    padding: var(--space-8);
+    color: #ffff;
+    padding-left: var(--space-48);
+    padding-right: var(--space-48);
+
 }
