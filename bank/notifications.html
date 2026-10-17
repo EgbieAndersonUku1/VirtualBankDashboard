@@ -267,12 +267,12 @@
                 class="notification-section__notification-cards flex-grid four-column-grid"
               >
                 <!-- Total notifications card -->
-                <div class="notification-card flex two-column-grid">
+                <div class="notification-card flex two-column-grid" id="notifications__card_all">
                   <div class="icon">
                     <img
                       src="/static/images/notification_icons/notifications.png"
                       alt=""
-                      class="notification-icon-img"
+                      class="notification-icon-img notification-card-header"
                     />
                   </div>
 
@@ -285,17 +285,20 @@
                       6
                     </p>
 
-                    <small>All your notifications</small>
+                    <p class="subtitles">
+                      All your notifications
+                    </p>
+
                   </div>
                 </div>
 
                 <!-- Unread notifications card -->
-                <div class="notification-card flex two-column-grid">
+                <div class="notification-card flex two-column-grid" id="notifications__card_unread">
                   <div class="icon">
                     <img
                       src="/static/images/notification_icons/unread_notifications.png"
                       alt=""
-                      class="notification-icon-img"
+                      class="notification-icon-img notification-card-header"
                     />
                   </div>
 
@@ -311,17 +314,20 @@
                       4
                     </p>
 
-                    <small>Require your attention</small>
+                     <p class="subtitles">
+                      Require your attention
+                    </p>
+
                   </div>
                 </div>
 
                 <!-- Read notifications card -->
-                <div class="notification-card flex two-column-grid">
+                <div class="notification-card flex two-column-grid" id="notifications__card_read">
                   <div class="icon">
                     <img
                       src="/static/images/notification_icons/read_notifications.png"
                       alt=""
-                      class="notification-icon-img"
+                      class="notification-icon-img notification-card-header"
                     />
                   </div>
 
@@ -334,17 +340,20 @@
                       2
                     </p>
 
-                    <small>You are up to date</small>
+                    <p class="subtitles">
+                      You are up to date
+                    </p>
+
                   </div>
                 </div>
 
                 <!-- Today's notifications card -->
-                <div class="notification-card flex two-column-grid">
+                <div class="notification-card flex two-column-grid" id="notifications__card_today">
                   <div class="icon">
                     <img
                       src="/static/images/notification_icons/notifications_today.png"
                       alt=""
-                      class="notification-icon-img"
+                      class="notification-icon-img notification-card-header"
                     />
                   </div>
 
@@ -355,7 +364,11 @@
                       2
                     </p>
 
-                    <small>New notifications today</small>
+                    <p class="subtitles">
+                       New notifications today
+                    </p>
+
+
                   </div>
                 </div>
               </div>
@@ -921,7 +934,7 @@
 
                 </div>
 
-                
+
 
 
                 <!-- the read message -->
