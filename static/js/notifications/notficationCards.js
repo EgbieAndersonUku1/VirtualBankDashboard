@@ -59,6 +59,13 @@ export class NotificationSummaryCard {
 
     }
 
+    #ensureInitialised() {
+        if (!this.#isInitialised) {
+            throw new Error(
+                "NotificationSummaryCard has not been initialized. Call init() first."
+            );
+        }
+    }
 
     /**
      * Initialises the notification summary card by querying the card element
@@ -106,6 +113,7 @@ export class NotificationSummaryCard {
      * Returns the title of notification card
      */
     get title() {
+        this.#ensureInitialised();
         return this.#title
     }
 
@@ -113,6 +121,7 @@ export class NotificationSummaryCard {
      * returns the image of the notification card
      */
     get image() {
+        this.#ensureInitialised();
         return this.#img.src;
     }
 
@@ -120,6 +129,7 @@ export class NotificationSummaryCard {
      * returns the subtitle for the notification card
      */
     get subtitle() {
+        this.#ensureInitialised();
         return this.#msg
     }
 
@@ -127,6 +137,7 @@ export class NotificationSummaryCard {
      * returns the notification count for the notification card
      */
     get notificationCount() {
+        this.#ensureInitialised();
         return this.#count;
     }
 
@@ -134,12 +145,15 @@ export class NotificationSummaryCard {
      * Updates the notifcation count summary
      */
     set count(notificationCount) {
-
+        this.#ensureInitialised();
+        
         const numType = typeof notificationCount;
 
-        if (typeof numType === "number" && Number.isFinite(notificationCount)) {
+        if (numType !== "number" && Number.isFinite(notificationCount)) {
            throw new Error(`The value entered is not a number. Got type ${numType}`)
         }
+
+        this.#cardElement.querySelector(".notification-card__msg p:nth-of-type(2)").textContent = notificationCount;
         this.#count = notificationCount;
     }
 }
