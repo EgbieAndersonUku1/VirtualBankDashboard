@@ -267,12 +267,15 @@
                 class="notification-section__notification-cards flex-grid four-column-grid"
               >
                 <!-- Total notifications card -->
-                <div class="notification-card flex two-column-grid">
+                <div
+                  class="notification-card flex two-column-grid"
+                  id="notifications__card_all"
+                >
                   <div class="icon">
                     <img
                       src="/static/images/notification_icons/notifications.png"
                       alt=""
-                      class="notification-icon-img"
+                      class="notification-icon-img notification-card-header"
                     />
                   </div>
 
@@ -285,17 +288,20 @@
                       6
                     </p>
 
-                    <small>All your notifications</small>
+                    <p class="subtitles">All your notifications</p>
                   </div>
                 </div>
 
                 <!-- Unread notifications card -->
-                <div class="notification-card flex two-column-grid">
+                <div
+                  class="notification-card flex two-column-grid"
+                  id="notifications__card_unread"
+                >
                   <div class="icon">
                     <img
                       src="/static/images/notification_icons/unread_notifications.png"
                       alt=""
-                      class="notification-icon-img"
+                      class="notification-icon-img notification-card-header"
                     />
                   </div>
 
@@ -311,17 +317,20 @@
                       4
                     </p>
 
-                    <small>Require your attention</small>
+                    <p class="subtitles">Require your attention</p>
                   </div>
                 </div>
 
                 <!-- Read notifications card -->
-                <div class="notification-card flex two-column-grid">
+                <div
+                  class="notification-card flex two-column-grid"
+                  id="notifications__card_read"
+                >
                   <div class="icon">
                     <img
                       src="/static/images/notification_icons/read_notifications.png"
                       alt=""
-                      class="notification-icon-img"
+                      class="notification-icon-img notification-card-header"
                     />
                   </div>
 
@@ -334,17 +343,20 @@
                       2
                     </p>
 
-                    <small>You are up to date</small>
+                    <p class="subtitles">You are up to date</p>
                   </div>
                 </div>
 
                 <!-- Today's notifications card -->
-                <div class="notification-card flex two-column-grid">
+                <div
+                  class="notification-card flex two-column-grid"
+                  id="notifications__card_today"
+                >
                   <div class="icon">
                     <img
                       src="/static/images/notification_icons/notifications_today.png"
                       alt=""
-                      class="notification-icon-img"
+                      class="notification-icon-img notification-card-header"
                     />
                   </div>
 
@@ -355,7 +367,7 @@
                       2
                     </p>
 
-                    <small>New notifications today</small>
+                    <p class="subtitles">New notifications today</p>
                   </div>
                 </div>
               </div>
@@ -363,77 +375,125 @@
 
             <!-- The notification inbox headers -->
 
-            <section id="notification-inbox" class="ml-16 mr-16" aria-label="Notification inbox">
+            <section
+              id="notification-inbox"
+              class="ml-16 mr-16"
+              aria-label="Notification inbox"
+            >
               <div class="notification-inbox__container">
-                <div id="notification-inbox__tabs" class="flex flex-space-between">
+                <div
+                  id="notification-inbox__tabs"
+                  class="flex flex-space-between"
+                >
+                  <!-- Notification filters -->
+                  <div
+                    class="notification-inbox__filters flex three-column-grid"
+                    role="group"
+                    aria-label="Filter notifications"
+                  >
+                    <button
+                      type="button"
+                      class="tab notification-active"
+                      aria-pressed="false"
+                      data-info="all"
+                    >
+                      All
+                    </button>
+                    <button
+                      type="button"
+                      aria-pressed="false"
+                      class="tab"
+                      data-info="unread"
+                    >
+                      Unread
+                    </button>
+                    <button
+                      type="button"
+                      aria-pressed="false"
+                      class="tab"
+                      data-info="read"
+                    >
+                      Read
+                    </button>
+                    <button
+                      type="button"
+                      aria-pressed="false"
+                      class="tab"
+                      data-info="mark-all-as-read"
+                    >
+                      Mark all as read
+                    </button>
+                    <button
+                      type="button"
+                      aria-pressed="false"
+                      class="tab"
+                      data-info="mark-all-as-unread"
+                    >
+                      Mark all as unread
+                    </button>
+                  </div>
 
-                      <!-- Notification filters -->
-                      <div class="notification-inbox__filters flex three-column-grid" role="group" aria-label="Filter notifications">
+                  <!-- Notification sorting -->
+                  <div class="notification-sortby flex two-column-grid">
+                    <span
+                      ><i
+                        class="fa-solid fa-arrow-down-wide-short"
+                        aria-hidden="true"
+                      ></i
+                    ></span>
 
-                        <button type="button" class="tab notification-active" aria-pressed="false" data-info="all">All</button>
-                        <button type="button" aria-pressed="false" class="tab" data-info="unread">Unread</button>
-                        <button type="button" aria-pressed="false" class="tab" data-info="read">Read</button>
-                        <button type="button" aria-pressed="false" class="tab" data-info="mark-all-as-read">Mark all as read</button>
-                        <button type="button" aria-pressed="false" class="tab" data-info="mark-all-as-unread">Mark all as unread</button>
+                    <label for="sort-by" class="sr-only">
+                      Sort notifications
+                    </label>
 
-                    </div>
-
-                    <!-- Notification sorting -->
-                    <div class="notification-sortby flex two-column-grid">
-                        <span><i class="fa-solid fa-arrow-down-wide-short" aria-hidden="true"></i></span>
-
-                        <label for="sort-by" class="sr-only">
-                          Sort notifications
-                        </label>
-
-                        <select name="sort-by" id="sort-by">
-                          <option value="newest">Sort by Newest first</option>
-                          <option value="oldest">Sort by Oldest first</option>
-                        </select>
-                    </div>
-
+                    <select name="sort-by" id="sort-by">
+                      <option value="newest">Sort by Newest first</option>
+                      <option value="oldest">Sort by Oldest first</option>
+                    </select>
+                  </div>
                 </div>
 
                 <!-- For now the rows are static later it will be changed to dynamically -->
                 <!-- Notification 1: Transfer complete (Unread) -->
 
                 <div id="notifications__all">
+                  <div
+                    class="notification-row flex flex-space-between ml-16 mr-16 mb-16 mt-16"
+                  >
+                    <div class="notifcation-checkbox">
+                      <input
+                        type="checkbox"
+                        name="selected_notifications"
+                        id="notification-transfer-1"
+                        value="notification-transfer-1"
+                        aria-label="Select notification: Transfer complete"
+                      />
+                    </div>
 
-                    <div class="notification-row flex flex-space-between ml-16 mr-16 mb-16 mt-16">
-                        <div class="notifcation-checkbox">
-                          <input
-                            type="checkbox"
-                            name="selected_notifications"
-                            id="notification-transfer-1"
-                            value="notification-transfer-1"
-                            aria-label="Select notification: Transfer complete"
-                          />
-                        </div>
+                    <div class="notifications-row-icon">
+                      <img
+                        src="../static/images/notification_icons/cardTransfer Icon.png"
+                        alt=""
+                        class="notification-row-icon-img"
+                      />
+                    </div>
 
-                        <div class="notifications-row-icon">
-                          <img
-                            src="../static/images/notification_icons/cardTransfer Icon.png"
-                            alt=""
-                            class="notification-row-icon-img"
-                          />
-                        </div>
+                    <div class="notification-row__head">
+                      <h2 class="small-text">Transfer complete</h2>
 
-                      <div class="notification-row__head">
-                        <h2 class="small-text">Transfer complete</h2>
+                      <p class="text-muted">
+                        You sent £500.00 to Jane Smith. Sort code: 22-22-10.
+                        Account number: 02312502.
+                      </p>
 
-                        <p class="text-muted">
-                          You sent £500.00 to Jane Smith. Sort code: 22-22-10.
-                          Account number: 02312502.
-                        </p>
-
-                        <a
-                          href="#"
-                          class="small-text"
-                          aria-label="View details for completed bank transfer"
-                        >
-                          View details &gt;
-                        </a>
-                      </div>
+                      <a
+                        href="#"
+                        class="small-text"
+                        aria-label="View details for completed bank transfer"
+                      >
+                        View details &gt;
+                      </a>
+                    </div>
 
                     <div class="notification-row__footer flex">
                       <p class="small-text">
@@ -502,7 +562,9 @@
                   </div>
 
                   <!-- Notification 3: Account created (Read) -->
-                  <div class="notification-row flex flex-space-between ml-16 mr-16 mb-16 mt-16">
+                  <div
+                    class="notification-row flex flex-space-between ml-16 mr-16 mb-16 mt-16"
+                  >
                     <div class="notifcation-checkbox">
                       <input
                         type="checkbox"
@@ -526,7 +588,8 @@
 
                       <p class="text-muted">
                         Your new current account has been created successfully.
-                        You can now view your account details from your dashboard.
+                        You can now view your account details from your
+                        dashboard.
                       </p>
 
                       <a
@@ -578,8 +641,8 @@
 
                       <p class="text-muted">
                         A sign-in to your account was detected. If you do not
-                        recognise this activity, review your account security and
-                        change your password.
+                        recognise this activity, review your account security
+                        and change your password.
                       </p>
 
                       <a
@@ -605,7 +668,8 @@
                   </div>
 
                   <!-- Notification 5: Bank update (Read) -->
-                  <div class="notification-row flex flex-space-between ml-16 mr-16 mb-16 mt-16"
+                  <div
+                    class="notification-row flex flex-space-between ml-16 mr-16 mb-16 mt-16"
                   >
                     <div class="notifcation-checkbox">
                       <input
@@ -657,7 +721,9 @@
                   </div>
 
                   <!-- Notification 6: Important information (Unread) -->
-                  <div class="notification-row flex flex-space-between ml-16 mr-16 mb-16 mt-16">
+                  <div
+                    class="notification-row flex flex-space-between ml-16 mr-16 mb-16 mt-16"
+                  >
                     <div class="notifcation-checkbox">
                       <input
                         type="checkbox"
@@ -681,8 +747,8 @@
 
                       <p class="text-muted">
                         Please ensure your contact details are up to date so we
-                        can keep you informed about important account activity and
-                        service announcements.
+                        can keep you informed about important account activity
+                        and service announcements.
                       </p>
 
                       <a
@@ -706,16 +772,13 @@
                       </p>
                     </div>
                   </div>
-
-
                 </div>
-
 
                 <!-- The unread msg -->
                 <div id="notifications__unread">
-
-
-                  <div class="notification-row flex flex-space-between ml-16 mr-16 mb-16 mt-16">
+                  <div
+                    class="notification-row flex flex-space-between ml-16 mr-16 mb-16 mt-16"
+                  >
                     <div class="notifcation-checkbox">
                       <input
                         type="checkbox"
@@ -764,171 +827,172 @@
                     </div>
                   </div>
 
-                    <!-- Notification 2: Card request update (Unread) -->
-                    <div class="notification-row flex flex-space-between ml-16 mr-16 mb-16 mt-16">
-                      <div class="notifcation-checkbox">
-                        <input
-                          type="checkbox"
-                          name="selected_notifications"
-                          id="notification-card-request-1"
-                          value="notification-card-request-1"
-                          aria-label="Select notification: Card request update"
-                        />
-                      </div>
-
-                      <div class="notifications-row-icon">
-                        <img
-                          src="../static/images/notification_icons/card-request.png"
-                          alt=""
-                          class="notification-row-icon-img"
-                        />
-                      </div>
-
-                      <div class="notification-row__head">
-                        <h2 class="small-text">Card request update</h2>
-
-                        <p class="text-muted">
-                          Your new debit card request has been received
-                          successfully. We will notify you when your card has been
-                          dispatched.
-                        </p>
-
-                        <a
-                          href="#"
-                          class="small-text"
-                          aria-label="View details for card request update"
-                        >
-                          View details &gt;
-                        </a>
-                      </div>
-
-                      <div class="notification-row__footer flex">
-                        <p class="small-text">
-                          <span class="sr-only">Received: </span>
-                          Today 12:18
-                        </p>
-
-                        <p class="small-text notification-label">
-                          <span class="sr-only">Notification status: </span>
-                          Unread
-                        </p>
-                      </div>
+                  <!-- Notification 2: Card request update (Unread) -->
+                  <div
+                    class="notification-row flex flex-space-between ml-16 mr-16 mb-16 mt-16"
+                  >
+                    <div class="notifcation-checkbox">
+                      <input
+                        type="checkbox"
+                        name="selected_notifications"
+                        id="notification-card-request-1"
+                        value="notification-card-request-1"
+                        aria-label="Select notification: Card request update"
+                      />
                     </div>
 
-
-                    <!-- Notification 3: Security alert (Unread) -->
-                    <div class="notification-row flex flex-space-between ml-16 mr-16 mb-16 mt-16">
-                      <div class="notifcation-checkbox">
-                        <input
-                          type="checkbox"
-                          name="selected_notifications"
-                          id="notification-security-alert-1"
-                          value="notification-security-alert-1"
-                          aria-label="Select notification: Security alert"
-                        />
-                      </div>
-
-                      <div class="notifications-row-icon">
-                        <img
-                          src="../static/images/notification_icons/securityy_alert.png"
-                          alt=""
-                          class="notification-row-icon-img"
-                        />
-                      </div>
-
-                      <div class="notification-row__head">
-                        <h2 class="small-text">Security alert</h2>
-
-                        <p class="text-muted">
-                          A sign-in to your account was detected. If you do not
-                          recognise this activity, review your account security and
-                          change your password.
-                        </p>
-
-                        <a
-                          href="#"
-                          class="small-text"
-                          aria-label="View details for security alert"
-                        >
-                          View details &gt;
-                        </a>
-                      </div>
-
-                      <div class="notification-row__footer flex">
-                        <p class="small-text">
-                          <span class="sr-only">Received: </span>
-                          Yesterday 09:12
-                        </p>
-
-                        <p class="small-text">
-                          <span class="sr-only">Notification status: </span>
-                          Unread
-                        </p>
-                      </div>
+                    <div class="notifications-row-icon">
+                      <img
+                        src="../static/images/notification_icons/card-request.png"
+                        alt=""
+                        class="notification-row-icon-img"
+                      />
                     </div>
 
-                    <!-- Notification 5: Important information (Unread) -->
-                    <div class="notification-row flex flex-space-between ml-16 mr-16 mb-16 mt-16">
-                      <div class="notifcation-checkbox">
-                        <input
-                          type="checkbox"
-                          name="selected_notifications"
-                          id="notification-important-information-1"
-                          value="notification-important-information-1"
-                          aria-label="Select notification: Important information"
-                        />
-                      </div>
+                    <div class="notification-row__head">
+                      <h2 class="small-text">Card request update</h2>
 
-                      <div class="notifications-row-icon">
-                        <img
-                          src="../static/images/notification_icons/securityy_alert.png"
-                          alt=""
-                          class="notification-row-icon-img"
-                        />
-                      </div>
+                      <p class="text-muted">
+                        Your new debit card request has been received
+                        successfully. We will notify you when your card has been
+                        dispatched.
+                      </p>
 
-                      <div class="notification-row__head">
-                        <h2 class="small-text">Important information</h2>
-
-                        <p class="text-muted">
-                          Please ensure your contact details are up to date so we
-                          can keep you informed about important account activity and
-                          service announcements.
-                        </p>
-
-                        <a
-                          href="#"
-                          class="small-text"
-                          aria-label="View details for important information"
-                        >
-                          View details &gt;
-                        </a>
-                      </div>
-
-                      <div class="notification-row__footer flex">
-                        <p class="small-text">
-                          <span class="sr-only">Received: </span>
-                          12 October 08:45
-                        </p>
-
-                        <p class="small-text notification-label">
-                          <span class="sr-only">Notification status: </span>
-                          Unread
-                        </p>
-                      </div>
+                      <a
+                        href="#"
+                        class="small-text"
+                        aria-label="View details for card request update"
+                      >
+                        View details &gt;
+                      </a>
                     </div>
 
+                    <div class="notification-row__footer flex">
+                      <p class="small-text">
+                        <span class="sr-only">Received: </span>
+                        Today 12:18
+                      </p>
 
+                      <p class="small-text notification-label">
+                        <span class="sr-only">Notification status: </span>
+                        Unread
+                      </p>
+                    </div>
+                  </div>
+
+                  <!-- Notification 3: Security alert (Unread) -->
+                  <div
+                    class="notification-row flex flex-space-between ml-16 mr-16 mb-16 mt-16"
+                  >
+                    <div class="notifcation-checkbox">
+                      <input
+                        type="checkbox"
+                        name="selected_notifications"
+                        id="notification-security-alert-1"
+                        value="notification-security-alert-1"
+                        aria-label="Select notification: Security alert"
+                      />
+                    </div>
+
+                    <div class="notifications-row-icon">
+                      <img
+                        src="../static/images/notification_icons/securityy_alert.png"
+                        alt=""
+                        class="notification-row-icon-img"
+                      />
+                    </div>
+
+                    <div class="notification-row__head">
+                      <h2 class="small-text">Security alert</h2>
+
+                      <p class="text-muted">
+                        A sign-in to your account was detected. If you do not
+                        recognise this activity, review your account security
+                        and change your password.
+                      </p>
+
+                      <a
+                        href="#"
+                        class="small-text"
+                        aria-label="View details for security alert"
+                      >
+                        View details &gt;
+                      </a>
+                    </div>
+
+                    <div class="notification-row__footer flex">
+                      <p class="small-text">
+                        <span class="sr-only">Received: </span>
+                        Yesterday 09:12
+                      </p>
+
+                      <p class="small-text">
+                        <span class="sr-only">Notification status: </span>
+                        Unread
+                      </p>
+                    </div>
+                  </div>
+
+                  <!-- Notification 5: Important information (Unread) -->
+                  <div
+                    class="notification-row flex flex-space-between ml-16 mr-16 mb-16 mt-16"
+                  >
+                    <div class="notifcation-checkbox">
+                      <input
+                        type="checkbox"
+                        name="selected_notifications"
+                        id="notification-important-information-1"
+                        value="notification-important-information-1"
+                        aria-label="Select notification: Important information"
+                      />
+                    </div>
+
+                    <div class="notifications-row-icon">
+                      <img
+                        src="../static/images/notification_icons/securityy_alert.png"
+                        alt=""
+                        class="notification-row-icon-img"
+                      />
+                    </div>
+
+                    <div class="notification-row__head">
+                      <h2 class="small-text">Important information</h2>
+
+                      <p class="text-muted">
+                        Please ensure your contact details are up to date so we
+                        can keep you informed about important account activity
+                        and service announcements.
+                      </p>
+
+                      <a
+                        href="#"
+                        class="small-text"
+                        aria-label="View details for important information"
+                      >
+                        View details &gt;
+                      </a>
+                    </div>
+
+                    <div class="notification-row__footer flex">
+                      <p class="small-text">
+                        <span class="sr-only">Received: </span>
+                        12 October 08:45
+                      </p>
+
+                      <p class="small-text notification-label">
+                        <span class="sr-only">Notification status: </span>
+                        Unread
+                      </p>
+                    </div>
+                  </div>
                 </div>
-
-                
-
 
                 <!-- the read message -->
                 <div id="notifications__read">
-
                   <!-- Notification 3: Account created (Read) -->
-                  <div class="notification-row flex flex-space-between ml-16 mr-16 mb-16 mt-16">
+                  <div
+                    class="notification-row flex flex-space-between ml-16 mr-16 mb-16 mt-16"
+                  >
                     <div class="notifcation-checkbox">
                       <input
                         type="checkbox"
@@ -952,7 +1016,8 @@
 
                       <p class="text-muted">
                         Your new current account has been created successfully.
-                        You can now view your account details from your dashboard.
+                        You can now view your account details from your
+                        dashboard.
                       </p>
 
                       <a
@@ -977,73 +1042,60 @@
                     </div>
                   </div>
 
+                  <div
+                    class="notification-row flex flex-space-between ml-16 mr-16 mb-16 mt-16"
+                  >
+                    <div class="notifcation-checkbox">
+                      <input
+                        type="checkbox"
+                        name="selected_notifications"
+                        id="notification-bank-update-1"
+                        value="notification-bank-update-1"
+                        aria-label="Select notification: Bank update"
+                      />
+                    </div>
 
-                 <div class="notification-row flex flex-space-between ml-16 mr-16 mb-16 mt-16">
-                  <div class="notifcation-checkbox">
-                    <input
-                      type="checkbox"
-                      name="selected_notifications"
-                      id="notification-bank-update-1"
-                      value="notification-bank-update-1"
-                      aria-label="Select notification: Bank update"
-                    />
-                  </div>
+                    <div class="notifications-row-icon">
+                      <img
+                        src="../static/images/notification_icons/bank_update.png"
+                        alt=""
+                        class="notification-row-icon-img"
+                      />
+                    </div>
 
-                  <div class="notifications-row-icon">
-                    <img
-                      src="../static/images/notification_icons/bank_update.png"
-                      alt=""
-                      class="notification-row-icon-img"
-                    />
-                  </div>
+                    <div class="notification-row__head">
+                      <h2 class="small-text">Bank update</h2>
 
-                  <div class="notification-row__head">
-                    <h2 class="small-text">Bank update</h2>
+                      <p class="text-muted">
+                        We have updated our banking services to improve your
+                        account experience. Visit your dashboard to review the
+                        latest service information.
+                      </p>
 
-                    <p class="text-muted">
-                      We have updated our banking services to improve your
-                      account experience. Visit your dashboard to review the
-                      latest service information.
-                    </p>
+                      <a
+                        href="#"
+                        class="small-text"
+                        aria-label="View details for bank update"
+                      >
+                        View details &gt;
+                      </a>
+                    </div>
 
-                    <a
-                      href="#"
-                      class="small-text"
-                      aria-label="View details for bank update"
-                    >
-                      View details &gt;
-                    </a>
-                  </div>
+                    <div class="notification-row__footer flex">
+                      <p class="small-text">
+                        <span class="sr-only">Received: </span>
+                        14 October 10:30
+                      </p>
 
-                  <div class="notification-row__footer flex">
-                    <p class="small-text">
-                      <span class="sr-only">Received: </span>
-                      14 October 10:30
-                    </p>
-
-                    <p class="small-text notification-label">
-                      <span class="sr-only">Notification status: </span>
-                      Read
-                    </p>
+                      <p class="small-text notification-label">
+                        <span class="sr-only">Notification status: </span>
+                        Read
+                      </p>
+                    </div>
                   </div>
                 </div>
-
-
-
-
-                </div>
-
-
-
-
-
               </div>
-
-
             </section>
-
-
-
           </section>
 
           <!-- The footer section -->
@@ -1146,6 +1198,9 @@
       </section>
     </main>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.12.2/dist/sweetalert2.all.min.js"></script>
-    <script src="/static/js/notifications/notification.js" type="module"></script>
+    <script
+      src="/static/js/notifications/notification.js"
+      type="module"
+    ></script>
   </body>
 </html>

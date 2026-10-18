@@ -5967,3 +5967,8 @@ textarea::placeholder {
     padding-right: var(--space-48);
 
 }
+
+
+.notification-card .notification-card__msg p:last-child {
+    font-size: 0.85rem;
+}
