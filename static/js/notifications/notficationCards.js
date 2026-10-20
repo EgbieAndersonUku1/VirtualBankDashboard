@@ -146,11 +146,15 @@ export class NotificationSummaryCard {
      */
     set count(notificationCount) {
         this.#ensureInitialised();
-        
+
         const numType = typeof notificationCount;
 
         if (numType !== "number" && Number.isFinite(notificationCount)) {
            throw new Error(`The value entered is not a number. Got type ${numType}`)
+        }
+
+        if (notificationCount < 0) {
+            throw new TypeError(`The number must not be negative number. Expected postive got ${notificationCount}`);
         }
 
         this.#cardElement.querySelector(".notification-card__msg p:nth-of-type(2)").textContent = notificationCount;
